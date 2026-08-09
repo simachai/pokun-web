@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#111827">
-<title>POKUN Web v1.2</title>
+<title>POKUN Web v1.5</title>
 <style>
 :root{--bg:#f4f5f7;--card:#fff;--ink:#16181d;--muted:#6b7280;--line:#e5e7eb;--accent:#111827;--good:#087f5b;--warn:#b45309}
 *{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI","Noto Sans Thai",sans-serif;background:var(--bg);color:var(--ink)}
@@ -23,7 +23,7 @@ button{border:0;border-radius:12px;padding:12px 14px;font-weight:800;cursor:poin
 <body>
 <div class="wrap">
   <div class="hero">
-    <h1>POKUN Web <span class="small">v1.2</span></h1>
+    <h1>POKUN Web <span class="small">v1.5</span></h1>
     <p>Daily Greeting Prompt Generator — ใช้ได้บนมือถือและคอม</p>
   </div>
 
@@ -32,6 +32,15 @@ button{border:0;border-radius:12px;padding:12px 14px;font-weight:800;cursor:poin
       <label>วันที่</label>
       <input id="date" type="date">
       <div id="status" class="status"></div>
+    </section>
+
+    <section class="card">
+      <label>วันสำคัญ</label>
+      <div id="specialDayBox" class="stylebox">
+        <strong id="specialDayName">วันปกติ</strong>
+        <div id="specialDayInfo" class="small" style="margin-top:5px">ระบบจะตรวจวันสำคัญให้อัตโนมัติ</div>
+      </div>
+      <div class="notice" style="margin-top:8px">ถ้าเป็นวันสำคัญ Headline, คำอวยพร และ Concept จะเปลี่ยนให้เข้ากับวันนั้นอัตโนมัติ</div>
     </section>
 
     <section class="card">
@@ -69,6 +78,31 @@ button{border:0;border-radius:12px;padding:12px 14px;font-weight:800;cursor:poin
     </section>
 
     <section class="card full">
+      <label>บุคคลในภาพ</label>
+      <div class="grid" style="grid-template-columns:repeat(2,minmax(0,1fr));gap:10px">
+        <div class="stylebox">
+          <strong>ภาพที่ 1</strong>
+          <select id="peopleMode1" style="margin-top:8px">
+            <option value="none">ไม่มีบุคคล</option>
+            <option value="include">มีบุคคล</option>
+          </select>
+          <div class="small" style="margin-top:6px">เลือกได้อิสระสำหรับภาพที่ 1</div>
+        </div>
+        <div class="stylebox">
+          <strong>ภาพที่ 2</strong>
+          <select id="peopleMode2" style="margin-top:8px">
+            <option value="none">ไม่มีบุคคล</option>
+            <option value="include">มีบุคคล</option>
+          </select>
+          <div class="small" style="margin-top:6px">เลือกได้อิสระสำหรับภาพที่ 2</div>
+        </div>
+      </div>
+      <div class="notice" style="margin-top:8px">
+        ค่าเริ่มต้นคือไม่มีบุคคล หากเลือก “มีบุคคล” ระบบจะเลือกประเภทบุคคลและกิจกรรมให้สัมพันธ์กับวันสำคัญหรือฉากโดยอัตโนมัติ
+      </div>
+    </section>
+
+    <section class="card full">
       <label>สร้าง Prompt</label>
       <div class="actions">
         <button id="make1">ภาพที่ 1</button>
@@ -100,7 +134,7 @@ button{border:0;border-radius:12px;padding:12px 14px;font-weight:800;cursor:poin
     </section>
 
     <section class="card full notice">
-      <b>หมายเหตุ:</b> POKUN Web v1.2 ทำงานในเครื่องผู้ใช้ทั้งหมด ไม่ส่งข้อมูลไปเซิร์ฟเวอร์ และใช้ตารางวันพระ พ.ศ. 2569/ค.ศ. 2026 จาก POKUN AHK v2.0 ที่คุณใช้อยู่ หากนำขึ้นเว็บจริง Clipboard/Share จะทำงานดีที่สุดบน HTTPS
+      <b>หมายเหตุ:</b> POKUN Web v1.5 ทำงานในเครื่องผู้ใช้ทั้งหมด ไม่ส่งข้อมูลไปเซิร์ฟเวอร์ และใช้ตารางวันพระ พ.ศ. 2569/ค.ศ. 2026 จาก POKUN AHK v2.0 ที่คุณใช้อยู่ หากนำขึ้นเว็บจริง Clipboard/Share จะทำงานดีที่สุดบน HTTPS
     </section>
   </div>
 </div>
@@ -116,10 +150,19 @@ const COLOR_HEX = ["#F44336","#FDD835","#EC407A","#43A047","#FB8C00","#42A5F5","
 const MONTHS_TH = ["มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน","กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"];
 const SACRED_NAMES = ["Thai Buddhist Sacred Art","Thai Temple Gold Calligraphy","Thai Kanok Sacred Display","Thai Dharma Minimal Elegant"];
 
+const SPECIAL_FIXED = {"01-01": {"name": "วันขึ้นปีใหม่", "category": "celebration", "h1": "สวัสดีปีใหม่ ขอให้เป็นปีแห่งความสุข", "h2": "เริ่มต้นปีใหม่ด้วยสิ่งดี ๆ", "g1": "ขอให้ปีใหม่นี้เต็มไปด้วยความสุข ความสำเร็จ สุขภาพแข็งแรง และมีเรื่องดี ๆ เข้ามาตลอดทั้งปี", "g2": "ขอให้ทุกการเริ่มต้นนำไปสู่โอกาสที่ดี สมหวังในสิ่งที่ตั้งใจ และพบความราบรื่นในทุกวัน", "c1": {"name": "New Year elegant celebration still life", "prompt": "An elegant New Year celebration still life with tasteful festive lights, gift boxes, sparkling ornaments, flowers, and premium celebratory atmosphere. No people.", "avoid": "No human figures, crowds, hands, faces, or Buddhist sacred imagery."}, "c2": {"name": "New Year sunrise fresh beginning", "prompt": "A beautiful sunrise landscape symbolizing a fresh beginning, with elegant flowers, subtle festive accents, and uplifting premium atmosphere. No people.", "avoid": "No human figures and no duplicated gift-box celebration composition."}}, "01-16": {"name": "วันครู", "category": "education", "h1": "๑๖ มกราคม วันครู", "h2": "ระลึกถึงพระคุณครูด้วยหัวใจ", "g1": "ขอส่งความขอบคุณแด่ครูทุกท่าน ผู้มอบความรู้ ความเมตตา และแรงบันดาลใจให้ศิษย์ก้าวไปข้างหน้า", "g2": "ขอให้คุณครูมีความสุข สุขภาพแข็งแรง และภาคภูมิใจกับทุกความสำเร็จที่ได้ร่วมสร้างให้กับลูกศิษย์", "c1": {"name": "Teacher appreciation desk", "prompt": "A refined teacher appreciation still life with books, elegant stationery, fountain pen, flowers, and warm morning light. No people.", "avoid": "No human figures, hands, classroom crowd, or childish clutter."}, "c2": {"name": "Knowledge and gratitude composition", "prompt": "A premium symbolic education composition with stacked books, open notebook, flowers, and uplifting light representing knowledge and gratitude. No people.", "avoid": "No human figures and no duplicated desk composition."}}, "02-14": {"name": "วันวาเลนไทน์", "category": "celebration", "h1": "สุขสันต์วันวาเลนไทน์", "h2": "วันแห่งความรัก ขอให้หัวใจอบอุ่น", "g1": "ขอให้วันนี้เต็มไปด้วยความรัก ความห่วงใย และความรู้สึกดี ๆ จากคนสำคัญที่อยู่รอบตัว", "g2": "ขอให้ทุกความสัมพันธ์งดงามด้วยความเข้าใจ ความจริงใจ และมีความสุขในทุกช่วงเวลาที่แบ่งปันกัน", "c1": {"name": "Elegant Valentine floral heart", "prompt": "A premium Valentine still life with romantic flowers, heart-shaped details, ribbons, gift elements, and warm dreamy light. No people.", "avoid": "No couples, human hands, faces, or crowded restaurant scene."}, "c2": {"name": "Love letters and gentle roses", "prompt": "A refined romantic composition with love notes, roses, small hearts, tasteful stationery, and elegant pastel atmosphere. No people.", "avoid": "No human figures and no duplicated heart-gift arrangement."}}, "04-06": {"name": "วันจักรี", "category": "national", "h1": "๖ เมษายน วันจักรี", "h2": "น้อมรำลึกวันจักรี", "g1": "ขอน้อมรำลึกถึงความสำคัญของวันจักรี และขอให้วันนี้เป็นวันที่สงบ ร่มเย็น และเป็นสิริมงคล", "g2": "ขอให้บ้านเมืองมีความร่มเย็น ประชาชนมีความสุข และร่วมกันรักษาสิ่งดีงามของแผ่นดินไทย", "c1": {"name": "Thai heritage architecture", "prompt": "A dignified Thai heritage composition featuring elegant classical Thai architecture, ceremonial gold details, and respectful morning light. No people.", "avoid": "No human figures, portraits, political rally, or casual party styling."}, "c2": {"name": "Traditional Thai symbolic still life", "prompt": "A refined traditional Thai still life with classical ornament, ceremonial floral arrangement, gold-and-ivory details, and graceful heritage atmosphere. No people.", "avoid": "No human figures and no duplicated architecture composition."}}, "04-13": {"name": "เทศกาลสงกรานต์", "category": "culture", "h1": "สุขสันต์วันสงกรานต์", "h2": "สงกรานต์นี้ ขอให้ชุ่มฉ่ำด้วยความสุข", "g1": "ขอให้เทศกาลปีใหม่ไทยนำพาความสุข ความสดชื่น สุขภาพแข็งแรง และสิริมงคลมาสู่ทุกวันของชีวิต", "g2": "ขอให้ช่วงเวลานี้เต็มไปด้วยความร่มเย็น ความอบอุ่น และเป็นจุดเริ่มต้นของสิ่งดี ๆ ตลอดปี", "c1": {"name": "Songkran floral water bowl", "prompt": "A premium Thai Songkran still life with traditional silver water bowl, jasmine garlands, fragrant flower petals, elegant water droplets, and bright festive Thai atmosphere. No people.", "avoid": "No human figures, hands, crowds, water-gun battle, or chaotic street scene."}, "c2": {"name": "Thai New Year blessing arrangement", "prompt": "A refined Thai New Year arrangement with scented water, floral garlands, traditional textile, temple-inspired details, and fresh uplifting light. No people.", "avoid": "No people and no duplicated silver-bowl focal setup."}}, "04-14": {"name": "เทศกาลสงกรานต์ / วันครอบครัว", "category": "culture", "h1": "สุขสันต์วันครอบครัวและสงกรานต์", "h2": "วันครอบครัว ขอให้บ้านเต็มไปด้วยความสุข", "g1": "ขอให้เทศกาลปีใหม่ไทยนำพาความสุข ความสดชื่น สุขภาพแข็งแรง และสิริมงคลมาสู่ทุกวันของชีวิต", "g2": "ขอให้ช่วงเวลานี้เต็มไปด้วยความร่มเย็น ความอบอุ่น และเป็นจุดเริ่มต้นของสิ่งดี ๆ ตลอดปี", "c1": {"name": "Songkran floral water bowl", "prompt": "A premium Thai Songkran still life with traditional silver water bowl, jasmine garlands, fragrant flower petals, elegant water droplets, and bright festive Thai atmosphere. No people.", "avoid": "No human figures, hands, crowds, water-gun battle, or chaotic street scene."}, "c2": {"name": "Thai New Year blessing arrangement", "prompt": "A refined Thai New Year arrangement with scented water, floral garlands, traditional textile, temple-inspired details, and fresh uplifting light. No people.", "avoid": "No people and no duplicated silver-bowl focal setup."}}, "04-15": {"name": "เทศกาลสงกรานต์", "category": "culture", "h1": "ส่งท้ายสงกรานต์ด้วยความสุข", "h2": "ปีใหม่ไทย ขอให้สิ่งดี ๆ อยู่กับคุณ", "g1": "ขอให้เทศกาลปีใหม่ไทยนำพาความสุข ความสดชื่น สุขภาพแข็งแรง และสิริมงคลมาสู่ทุกวันของชีวิต", "g2": "ขอให้ช่วงเวลานี้เต็มไปด้วยความร่มเย็น ความอบอุ่น และเป็นจุดเริ่มต้นของสิ่งดี ๆ ตลอดปี", "c1": {"name": "Songkran floral water bowl", "prompt": "A premium Thai Songkran still life with traditional silver water bowl, jasmine garlands, fragrant flower petals, elegant water droplets, and bright festive Thai atmosphere. No people.", "avoid": "No human figures, hands, crowds, water-gun battle, or chaotic street scene."}, "c2": {"name": "Thai New Year blessing arrangement", "prompt": "A refined Thai New Year arrangement with scented water, floral garlands, traditional textile, temple-inspired details, and fresh uplifting light. No people.", "avoid": "No people and no duplicated silver-bowl focal setup."}}, "05-01": {"name": "วันแรงงานแห่งชาติ", "category": "national", "h1": "๑ พฤษภาคม วันแรงงานแห่งชาติ", "h2": "ส่งกำลังใจให้ทุกความตั้งใจในการทำงาน", "g1": "ขอให้ทุกความขยันและความทุ่มเทนำมาซึ่งความก้าวหน้า ความมั่นคง และความภาคภูมิใจในชีวิต", "g2": "ขอให้การงานราบรื่น มีโอกาสดี ๆ เข้ามา ได้รับผลตอบแทนที่เหมาะสม และมีความสุขกับทุกความสำเร็จ"}, "05-04": {"name": "วันฉัตรมงคล", "category": "national", "h1": "๔ พฤษภาคม วันฉัตรมงคล", "h2": "เนื่องในวันฉัตรมงคล", "g1": "ขอให้วันนี้เป็นวันแห่งความเป็นสิริมงคล ความร่มเย็น และความสุขของทุกคน", "g2": "ขอให้บ้านเมืองสงบสุข และทุกครอบครัวมีความมั่นคง ร่มเย็น และก้าวไปข้างหน้าด้วยสิ่งดีงาม"}, "06-03": {"name": "วันเฉลิมพระชนมพรรษา ๓ มิถุนายน", "category": "national", "h1": "๓ มิถุนายน วันเฉลิมพระชนมพรรษา", "h2": "เนื่องในวันสำคัญ ๓ มิถุนายน", "g1": "ขอให้วันนี้เป็นวันแห่งความเป็นสิริมงคล และขอให้ทุกครอบครัวมีความสุข ความร่มเย็น และความเจริญ", "g2": "ขอให้บ้านเมืองสงบสุข ผู้คนมีความสามัคคี และดำเนินชีวิตด้วยความมั่นคงและความหวังที่ดี"}, "07-28": {"name": "วันเฉลิมพระชนมพรรษา ๒๘ กรกฎาคม", "category": "national", "h1": "๒๘ กรกฎาคม วันเฉลิมพระชนมพรรษา", "h2": "เนื่องในวันสำคัญ ๒๘ กรกฎาคม", "g1": "ขอให้วันนี้เป็นวันแห่งความเป็นสิริมงคล ความสงบสุข และความร่มเย็นของแผ่นดิน", "g2": "ขอให้ทุกครอบครัวมีความสุข ความมั่นคง และร่วมกันสร้างสิ่งดีงามให้กับสังคมไทย"}, "08-12": {"name": "วันแม่แห่งชาติ", "category": "family", "h1": "๑๒ สิงหาคม สุขสันต์วันแม่แห่งชาติ", "h2": "วันแม่แห่งชาติ รักของแม่งดงามเสมอ", "g1": "ขอให้คุณแม่ทุกท่านมีสุขภาพแข็งแรง มีความสุขมาก ๆ และได้รับความรักความอบอุ่นจากครอบครัวเสมอ", "g2": "ขอให้ความรัก ความเสียสละ และความห่วงใยของแม่เป็นพลังใจที่งดงามในทุกวันของครอบครัว", "c1": {"name": "Mother Day jasmine garland still life", "prompt": "A beautiful Thai Mother Day still life with jasmine flowers and garlands, elegant pale-blue accents, refined gift box, warm home atmosphere, and soft loving light. No people.", "avoid": "No woman, mother figure, child, hands, faces, or identifiable family portrait."}, "c2": {"name": "Jasmine garden warm home symbolism", "prompt": "A serene jasmine garden or jasmine-filled veranda with soft pale-blue details, warm morning light, and subtle symbols of family love. No people.", "avoid": "No human figures and no duplicated gift-box arrangement."}}, "10-13": {"name": "วันนวมินทรมหาราช", "category": "national", "h1": "๑๓ ตุลาคม วันนวมินทรมหาราช", "h2": "น้อมรำลึก ๑๓ ตุลาคม", "g1": "ขอน้อมรำลึกถึงคุณูปการอันยิ่งใหญ่ และขอให้ความดีงามเป็นแรงบันดาลใจในการดำเนินชีวิต", "g2": "ขอให้วันนี้เป็นวันที่สงบ เรียบง่าย และเตือนใจให้เราร่วมกันทำความดีเพื่อส่วนรวม"}, "10-23": {"name": "วันปิยมหาราช", "category": "national", "h1": "๒๓ ตุลาคม วันปิยมหาราช", "h2": "น้อมรำลึกวันปิยมหาราช", "g1": "ขอน้อมรำลึกถึงพระมหากรุณาธิคุณ และขอให้คุณค่าของการพัฒนาบ้านเมืองเป็นแรงบันดาลใจสืบไป", "g2": "ขอให้วันนี้เป็นวันแห่งความสงบ ความกตัญญู และความภาคภูมิใจในประวัติศาสตร์ไทย"}, "12-05": {"name": "วันพ่อแห่งชาติ", "category": "family", "h1": "๕ ธันวาคม สุขสันต์วันพ่อแห่งชาติ", "h2": "วันพ่อแห่งชาติ ด้วยรักและความกตัญญู", "g1": "ขอให้คุณพ่อทุกท่านมีสุขภาพแข็งแรง มีความสุข และได้รับความรักความอบอุ่นจากครอบครัวในทุกวัน", "g2": "ขอให้ความรัก ความเสียสละ และคำสอนของพ่อเป็นพลังใจให้ครอบครัวก้าวผ่านทุกเรื่องด้วยความเข้มแข็ง", "c1": {"name": "Father Day yellow canna floral still life", "prompt": "A warm Thai Father Day still life with yellow canna flowers, elegant gift elements, classic pen symbolism, and soft golden home light. No people.", "avoid": "No man, father figure, child, hands, faces, or identifiable family portrait."}, "c2": {"name": "Warm home fatherly strength symbolism", "prompt": "A refined people-free home composition symbolizing fatherly strength and care, with yellow flowers, books, classic objects, and warm morning light. No people.", "avoid": "No human figures and no duplicated gift arrangement."}}, "12-10": {"name": "วันรัฐธรรมนูญ", "category": "national", "h1": "๑๐ ธันวาคม วันรัฐธรรมนูญ", "h2": "วันรัฐธรรมนูญ ๑๐ ธันวาคม", "g1": "ขอให้สังคมไทยก้าวไปข้างหน้าด้วยความสงบ เคารพซึ่งกันและกัน และร่วมกันสร้างประโยชน์เพื่อส่วนรวม", "g2": "ขอให้วันนี้เป็นวันที่เตือนใจถึงความรับผิดชอบต่อสังคม ความสามัคคี และการอยู่ร่วมกันอย่างสร้างสรรค์"}, "12-31": {"name": "วันสิ้นปี", "category": "celebration", "h1": "ส่งท้ายปีเก่า ต้อนรับสิ่งดี ๆ", "h2": "วันสุดท้ายของปี ขอให้จบอย่างงดงาม", "g1": "ขอให้เรื่องเหนื่อยใจผ่านไปพร้อมปีเก่า และเก็บทุกความทรงจำดี ๆ ไว้เป็นพลังสำหรับปีใหม่", "g2": "ขอให้วันสุดท้ายของปีเต็มไปด้วยความสุข ความสบายใจ และพร้อมต้อนรับการเริ่มต้นใหม่ที่สดใส", "c1": {"name": "Year-end elegant countdown still life", "prompt": "An elegant year-end celebration still life with refined clock near midnight, sparkling lights, tasteful ornaments, flowers, and premium festive atmosphere. No people.", "avoid": "No crowd, human figures, hands, nightclub scene, or excessive alcohol imagery."}, "c2": {"name": "Last sunset of the year", "prompt": "A breathtaking peaceful sunset landscape symbolizing the final day of the year, with warm golden light and contemplative premium mood. No people.", "avoid": "No human figures and no duplicated countdown still life."}}};
+const SPECIAL_2026 = {"2026-01-10": {"name": "วันเด็กแห่งชาติ", "category": "family", "h1": "สุขสันต์วันเด็กแห่งชาติ", "h2": "เด็กวันนี้ คือพลังของวันข้างหน้า", "g1": "ขอให้เด็ก ๆ เติบโตอย่างมีความสุข มีความฝัน มีความกล้าเรียนรู้ และได้รับโอกาสที่ดีในทุกช่วงวัย", "g2": "ขอให้ทุกวันของเด็ก ๆ เต็มไปด้วยความสนุก ความปลอดภัย ความอบอุ่น และการเรียนรู้ที่สร้างสรรค์", "c1": {"name": "Colorful children learning world", "prompt": "A joyful people-free children learning scene with colorful books, building blocks, art supplies, balloons, stars, and playful educational toys. No children or people.", "avoid": "No human figures, faces, hands, or copyrighted characters."}, "c2": {"name": "Dream and imagination objects", "prompt": "A whimsical people-free composition with kites, paper airplanes, toy telescope, colorful stars, clouds, pencils, and creative learning objects. No people.", "avoid": "No children, human figures, or duplicated book-block arrangement."}}, "2026-02-17": {"name": "วันตรุษจีน", "category": "culture", "h1": "สุขสันต์วันตรุษจีน เฮง ๆ รวย ๆ", "h2": "ตรุษจีนนี้ ขอให้โชคดีตลอดปี", "g1": "ขอให้ปีใหม่นี้มั่งมีศรีสุข การงานรุ่งเรือง การเงินคล่องตัว และมีโชคลาภตลอดทั้งปี", "g2": "ขอให้บ้านเต็มไปด้วยความสุข ความอบอุ่น ความสำเร็จ และสิ่งดี ๆ เข้ามาอย่างต่อเนื่อง", "c1": {"name": "Chinese New Year red-gold still life", "prompt": "A premium Chinese New Year still life with red envelopes, mandarin oranges, plum blossoms, elegant lanterns, gold decorative elements, and rich red-gold lighting. No people.", "avoid": "No human figures, hands, lion-dance performers, or crowded street scene."}, "c2": {"name": "Lantern and blossom festive courtyard", "prompt": "An elegant empty festive courtyard with red lanterns, blossoms, tasteful gold accents, and warm Chinese New Year atmosphere. No people.", "avoid": "No human figures and no duplicated orange-envelope tabletop."}}, "2026-03-03": {"name": "วันมาฆบูชา", "category": "buddhist", "h1": "วันมาฆบูชา น้อมใจสู่ความสงบ", "h2": "มาฆบูชานี้ ขอให้ใจสว่างด้วยธรรม", "g1": "ขอให้การระลึกถึงหลักธรรมในวันมาฆบูชานำความสงบ สติ และปัญญามาสู่การดำเนินชีวิต", "g2": "ขอให้วันนี้เป็นโอกาสดีในการทำความดี ลดสิ่งที่ทำให้ใจหนัก และเพิ่มความเมตตาให้กับตนเองและผู้อื่น"}, "2026-05-31": {"name": "วันวิสาขบูชา", "category": "buddhist", "h1": "วันวิสาขบูชา น้อมบูชาด้วยใจสงบ", "h2": "วิสาขบูชานี้ ขอให้ธรรมะนำทางใจ", "g1": "ขอให้วันวิสาขบูชานำความสงบ ความมีสติ และความสว่างทางปัญญามาสู่ชีวิต", "g2": "ขอให้บุญกุศลและความตั้งใจดีในวันนี้ช่วยเติมความร่มเย็น และเป็นกำลังใจให้ดำเนินชีวิตอย่างมีคุณค่า"}, "2026-06-08": {"name": "วันอัฏฐมีบูชา", "category": "buddhist", "h1": "วันอัฏฐมีบูชา น้อมระลึกด้วยศรัทธา", "h2": "อัฏฐมีบูชา ขอให้ใจตั้งมั่นในความดี", "g1": "ขอให้การระลึกถึงธรรมในวันนี้ช่วยให้มีสติ รู้เท่าทันใจ และดำเนินชีวิตด้วยความไม่ประมาท", "g2": "ขอให้ความดีที่ตั้งใจทำเป็นเหตุแห่งความสงบ ความเมตตา และปัญญาในทุกวัน"}, "2026-07-29": {"name": "วันอาสาฬหบูชา", "category": "buddhist", "h1": "วันอาสาฬหบูชา น้อมใจบูชาพระรัตนตรัย", "h2": "อาสาฬหบูชานี้ ขอให้ใจพบแสงแห่งธรรม", "g1": "ขอให้วันนี้เป็นวันที่ใจสงบ มีสติ และได้รับพลังจากหลักธรรมในการก้าวผ่านทุกเรื่องอย่างมั่นคง", "g2": "ขอให้การทำความดี ฟังธรรม และระลึกถึงพระรัตนตรัยนำความร่มเย็นและปัญญามาสู่ชีวิต"}, "2026-07-30": {"name": "วันเข้าพรรษา", "category": "buddhist", "h1": "วันเข้าพรรษา เริ่มต้นสิ่งดีด้วยใจตั้งมั่น", "h2": "เข้าพรรษานี้ ตั้งใจดี ทำดีให้ต่อเนื่อง", "g1": "ขอให้ช่วงเข้าพรรษาเป็นจุดเริ่มต้นของการลดสิ่งที่ไม่ดี เพิ่มสิ่งที่มีคุณค่า และดูแลใจให้สงบขึ้นทุกวัน", "g2": "ขอให้ความตั้งใจทำความดีในพรรษานี้เกิดผลเป็นความสุข ความมีสติ และความร่มเย็นในชีวิต"}, "2026-10-26": {"name": "วันออกพรรษา", "category": "buddhist", "h1": "วันออกพรรษา ขอให้ใจอิ่มบุญ", "h2": "ออกพรรษานี้ ขอให้ความดีงอกงาม", "g1": "ขอให้ผลแห่งความตั้งใจดีและการปฏิบัติตนตลอดพรรษานำความสุข ความสงบ และความสบายใจมาสู่ชีวิต", "g2": "ขอให้วันนี้เป็นอีกหนึ่งจุดเริ่มต้นของการรักษาความดี มีสติ และแบ่งปันสิ่งดีงามให้กับคนรอบข้าง"}, "2026-11-24": {"name": "วันลอยกระทง", "category": "culture", "h1": "สุขสันต์วันลอยกระทง", "h2": "ลอยกระทงนี้ ขอให้ทุกข์ลอยไป ความสุขลอยมา", "g1": "ขอให้ค่ำคืนลอยกระทงงดงาม สดใส และเป็นโอกาสให้ปล่อยสิ่งที่หนักใจไปพร้อมสายน้ำ", "g2": "ขอให้ความสุข ความหวัง และสิ่งดี ๆ เข้ามาแทนที่เรื่องที่ผ่านไป พร้อมเริ่มต้นวันใหม่ด้วยใจเบาสบาย", "c1": {"name": "Elegant krathong on moonlit water", "prompt": "A beautiful eco-friendly Thai krathong floating on calm moonlit water, decorated with flowers, candlelight, reflections, and elegant traditional details. No people.", "avoid": "No human figures, hands, crowds, plastic waste, or unsafe fire scene."}, "c2": {"name": "Loy Krathong riverside atmosphere", "prompt": "A serene empty Thai riverside at night with tasteful floating krathongs in the distance, warm lantern light, full moon reflections, flowers, and refined festival ambience. No people.", "avoid": "No human figures and no duplicated close-up krathong focal composition."}}};
+function specialDayInfo(d){
+  const full=isoCE(d), md=`${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+  return SPECIAL_2026[full] || SPECIAL_FIXED[md] || null;
+}
+
 let styleMode = localStorage.getItem("pokunStyleMode") || "AUTO";
 let selectedStyle = Number(localStorage.getItem("pokunStyleIndex") || 0);
 let forceBuddhist = localStorage.getItem("pokunBuddhistF6") === "1";
 let watermarkText = localStorage.getItem("pokunWatermark") || "POKUN ✨";
+let peopleMode1 = localStorage.getItem("pokunPeopleMode1") || "none";
+let peopleMode2 = localStorage.getItem("pokunPeopleMode2") || "none";
 let filteredIndices = DATA.typography.map((_,i)=>i);
 
 const $ = id => document.getElementById(id);
@@ -177,18 +220,159 @@ function buddhistConceptPair(d){
   const j=(dateSeed(d)+2)%DATA.meritConcepts.length;
   return {image1:DATA.buddhaConcepts[i],image2:DATA.meritConcepts[j]}
 }
+function specialTexts(sp){return {headline1:sp.h1,headline2:sp.h2,greeting1:sp.g1,greeting2:sp.g2}}
+function specialConceptPair(sp,d){if(sp.category==="buddhist")return buddhistConceptPair(d); if(sp.c1&&sp.c2)return {image1:sp.c1,image2:sp.c2}; return normalConceptPair(d)}
 function effectiveState(setNo){
-  const d=localDateFromInput($("date").value), day=daily(d), holy=holyInfo(d);
+  const d=localDateFromInput($("date").value), day=daily(d), holy=holyInfo(d), special=specialDayInfo(d);
   let style, concepts, texts, buddhist=false;
-  if(holy.isHoly){
+  if(special){
+    buddhist=special.category==="buddhist";
+    style=buddhist?sacredStyle(d):currentManualStyle(d);
+    concepts=specialConceptPair(special,d);
+    texts=specialTexts(special);
+  }else if(holy.isHoly){
     buddhist=true; style=sacredStyle(d); concepts=buddhistConceptPair(d); texts=buddhistTexts(day.dayThai);
   }else if(forceBuddhist && setNo===1){
     buddhist=true; style=sacredStyle(d); concepts=buddhistConceptPair(d); texts=normalTexts(d,day.dayThai);
   }else{
     style=currentManualStyle(d); concepts=normalConceptPair(d); texts=normalTexts(d,day.dayThai);
   }
-  return {d,day,holy,style,concepts,texts,buddhist}
+  return {d,day,holy,special,style,concepts,texts,buddhist};
 }
+
+function getPeopleDirection(s,setNo){
+  const sp=s.special;
+  const c=setNo===1?s.concepts.image1:s.concepts.image2;
+  const name=(sp&&sp.name)||"";
+  const category=(sp&&sp.category)||"";
+  const scene=(c&&c.name)||"";
+
+  // IMPORTANT DAYS — choose people and activity that make narrative sense.
+  if(name.includes("วันแม่")){
+    return setNo===1
+      ? "Feature a warm Thai mother-and-child moment. Show a mother with her son or daughter offering a jasmine garland, embracing gently, or sharing a respectful affectionate moment. Keep the mood warm, sincere, elegant, and family-centered."
+      : "Feature a different Mother's Day family moment from the companion artwork, such as an elderly mother receiving a jasmine garland from an adult child, sitting together warmly, or sharing a quiet family blessing moment. Do not repeat the same pose or activity as the first artwork.";
+  }
+
+  if(name.includes("วันพ่อ")){
+    return setNo===1
+      ? "Feature a warm Thai father-and-child moment. Show a father with his son or daughter receiving a garland, sharing a respectful embrace, or spending a meaningful family moment together."
+      : "Feature a different Father's Day family moment, such as an elderly father with an adult child, a child presenting a small gift or garland, or a calm family conversation. Do not repeat the companion artwork's pose or activity.";
+  }
+
+  if(name.includes("วันครู")){
+    return setNo===1
+      ? "Feature a respectful Thai teacher-and-student scene, such as students presenting a floral tray or wai khru arrangement to a teacher. Keep the atmosphere dignified, warm, and educational."
+      : "Feature a different teacher-appreciation moment, such as a teacher guiding students with books, a student presenting flowers, or a classroom gratitude scene. Do not duplicate the first artwork's ceremony or composition.";
+  }
+
+  if(name.includes("วันเด็ก")){
+    return setNo===1
+      ? "Feature happy children doing a creative learning activity such as drawing, reading, building, science play, or exploring educational toys. Use a cheerful but premium composition."
+      : "Feature different children and a different activity from the first artwork, such as outdoor learning, music, crafts, or imaginative play. Avoid repeating the same props or poses.";
+  }
+
+  if(name.includes("วันครอบครัว")){
+    return setNo===1
+      ? "Feature a warm multigenerational Thai family scene with grandparents, parents, and children sharing a respectful Songkran family blessing moment."
+      : "Feature a different family activity, such as younger family members respectfully pouring scented water for elders or spending a calm joyful family moment together. Do not duplicate the first artwork.";
+  }
+
+  if(name.includes("สงกรานต์")){
+    return setNo===1
+      ? "Feature Thai people celebrating Songkran respectfully, such as younger family members pouring scented water for elders, wearing tasteful Thai-inspired clothing, with flower garlands and traditional bowls."
+      : "Feature a different Songkran activity from the first artwork, such as a small family preparing scented water and floral offerings, or a tasteful community blessing scene. Avoid repeating the same composition.";
+  }
+
+  if(name.includes("ลอยกระทง")){
+    return setNo===1
+      ? "Feature Thai people respectfully holding or preparing an eco-friendly krathong by the water at night, dressed neatly, with a calm festive mood."
+      : "Feature a different Loy Krathong moment, such as a family or small group placing krathongs on the water from a riverside platform. Keep it elegant and avoid duplicating the first artwork.";
+  }
+
+  if(name.includes("ตรุษจีน")){
+    return setNo===1
+      ? "Feature a warm Thai-Chinese family scene in tasteful red and gold clothing, exchanging blessings or red envelopes in a refined festive setting."
+      : "Feature a different Chinese New Year family activity, such as arranging oranges, lanterns, or making a respectful family greeting. Do not repeat the first artwork's pose or props.";
+  }
+
+  if(category==="buddhist" || s.buddhist || s.holy.isHoly){
+    if(setNo===1){
+      return "Feature respectful Thai Buddhist merit-making activity. Suitable people may include laypeople in modest clothing praying, offering lotus flowers, lighting candles, or making merit at a temple. Monks may appear respectfully if appropriate, but keep Buddha imagery dignified and never use casual or comedic posing.";
+    }
+    return "Feature a respectful merit-making activity without making a Buddha statue the main focal point. Suitable people may include laypeople preparing food, carrying tiffin carriers, offering sangkhathan sets, arranging fruit and necessities, or respectfully presenting offerings to monks. Keep the focus on the merit-making action and offerings.";
+  }
+
+  if(name.includes("วันวาเลนไทน์")){
+    return setNo===1
+      ? "Feature an affectionate adult couple in a tasteful romantic moment, such as exchanging flowers or walking together. Keep the scene elegant, natural, and non-sexual."
+      : "Feature a different romantic moment from the first artwork, such as a couple sharing a small gift or sitting together in a beautiful setting. Avoid repeating poses or props.";
+  }
+
+  if(name.includes("วันแรงงาน")){
+    return setNo===1
+      ? "Feature working adults in a professional, respectful workplace context that matches the scene, showing teamwork, focus, and pride in work."
+      : "Feature a different type of worker or work activity from the first artwork. Keep the scene positive, safe, realistic, and dignified.";
+  }
+
+  if(category==="national"){
+    return "Feature Thai people only if they add meaning to the scene, dressed respectfully and naturally. Keep the mood formal, dignified, non-partisan, and avoid political campaigning, rallies, or identifiable public figures.";
+  }
+
+  // NORMAL SCENES
+  if(scene.toLowerCase().includes("breakfast")){
+    return setNo===1
+      ? "Feature one or two adults naturally enjoying a relaxed breakfast moment by the window. Keep the food and morning atmosphere visible, and do not let people dominate the typography."
+      : "Feature suitable adults in a different activity from the companion artwork.";
+  }
+
+  if(scene.toLowerCase().includes("flower garden")){
+    return "Feature one adult or a small group strolling naturally through the flower garden, admiring flowers, taking in the morning atmosphere, with relaxed realistic poses.";
+  }
+
+  if(scene.toLowerCase().includes("seaside")){
+    return "Feature one or two adults strolling along the seaside promenade, enjoying the sunrise and ocean breeze. Keep the landscape dominant.";
+  }
+
+  if(scene.toLowerCase().includes("mountain")){
+    return "Feature one or two travelers enjoying the mountain viewpoint, standing or sitting naturally while looking at the scenery. Keep the landscape as the main visual story.";
+  }
+
+  if(scene.toLowerCase().includes("veranda")){
+    return "Feature a relaxed adult in tasteful casual clothing enjoying the Thai veranda, tending plants, reading, or quietly appreciating the morning atmosphere.";
+  }
+
+  if(scene.toLowerCase().includes("bicycle")){
+    return "Feature an adult cyclist riding naturally through the green park with safe posture and realistic motion. Keep the scene elegant and uplifting.";
+  }
+
+  if(scene.toLowerCase().includes("riverside")){
+    return "Feature one or two adults walking, sitting, or enjoying the peaceful riverside in a natural relaxed way. Keep the river and atmosphere visually important.";
+  }
+
+  if(scene.toLowerCase().includes("bookstore")){
+    return "Feature an adult browsing books, reading, or selecting a book naturally in the bookstore. Keep the interior and books as important visual elements.";
+  }
+
+  if(scene.toLowerCase().includes("old-town")){
+    return "Feature one or two travelers exploring the old-town street, walking naturally and appreciating the architecture. Keep the street character dominant.";
+  }
+
+  if(scene.toLowerCase().includes("orchard")){
+    return "Feature one or two adults in the orchard, gently harvesting fruit, carrying a basket, or walking through the countryside. Keep the orchard and natural environment dominant.";
+  }
+
+  if(scene.toLowerCase().includes("art gallery")){
+    return "Feature one or two adult visitors viewing artworks respectfully in the gallery, with natural poses and clean spacing.";
+  }
+
+  if(scene.toLowerCase().includes("flower market")){
+    return "Feature a florist or customer arranging or selecting flowers naturally in the market. Keep bouquets and market atmosphere visually prominent.";
+  }
+
+  return "Include one or two suitable adults naturally interacting with the scene. Choose clothing, activity, posture, and placement that fit the setting. Keep the visual story coherent and do not let people cover the Thai typography.";
+}
+
 function buildPrompt(setNo){
   const s=effectiveState(setNo);
   const c=setNo===1?s.concepts.image1:s.concepts.image2;
@@ -202,9 +386,15 @@ function buildPrompt(setNo){
   L.push("Render the finished artwork now from this creative brief.","");
   L.push(`Today: ${s.day.dayThai} (${s.day.dayEnglish})`);
   L.push(`Date: ${s.day.dateThai}`);
+  if(s.special){
+    L.push(`Important calendar day: ${s.special.name}`);
+    L.push("The visible Thai headline MUST clearly mention today's important day exactly as supplied below.");
+    if(s.special.category==="buddhist")L.push("Use a serene Buddhist sacred-art direction appropriate for this Buddhist important day.");
+  }
   if(s.holy.isHoly){
-    L.push("Buddhist holy day: วันพระ",`Thai lunar date: ${s.holy.lunar}`,"Use a serene Buddhist sacred-art direction appropriate for Wan Phra.");
-  }else if(forceBuddhist && setNo===1){
+    L.push("Buddhist holy day: วันพระ",`Thai lunar date: ${s.holy.lunar}`);
+    if(!s.special)L.push("Use a serene Buddhist sacred-art direction appropriate for Wan Phra.");
+  }else if(!s.special && forceBuddhist && setNo===1){
     L.push("Special Buddhist art mode: ON","Use a serene Buddhist sacred-art direction for this first artwork even though today is not Wan Phra.");
   }
   L.push(`Signature color: ${s.day.colorThai} / ${s.day.colorEnglish} / ${s.day.hex}`);
@@ -216,12 +406,22 @@ function buildPrompt(setNo){
   L.push("Use clear negative space for all Thai typography.","Never cover important focal objects.","");
   L.push(`Scene concept: ${c.name}`,c.prompt,"","Keep this scene clearly different from the companion daily artwork.","Do not reuse the companion artwork's main setting, activity, major props, object cluster, or storytelling idea.",`Companion concept to avoid: ${other.name}`,`Also avoid: ${c.avoid}`,"");
   L.push("Visible Thai headline:",headline,"","Visible Thai greeting / blessing:",greeting,"");
+  if(s.special)L.push("",`IMPORTANT: The headline must visibly and clearly identify ${s.special.name}. Do not replace it with a generic weekday-only headline.`);
   L.push("Use the Thai headline and greeting exactly as written.","Do not rewrite, paraphrase, or add another headline or blessing.","Do not reuse the companion text:",`Companion headline: ${otherHeadline}`,`Companion greeting: ${otherGreeting}`,"");
+  if((setNo===1?peopleMode1:peopleMode2)==="include"){
+    L.push("When people are included, the human activity, pose, relationship, and storytelling must also differ clearly from the companion artwork.");
+  }
   L.push("All visible Thai must be correctly spelled, natural, clear, and pleasant.","The exact incorrect Thai string \"นะค่ะ\" must never appear.","");
-  L.push("PEOPLE / HUMAN SUBJECT RULE:","Do not include any person in the artwork.","No man, no woman, no child, no monk as a human figure, no face, no body, no hands, no silhouette, no crowd, and no distant people.","The scene must be completely people-free.");
-  if(s.holy.isHoly || (forceBuddhist&&setNo===1)){
-    if(setNo===1)L.push("For this first Buddhist artwork, a respectful Buddha statue or Buddha image may be the sacred focal point together with temple architecture, lotus flowers, candles, incense, and peaceful Buddhist details.");
-    else L.push("For this second Wan Phra artwork, DO NOT include any Buddha statue or Buddha image. Focus only on merit-making offerings such as Thai tiffin carriers, prepared food, rice, fruit, bottled water, sangkhathan sets, alms bowls, folded saffron robe offerings, useful necessities, lotus flowers, candles, incense, and temple atmosphere.");
+  const peopleMode = setNo===1 ? peopleMode1 : peopleMode2;
+  if(peopleMode==="include"){
+    L.push("PEOPLE / HUMAN SUBJECT RULE:","Include suitable people naturally in the artwork.","Use realistic, respectful, non-famous human subjects appropriate to the scene. Keep faces, anatomy, hands, clothing, scale, and poses natural.","Do not let people cover the Thai headline, greeting, watermark, or important focal objects.");
+    L.push("CONTEXT-AWARE PEOPLE DIRECTION:",getPeopleDirection(s,setNo));
+  }else{
+    L.push("PEOPLE / HUMAN SUBJECT RULE:","Do not include any person in the artwork.","No man, no woman, no child, no monk as a human figure, no face, no body, no hands, no silhouette, no crowd, and no distant people.","The scene must be completely people-free.");
+    if(s.buddhist || (!s.special&&s.holy.isHoly) || (!s.special&&forceBuddhist&&setNo===1)){
+      if(setNo===1)L.push("For this first Buddhist artwork, a respectful Buddha statue or Buddha image may be the sacred focal point together with temple architecture, lotus flowers, candles, incense, and peaceful Buddhist details.");
+      else L.push("For this second Buddhist artwork, DO NOT include any Buddha statue or Buddha image. Focus on respectful merit-making offerings such as Thai tiffin carriers, prepared food, rice, fruit, bottled water, sangkhathan sets, alms bowls, folded saffron robe offerings, useful necessities, lotus flowers, candles, incense, and temple atmosphere.");
+    }
   }
   L.push("","Visual direction:","- photorealistic","- premium commercial photography","- high-end editorial quality","- realistic materials and textures","- natural believable lighting","- cinematic depth","- elegant composition",s.buddhist?"- peaceful, reverent, sacred Thai Buddhist atmosphere":"- cheerful, uplifting, refined mood","- polished professional finish","");
   L.push("Avoid cheap greeting-card templates, generic stock appearance, visual clutter, awkward anatomy, random objects, illegible Thai text, and excessive font mixing.");
@@ -248,18 +448,28 @@ function renderStyleDetail(){
   }else $("styleDetail").innerHTML="<span class='small'>ไม่พบ Typography</span>";
 }
 function updateUI(){
-  const d=localDateFromInput($("date").value), x=daily(d), h=holyInfo(d);
+  const d=localDateFromInput($("date").value), x=daily(d), h=holyInfo(d), sp=specialDayInfo(d);
   if(styleMode==="AUTO")selectedStyle=autoStyleIndex(d);
   $("buddhistToggle").checked=forceBuddhist;
   $("toggleText").textContent=forceBuddhist?"ON":"OFF";
-  const style=h.isHoly?sacredStyle(d):currentManualStyle(d);
+  let style;
+  if(sp&&sp.category==="buddhist")style=sacredStyle(d);
+  else if(!sp&&h.isHoly)style=sacredStyle(d);
+  else style=currentManualStyle(d);
   $("status").innerHTML=`
     <div class="stat"><b>วัน</b><span>${x.dayThai}</span></div>
     <div class="stat"><b>สี</b><span style="color:${x.hex}">${x.colorThai}</span></div>
     <div class="stat"><b>วันพระ</b><span>${h.isHoly?"YES":"NO"}</span></div>
-    <div class="stat"><b>Typography</b><span>${h.isHoly?"BUDDHIST AUTO":styleMode}</span></div>`;
+    <div class="stat"><b>Typography</b><span>${(sp&&sp.category==="buddhist")||(!sp&&h.isHoly)?"BUDDHIST AUTO":styleMode}</span></div>`;
+  if(sp){
+    $("specialDayName").textContent=sp.name;
+    $("specialDayInfo").textContent="Headline + คำอวยพร + Concept จะใช้ธีมวันสำคัญนี้อัตโนมัติ";
+  }else{
+    $("specialDayName").textContent="วันปกติ";
+    $("specialDayInfo").textContent=h.isHoly?"วันนี้เป็นวันพระ ระบบวันพระทำงานอัตโนมัติ":"ไม่มีวันสำคัญที่กำหนดไว้สำหรับวันนี้";
+  }
   renderStyles();
-  if(!h.isHoly)$("styleSelect").value=selectedStyle;
+  if(!h.isHoly&&!(sp&&sp.category==="buddhist"))$("styleSelect").value=selectedStyle;
   renderStyleDetail();
 }
 function toast(t){$("toast").textContent=t;$("toast").classList.add("show");setTimeout(()=>$("toast").classList.remove("show"),1300)}
@@ -300,6 +510,20 @@ $("clear").addEventListener("click",()=>{
 });
 
 $("watermark").value = watermarkText;
+$("peopleMode1").value = peopleMode1;
+$("peopleMode2").value = peopleMode2;
+
+$("peopleMode1").addEventListener("change",e=>{
+  peopleMode1 = e.target.value;
+  localStorage.setItem("pokunPeopleMode1", peopleMode1);
+  toast(peopleMode1==="include" ? "ภาพที่ 1: มีบุคคล" : "ภาพที่ 1: ไม่มีบุคคล");
+});
+$("peopleMode2").addEventListener("change",e=>{
+  peopleMode2 = e.target.value;
+  localStorage.setItem("pokunPeopleMode2", peopleMode2);
+  toast(peopleMode2==="include" ? "ภาพที่ 2: มีบุคคล" : "ภาพที่ 2: ไม่มีบุคคล");
+});
+
 $("saveWatermark").addEventListener("click",()=>{
   const v=$("watermark").value.trim();
   watermarkText = v || "POKUN ✨";
