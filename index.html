@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#111827">
-<title>POKUN Web v1.9.1</title>
+<title>POKUN Web v2.1</title>
 <style>
 :root{--bg:#f4f5f7;--card:#fff;--ink:#16181d;--muted:#6b7280;--line:#e5e7eb;--accent:#111827;--good:#087f5b;--warn:#b45309}
 *{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI","Noto Sans Thai",sans-serif;background:var(--bg);color:var(--ink)}
@@ -24,7 +24,7 @@ button{border:0;border-radius:12px;padding:12px 14px;font-weight:800;cursor:poin
 <body>
 <div class="wrap">
   <div class="hero">
-    <h1>POKUN Web <span class="small">v1.9.1</span></h1>
+    <h1>POKUN Web <span class="small">v2.1</span></h1>
     <p>Daily Greeting Prompt Generator — ใช้ได้บนมือถือและคอม</p>
   </div>
 
@@ -71,8 +71,9 @@ button{border:0;border-radius:12px;padding:12px 14px;font-weight:800;cursor:poin
       <div class="stylebox">
         <strong>Random Prompt Engine</strong>
         <div class="small" style="margin-top:5px">
-          ทุกครั้งที่กดสร้าง Prompt ระบบจะสุ่มรายละเอียดใหม่ เช่น มุมกล้อง แสง อารมณ์ Props การจัดวาง และตำแหน่งข้อความ
-          แต่ยังคงวัน สี วันสำคัญ และกฎหลักไว้
+          ทุกครั้งที่กดสร้าง Prompt ระบบจะสุ่มตั้งแต่ระดับหลัก เช่น Scene, Headline, คำอวยพร, Activity, Props, มุมกล้อง,
+          แสง อารมณ์ การจัดวาง และตำแหน่งข้อความ พร้อมระบบจำ Headline/คำอวยพรที่เคยใช้ เพื่อลดการสุ่มซ้ำ
+          โดยยังคงวัน สี และกฎของวันสำคัญไว้
         </div>
       </div>
       <div class="row mobile-stack" style="margin-top:10px">
@@ -178,7 +179,7 @@ button{border:0;border-radius:12px;padding:12px 14px;font-weight:800;cursor:poin
     </section>
 
     <section class="card full notice">
-      <b>หมายเหตุ:</b> POKUN Web v1.9.1 ทำงานในเครื่องผู้ใช้ทั้งหมด ไม่ส่งข้อมูลไปเซิร์ฟเวอร์ และใช้ตารางวันพระ พ.ศ. 2569/ค.ศ. 2026 จาก POKUN AHK v2.0 ที่คุณใช้อยู่ หากนำขึ้นเว็บจริง Clipboard/Share จะทำงานดีที่สุดบน HTTPS
+      <b>หมายเหตุ:</b> POKUN Web v2.1 ทำงานในเครื่องผู้ใช้ทั้งหมด ไม่ส่งข้อมูลไปเซิร์ฟเวอร์ และใช้ตารางวันพระ พ.ศ. 2569/ค.ศ. 2026 จาก POKUN AHK v2.0 ที่คุณใช้อยู่ หากนำขึ้นเว็บจริง Clipboard/Share จะทำงานดีที่สุดบน HTTPS
     </section>
   </div>
 </div>
@@ -211,6 +212,11 @@ let frameMode1 = localStorage.getItem("pokunFrameMode1") || "auto";
 let frameMode2 = localStorage.getItem("pokunFrameMode2") || "auto";
 let rerollSeed1 = Number(localStorage.getItem("pokunRerollSeed1") || "0");
 let rerollSeed2 = Number(localStorage.getItem("pokunRerollSeed2") || "0");
+let userSeed = localStorage.getItem("pokunUserSeed");
+if(!userSeed){
+  userSeed = String(Date.now()) + "-" + String(Math.random()).slice(2) + "-" + String(performance.now());
+  localStorage.setItem("pokunUserSeed", userSeed);
+}
 let filteredIndices = DATA.typography.map((_,i)=>i);
 
 const $ = id => document.getElementById(id);
@@ -280,6 +286,56 @@ function buddhistConceptPair(d){
   const j=(dateSeed(d)+2)%DATA.meritConcepts.length;
   return {image1:DATA.buddhaConcepts[i],image2:DATA.meritConcepts[j]}
 }
+
+const SPECIAL_HEADLINE_PREFIXES = [
+  "เนื่องใน",
+  "สุขสันต์",
+  "ร่วมส่งความสุขใน",
+  "ขอส่งความปรารถนาดีเนื่องใน",
+  "วันนี้คือ",
+  "ร่วมระลึกถึง",
+  "ส่งความสุขในโอกาส"
+];
+const SPECIAL_GREETING_VARIANTS = [
+  "ขอให้วันนี้เต็มไปด้วยความสุข ความอบอุ่น และสิ่งดี ๆ ที่เหมาะกับความหมายของวันสำคัญนี้",
+  "ขอให้วันสำคัญนี้นำความสุข ความสบายใจ และความทรงจำดี ๆ มาสู่ทุกคน",
+  "ขอให้ความหมายดีงามของวันนี้เป็นพลังใจ และนำพาเรื่องดี ๆ เข้ามาในชีวิต",
+  "ขอให้วันนี้เป็นอีกหนึ่งวันที่เต็มไปด้วยรอยยิ้ม ความอบอุ่น และความรู้สึกดี ๆ",
+  "ขอให้วันสำคัญนี้เป็นโอกาสของความสุข ความกตัญญู ความรัก และสิ่งดีงามรอบตัว",
+  "ขอให้ทุกช่วงเวลาของวันนี้งดงาม อบอุ่น และเต็มไปด้วยความหมายที่ดี"
+];
+
+function specialTextVariant(sp,s,setNo,seed){
+  // Preserve exact curated Buddhist texts because they are semantically sensitive.
+  if(sp.category==="buddhist") return null;
+
+  const baseHeadline=setNo===1?sp.h1:sp.h2;
+  const baseGreeting=setNo===1?sp.g1:sp.g2;
+
+  const hKey=`pokunSpecialHeadline|${userSeed}|${s.day.isoDate}|${setNo}|${sp.name}`;
+  const gKey=`pokunSpecialGreeting|${userSeed}|${s.day.isoDate}|${setNo}|${sp.name}`;
+
+  // Use the curated headline first, then alternate constructions while always naming the event.
+  const headlineVariants=[
+    baseHeadline,
+    `${pick(SPECIAL_HEADLINE_PREFIXES,seed+41)} ${sp.name}`,
+    `${sp.name} ขอให้วันนี้เต็มไปด้วยความสุข`,
+    `${sp.name} วันดี ๆ ที่มีความหมาย`,
+    `ส่งความสุขเนื่องใน${sp.name}`,
+    `ขอร่วมส่งความปรารถนาดีใน${sp.name}`
+  ];
+
+  const greetingVariants=[
+    baseGreeting,
+    ...SPECIAL_GREETING_VARIANTS
+  ];
+
+  return {
+    headline:pickNoRepeat(headlineVariants,seed+71,hKey,""),
+    greeting:pickNoRepeat(greetingVariants,seed+97,gKey,"")
+  };
+}
+
 function specialTexts(sp){return {headline1:sp.h1,headline2:sp.h2,greeting1:sp.g1,greeting2:sp.g2}}
 function specialConceptPair(sp,d){if(sp.category==="buddhist")return buddhistConceptPair(d); if(sp.c1&&sp.c2)return {image1:sp.c1,image2:sp.c2}; return normalConceptPair(d)}
 function effectiveState(setNo){
@@ -314,7 +370,7 @@ function seededIndex(seed,len){
 function pick(list,seed){ return list[seededIndex(seed,list.length)]; }
 function variationSeed(s,setNo){
   const u=setNo===1?rerollSeed1:rerollSeed2;
-  return hashString(`${s.day.isoDate}|${setNo}|${u}|${Date.now()}|${Math.random()}`);
+  return hashString(`${userSeed}|${s.day.isoDate}|${setNo}|${u}|${Date.now()}|${performance.now()}|${Math.random()}`);
 }
 const CAMERA_VARIATIONS=[
   "eye-level editorial composition with balanced negative space",
@@ -415,6 +471,162 @@ function randomCreativeVariation(s,setNo){
     textPlacement:pick(TEXT_PLACEMENTS,seed+71),
     frame:chooseFrameStyle(s,setNo,seed+89)
   };
+}
+
+
+const DEEP_SCENE_POOLS = {
+  sunday:[
+    ["Sunrise flower terrace","A premium sunlit terrace with vivid red floral accents, elegant outdoor furniture, soft morning breeze, layered greenery, and no food or drink focus."],
+    ["Red orchid conservatory","A refined glasshouse filled with orchids and tropical greenery, selective red signature accents, polished morning light, and rich botanical depth."],
+    ["Scenic red-accent countryside","A bright rural landscape with elegant red wildflower accents, distant fields, morning mist, and cinematic natural depth."],
+    ["Minimal modern home garden","A clean modern Thai home exterior with landscaped greenery, red accent flowers, architectural shadows, and calm morning atmosphere."]
+  ],
+  monday:[
+    ["Golden marigold garden","A lush morning garden filled with yellow marigolds and green foliage, soft sunlight, elegant pathways, and premium editorial composition."],
+    ["Sunlit Thai veranda","A refined Thai wooden veranda with yellow flowers, woven textures, polished wood, morning light, and a calm lifestyle atmosphere."],
+    ["Golden rice field morning","A cinematic rice-field landscape in fresh morning light with yellow-gold tones, layered countryside depth, and elegant rural details."],
+    ["Yellow flower market still life","A premium floral market composition dominated by fresh yellow flowers, natural baskets, elegant textures, and soft daylight."]
+  ],
+  tuesday:[
+    ["Pink rose courtyard","A sophisticated courtyard with pink roses, stone textures, gentle sunlight, and elegant lifestyle styling."],
+    ["Pastel flower studio","A refined floral studio filled with pink blossoms, ribbons, vases, natural materials, and soft editorial light."],
+    ["Pink sunrise lakeside","A tranquil lakeside with soft pink sunrise tones, reflective water, graceful flowers, and cinematic calm."],
+    ["Elegant pink garden arch","A beautiful garden arch with pink flowering vines, layered greenery, soft morning haze, and premium depth."]
+  ],
+  wednesday:[
+    ["Green botanical garden","A rich botanical garden with layered tropical foliage, elegant paths, filtered sunlight, and sophisticated green tonal harmony."],
+    ["Herbal garden morning","A fresh herb garden with Thai herbs, ceramic pots, dew, natural wood, and clean morning light."],
+    ["Forest-view veranda","A premium veranda overlooking lush forest, natural textures, soft green light, and calm editorial composition."],
+    ["Tea plantation landscape","A cinematic green tea plantation with layered hills, morning mist, and elegant rural atmosphere without food service props."]
+  ],
+  thursday:[
+    ["Orange flower courtyard","A refined courtyard with orange blossoms, warm natural stone, soft sunlight, and elegant tropical details."],
+    ["Temple-inspired orange garden","A peaceful Thai garden with orange floral accents, subtle traditional architecture, warm morning light, and premium serenity."],
+    ["Warm orchard scene","A fresh orchard with orange-toned fruit accents, green foliage, sunlit paths, and natural countryside depth."],
+    ["Amber morning terrace","A sophisticated terrace with amber-orange textiles, warm flowers, natural wood, and soft glowing daylight."]
+  ],
+  friday:[
+    ["Blue hydrangea garden","A refined garden with blue hydrangeas, fresh greenery, elegant morning light, and premium editorial balance."],
+    ["Serene blue lakeside","A calm lakeside in cool blue morning tones with soft mist, reflective water, and tasteful floral accents."],
+    ["Modern blue-white veranda","A polished veranda with blue-and-white decor, natural wood, plants, and crisp morning sunlight."],
+    ["Coastal blue garden","A peaceful coastal garden with blue flowers, sea breeze, distant water, and elegant travel atmosphere."]
+  ],
+  saturday:[
+    ["Purple orchid garden","A premium tropical orchid garden with purple blooms, deep greenery, filtered morning light, and cinematic depth."],
+    ["Lavender-inspired terrace","A refined terrace with purple floral accents, elegant furniture, natural materials, and soft morning glow."],
+    ["Purple mountain sunrise","A cinematic mountain view with purple dawn tones, layered hills, subtle flowers, and serene travel atmosphere."],
+    ["Boutique floral studio","A sophisticated studio with purple flowers, vases, ribbons, textured materials, and polished editorial light."]
+  ]
+};
+
+const HEADLINE_POOLS = ["{DAY}นี้ ขอให้มีแต่สิ่งดี ๆ", "สวัสดี{DAY} ขอให้วันนี้สดใส", "อรุณสวัสดิ์{DAY} เริ่มวันด้วยรอยยิ้ม", "{DAY}แห่งความสุขและความหวัง", "ส่งความสุขในเช้าวัน{DAY}", "ขอให้{DAY}นี้เป็นวันที่น่ารัก", "เช้าวัน{DAY} ขอให้ใจเบิกบาน", "เริ่มต้น{DAY}ด้วยพลังดี ๆ", "{DAY}นี้ ขอให้ทุกอย่างราบรื่น", "สุขสันต์เช้าวัน{DAY} ขอให้โชคดี", "เช้านี้ขอให้{DAY}เต็มไปด้วยความสุข", "{DAY}สดใส ขอให้พบแต่เรื่องดีงาม", "สวัสดีเช้าวัน{DAY} ขอให้ใจเป็นสุข", "เริ่ม{DAY}ด้วยความหวังดี ๆ", "{DAY}นี้ ขอให้ยิ้มได้ทั้งวัน", "ขอให้เช้าวัน{DAY}พาเรื่องดี ๆ มา", "{DAY}เบิกบาน ขอให้วันนี้ใจดีต่อเรา", "อรุณรุ่งวัน{DAY} ขอให้ทุกอย่างลงตัว", "ส่งกำลังใจดี ๆ ในเช้าวัน{DAY}", "{DAY}นี้ ขอให้ได้พบความสบายใจ", "ขอให้{DAY}เป็นวันที่เต็มไปด้วยโอกาสดี", "เริ่มเช้าวัน{DAY}อย่างสดใสและมั่นใจ", "{DAY}นี้ ขอให้โชคดีอยู่ข้างคุณ", "สวัสดี{DAY} ขอให้ทุกก้าวเป็นก้าวที่ดี", "ขอให้เช้าวัน{DAY}เติมพลังให้หัวใจ", "{DAY}วันนี้ ขอให้มีแต่ข่าวดี", "อรุณสวัสดิ์{DAY} ขอให้ทั้งวันราบรื่น", "ขอให้{DAY}นี้มีแต่รอยยิ้มอบอุ่น", "เช้าวัน{DAY} ขอให้ทุกเรื่องง่ายขึ้น", "{DAY}นี้ ขอให้ได้เจอสิ่งที่ใช่", "ส่งความสดใสให้ในวัน{DAY}", "ขอให้วัน{DAY}นี้เป็นวันแห่งความสบายใจ", "{DAY}ดี ๆ เริ่มต้นได้ตั้งแต่เช้านี้", "เช้านี้ในวัน{DAY} ขอให้ใจเต็มไปด้วยพลัง", "สวัสดี{DAY} ขอให้ทุกอย่างเป็นใจ", "ขอให้{DAY}นี้มีแต่ความราบรื่น", "เริ่มต้นวัน{DAY}ด้วยความคิดดี ๆ", "{DAY}นี้ ขอให้ความสุขเดินทางมาหา", "ขอให้เช้าวัน{DAY}เป็นจุดเริ่มต้นที่ดี", "{DAY}นี้ ขอให้มีแรงใจและแรงบันดาลใจ", "ส่งคำทักทายดี ๆ ในเช้าวัน{DAY}", "อรุณสวัสดิ์วัน{DAY} ขอให้ใจสงบและสดใส", "ขอให้{DAY}นี้เป็นวันที่น่าจดจำ", "เช้าวัน{DAY} ขอให้สิ่งดี ๆ เกิดขึ้นง่าย ๆ", "{DAY}นี้ ขอให้สมหวังในสิ่งที่ตั้งใจ", "ขอให้วัน{DAY}นี้อ่อนโยนกับหัวใจ", "เริ่ม{DAY}ด้วยความสุขเล็ก ๆ รอบตัว", "สวัสดีวัน{DAY} ขอให้มีพลังดีตลอดวัน", "{DAY}นี้ ขอให้ทุกช่วงเวลามีความหมาย", "เช้าวัน{DAY} ขอให้ชีวิตไหลลื่นและสบายใจ", "ขอให้วัน{DAY}นี้เต็มไปด้วยความสำเร็จ", "{DAY}สดใส ขอให้หัวใจสดชื่น", "เริ่มต้นวัน{DAY}ด้วยรอยยิ้มและความหวัง", "ส่งความปรารถนาดีในเช้าวัน{DAY}", "{DAY}นี้ ขอให้เรื่องดี ๆ เข้ามาไม่ขาดสาย", "ขอให้เช้าวัน{DAY}นำความสุขมาให้", "สวัสดีวัน{DAY} ขอให้ใจพร้อมรับสิ่งดี ๆ", "{DAY}นี้ ขอให้สิ่งที่รอคอยมาถึง", "อรุณสวัสดิ์วัน{DAY} ขอให้เป็นวันที่ราบรื่น", "เช้าวัน{DAY} ขอให้พบแต่คนและเรื่องดี ๆ"];
+
+const GREETING_POOLS = ["ขอให้วันนี้มีแต่ความสบายใจ รอยยิ้ม และเรื่องดี ๆ เข้ามาเติมพลังตลอดทั้งวัน", "ขอให้ทุกสิ่งที่ตั้งใจค่อย ๆ สำเร็จอย่างราบรื่น และมีความสุขกับทุกก้าวของวันนี้", "ขอให้เช้าวันนี้นำความสดใส ความหวัง และโอกาสดี ๆ เข้ามาในชีวิต", "ขอให้สุขภาพแข็งแรง การงานคล่องตัว และพบเจอแต่ผู้คนและเรื่องราวที่ทำให้ใจเป็นสุข", "ขอให้วันนี้เป็นวันที่เบาสบาย มีข่าวดี มีรอยยิ้ม และมีพลังใจที่ดีอยู่ข้างกาย", "ขอให้ทุกช่วงเวลาของวันนี้เต็มไปด้วยความอบอุ่น ความสำเร็จ และสิ่งที่น่าชื่นใจ", "ขอให้การเดินทางของวันนี้ราบรื่น ได้พบสิ่งดี ๆ และมีความสุขกับเรื่องเล็ก ๆ รอบตัว", "ขอให้วันนี้เปิดประตูสู่โอกาสใหม่ ๆ มีความก้าวหน้า และสมหวังในสิ่งที่ตั้งใจ", "ขอให้หัวใจสดใส มีคนดี ๆ อยู่รอบตัว และได้ใช้วันนี้อย่างมีความหมาย", "ขอให้วันนี้มีโชค มีความสุข และมีเรื่องดี ๆ เกิดขึ้นมากกว่าที่คาดหวัง", "ขอให้ทุกเรื่องที่กำลังพยายามค่อย ๆ เห็นผล และมีแรงใจเดินหน้าต่ออย่างมั่นคง", "ขอให้วันนี้มีจังหวะดี ๆ เข้ามา ทำสิ่งใดก็ราบรื่นและลงตัว", "ขอให้ความเหนื่อยใจลดลง ความสบายใจเพิ่มขึ้น และมีความสุขกับทุกช่วงเวลาของวันนี้", "ขอให้วันนี้เต็มไปด้วยพลังบวก ความคิดดี ๆ และโอกาสที่ช่วยให้ชีวิตก้าวหน้า", "ขอให้ทุกการตัดสินใจวันนี้นำไปสู่สิ่งที่ดี และทำให้ใจเบาสบายขึ้น", "ขอให้เช้านี้เป็นจุดเริ่มต้นของเรื่องดี ๆ ที่ค่อย ๆ เติบโตตลอดทั้งวัน", "ขอให้มีสติ มีพลัง และมีความสุขกับสิ่งที่กำลังทำอยู่ในวันนี้", "ขอให้วันนี้ผ่านไปอย่างราบรื่น ได้รับข่าวดี และพบความสุขในสิ่งเล็ก ๆ รอบตัว", "ขอให้ทุกความตั้งใจได้รับการตอบรับที่ดี และทุกความพยายามมีความหมาย", "ขอให้วันนี้มีทั้งความสุข ความสำเร็จ และความอบอุ่นจากคนรอบข้าง", "ขอให้มีโอกาสดี ๆ เข้ามาอย่างเหมาะสม และพร้อมรับทุกสิ่งด้วยหัวใจที่มั่นคง", "ขอให้วันนี้เป็นวันที่ได้พักใจจากเรื่องหนัก ๆ และพบสิ่งที่ทำให้ยิ้มได้ง่ายขึ้น", "ขอให้ทุกเส้นทางที่เลือกเดินนำไปสู่ความราบรื่น ความก้าวหน้า และความสบายใจ", "ขอให้วันนี้มีความสุขแบบเรียบง่าย มีแรงใจ และมีเวลาสำหรับสิ่งที่สำคัญ", "ขอให้สิ่งดี ๆ ค่อย ๆ เดินทางเข้ามา และทำให้วันนี้เป็นวันที่น่าจดจำ", "ขอให้ความกังวลเบาลง ความหวังเพิ่มขึ้น และมีพลังดี ๆ อยู่กับคุณตลอดวัน", "ขอให้วันนี้มีทั้งโอกาส ความสำเร็จ และคนดี ๆ ที่พร้อมสนับสนุนกัน", "ขอให้ทุกเรื่องที่ค้างคาคลี่คลายไปในทางที่ดี และทำให้ใจโล่งสบายขึ้น", "ขอให้สุขภาพแข็งแรง จิตใจสดใส และได้ทำสิ่งที่รักอย่างมีความสุข", "ขอให้วันนี้มีความหมาย มีความคืบหน้า และมีเรื่องเล็ก ๆ ที่ทำให้หัวใจอบอุ่น", "ขอให้ทุกความพยายามได้รับผลตอบแทนที่ดี และทุกความตั้งใจนำไปสู่ความสำเร็จ", "ขอให้วันนี้มีข่าวดีเข้ามา มีเรื่องน่ายินดี และมีความสบายใจมากขึ้นเรื่อย ๆ", "ขอให้ได้พบผู้คนที่จริงใจ โอกาสที่เหมาะสม และความสุขที่อยู่ได้นาน", "ขอให้วันนี้เป็นวันที่ใจนิ่ง งานเดินหน้า และทุกอย่างค่อย ๆ เข้าที่เข้าทาง", "ขอให้มีความมั่นใจในตัวเอง และพบเหตุผลดี ๆ ที่ทำให้ยิ้มได้ตลอดวัน", "ขอให้ทุกช่วงเวลาวันนี้เติมเต็มทั้งพลังใจ ความหวัง และความสุขเล็ก ๆ", "ขอให้วันนี้มีแต่สิ่งที่ดีต่อใจ และช่วยให้ก้าวไปข้างหน้าอย่างมั่นคง", "ขอให้ทุกอย่างที่ตั้งใจเริ่มเห็นความชัดเจน และพบทางออกที่เหมาะกับตัวเอง", "ขอให้วันนี้เต็มไปด้วยความอ่อนโยน ความเข้าใจ และบรรยากาศที่ทำให้ใจสบาย", "ขอให้ได้ใช้วันนี้อย่างคุ้มค่า มีความสุขกับปัจจุบัน และมองไปข้างหน้าด้วยความหวัง", "ขอให้วันนี้เป็นวันที่ทุกอย่างเบาขึ้น ง่ายขึ้น และเป็นใจมากขึ้น", "ขอให้มีพลังดีพอสำหรับทุกสิ่งที่ต้องทำ และมีเวลาพักใจอย่างพอดี", "ขอให้วันนี้มีความก้าวหน้าแบบไม่กดดัน และมีความสุขกับความสำเร็จเล็ก ๆ ระหว่างทาง", "ขอให้ทุกคำพูด ทุกการพบเจอ และทุกเหตุการณ์วันนี้พาไปในทิศทางที่ดี", "ขอให้วันนี้ใจเย็น งานไหลลื่น และมีความสุขกับผลลัพธ์ที่เกิดขึ้น", "ขอให้มีความหวังใหม่ ๆ เข้ามา และช่วยให้มองเห็นสิ่งดี ๆ รอบตัวได้ชัดขึ้น", "ขอให้วันนี้เป็นวันแห่งการเริ่มต้นที่ดี การตัดสินใจที่ดี และความรู้สึกที่ดี", "ขอให้ทุกเรื่องสำคัญค่อย ๆ ลงตัว และมีความสบายใจมากกว่าความกังวล", "ขอให้วันนี้มีความสุขกับสิ่งที่ทำ มีคนดี ๆ อยู่ใกล้ และมีพลังใจอยู่เสมอ", "ขอให้สิ่งที่กำลังรอคอยค่อย ๆ เดินทางมาถึงในเวลาที่เหมาะสม", "ขอให้วันนี้เต็มไปด้วยความสดใส ความคล่องตัว และความหวังที่จับต้องได้", "ขอให้ความตั้งใจดี ๆ ของวันนี้กลายเป็นผลลัพธ์ที่น่าภูมิใจในวันข้างหน้า", "ขอให้ทุกก้าววันนี้พาเข้าใกล้สิ่งที่หวัง และมีความสุขกับระหว่างทาง", "ขอให้วันนี้มีเรื่องราวดี ๆ มากพอที่จะทำให้หัวใจยิ้มได้", "ขอให้ทุกความเหน็ดเหนื่อยมีความหมาย และนำไปสู่ความสำเร็จที่คู่ควร", "ขอให้วันนี้ราบรื่นตั้งแต่เช้าจนเย็น และมีความสุขกับทุกสิ่งที่เกิดขึ้น", "ขอให้ได้พบความชัดเจนในสิ่งที่ลังเล และมีความมั่นใจในทางที่เลือก", "ขอให้วันนี้มีความพอดีทั้งงาน ชีวิต และความรู้สึก ทำทุกอย่างได้อย่างสบายใจ", "ขอให้สิ่งดี ๆ เข้ามาอย่างต่อเนื่อง และทำให้วันนี้เป็นอีกวันที่น่ารักของชีวิต", "ขอให้มีทั้งแรงกาย แรงใจ และความสุขเพียงพอสำหรับทุกสิ่งที่ต้องเจอในวันนี้"];
+
+const ACTIVITY_POOLS = [
+  "quietly enjoying the morning atmosphere",
+  "arranging flowers or decorative objects naturally",
+  "walking through the scene with relaxed body language",
+  "reading or observing the surroundings calmly",
+  "gently tending plants or arranging natural elements",
+  "pausing to appreciate the scenery",
+  "preparing or organizing scene-appropriate objects",
+  "interacting naturally with the environment without posing for the camera"
+];
+
+const OBJECT_CLUSTER_POOLS = [
+  "flowers, woven textures, ceramic vessels, and natural wood",
+  "greenery, elegant fabric, handcrafted baskets, and subtle decorative objects",
+  "fresh blossoms, polished stone, glass details, and refined natural textures",
+  "traditional Thai accents, plants, ceramics, and tasteful handcrafted materials",
+  "minimal lifestyle objects, flowers, architectural details, and natural foliage",
+  "decorative textiles, foliage, elegant containers, and premium surface textures"
+];
+
+function weekdayKey(dayEnglish){
+  return dayEnglish.toLowerCase();
+}
+function deepRandomScene(s,setNo,seed){
+  if(s.special || s.holy.isHoly || s.buddhist) return null;
+  const pool=DEEP_SCENE_POOLS[weekdayKey(s.day.dayEnglish)] || [];
+  if(!pool.length) return null;
+  const chosen=pick(pool,seed+301);
+  return {name:chosen[0], prompt:chosen[1], avoid:"Do not duplicate the companion artwork's main setting, major props, camera viewpoint, or storytelling structure."};
+}
+
+function getHistory(key){
+  try{
+    const v=JSON.parse(localStorage.getItem(key)||"[]");
+    return Array.isArray(v)?v:[];
+  }catch(e){ return []; }
+}
+function saveHistory(key,arr){
+  localStorage.setItem(key,JSON.stringify(arr));
+}
+function pickNoRepeat(list,seed,historyKey,avoidValue=""){
+  let history=getHistory(historyKey);
+
+  // Reset only when all available items have been consumed.
+  if(history.length>=list.length) history=[];
+
+  let candidates=list.filter(x=>!history.includes(x) && x!==avoidValue);
+  if(!candidates.length){
+    history=[];
+    candidates=list.filter(x=>x!==avoidValue);
+  }
+  if(!candidates.length) candidates=list.slice();
+
+  const value=pick(candidates,seed);
+  history.push(value);
+
+  // Keep unique values only.
+  history=[...new Set(history)];
+  saveHistory(historyKey,history);
+  return value;
+}
+
+function textHistoryKey(type,s,setNo){
+  return `pokunTextHistory|${userSeed}|${type}|${s.day.isoDate}|${setNo}`;
+}
+
+function deepRandomTexts(s,setNo,seed,avoidHeadline="",avoidGreeting=""){
+  if(s.special || s.holy.isHoly || s.buddhist) return null;
+
+  let hTemplate=pickNoRepeat(
+    HEADLINE_POOLS,
+    seed+401,
+    textHistoryKey("headline",s,setNo),
+    ""
+  );
+  let h=sanitizeThaiWeekdayText(hTemplate.replaceAll("{DAY}",s.day.dayThai));
+
+  // If rendered headline accidentally matches companion, pick another template.
+  if(h===avoidHeadline && HEADLINE_POOLS.length>1){
+    const extra=HEADLINE_POOLS.filter(x=>sanitizeThaiWeekdayText(x.replaceAll("{DAY}",s.day.dayThai))!==avoidHeadline);
+    hTemplate=pickNoRepeat(extra,seed+447,textHistoryKey("headline2",s,setNo),"");
+    h=sanitizeThaiWeekdayText(hTemplate.replaceAll("{DAY}",s.day.dayThai));
+  }
+
+  let g=pickNoRepeat(
+    GREETING_POOLS,
+    seed+503,
+    textHistoryKey("greeting",s,setNo),
+    avoidGreeting
+  );
+
+  return {headline:h,greeting:g};
+}
+function chooseDistinctDeepPair(s,seed1,seed2){
+  const a=deepRandomScene(s,1,seed1);
+  let b=deepRandomScene(s,2,seed2);
+  if(a && b && a.name===b.name){
+    const pool=DEEP_SCENE_POOLS[weekdayKey(s.day.dayEnglish)]||[];
+    if(pool.length>1){
+      const idx=(seededIndex(seed2+811,pool.length)+1)%pool.length;
+      b={name:pool[idx][0],prompt:pool[idx][1],avoid:"Do not duplicate the companion artwork's main setting, major props, camera viewpoint, or storytelling structure."};
+    }
+  }
+  return {a,b};
 }
 
 function getPeopleDirection(s,setNo){
@@ -553,12 +765,75 @@ function getPeopleDirection(s,setNo){
 function buildPrompt(setNo){
   const s=effectiveState(setNo);
   const variation=randomCreativeVariation(s,setNo);
-  const c=setNo===1?s.concepts.image1:s.concepts.image2;
-  const other=setNo===1?s.concepts.image2:s.concepts.image1;
-  const headline=setNo===1?s.texts.headline1:s.texts.headline2;
-  const greeting=setNo===1?s.texts.greeting1:s.texts.greeting2;
-  const otherHeadline=setNo===1?s.texts.headline2:s.texts.headline1;
-  const otherGreeting=setNo===1?s.texts.greeting2:s.texts.greeting1;
+  let c=setNo===1?s.concepts.image1:s.concepts.image2;
+  let other=setNo===1?s.concepts.image2:s.concepts.image1;
+  let headline=setNo===1?s.texts.headline1:s.texts.headline2;
+  let greeting=setNo===1?s.texts.greeting1:s.texts.greeting2;
+  let otherHeadline=setNo===1?s.texts.headline2:s.texts.headline1;
+  let otherGreeting=setNo===1?s.texts.greeting2:s.texts.greeting1;
+
+  // Anti-repeat text variation for non-Buddhist special days.
+  if(s.special && s.special.category!=="buddhist"){
+    const spTx=specialTextVariant(s.special,s,setNo,variation.seed+1401);
+    const spOther=specialTextVariant(s.special,s,setNo===1?2:1,variation.seed+1501);
+    if(spTx){
+      headline=sanitizeThaiWeekdayText(spTx.headline);
+      greeting=spTx.greeting;
+    }
+    if(spOther){
+      otherHeadline=sanitizeThaiWeekdayText(spOther.headline);
+      otherGreeting=spOther.greeting;
+    }
+    if(otherHeadline===headline){
+      otherHeadline=`${s.special.name} ขอให้วันนี้เต็มไปด้วยความสุข`;
+    }
+    if(otherGreeting===greeting){
+      otherGreeting=pick(SPECIAL_GREETING_VARIANTS.filter(x=>x!==greeting),variation.seed+1601);
+    }
+  }
+
+  // Deep-randomize the MAIN scene and text on normal days.
+  // Special days / Wan Phra remain semantically locked to the calendar event.
+  if(!s.special && !s.holy.isHoly && !s.buddhist){
+    const seedA=variation.seed + (setNo===1?101:203);
+    const seedB=variation.seed + (setNo===1?307:409);
+    const pair=chooseDistinctDeepPair(s,seedA,seedB);
+    if(setNo===1){
+      if(pair.a) c=pair.a;
+      if(pair.b) other=pair.b;
+    }else{
+      if(pair.b) c=pair.b;
+      if(pair.a) other=pair.a;
+    }
+    const tx=deepRandomTexts(s,setNo,variation.seed+601);
+    if(tx){
+      headline=tx.headline;
+      greeting=tx.greeting;
+    }
+
+    const txOther=deepRandomTexts(
+      s,
+      setNo===1?2:1,
+      variation.seed+907,
+      headline,
+      greeting
+    );
+    if(txOther){
+      otherHeadline=txOther.headline;
+      otherGreeting=txOther.greeting;
+    }
+
+    // Final hard anti-repeat guard between Image 1 and Image 2 text.
+    if(otherHeadline===headline){
+      otherHeadline=sanitizeThaiWeekdayText(
+        pick(HEADLINE_POOLS.filter(x=>sanitizeThaiWeekdayText(x.replaceAll("{DAY}",s.day.dayThai))!==headline),variation.seed+1201)
+        .replaceAll("{DAY}",s.day.dayThai)
+      );
+    }
+    if(otherGreeting===greeting){
+      otherGreeting=pick(GREETING_POOLS.filter(x=>x!==greeting),variation.seed+1301);
+    }
+  }
   const L=[];
   L.push("Create one brand-new original 3:4 vertical Thai daily greeting artwork.");
   L.push("Render the finished artwork now from this creative brief.","");
@@ -588,6 +863,8 @@ function buildPrompt(setNo){
   L.push(`- Lighting: ${variation.light}`);
   L.push(`- Mood: ${variation.mood}`);
   L.push(`- Supporting prop variation: ${variation.prop}`);
+  L.push(`- Object cluster: ${pick(OBJECT_CLUSTER_POOLS,variation.seed+1001)}`);
+  L.push(`- Activity / storytelling cue: ${pick(ACTIVITY_POOLS,variation.seed+1103)}`);
   L.push(`- Preferred typography placement: ${variation.textPlacement}`);
   L.push("- Change secondary details, object arrangement, background treatment, depth, and visual storytelling from previous generations.");
   L.push("- Do not simply reproduce the same composition when this prompt is generated again.","");
