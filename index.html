@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#111827">
-<title>POKUN Web v1.8</title>
+<title>POKUN Web v1.9</title>
 <style>
 :root{--bg:#f4f5f7;--card:#fff;--ink:#16181d;--muted:#6b7280;--line:#e5e7eb;--accent:#111827;--good:#087f5b;--warn:#b45309}
 *{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI","Noto Sans Thai",sans-serif;background:var(--bg);color:var(--ink)}
@@ -24,7 +24,7 @@ button{border:0;border-radius:12px;padding:12px 14px;font-weight:800;cursor:poin
 <body>
 <div class="wrap">
   <div class="hero">
-    <h1>POKUN Web <span class="small">v1.8</span></h1>
+    <h1>POKUN Web <span class="small">v1.9</span></h1>
     <p>Daily Greeting Prompt Generator — ใช้ได้บนมือถือและคอม</p>
   </div>
 
@@ -63,6 +63,49 @@ button{border:0;border-radius:12px;padding:12px 14px;font-weight:800;cursor:poin
         <button id="autoStyle" class="secondary">AUTO ตามวันที่</button>
         <button id="prevStyle" class="ghost">◀ ก่อนหน้า</button>
         <button id="nextStyle" class="ghost">ถัดไป ▶</button>
+      </div>
+    </section>
+
+    <section class="card full">
+      <label>ความหลากหลายของ Prompt</label>
+      <div class="stylebox">
+        <strong>Random Prompt Engine</strong>
+        <div class="small" style="margin-top:5px">
+          ทุกครั้งที่กดสร้าง Prompt ระบบจะสุ่มรายละเอียดใหม่ เช่น มุมกล้อง แสง อารมณ์ Props การจัดวาง และตำแหน่งข้อความ
+          แต่ยังคงวัน สี วันสำคัญ และกฎหลักไว้
+        </div>
+      </div>
+      <div class="row mobile-stack" style="margin-top:10px">
+        <button id="reroll1" class="secondary">สุ่มชุดใหม่สำหรับภาพที่ 1</button>
+        <button id="reroll2" class="secondary">สุ่มชุดใหม่สำหรับภาพที่ 2</button>
+      </div>
+      <div class="notice" style="margin-top:8px">ภาพที่ 1 และภาพที่ 2 จะพยายามหลีกเลี่ยง Concept / Props / Activity ที่ซ้ำกัน</div>
+    </section>
+
+    <section class="card full">
+      <label>รูปแบบกรอบคำอวยพร</label>
+      <div class="grid" style="grid-template-columns:repeat(2,minmax(0,1fr));gap:10px">
+        <div class="stylebox">
+          <strong>ภาพที่ 1</strong>
+          <select id="frameMode1" style="margin-top:8px">
+            <option value="auto">AUTO</option>
+            <option value="frame">มีกรอบ</option>
+            <option value="none">ไม่มีกรอบ</option>
+          </select>
+          <div class="small" style="margin-top:6px">AUTO = ระบบสุ่มให้เหมาะกับวันและสไตล์</div>
+        </div>
+        <div class="stylebox">
+          <strong>ภาพที่ 2</strong>
+          <select id="frameMode2" style="margin-top:8px">
+            <option value="auto">AUTO</option>
+            <option value="frame">มีกรอบ</option>
+            <option value="none">ไม่มีกรอบ</option>
+          </select>
+          <div class="small" style="margin-top:6px">ตั้งค่าแยกจากภาพที่ 1 ได้</div>
+        </div>
+      </div>
+      <div class="notice" style="margin-top:8px">
+        วันพระ/วันสำคัญทางพุทธศาสนา ถ้าใช้กรอบ จะเลือกเฉพาะแนวพุทธศิลป์ เช่น ลายกนก ลายไทย ดอกบัว ทอง งาช้าง หรือศิลปะวัด
       </div>
     </section>
 
@@ -135,7 +178,7 @@ button{border:0;border-radius:12px;padding:12px 14px;font-weight:800;cursor:poin
     </section>
 
     <section class="card full notice">
-      <b>หมายเหตุ:</b> POKUN Web v1.8 ทำงานในเครื่องผู้ใช้ทั้งหมด ไม่ส่งข้อมูลไปเซิร์ฟเวอร์ และใช้ตารางวันพระ พ.ศ. 2569/ค.ศ. 2026 จาก POKUN AHK v2.0 ที่คุณใช้อยู่ หากนำขึ้นเว็บจริง Clipboard/Share จะทำงานดีที่สุดบน HTTPS
+      <b>หมายเหตุ:</b> POKUN Web v1.9 ทำงานในเครื่องผู้ใช้ทั้งหมด ไม่ส่งข้อมูลไปเซิร์ฟเวอร์ และใช้ตารางวันพระ พ.ศ. 2569/ค.ศ. 2026 จาก POKUN AHK v2.0 ที่คุณใช้อยู่ หากนำขึ้นเว็บจริง Clipboard/Share จะทำงานดีที่สุดบน HTTPS
     </section>
   </div>
 </div>
@@ -164,6 +207,10 @@ let forceBuddhist = localStorage.getItem("pokunBuddhistF6") === "1";
 let watermarkText = localStorage.getItem("pokunWatermark") || "POKUN ✨";
 let peopleMode1 = localStorage.getItem("pokunPeopleMode1") || "none";
 let peopleMode2 = localStorage.getItem("pokunPeopleMode2") || "none";
+let frameMode1 = localStorage.getItem("pokunFrameMode1") || "auto";
+let frameMode2 = localStorage.getItem("pokunFrameMode2") || "auto";
+let rerollSeed1 = Number(localStorage.getItem("pokunRerollSeed1") || "0");
+let rerollSeed2 = Number(localStorage.getItem("pokunRerollSeed2") || "0");
 let filteredIndices = DATA.typography.map((_,i)=>i);
 
 const $ = id => document.getElementById(id);
@@ -239,6 +286,123 @@ function effectiveState(setNo){
     style=currentManualStyle(d); concepts=normalConceptPair(d); texts=normalTexts(d,day.dayThai);
   }
   return {d,day,holy,special,style,concepts,texts,buddhist};
+}
+
+
+function hashString(str){
+  let h=2166136261;
+  for(let i=0;i<str.length;i++){ h^=str.charCodeAt(i); h=Math.imul(h,16777619); }
+  return h>>>0;
+}
+function seededIndex(seed,len){
+  if(!len) return 0;
+  let x=seed>>>0; x^=x<<13; x^=x>>>17; x^=x<<5;
+  return Math.abs(x>>>0)%len;
+}
+function pick(list,seed){ return list[seededIndex(seed,list.length)]; }
+function variationSeed(s,setNo){
+  const u=setNo===1?rerollSeed1:rerollSeed2;
+  return hashString(`${s.day.isoDate}|${setNo}|${u}|${Date.now()}|${Math.random()}`);
+}
+const CAMERA_VARIATIONS=[
+  "eye-level editorial composition with balanced negative space",
+  "slightly elevated three-quarter view with elegant depth",
+  "close-to-medium cinematic framing with selective focus",
+  "wide environmental composition showing rich context",
+  "layered foreground-to-background composition with natural depth",
+  "clean asymmetrical editorial framing with generous text space",
+  "premium still-life angle emphasizing textures and dimension",
+  "soft telephoto compression with refined background separation"
+];
+const LIGHT_VARIATIONS=[
+  "soft golden morning light","bright diffused daylight","gentle window light with soft natural shadows",
+  "warm sunrise glow with atmospheric depth","clean high-key daylight with polished highlights",
+  "soft cinematic side light","calm overcast light with rich texture detail","warm ambient light with subtle luminous accents"
+];
+const MOOD_VARIATIONS=[
+  "uplifting and elegant","warm and comforting","fresh and optimistic","calm and premium",
+  "cheerful but sophisticated","peaceful and refined","graceful and emotionally warm","bright, polished, and welcoming"
+];
+const PROP_VARIATIONS=[
+  "fresh seasonal flowers","tasteful fabric and handcrafted details","elegant ceramic objects",
+  "natural greenery and foliage","subtle decorative ribbons","small premium stationery details",
+  "refined traditional Thai accents","simple lifestyle objects chosen to fit the scene"
+];
+const TEXT_PLACEMENTS=[
+  "upper-left negative space","upper-right negative space","center-left clear area","center-right clear area",
+  "top-center with generous breathing room","lower-left clear area above the safe margin","lower-right clear area above the watermark zone"
+];
+const FRAME_GENERAL=[
+  "a refined frosted-glass translucent rounded panel with subtle blur",
+  "a clean rounded premium card with soft edge and gentle shadow",
+  "a thin elegant floral border using scene-matching flowers",
+  "a minimal translucent ivory panel with a fine outline",
+  "a sophisticated paper-note panel with subtle texture",
+  "a soft pastel sticker-like panel with restrained decorative accents",
+  "a delicate metallic keyline frame coordinated with the typography",
+  "a minimal floating text panel with light transparency and soft shadow"
+];
+const FRAME_BUDDHIST=[
+  "a refined Thai Buddhist art frame with delicate gold kanok corner ornaments on warm ivory",
+  "a thin traditional Thai kanok border in muted gold with generous empty space",
+  "an elegant lotus-and-kanok frame inspired by Thai temple mural art",
+  "a warm ivory translucent panel with fine gold Thai ornamental corners",
+  "a restrained gilded Thai temple-art border with subtle lotus motifs",
+  "a traditional Thai ornamental frame using gold leaf, lotus geometry, and calm ivory tones",
+  "a minimal sacred-art frame with fine kanok lines, lotus accents, and soft golden glow"
+];
+const FRAME_MOTHER=[
+  "a delicate jasmine-flower frame with pale blue and warm ivory accents",
+  "a soft translucent panel edged with small jasmine blossoms",
+  "an elegant floral border using jasmine, white flowers, and subtle pale-blue details"
+];
+const FRAME_FATHER=[
+  "a dignified warm ivory panel with yellow floral accents and fine gold edging",
+  "a restrained yellow-flower border with classic elegant detailing"
+];
+const FRAME_TEACHER=[
+  "a refined academic-style card with small floral and stationery accents",
+  "a clean ivory panel with subtle book, pen, and floral motifs"
+];
+const FRAME_CHILDREN=[
+  "a cheerful rounded pastel panel with tiny stars, clouds, and playful educational doodles",
+  "a colorful but clean sticker-like panel with soft rounded corners"
+];
+const FRAME_LOYKRATHONG=[
+  "a dark translucent panel with delicate lotus, candlelight, and water-ripple motifs",
+  "a thin gold-and-lotus border inspired by Thai festival night aesthetics"
+];
+const FRAME_SONGKRAN=[
+  "a fresh Thai floral border with jasmine, rose petals, and subtle water-splash accents",
+  "a translucent ivory panel with small traditional Thai floral corner motifs"
+];
+function chooseFrameStyle(s,setNo,seed){
+  const mode=setNo===1?frameMode1:frameMode2;
+  if(mode==="none") return {use:false,text:""};
+  const shouldUse=mode==="frame"?true:seededIndex(seed+91,2)===0;
+  if(!shouldUse) return {use:false,text:""};
+  const specialName=(s.special&&s.special.name)||"";
+  let pool=FRAME_GENERAL;
+  if(s.buddhist||s.holy.isHoly||(s.special&&s.special.category==="buddhist")) pool=FRAME_BUDDHIST;
+  else if(specialName.includes("วันแม่")) pool=FRAME_MOTHER;
+  else if(specialName.includes("วันพ่อ")) pool=FRAME_FATHER;
+  else if(specialName.includes("วันครู")) pool=FRAME_TEACHER;
+  else if(specialName.includes("วันเด็ก")) pool=FRAME_CHILDREN;
+  else if(specialName.includes("ลอยกระทง")) pool=FRAME_LOYKRATHONG;
+  else if(specialName.includes("สงกรานต์")) pool=FRAME_SONGKRAN;
+  return {use:true,text:pick(pool,seed+123)};
+}
+function randomCreativeVariation(s,setNo){
+  const seed=variationSeed(s,setNo);
+  return {
+    seed,
+    camera:pick(CAMERA_VARIATIONS,seed+11),
+    light:pick(LIGHT_VARIATIONS,seed+23),
+    mood:pick(MOOD_VARIATIONS,seed+37),
+    prop:pick(PROP_VARIATIONS,seed+53),
+    textPlacement:pick(TEXT_PLACEMENTS,seed+71),
+    frame:chooseFrameStyle(s,setNo,seed+89)
+  };
 }
 
 function getPeopleDirection(s,setNo){
@@ -376,6 +540,7 @@ function getPeopleDirection(s,setNo){
 
 function buildPrompt(setNo){
   const s=effectiveState(setNo);
+  const variation=randomCreativeVariation(s,setNo);
   const c=setNo===1?s.concepts.image1:s.concepts.image2;
   const other=setNo===1?s.concepts.image2:s.concepts.image1;
   const headline=setNo===1?s.texts.headline1:s.texts.headline2;
@@ -405,13 +570,35 @@ function buildPrompt(setNo){
   L.push(`Thai typography style: ${s.style.name}`,s.style.direction,`Headline treatment: ${s.style.headline}`,`Supporting text treatment: ${s.style.support}`);
   if(s.style.decoration)L.push(`Typography decoration: ${s.style.decoration}`);
   L.push("Use clear negative space for all Thai typography.","Never cover important focal objects.","");
-  L.push(`Scene concept: ${c.name}`,c.prompt,"","Keep this scene clearly different from the companion daily artwork.","Do not reuse the companion artwork's main setting, activity, major props, object cluster, or storytelling idea.",`Companion concept to avoid: ${other.name}`,`Also avoid: ${c.avoid}`,"");
+  L.push(`Scene concept: ${c.name}`,c.prompt,"");
+  L.push("RANDOM CREATIVE VARIATION FOR THIS GENERATION:");
+  L.push(`- Camera / composition: ${variation.camera}`);
+  L.push(`- Lighting: ${variation.light}`);
+  L.push(`- Mood: ${variation.mood}`);
+  L.push(`- Supporting prop variation: ${variation.prop}`);
+  L.push(`- Preferred typography placement: ${variation.textPlacement}`);
+  L.push("- Change secondary details, object arrangement, background treatment, depth, and visual storytelling from previous generations.");
+  L.push("- Do not simply reproduce the same composition when this prompt is generated again.","");
+  L.push("Keep this scene clearly different from the companion daily artwork.","Do not reuse the companion artwork's main setting, activity, major props, object cluster, camera viewpoint, or storytelling idea.",`Companion concept to avoid: ${other.name}`,`Also avoid: ${c.avoid}`,"");
   L.push("Visible Thai headline:",headline,"","Visible Thai greeting / blessing:",greeting,"");
+  L.push("","BLESSING TEXT FRAME / PANEL:");
+  if(variation.frame.use){
+    L.push("Use a designed frame/panel specifically for the greeting / blessing text.");
+    L.push(`Frame style: ${variation.frame.text}`);
+    L.push("Keep the frame elegant, readable, and clearly separated from the headline.");
+    L.push("Do not let the frame cover faces, people, Buddha imagery, offerings, food, important objects, or the watermark.");
+  }else{
+    L.push("Do NOT place the greeting / blessing inside a box, card, panel, plaque, or decorative frame.");
+    L.push("Place the blessing directly on clean negative space and use only subtle outline, shadow, glow, or contrast treatment when needed for readability.");
+  }
   if(s.special)L.push("",`IMPORTANT: The headline must visibly and clearly identify ${s.special.name}. Do not replace it with a generic weekday-only headline.`);
   L.push("Use the Thai headline and greeting exactly as written.","Do not rewrite, paraphrase, or add another headline or blessing.","Do not reuse the companion text:",`Companion headline: ${otherHeadline}`,`Companion greeting: ${otherGreeting}`,"");
   if((setNo===1?peopleMode1:peopleMode2)==="include"){
-    L.push("When people are included, the human activity, pose, relationship, and storytelling must also differ clearly from the companion artwork.");
+    L.push("When people are included, the human activity, pose, relationship, clothing treatment, and storytelling must also differ clearly from the companion artwork.");
   }
+  L.push("ANTI-DUPLICATION RULE:");
+  L.push("This generation must feel newly art-directed. Vary camera angle, object positions, foreground/background layering, supporting props, lighting nuance, and text layout.");
+  L.push("Do not reuse the same major prop cluster or activity as the companion artwork.");
   L.push("All visible Thai must be correctly spelled, natural, clear, and pleasant.","The exact incorrect Thai string \"นะค่ะ\" must never appear.","");
   const peopleMode = setNo===1 ? peopleMode1 : peopleMode2;
   if(peopleMode==="include"){
@@ -498,8 +685,18 @@ $("styleSelect").addEventListener("change",e=>{selectedStyle=Number(e.target.val
 $("autoStyle").addEventListener("click",()=>{styleMode="AUTO";selectedStyle=autoStyleIndex(localDateFromInput($("date").value));localStorage.setItem("pokunStyleMode","AUTO");localStorage.setItem("pokunStyleIndex",selectedStyle);updateUI();toast("AUTO Typography")});
 $("prevStyle").addEventListener("click",()=>{styleMode="MANUAL";selectedStyle=(selectedStyle-1+DATA.typography.length)%DATA.typography.length;localStorage.setItem("pokunStyleMode",styleMode);localStorage.setItem("pokunStyleIndex",selectedStyle);$("styleSearch").value="";updateUI()});
 $("nextStyle").addEventListener("click",()=>{styleMode="MANUAL";selectedStyle=(selectedStyle+1)%DATA.typography.length;localStorage.setItem("pokunStyleMode",styleMode);localStorage.setItem("pokunStyleIndex",selectedStyle);$("styleSearch").value="";updateUI()});
-$("make1").addEventListener("click",()=>{$("output1").value=buildPrompt(1);toast("สร้าง Prompt ภาพ 1 แล้ว")});
-$("make2").addEventListener("click",()=>{$("output2").value=buildPrompt(2);toast("สร้าง Prompt ภาพ 2 แล้ว")});
+$("make1").addEventListener("click",()=>{
+  rerollSeed1++;
+  localStorage.setItem("pokunRerollSeed1",rerollSeed1);
+  $("output1").value=buildPrompt(1);
+  toast("สร้าง Prompt ภาพที่ 1 ชุดใหม่แล้ว");
+});
+$("make2").addEventListener("click",()=>{
+  rerollSeed2++;
+  localStorage.setItem("pokunRerollSeed2",rerollSeed2);
+  $("output2").value=buildPrompt(2);
+  toast("สร้าง Prompt ภาพที่ 2 ชุดใหม่แล้ว");
+});
 $("copy1").addEventListener("click",()=>copyText("output1"));
 $("copy2").addEventListener("click",()=>copyText("output2"));
 $("share1").addEventListener("click",()=>shareText("output1","Prompt ภาพที่ 1"));
@@ -513,6 +710,8 @@ $("clear").addEventListener("click",()=>{
 $("watermark").value = watermarkText;
 $("peopleMode1").value = peopleMode1;
 $("peopleMode2").value = peopleMode2;
+$("frameMode1").value = frameMode1;
+$("frameMode2").value = frameMode2;
 
 $("peopleMode1").addEventListener("change",e=>{
   peopleMode1 = e.target.value;
@@ -523,6 +722,29 @@ $("peopleMode2").addEventListener("change",e=>{
   peopleMode2 = e.target.value;
   localStorage.setItem("pokunPeopleMode2", peopleMode2);
   toast(peopleMode2==="include" ? "ภาพที่ 2: มีบุคคล" : "ภาพที่ 2: ไม่มีบุคคล");
+});
+
+$("frameMode1").addEventListener("change",e=>{
+  frameMode1=e.target.value;
+  localStorage.setItem("pokunFrameMode1",frameMode1);
+  toast("กรอบคำอวยพรภาพที่ 1: "+(frameMode1==="auto"?"AUTO":frameMode1==="frame"?"มีกรอบ":"ไม่มีกรอบ"));
+});
+$("frameMode2").addEventListener("change",e=>{
+  frameMode2=e.target.value;
+  localStorage.setItem("pokunFrameMode2",frameMode2);
+  toast("กรอบคำอวยพรภาพที่ 2: "+(frameMode2==="auto"?"AUTO":frameMode2==="frame"?"มีกรอบ":"ไม่มีกรอบ"));
+});
+$("reroll1").addEventListener("click",()=>{
+  rerollSeed1++;
+  localStorage.setItem("pokunRerollSeed1",rerollSeed1);
+  $("output1").value=buildPrompt(1);
+  toast("สุ่ม Prompt ภาพที่ 1 ชุดใหม่แล้ว");
+});
+$("reroll2").addEventListener("click",()=>{
+  rerollSeed2++;
+  localStorage.setItem("pokunRerollSeed2",rerollSeed2);
+  $("output2").value=buildPrompt(2);
+  toast("สุ่ม Prompt ภาพที่ 2 ชุดใหม่แล้ว");
 });
 
 $("saveWatermark").addEventListener("click",()=>{
