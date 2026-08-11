@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#111827">
-<title>POKUN Web v4.9</title>
+<title>POKUN Web v5.0</title>
 <style>
 :root{--bg:#f4f5f7;--card:#fff;--ink:#16181d;--muted:#6b7280;--line:#e5e7eb;--accent:#111827;--good:#087f5b;--warn:#b45309}
 *{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI","Noto Sans Thai",sans-serif;background:var(--bg);color:var(--ink)}
@@ -32,7 +32,7 @@ button{border:0;border-radius:12px;padding:12px 14px;font-weight:800;cursor:poin
 <body>
 <div class="wrap">
   <div class="hero">
-    <h1>POKUN Web <span class="small">v4.9</span></h1>
+    <h1>POKUN Web <span class="small">v5.0</span></h1>
     <p>Daily Greeting Prompt Generator — ใช้ได้บนมือถือและคอม</p>
   </div>
 
@@ -309,14 +309,17 @@ button{border:0;border-radius:12px;padding:12px 14px;font-weight:800;cursor:poin
       </div>
     </section>
 
-    <section class="card full">
+    <section class="card full" id="characterCompositionSection">
       <label>องค์ประกอบตัวละครในภาพ</label>
+      <div id="birthdayCharacterNotice" class="notice" style="margin-bottom:10px;display:none">
+        🎂 โหมดการ์ดวันเกิด: เลือก “ไม่มีบุคคล” หรือ “มีบุคคล” เท่านั้น ระบบสัตว์จะซ่อนอัตโนมัติ หากใช้รูปของฉัน สามารถเลือก “คนสมจริง” หรือ “การ์ตูน” ได้
+      </div>
       <div class="grid" style="grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:10px">
         <div class="stylebox">
           <strong>ภาพที่ 1</strong>
           <select id="characterMode1" style="margin-top:8px">
-            <option value="none">ไม่มีคนและสัตว์</option>
-            <option value="people">มีคนอย่างเดียว</option>
+            <option value="none" data-normal="ไม่มีคนและสัตว์">ไม่มีคนและสัตว์</option>
+            <option value="people" data-normal="มีคนอย่างเดียว">มีคนอย่างเดียว</option>
             <option value="animal">มีสัตว์อย่างเดียว</option>
             <option value="both">มีทั้งคนและสัตว์</option>
           </select>
@@ -324,8 +327,8 @@ button{border:0;border-radius:12px;padding:12px 14px;font-weight:800;cursor:poin
         <div class="stylebox">
           <strong>ภาพที่ 2</strong>
           <select id="characterMode2" style="margin-top:8px">
-            <option value="none">ไม่มีคนและสัตว์</option>
-            <option value="people">มีคนอย่างเดียว</option>
+            <option value="none" data-normal="ไม่มีคนและสัตว์">ไม่มีคนและสัตว์</option>
+            <option value="people" data-normal="มีคนอย่างเดียว">มีคนอย่างเดียว</option>
             <option value="animal">มีสัตว์อย่างเดียว</option>
             <option value="both">มีทั้งคนและสัตว์</option>
           </select>
@@ -344,7 +347,7 @@ button{border:0;border-radius:12px;padding:12px 14px;font-weight:800;cursor:poin
           <option value="cartoon">การ์ตูน / Illustration</option>
         </select>
         <div class="small" style="margin-top:6px">
-          ถ้าเลือก “การ์ตูน” ภาพที่ 1 และภาพที่ 2 จะใช้สไตล์การ์ตูนชุดเดียวกันทั้งหมด
+          ถ้าเลือก “การ์ตูน” ภาพที่ 1 และภาพที่ 2 จะใช้สไตล์การ์ตูนชุดเดียวกันทั้งหมด หากเลือกใช้รูปของฉัน ระบบ Prompt จะสั่งแปลงบุคคลจริงเป็นการ์ตูนที่ยังรักษาความคล้ายและเอกลักษณ์ของเจ้าของรูป
         </div>
       </div>
 
@@ -381,7 +384,7 @@ button{border:0;border-radius:12px;padding:12px 14px;font-weight:800;cursor:poin
             <option value="generated">สร้างบุคคลใหม่</option>
             <option value="user_photo">ใช้รูปของฉันที่แนบใน ChatGPT</option>
           </select>
-          <div class="small" style="margin-top:6px">หากเลือกใช้รูปของฉัน ให้แนบรูปใน ChatGPT ก่อนวาง Prompt</div>
+          <div class="small" style="margin-top:6px">หากเลือกใช้รูปของฉัน ให้แนบรูปใน ChatGPT ก่อนวาง Prompt — ถ้าเลือกการ์ตูน ระบบจะรักษาความคล้ายของบุคคลจากรูปจริง</div>
         </div>
 
         <div class="stylebox">
@@ -416,7 +419,7 @@ button{border:0;border-radius:12px;padding:12px 14px;font-weight:800;cursor:poin
             <option value="generated">สร้างบุคคลใหม่</option>
             <option value="user_photo">ใช้รูปของฉันที่แนบใน ChatGPT</option>
           </select>
-          <div class="small" style="margin-top:6px">หากเลือกใช้รูปของฉัน ให้แนบรูปใน ChatGPT ก่อนวาง Prompt</div>
+          <div class="small" style="margin-top:6px">หากเลือกใช้รูปของฉัน ให้แนบรูปใน ChatGPT ก่อนวาง Prompt — ถ้าเลือกการ์ตูน ระบบจะรักษาความคล้ายของบุคคลจากรูปจริง</div>
         </div>
       </div>
 
@@ -429,7 +432,7 @@ button{border:0;border-radius:12px;padding:12px 14px;font-weight:800;cursor:poin
       </div>
     </section>
 
-<section class="card full">
+<section class="card full" id="animalSettingsSection">
       <label>ตั้งค่าสัตว์ / Animal Character</label>
       <div class="notice" style="margin-bottom:10px">
         ตั้งค่าส่วนนี้ต่อจาก “องค์ประกอบตัวละครในภาพ” ด้านบน หากภาพที่ 1 หรือภาพที่ 2 เลือก “มีสัตว์อย่างเดียว” หรือ “มีทั้งคนและสัตว์” ให้กำหนดชนิด รูปแบบ และพฤติกรรมของสัตว์ที่นี่
@@ -630,7 +633,7 @@ button{border:0;border-radius:12px;padding:12px 14px;font-weight:800;cursor:poin
     </section>
 
     <section class="card full notice">
-      <b>หมายเหตุ:</b> POKUN Web v4.9 ทำงานในเครื่องผู้ใช้ทั้งหมด ไม่ส่งข้อมูลไปเซิร์ฟเวอร์ และใช้ตารางวันพระ พ.ศ. 2569/ค.ศ. 2026 จาก POKUN AHK v2.0 ที่คุณใช้อยู่ หากนำขึ้นเว็บจริง Clipboard/Share จะทำงานดีที่สุดบน HTTPS
+      <b>หมายเหตุ:</b> POKUN Web v5.0 ทำงานในเครื่องผู้ใช้ทั้งหมด ไม่ส่งข้อมูลไปเซิร์ฟเวอร์ และใช้ตารางวันพระ พ.ศ. 2569/ค.ศ. 2026 จาก POKUN AHK v2.0 ที่คุณใช้อยู่ หากนำขึ้นเว็บจริง Clipboard/Share จะทำงานดีที่สุดบน HTTPS
     </section>
   </div>
 </div>
@@ -2139,6 +2142,39 @@ function updateBirthdayWishFocusUI(){
  desc.textContent=descriptions[birthdayWishFocus]||descriptions.auto_age;
 }
 
+
+function applyBirthdayCharacterUI(){
+  const birthday=appMode==="birthday";
+  const animalSection=$("animalSettingsSection");
+  const notice=$("birthdayCharacterNotice");
+  if(animalSection) animalSection.style.display=birthday?"none":"";
+  if(notice) notice.style.display=birthday?"block":"none";
+
+  ["characterMode1","characterMode2"].forEach((id,idx)=>{
+    const sel=$(id);
+    if(!sel) return;
+    Array.from(sel.options).forEach(opt=>{
+      const animalOpt=(opt.value==="animal" || opt.value==="both");
+      opt.hidden=birthday && animalOpt;
+      opt.disabled=birthday && animalOpt;
+      if(opt.value==="none") opt.textContent=birthday?"ไม่มีบุคคล":"ไม่มีคนและสัตว์";
+      if(opt.value==="people") opt.textContent=birthday?"มีบุคคล":"มีคนอย่างเดียว";
+    });
+    if(birthday && (sel.value==="animal" || sel.value==="both")){
+      sel.value="people";
+      if(idx===0){ characterMode1="people"; localStorage.setItem("pokunCharacterMode1","people"); }
+      else { characterMode2="people"; localStorage.setItem("pokunCharacterMode2","people"); }
+    }
+  });
+  peopleMode1=imageHasPeople(1)?"include":"none";
+  peopleMode2=imageHasPeople(2)?"include":"none";
+  animalMode=(!birthday && (imageHasAnimal(1)||imageHasAnimal(2)))?"animal":"none";
+  if($("peopleMode1")) $("peopleMode1").value=peopleMode1;
+  if($("peopleMode2")) $("peopleMode2").value=peopleMode2;
+  if($("animalMode")) $("animalMode").value=animalMode;
+  if(typeof updateCharacterControls==="function") updateCharacterControls();
+}
+
 function applyAppModeUI(){
  const q=appMode==="quote", b=appMode==="birthday", g=appMode==="greeting";
  $("quoteSettings").style.display=q?"":"none";
@@ -2148,6 +2184,7 @@ function applyAppModeUI(){
  $("modeBirthdayCard").classList.toggle("active",b);
  $("modeStatus").textContent=q?"โหมดปัจจุบัน: คำคมประจำวัน":b?"โหมดปัจจุบัน: การ์ดวันเกิด":"โหมดปัจจุบัน: การ์ดสวัสดีประจำวัน";
  updateBirthdayWishFocusUI();
+ applyBirthdayCharacterUI();
 }
 
 
@@ -2435,6 +2472,9 @@ function userPhotoDirection(setNo){
     "The user will attach a personal photo in ChatGPT together with this prompt.",
     "Use the person shown in that uploaded photo as the identity reference for the visible human subject in this newly created artwork.",
     "Preserve the person's recognizable facial identity, overall facial proportions, hairstyle cues, skin tone, and distinctive visible features as faithfully as practical.",
+    humanStyle==="cartoon"
+      ? "CARTOON LIKENESS RULE: Transform the uploaded real person into a cute polished illustrated/cartoon version while preserving a strong recognizable likeness. Keep the same identity cues, face shape, hairstyle, hair color, skin tone, age impression, and distinctive visible features. Do not replace them with a generic random cartoon face. Stylize the person; do not merely place a cartoon filter over the original photo."
+      : "PHOTOREALISTIC LIKENESS RULE: Keep the newly generated person photorealistic and recognizably consistent with the uploaded identity reference.",
     "Create a new composition, pose, clothing treatment, activity, lighting, and environment according to this creative brief.",
     "Do not copy the original photo background or original pose unless the creative brief specifically calls for them.",
     "If more than one person appears in the uploaded photo, prioritize the clearly dominant/main person unless the prompt context explicitly calls for multiple family members.",
