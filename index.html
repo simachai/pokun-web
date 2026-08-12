@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#111827">
-<title>POKUN Web v5.0</title>
+<title>POKUN Web v5.8</title>
 <style>
 :root{--bg:#f4f5f7;--card:#fff;--ink:#16181d;--muted:#6b7280;--line:#e5e7eb;--accent:#111827;--good:#087f5b;--warn:#b45309}
 *{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI","Noto Sans Thai",sans-serif;background:var(--bg);color:var(--ink)}
@@ -26,13 +26,49 @@ button{border:0;border-radius:12px;padding:12px 14px;font-weight:800;cursor:poin
 .mode-icon{font-size:32px;margin-bottom:8px}.mode-title{font-size:18px;font-weight:800;color:#153a2f;margin-bottom:5px}
 .mode-desc{font-size:13px;line-height:1.55;color:#65736e}.mode-badge{display:inline-block;margin-top:9px;padding:4px 9px;border-radius:999px;background:#e5f5ef;color:#087f5b;font-size:11px;font-weight:800}
 @media(max-width:700px){.mode-launcher{grid-template-columns:1fr}}
+
+.ai-engine-switch{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:10px;
+  margin-top:10px;
+}
+.ai-engine-btn{
+  border:2px solid #dbe4e1;
+  background:#fff;
+  border-radius:14px;
+  padding:14px 12px;
+  cursor:pointer;
+  text-align:left;
+  transition:.18s ease;
+  color:#20332d;
+}
+.ai-engine-btn:hover{border-color:#087f5b;transform:translateY(-1px)}
+.ai-engine-btn.active{
+  border-color:#087f5b;
+  background:#edf8f4;
+  box-shadow:0 0 0 3px rgba(8,127,91,.08);
+}
+.ai-engine-btn .ai-title{font-weight:800;font-size:15px;display:block}
+.ai-engine-btn .ai-sub{font-size:12px;opacity:.78;display:block;margin-top:4px;line-height:1.45}
+.ai-status-pill{
+  display:inline-block;
+  padding:4px 9px;
+  border-radius:999px;
+  font-size:11px;
+  font-weight:800;
+  margin-left:6px;
+}
+.ai-status-free{background:#e9f8ef;color:#15703d}
+.ai-status-api{background:#fff3cd;color:#8a5a00}
+@media(max-width:700px){.ai-engine-switch{grid-template-columns:1fr}}
 </style>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2215%22%20fill%3D%22%230b8f64%22%2F%3E%0A%3Cpath%20fill%3D%22%23ffffff%22%20d%3D%22M18%2012h20c10.5%200%2017%206.1%2017%2015.1C55%2036.2%2048.3%2042%2038%2042H29v10H18V12zm11%209v12h8.3c4.3%200%206.7-2.1%206.7-6s-2.4-6-6.7-6H29z%22%2F%3E%0A%3Ccircle%20cx%3D%2249%22%20cy%3D%2249%22%20r%3D%226%22%20fill%3D%22%23f6c344%22%2F%3E%0A%3C%2Fsvg%3E">
 </head>
 <body>
 <div class="wrap">
   <div class="hero">
-    <h1>POKUN Web <span class="small">v5.0</span></h1>
+    <h1>POKUN Web <span class="small">v5.8</span></h1>
     <p>Daily Greeting Prompt Generator — ใช้ได้บนมือถือและคอม</p>
   </div>
 
@@ -382,9 +418,35 @@ button{border:0;border-radius:12px;padding:12px 14px;font-weight:800;cursor:poin
           <label class="small" style="display:block;margin-top:10px">แหล่งบุคคล</label>
           <select id="personSource1" style="margin-top:5px">
             <option value="generated">สร้างบุคคลใหม่</option>
-            <option value="user_photo">ใช้รูปของฉันที่แนบใน ChatGPT</option>
+            <option value="user_photo">ใช้รูปอ้างอิง 1 รูป</option>
+            <option value="multi_photo">ใช้รูปอ้างอิงหลายรูป / หลายบุคคล</option>
           </select>
-          <div class="small" style="margin-top:6px">หากเลือกใช้รูปของฉัน ให้แนบรูปใน ChatGPT ก่อนวาง Prompt — ถ้าเลือกการ์ตูน ระบบจะรักษาความคล้ายของบุคคลจากรูปจริง</div>
+          <div id="referenceUseBox1" style="display:none;margin-top:8px">
+            <label class="small">ใช้ส่วนไหนจากรูปอ้างอิง</label>
+            <select id="referenceUse1" style="margin-top:5px">
+              <option value="face_only">เฉพาะใบหน้า / Identity — แนะนำ</option>
+              <option value="face_hair">ใบหน้า + ทรงผม</option>
+              <option value="full_look">ใบหน้า + ทรงผม + ลุคโดยรวม</option>
+            </select>
+            <div id="referenceUseDescription1" class="notice" style="margin-top:6px"></div>
+          </div>
+          <div id="multiPhotoSettings1" style="display:none;margin-top:8px">
+            <label class="small">บทบาทของบุคคลจากรูปอ้างอิง</label>
+            <select id="multiPhotoRole1" style="margin-top:5px">
+              <option value="mother_daughter">รูปที่ 1 = แม่ / รูปที่ 2 = ลูกสาว</option>
+              <option value="mother_son">รูปที่ 1 = แม่ / รูปที่ 2 = ลูกชาย</option>
+              <option value="mother_child">รูปที่ 1 = แม่ / รูปที่ 2 = ลูก (AUTO เพศ)</option>
+              <option value="father_daughter">รูปที่ 1 = พ่อ / รูปที่ 2 = ลูกสาว</option>
+              <option value="father_son">รูปที่ 1 = พ่อ / รูปที่ 2 = ลูกชาย</option>
+              <option value="father_child">รูปที่ 1 = พ่อ / รูปที่ 2 = ลูก (AUTO เพศ)</option>
+              <option value="couple">รูปที่ 1 = บุคคลที่ 1 / รูปที่ 2 = คนรัก</option>
+              <option value="family">ครอบครัว / หลายบุคคล</option>
+              <option value="auto">AUTO ตามเนื้อหา</option>
+            </select>
+            <div class="notice" style="margin-top:6px">วันแม่แนะนำ: เลือกให้ตรงเพศจริง เช่น รูปที่ 1 = แม่ / รูปที่ 2 = ลูกสาว เพื่อให้ Prompt ล็อกทั้งบทบาท เพศ และ identity ของแต่ละคน</div>
+            <div class="notice" style="margin-top:6px">ถ้าลูกหน้าไม่ตรง ให้ใช้ “เฉพาะใบหน้า / Identity” ระบบ v5.8 จะเพิ่ม Child Identity Lock โดยรักษา Hairline + ทรงผมหลักของลูกด้วย แต่ยังเปลี่ยนเสื้อผ้าและฉากได้</div>
+          </div>
+          <div class="small" style="margin-top:6px">หากใช้รูปอ้างอิง ให้แนบรูปใน ChatGPT ก่อนวาง Prompt — รองรับทั้งรูปเดียวและหลายรูป และถ้าเลือกการ์ตูน ระบบจะรักษาความคล้ายของแต่ละบุคคลจากรูปจริง</div>
         </div>
 
         <div class="stylebox">
@@ -417,18 +479,46 @@ button{border:0;border-radius:12px;padding:12px 14px;font-weight:800;cursor:poin
           <label class="small" style="display:block;margin-top:10px">แหล่งบุคคล</label>
           <select id="personSource2" style="margin-top:5px">
             <option value="generated">สร้างบุคคลใหม่</option>
-            <option value="user_photo">ใช้รูปของฉันที่แนบใน ChatGPT</option>
+            <option value="user_photo">ใช้รูปอ้างอิง 1 รูป</option>
+            <option value="multi_photo">ใช้รูปอ้างอิงหลายรูป / หลายบุคคล</option>
           </select>
-          <div class="small" style="margin-top:6px">หากเลือกใช้รูปของฉัน ให้แนบรูปใน ChatGPT ก่อนวาง Prompt — ถ้าเลือกการ์ตูน ระบบจะรักษาความคล้ายของบุคคลจากรูปจริง</div>
+          <div id="referenceUseBox2" style="display:none;margin-top:8px">
+            <label class="small">ใช้ส่วนไหนจากรูปอ้างอิง</label>
+            <select id="referenceUse2" style="margin-top:5px">
+              <option value="face_only">เฉพาะใบหน้า / Identity — แนะนำ</option>
+              <option value="face_hair">ใบหน้า + ทรงผม</option>
+              <option value="full_look">ใบหน้า + ทรงผม + ลุคโดยรวม</option>
+            </select>
+            <div id="referenceUseDescription2" class="notice" style="margin-top:6px"></div>
+          </div>
+          <div id="multiPhotoSettings2" style="display:none;margin-top:8px">
+            <label class="small">บทบาทของบุคคลจากรูปอ้างอิง</label>
+            <select id="multiPhotoRole2" style="margin-top:5px">
+              <option value="mother_daughter">รูปที่ 1 = แม่ / รูปที่ 2 = ลูกสาว</option>
+              <option value="mother_son">รูปที่ 1 = แม่ / รูปที่ 2 = ลูกชาย</option>
+              <option value="mother_child">รูปที่ 1 = แม่ / รูปที่ 2 = ลูก (AUTO เพศ)</option>
+              <option value="father_daughter">รูปที่ 1 = พ่อ / รูปที่ 2 = ลูกสาว</option>
+              <option value="father_son">รูปที่ 1 = พ่อ / รูปที่ 2 = ลูกชาย</option>
+              <option value="father_child">รูปที่ 1 = พ่อ / รูปที่ 2 = ลูก (AUTO เพศ)</option>
+              <option value="couple">รูปที่ 1 = บุคคลที่ 1 / รูปที่ 2 = คนรัก</option>
+              <option value="family">ครอบครัว / หลายบุคคล</option>
+              <option value="auto">AUTO ตามเนื้อหา</option>
+            </select>
+            <div class="notice" style="margin-top:6px">หากแนบมากกว่า 2 รูป ให้ระบบรักษา identity ของแต่ละคนแยกจากกัน และใช้ความสัมพันธ์ตาม Creative Brief</div>
+          </div>
+          <div class="small" style="margin-top:6px">หากใช้รูปอ้างอิง ให้แนบรูปใน ChatGPT ก่อนวาง Prompt — รองรับทั้งรูปเดียวและหลายรูป และถ้าเลือกการ์ตูน ระบบจะรักษาความคล้ายของแต่ละบุคคลจากรูปจริง</div>
         </div>
       </div>
 
       <div id="userPhotoNotice" class="notice" style="margin-top:8px;display:none;padding:10px;border:1px solid #f59e0b;border-radius:12px;background:#fff7ed;color:#92400e">
-        📷 ใช้รูปของฉัน: POKUN ไม่รับไฟล์รูป ให้คัดลอก Prompt แล้วเปิด ChatGPT จากนั้นแนบรูปของคุณในแชตก่อนวาง Prompt และสั่งสร้างภาพ
+        📷 ใช้รูปอ้างอิง: ค่าแนะนำคือ “เฉพาะใบหน้า / Identity” — ให้ AI ใช้รูปเพื่อรักษาหน้าของแต่ละคนเท่านั้น ส่วนเสื้อผ้า เครื่องประดับ ท่าทาง ฉาก และแสง ให้ AI ออกแบบใหม่ตาม Prompt หากใช้หลายรูปให้เรียงตามบทบาท เช่น รูปที่ 1 = แม่ / รูปที่ 2 = ลูกสาว
       </div>
 
       <div class="notice" style="margin-top:8px">
         วันสำคัญยังคงบทบาทหลักให้ถูกต้อง และ AUTO จะเลือกทั้งเพศและช่วงวัยตามบริบท เช่น วันแม่อาจเป็นแม่กับลูกเด็ก คุณแม่สูงอายุกับลูกผู้ใหญ่ หรือคุณยายกับหลานได้
+      </div>
+      <div class="notice" style="margin-top:8px">
+        💙 วันแม่ + รูปอ้างอิงหลายรูป: แนะนำเลือกบทบาทให้ตรงเพศจริง และเลือก “เฉพาะใบหน้า / Identity” เพื่อให้หน้าแม่และลูกตรงกับรูปอ้างอิง โดย v5.8 ให้ลูกมี Face Fidelity Priority เท่ากับแม่ พร้อมล็อก Hairline + ทรงผมหลักของลูก แต่เสื้อผ้า ท่าทาง ฉาก และแสงยังให้ AI สร้างใหม่ตามงานวันแม่
       </div>
     </section>
 
@@ -576,6 +666,61 @@ button{border:0;border-radius:12px;padding:12px 14px;font-weight:800;cursor:poin
 <section class="card full">
       <label>ความหลากหลายของ Prompt + สร้าง Prompt</label>
 
+      <div class="stylebox" style="margin-bottom:10px">
+        <strong>🧠 ระบบสร้าง Prompt</strong>
+        <div class="small" style="margin-top:5px">
+          เลือกก่อนกดสร้าง Prompt ว่าจะใช้ระบบ POKUN ในเครื่อง หรือให้ AI ช่วยคิดผ่าน Backend
+        </div>
+
+        <div id="pokunEngineReady" class="notice" style="margin-top:10px">
+          ✅ ค่าเริ่มต้น: POKUN Engine พร้อมสร้าง Prompt ได้ทันที ไม่ต้องเชื่อม AI
+        </div>
+
+        <div class="ai-engine-switch">
+          <button id="aiEngineOffBtn" class="ai-engine-btn" type="button">
+            <span class="ai-title">⚙️ POKUN Engine <span class="ai-status-pill ai-status-free">ไม่ใช้ AI</span></span>
+            <span class="ai-sub">สร้าง Prompt ได้ทันทีด้วย Rule + Random Prompt Engine ใน Browser — ไม่ต้องมี API / Backend / API Key</span>
+          </button>
+
+          <button id="aiEngineOnBtn" class="ai-engine-btn" type="button">
+            <span class="ai-title">🧠 AI Prompt Engine <span class="ai-status-pill ai-status-api">ใช้ AI</span></span>
+            <span class="ai-sub">ส่ง Base Prompt ไปยัง Backend เพื่อให้ AI ช่วยคิดข้อความ Scene หรือปรับ Prompt ทั้งชุด</span>
+          </button>
+        </div>
+
+        <select id="aiPromptMode" style="display:none">
+          <option value="off">off</option>
+          <option value="on">on</option>
+        </select>
+
+        <div id="aiAdvancedBox" style="display:none;margin-top:12px">
+          <div class="grid" style="grid-template-columns:repeat(2,minmax(0,1fr));gap:10px">
+            <div>
+              <label class="small">AI ช่วยส่วนไหน</label>
+              <select id="aiPromptScope" style="margin-top:5px">
+                <option value="text">ข้อความ / Headline / คำอวยพร</option>
+                <option value="text_scene">ข้อความ + Scene / Props / Activity</option>
+                <option value="full">ปรับ Prompt ทั้งชุด</option>
+              </select>
+            </div>
+            <div>
+              <label class="small">สถานะ</label>
+              <div id="aiEngineStatus" class="notice" style="margin-top:5px">POKUN Engine — ไม่ใช้ AI</div>
+            </div>
+          </div>
+
+          <div id="aiBackendBox" style="margin-top:10px">
+            <label class="small">Backend Endpoint</label>
+            <input id="aiBackendUrl" type="text" maxlength="240" placeholder="/api/pokun-ai" style="margin-top:5px">
+            <div class="row mobile-stack" style="margin-top:8px">
+              <button id="testAiBackend" class="secondary" type="button">ทดสอบ Backend</button>
+            </div>
+          </div>
+        </div>
+
+        <div id="aiPromptDescription" class="notice" style="margin-top:8px"></div>
+      </div>
+
       <div class="stylebox">
         <strong>🎲 Random Prompt Engine</strong>
         <div class="small" style="margin-top:5px">
@@ -633,7 +778,7 @@ button{border:0;border-radius:12px;padding:12px 14px;font-weight:800;cursor:poin
     </section>
 
     <section class="card full notice">
-      <b>หมายเหตุ:</b> POKUN Web v5.0 ทำงานในเครื่องผู้ใช้ทั้งหมด ไม่ส่งข้อมูลไปเซิร์ฟเวอร์ และใช้ตารางวันพระ พ.ศ. 2569/ค.ศ. 2026 จาก POKUN AHK v2.0 ที่คุณใช้อยู่ หากนำขึ้นเว็บจริง Clipboard/Share จะทำงานดีที่สุดบน HTTPS
+      <b>หมายเหตุ:</b> เมื่อเลือก POKUN Engine — ไม่ใช้ AI ระบบจะทำงานในเครื่องผู้ใช้และไม่เรียก AI API ส่วนเมื่อเลือก AI Prompt Engine — ใช้ AI ระบบจะส่ง Base Prompt ไปยัง Backend Endpoint ที่กำหนดเพื่อให้ AI ช่วยปรับ Prompt โดยไฟล์ HTML นี้ไม่เก็บ OpenAI API Key ไว้ใน Browser หากนำขึ้นเว็บจริง Clipboard/Share และ AI Backend จะทำงานดีที่สุดบน HTTPS
     </section>
   </div>
 </div>
@@ -661,6 +806,9 @@ let selectedStyle = Number(localStorage.getItem("pokunStyleIndex") || 0);
 let forceBuddhist = localStorage.getItem("pokunBuddhistF6") === "1";
 let watermarkText = localStorage.getItem("pokunWatermark") || "POKUN ✨";
 let appMode = localStorage.getItem("pokunAppMode") || "greeting";
+let aiPromptMode = localStorage.getItem("pokunAiPromptMode") || "off";
+let aiPromptScope = localStorage.getItem("pokunAiPromptScope") || "text_scene";
+let aiBackendUrl = localStorage.getItem("pokunAiBackendUrl") || "/api/pokun-ai";
 let birthdayName = localStorage.getItem("pokunBirthdayName") || "";
 let birthdayRelation = localStorage.getItem("pokunBirthdayRelation") || "auto";
 let birthdayTone = localStorage.getItem("pokunBirthdayTone") || "warm";
@@ -684,6 +832,10 @@ let ageMode1 = localStorage.getItem("pokunAgeMode1") || "auto";
 let ageMode2 = localStorage.getItem("pokunAgeMode2") || "auto";
 let personSource1 = localStorage.getItem("pokunPersonSource1") || "generated";
 let personSource2 = localStorage.getItem("pokunPersonSource2") || "generated";
+let multiPhotoRole1 = localStorage.getItem("pokunMultiPhotoRole1") || "mother_daughter";
+let multiPhotoRole2 = localStorage.getItem("pokunMultiPhotoRole2") || "mother_daughter";
+let referenceUse1 = localStorage.getItem("pokunReferenceUse1") || "face_only";
+let referenceUse2 = localStorage.getItem("pokunReferenceUse2") || "face_only";
 let animalMode = ["animal","both"].includes(characterMode1) || ["animal","both"].includes(characterMode2) ? "animal" : "none";
 let animalType = localStorage.getItem("pokunAnimalType") || "auto";
 let animalStyle = localStorage.getItem("pokunAnimalStyle") || "follow";
@@ -2223,6 +2375,21 @@ const ADVANCED_LAYOUTS=[
   "vertical","centerhero","frame","bottomblock","oversized","diagonal","minimal"
 ];
 
+
+function getCharacterComposition(setNo){
+  const mode=setNo===1 ? characterMode1 : characterMode2;
+
+  // Birthday mode intentionally has no animal workflow.
+  if(appMode==="birthday"){
+    return mode==="people" ? "people" : "none";
+  }
+
+  if(mode==="people") return "people";
+  if(mode==="animal") return "animal";
+  if(mode==="both") return "people_animal";
+  return "none";
+}
+
 function sceneLayoutCategory(sceneText){
   const t=(sceneText||"").toLowerCase();
   if(/food|breakfast|dessert|bakery|coffee|cafe|tea|fruit|meal|อาหาร|ขนม|กาแฟ/.test(t)) return "food";
@@ -2465,11 +2632,194 @@ function personSourceForSet(setNo){
   return setNo===1 ? personSource1 : personSource2;
 }
 
+
+function referenceUseForSet(setNo){
+  return setNo===1 ? referenceUse1 : referenceUse2;
+}
+
+function referenceUsageDirection(setNo){
+  const mode=referenceUseForSet(setNo);
+  if(mode==="face_hair"){
+    return [
+      "REFERENCE USAGE MODE: FACE + HAIR.",
+      "Use the uploaded reference only for facial identity, facial structure, skin tone, age impression, gender, and hairstyle/hair color.",
+      "Do NOT copy clothing, jewelry, accessories, body pose, hand pose, background, furniture, camera framing, or lighting from the reference.",
+      "Design new clothing, accessories, pose, scene, lighting, and styling that fit this creative brief."
+    ];
+  }
+  if(mode==="full_look"){
+    return [
+      "REFERENCE USAGE MODE: FACE + HAIR + GENERAL LOOK.",
+      "Preserve facial identity and hairstyle, and take only broad inspiration from the person's overall visible styling.",
+      "Do not mechanically copy the original photo. The final artwork must still use a newly designed pose, composition, lighting, and environment."
+    ];
+  }
+  return [
+    "REFERENCE USAGE MODE: FACE IDENTITY ONLY.",
+    "Use the uploaded reference photo ONLY to preserve the person's facial identity and essential face-specific traits: face shape, facial proportions, eyes, eyebrows, nose, mouth, jawline, skin tone, age impression, gender, and distinctive facial features.",
+    "CLOTHING FREEDOM RULE: Ignore the clothing, outfit colors, jewelry, accessories, uniform, shoes, and fashion styling from the reference photo. AI must create new clothing appropriate to this artwork.",
+    "POSE FREEDOM RULE: Do not copy body pose, hand pose, body angle, crop, camera framing, or posture from the reference photo.",
+    "SCENE FREEDOM RULE: Do not copy the original background, furniture, location, lighting, props, or environment.",
+    "HAIR RULE: Hair may be adapted naturally for adults when needed, but preserve the main hairline and hairstyle silhouette when they are important identity cues. For referenced children/teens, preserve the main hairline and hairstyle silhouette by default unless the user explicitly chooses another reference mode.",
+    "The reference photo is an identity source, not a wardrobe, pose, or scene template."
+  ];
+}
+
+function updateReferenceUseUI(){
+  const ref1=imageHasPeople(1)&&["user_photo","multi_photo"].includes(personSource1);
+  const ref2=imageHasPeople(2)&&["user_photo","multi_photo"].includes(personSource2);
+  const b1=$("referenceUseBox1"), b2=$("referenceUseBox2");
+  if(b1) b1.style.display=ref1?"block":"none";
+  if(b2) b2.style.display=ref2?"block":"none";
+
+  const descriptions={
+    face_only:"เฉพาะใบหน้า / Identity — ใช้รูปเพื่อรักษาหน้า เพศ และช่วงวัยเท่านั้น เสื้อผ้า เครื่องประดับ ท่าทาง ฉาก และแสงให้ AI ออกแบบใหม่ทั้งหมด",
+    face_hair:"ใบหน้า + ทรงผม — รักษาหน้าและทรงผมจากรูป แต่ให้ AI เปลี่ยนเสื้อผ้า ท่าทาง ฉาก และแสงใหม่",
+    full_look:"ใบหน้า + ทรงผม + ลุคโดยรวม — รักษาความคล้ายและอารมณ์ลุคจากรูปมากขึ้น แต่ยังสร้างฉากและ Composition ใหม่"
+  };
+  if($("referenceUseDescription1")) $("referenceUseDescription1").textContent=descriptions[referenceUse1]||descriptions.face_only;
+  if($("referenceUseDescription2")) $("referenceUseDescription2").textContent=descriptions[referenceUse2]||descriptions.face_only;
+}
+
+function multiPhotoRoleForSet(setNo){
+  return setNo===1 ? multiPhotoRole1 : multiPhotoRole2;
+}
+
+function multiPhotoRoleDirection(setNo){
+  const role=multiPhotoRoleForSet(setNo);
+  const map={
+    mother_daughter:[
+      "STRICT REFERENCE PHOTO ROLE MAPPING:",
+      "Reference photo 1 = MOTHER. She is an adult female.",
+      "Reference photo 2 = DAUGHTER. She is female. Do not render her as a boy, son, male child, or male teenager.",
+      "The mother and daughter must remain two distinct recognizable identities.",
+      "EQUAL IDENTITY PRIORITY: The daughter's likeness is equally important as the mother's likeness. Do not spend more fidelity on the mother while simplifying or replacing the daughter.",
+      "REFERENCE 1 controls only the mother's identity. REFERENCE 2 controls only the daughter's identity.",
+      "DAUGHTER IDENTITY LOCK: Preserve the daughter's recognizable face shape, forehead proportion, hairline, eye shape and spacing, eyebrows, nose, mouth, cheeks, jawline, skin tone, age impression, and core hairstyle silhouette from reference photo 2.",
+      "Do not beautify, mature, de-age, slim, feminize differently, or replace the daughter with a generic child/teen face.",
+      "Never swap, merge, average, reinterpret, or mix the two identities."
+    ],
+    mother_son:[
+      "STRICT REFERENCE PHOTO ROLE MAPPING:",
+      "Reference photo 1 = MOTHER. She is an adult female.",
+      "Reference photo 2 = SON. He is male. Do not render him as a daughter or female child.",
+      "The mother and son must remain two distinct recognizable identities.",
+      "REFERENCE 1 controls only the mother's identity. REFERENCE 2 controls only the son's identity.",
+      "Never swap, merge, average, reinterpret, or mix the two identities."
+    ],
+    mother_child:[
+      "REFERENCE PHOTO ROLE MAPPING:",
+      "Reference photo 1 = MOTHER.",
+      "Reference photo 2 = CHILD. Infer the child's gender ONLY from reference photo 2, not from random generation or other POKUN gender settings.",
+      "Keep the mother's identity and the child's identity clearly separate and individually recognizable."
+    ],
+    father_daughter:[
+      "STRICT REFERENCE PHOTO ROLE MAPPING:",
+      "Reference photo 1 = FATHER. He is an adult male.",
+      "Reference photo 2 = DAUGHTER. She is female. Do not render her as a son or male child.",
+      "Keep both identities separate and recognizable."
+    ],
+    father_son:[
+      "STRICT REFERENCE PHOTO ROLE MAPPING:",
+      "Reference photo 1 = FATHER. He is an adult male.",
+      "Reference photo 2 = SON. He is male. Do not render him as a daughter or female child.",
+      "Keep both identities separate and recognizable."
+    ],
+    father_child:[
+      "REFERENCE PHOTO ROLE MAPPING:",
+      "Reference photo 1 = FATHER.",
+      "Reference photo 2 = CHILD. Infer the child's gender ONLY from reference photo 2.",
+      "Keep the father's identity and the child's identity clearly separate and individually recognizable."
+    ],
+    couple:[
+      "STRICT REFERENCE PHOTO ROLE MAPPING:",
+      "Reference photo 1 = PERSON 1.",
+      "Reference photo 2 = PARTNER / PERSON 2.",
+      "Preserve each person's identity independently and do not swap or blend faces."
+    ],
+    family:[
+      "STRICT FAMILY REFERENCE MAPPING:",
+      "Each uploaded reference image represents a separate identity unless one image clearly contains multiple people.",
+      "Preserve every included family member as a distinct identity and never merge faces.",
+      "Assign family roles according to the creative brief and the selected relationship."
+    ],
+    auto:[
+      "REFERENCE PHOTO ROLE MAPPING:",
+      "Infer each person's role from the creative brief and the uploaded references.",
+      "Gender and age must come from each corresponding reference photo, not from random generation.",
+      "Never merge, swap, or reinterpret identities between reference photos."
+    ]
+  };
+  return map[role]||map.auto;
+}
+
+
+function childIdentityLockDirection(setNo){
+  const source=personSourceForSet(setNo);
+  if(source!=="multi_photo") return [];
+  const role=multiPhotoRoleForSet(setNo);
+
+  if(role==="mother_daughter" || role==="father_daughter"){
+    return [
+      "CHILD / DAUGHTER FACE FIDELITY LOCK:",
+      "Reference photo 2 has its own independent face-identity priority equal to reference photo 1.",
+      "Preserve the daughter's exact recognizable facial structure as closely as practical: face outline, forehead proportion, hairline, eye shape, eye spacing, eyebrow shape, nose shape, mouth shape, cheek fullness, jawline, skin tone, age impression, and distinctive facial marks.",
+      "Preserve the daughter's main hairstyle silhouette and hairline because they are important identity cues, even when REFERENCE USAGE MODE is FACE IDENTITY ONLY.",
+      "Do not substitute a generic cute daughter face, generic Asian girl face, model-like child face, or a newly invented child identity.",
+      "Do not make the daughter older, younger, slimmer, rounder, more mature, more glamorous, or more stylized than needed for the selected visual style.",
+      "The daughter must still look recognizably like reference photo 2 after changing clothing, pose, scene, and lighting.",
+      ""
+    ];
+  }
+
+  if(role==="mother_son" || role==="father_son"){
+    return [
+      "CHILD / SON FACE FIDELITY LOCK:",
+      "Reference photo 2 has its own independent face-identity priority equal to reference photo 1.",
+      "Preserve the son's recognizable face outline, forehead proportion, hairline, eye shape and spacing, eyebrows, nose, mouth, cheeks, jawline, skin tone, age impression, and main hairstyle silhouette.",
+      "Do not substitute a generic boy face or a newly invented child identity.",
+      "The son must still look recognizably like reference photo 2 after changing clothing, pose, scene, and lighting.",
+      ""
+    ];
+  }
+
+  return [];
+}
+
 function userPhotoDirection(setNo){
-  if(!imageHasPeople(setNo) || personSourceForSet(setNo)!=="user_photo") return [];
+  if(!imageHasPeople(setNo)) return [];
+  const source=personSourceForSet(setNo);
+  if(source==="generated") return [];
+
+  if(source==="multi_photo"){
+    return [
+      "MULTI-PERSON USER REFERENCE PHOTOS:",
+      "The user will attach two or more personal reference photos in ChatGPT together with this prompt.",
+      ...multiPhotoRoleDirection(setNo),
+      ...referenceUsageDirection(setNo),
+      ...childIdentityLockDirection(setNo),
+      "Use the uploaded people as identity references for the human subjects in this newly created artwork.",
+      "IDENTITY PRIORITY RULE: The uploaded reference photos have higher priority than POKUN's generic gender, age, face, hairstyle, or character defaults.",
+      "IDENTITY SEPARATION RULE: Preserve each person's face shape, facial proportions, eye shape, nose, mouth, jawline, hairstyle, hair color, skin tone, age impression, and distinctive visible features independently.",
+      "FACE FIDELITY RULE: Do not invent a new generic face for either person. Keep each face recognizably close to its own reference photo. Clothing, accessories, pose, expression, lighting, and scene are controlled by this creative brief, not by the reference photo.",
+      "Never blend, average, swap, merge, hybridize, beautify into a different identity, or transfer facial features between reference photos.",
+      "Do not assign the mother's face to the child or the child's face to the mother.",
+      "Do not change the selected person's gender. If the role says DAUGHTER, she must remain female; if SON, he must remain male.",
+      "Keep each person's age and relationship visually appropriate.",
+      humanStyle==="cartoon"
+        ? "MULTI-PERSON CARTOON LIKENESS RULE: Transform each real person into a cute polished illustrated/cartoon likeness while preserving the recognizable identity of EACH individual. Keep each person's real face shape, hairline, hairstyle silhouette, age impression, gender, and distinctive features recognizable. Apply equal likeness fidelity to every referenced person, especially children. All people must share one coherent cartoon style, but do not simplify them into generic interchangeable cartoon faces."
+        : "MULTI-PERSON PHOTOREALISTIC LIKENESS RULE: Render all referenced people photorealistically and keep each individual recognizably consistent with their own reference photo.",
+      "Create a new pose, clothing treatment, activity, lighting, and environment according to this creative brief.",
+      "The uploaded photos are identity references; do not simply paste or reproduce their original backgrounds.",
+      "For a Mother’s Day scene, naturally place the mother and child together in a warm respectful relationship moment such as offering a jasmine garland, embracing gently, sitting together, or sharing an affectionate family interaction when appropriate.",
+      ""
+    ];
+  }
+
   return [
     "USER-PROVIDED PERSON REFERENCE:",
     "The user will attach a personal photo in ChatGPT together with this prompt.",
+    ...referenceUsageDirection(setNo),
     "Use the person shown in that uploaded photo as the identity reference for the visible human subject in this newly created artwork.",
     "Preserve the person's recognizable facial identity, overall facial proportions, hairstyle cues, skin tone, and distinctive visible features as faithfully as practical.",
     humanStyle==="cartoon"
@@ -2477,7 +2827,7 @@ function userPhotoDirection(setNo){
       : "PHOTOREALISTIC LIKENESS RULE: Keep the newly generated person photorealistic and recognizably consistent with the uploaded identity reference.",
     "Create a new composition, pose, clothing treatment, activity, lighting, and environment according to this creative brief.",
     "Do not copy the original photo background or original pose unless the creative brief specifically calls for them.",
-    "If more than one person appears in the uploaded photo, prioritize the clearly dominant/main person unless the prompt context explicitly calls for multiple family members.",
+    "If more than one person appears in the uploaded photo, preserve the visible identities separately when the creative brief calls for multiple family members.",
     ""
   ];
 }
@@ -2799,6 +3149,146 @@ function quoteVisualDirection(s,setNo,qtx){
 }
 
 
+
+function updateAiPromptUI(){
+  const on=aiPromptMode==="on";
+  const offBtn=$("aiEngineOffBtn");
+  const onBtn=$("aiEngineOnBtn");
+  const adv=$("aiAdvancedBox");
+  const backend=$("aiBackendBox");
+  const status=$("aiEngineStatus");
+  const hiddenMode=$("aiPromptMode");
+
+  if(hiddenMode) hiddenMode.value=aiPromptMode;
+  if(offBtn) offBtn.classList.toggle("active",!on);
+  if(onBtn) onBtn.classList.toggle("active",on);
+  if(adv) adv.style.display=on?"block":"none";
+  if(backend) backend.style.display=on?"block":"none";
+
+  if(status){
+    status.textContent=on
+      ? "AI Prompt Engine — ใช้ AI ผ่าน Backend"
+      : "POKUN Engine — ไม่ใช้ AI";
+  }
+
+  const d=$("aiPromptDescription");
+  if(d){
+    if(on){
+      const scopeMap={
+        text:"AI จะช่วยคิด/ปรับ Headline คำอวยพร หรือคำคม โดยยังรักษาการตั้งค่า Scene และ Layout ของ POKUN",
+        text_scene:"AI จะช่วยทั้งข้อความ Scene Props และ Activity เพื่อเพิ่มความหลากหลาย",
+        full:"AI จะช่วยปรับ Prompt ทั้งชุด แต่ยังต้องรักษากฎหลัก เช่น วัน สี วันสำคัญ ตัวละคร Typography และ Layout ที่ User เลือก"
+      };
+      d.textContent="ON — "+(scopeMap[aiPromptScope]||scopeMap.text)+" • ต้องมี Backend Endpoint ที่เชื่อม OpenAI API";
+    }else{
+      d.textContent="OFF — พร้อมสร้าง Prompt ทันทีด้วย POKUN Random / Rule Engine ไม่เรียก AI API ไม่ต้องมี Backend และไม่ต้องมี API Key";
+    }
+  }
+}
+
+function aiScopeInstruction(scope){
+  if(scope==="text") return "Improve ONLY the creative Thai visible text choices (headline/blessing/quote/supporting thought) when they are not marked exact or mandatory. Preserve scene, layout, typography, characters, dates, colors, and every hard constraint. Return the COMPLETE final prompt, not commentary.";
+  if(scope==="text_scene") return "Improve the Thai visible text plus scene storytelling, activity, and props for stronger originality and semantic coherence. Preserve layout, typography identity, stroke/shadow, character composition, dates, signature colors, important-day rules, user-reference rules, and every hard constraint. Return the COMPLETE final prompt, not commentary.";
+  return "Polish and creatively improve the COMPLETE prompt for originality, coherence, and visual quality. Never violate or remove any hard constraint, exact Thai text requirement, important-day rule, character-composition rule, user-reference rule, layout selection, typography identity, stroke/shadow setting, watermark, or 3:4 format. Return only the COMPLETE final prompt.";
+}
+
+async function callAiPromptBackend(basePrompt,setNo){
+  const endpoint=String(aiBackendUrl||"").trim();
+  if(!endpoint) throw new Error("ยังไม่ได้กำหนด Backend Endpoint");
+  const payload={
+    action:"generate_prompt",
+    setNo,
+    scope:aiPromptScope,
+    instruction:aiScopeInstruction(aiPromptScope),
+    basePrompt,
+    appMode,
+    client:"POKUN Web v5.8"
+  };
+  const res=await fetch(endpoint,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)});
+  let data={};
+  try{ data=await res.json(); }catch(_){ }
+  if(!res.ok) throw new Error(data.error||`Backend error ${res.status}`);
+  const prompt=String(data.prompt||data.output||data.text||"").trim();
+  if(!prompt) throw new Error("Backend ไม่ได้ส่ง Prompt กลับมา");
+  return prompt;
+}
+
+async function generatePromptForSet(setNo){
+  const output=$(setNo===1?"output1":"output2");
+  const button=$(setNo===1?"make1":"make2");
+
+  // IMPORTANT: POKUN Engine is completely independent from AI/API/Backend.
+  // OFF mode must always build locally first and never call fetch().
+  if(aiPromptMode!=="on"){
+    try{
+      if(setNo===1){
+        rerollSeed1++;
+        localStorage.setItem("pokunRerollSeed1",rerollSeed1);
+      }else{
+        rerollSeed2++;
+        localStorage.setItem("pokunRerollSeed2",rerollSeed2);
+      }
+      const localPrompt=pokunSafeBuildPrompt(setNo);
+      output.value=localPrompt;
+      toast(`✅ POKUN Engine สร้าง Prompt ภาพที่ ${setNo} แล้ว — ไม่ได้ใช้ AI`);
+    }catch(err){
+      console.error("POKUN Engine error:",err);
+      output.value="POKUN Engine พบข้อผิดพลาด: "+(err && err.message ? err.message : String(err));
+      toast("POKUN Engine พบข้อผิดพลาด กรุณาดูข้อความในช่อง Prompt");
+    }
+    return;
+  }
+
+  // AI mode: local POKUN prompt is still the base/fallback.
+  let localPrompt="";
+  try{
+    if(setNo===1){
+      rerollSeed1++;
+      localStorage.setItem("pokunRerollSeed1",rerollSeed1);
+    }else{
+      rerollSeed2++;
+      localStorage.setItem("pokunRerollSeed2",rerollSeed2);
+    }
+    localPrompt=pokunSafeBuildPrompt(setNo);
+  }catch(err){
+    console.error("Base prompt error:",err);
+    output.value="ไม่สามารถสร้าง Base Prompt ได้: "+(err && err.message ? err.message : String(err));
+    toast("สร้าง Base Prompt ไม่สำเร็จ");
+    return;
+  }
+
+  const oldText=button.textContent;
+  button.disabled=true;
+  button.textContent=`🧠 AI กำลังคิดภาพที่ ${setNo}...`;
+  output.value="กำลังส่ง Base Prompt ไปยัง AI Backend...";
+  try{
+    output.value=await callAiPromptBackend(localPrompt,setNo);
+    toast(`AI สร้าง Prompt ภาพที่ ${setNo} แล้ว`);
+  }catch(err){
+    console.error(err);
+    output.value=localPrompt;
+    toast(`AI ใช้งานไม่ได้ — ใช้ POKUN Engine แทนอัตโนมัติ`);
+  }finally{
+    button.disabled=false;
+    button.textContent=oldText;
+  }
+}
+
+async function testAiBackendConnection(){
+  const endpoint=String(aiBackendUrl||"").trim();
+  if(!endpoint){ toast("กรุณาระบุ Backend Endpoint"); return; }
+  const btn=$("testAiBackend");
+  const old=btn.textContent;
+  btn.disabled=true; btn.textContent="กำลังทดสอบ...";
+  try{
+    const res=await fetch(endpoint,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({action:"health",client:"POKUN Web v5.8"})});
+    const data=await res.json().catch(()=>({}));
+    if(!res.ok) throw new Error(data.error||`HTTP ${res.status}`);
+    toast(data.ok?"AI Backend พร้อมใช้งาน":"Backend ตอบกลับแล้ว");
+  }catch(err){ toast("เชื่อมต่อ AI Backend ไม่สำเร็จ: "+err.message); }
+  finally{ btn.disabled=false; btn.textContent=old; }
+}
+
 function buildPrompt(setNo){
   const s=effectiveState(setNo);
   const variation=randomCreativeVariation(s,setNo);
@@ -3028,8 +3518,12 @@ function buildPrompt(setNo){
       L.push("Render all visible people as photorealistic, respectful, non-famous human subjects appropriate to the scene.");
       L.push("Keep faces, anatomy, hands, skin, hair, clothing, scale, expressions, and poses natural and believable.");
     }
-    L.push("GENDER DIRECTION:",genderDirection(s,setNo));
-    L.push("AGE DIRECTION:",ageDirection(s,setNo));
+    if(personSourceForSet(setNo)==="multi_photo"){
+      L.push("REFERENCE OVERRIDE: For referenced people, use gender and age from the selected reference-role mapping and uploaded photos. Do not let generic Gender/Age settings override the reference identities.");
+    }else{
+      L.push("GENDER DIRECTION:",genderDirection(s,setNo));
+      L.push("AGE DIRECTION:",ageDirection(s,setNo));
+    }
     if(personSourceForSet(setNo)==="user_photo"){
       L.push(...userPhotoDirection(setNo));
     }else{
@@ -3141,18 +3635,53 @@ $("styleSelect").addEventListener("change",e=>{selectedStyle=Number(e.target.val
 $("autoStyle").addEventListener("click",()=>{styleMode="AUTO";selectedStyle=autoStyleIndex(localDateFromInput($("date").value));localStorage.setItem("pokunStyleMode","AUTO");localStorage.setItem("pokunStyleIndex",selectedStyle);updateUI();toast("AUTO Typography")});
 $("prevStyle").addEventListener("click",()=>{styleMode="MANUAL";selectedStyle=(selectedStyle-1+DATA.typography.length)%DATA.typography.length;localStorage.setItem("pokunStyleMode",styleMode);localStorage.setItem("pokunStyleIndex",selectedStyle);$("styleSearch").value="";updateUI()});
 $("nextStyle").addEventListener("click",()=>{styleMode="MANUAL";selectedStyle=(selectedStyle+1)%DATA.typography.length;localStorage.setItem("pokunStyleMode",styleMode);localStorage.setItem("pokunStyleIndex",selectedStyle);$("styleSearch").value="";updateUI()});
-$("make1").addEventListener("click",()=>{
-  rerollSeed1++;
-  localStorage.setItem("pokunRerollSeed1",rerollSeed1);
-  $("output1").value=buildPrompt(1);
-  toast("สร้าง Prompt ภาพที่ 1 ชุดใหม่แล้ว");
+
+function pokunSafeBuildPrompt(setNo){
+  try{
+    return buildPrompt(setNo);
+  }catch(err){
+    console.error("POKUN buildPrompt failed:",err);
+    const msg=err && err.message ? err.message : String(err);
+    throw new Error(msg);
+  }
+}
+
+function forcePokunEngine(){
+  aiPromptMode="off";
+  localStorage.setItem("pokunAiPromptMode","off");
+  updateAiPromptUI();
+}
+
+$("make1").addEventListener("click",()=>generatePromptForSet(1));
+$("make2").addEventListener("click",()=>generatePromptForSet(2));
+$("aiEngineOffBtn").addEventListener("click",()=>{
+  forcePokunEngine();
+  toast("✅ POKUN Engine พร้อมใช้งาน — กดสร้าง Prompt ได้ทันที");
 });
-$("make2").addEventListener("click",()=>{
-  rerollSeed2++;
-  localStorage.setItem("pokunRerollSeed2",rerollSeed2);
-  $("output2").value=buildPrompt(2);
-  toast("สร้าง Prompt ภาพที่ 2 ชุดใหม่แล้ว");
+$("aiEngineOnBtn").addEventListener("click",()=>{
+  aiPromptMode="on";
+  localStorage.setItem("pokunAiPromptMode",aiPromptMode);
+  updateAiPromptUI();
+  toast("AI Prompt Engine — ใช้ AI ผ่าน Backend");
 });
+
+$("aiPromptMode").addEventListener("change",e=>{
+  aiPromptMode=e.target.value;
+  localStorage.setItem("pokunAiPromptMode",aiPromptMode);
+  updateAiPromptUI();
+  toast(aiPromptMode==="on"?"AI Prompt Engine: ON":"AI Prompt Engine: OFF");
+});
+$("aiPromptScope").addEventListener("change",e=>{
+  aiPromptScope=e.target.value;
+  localStorage.setItem("pokunAiPromptScope",aiPromptScope);
+  updateAiPromptUI();
+});
+$("aiBackendUrl").addEventListener("change",e=>{
+  aiBackendUrl=e.target.value.trim()||"/api/pokun-ai";
+  localStorage.setItem("pokunAiBackendUrl",aiBackendUrl);
+});
+$("testAiBackend").addEventListener("click",testAiBackendConnection);
+
 $("copy1").addEventListener("click",()=>copyText("output1"));
 $("copy2").addEventListener("click",()=>copyText("output2"));
 $("share1").addEventListener("click",()=>shareText("output1","Prompt ภาพที่ 1"));
@@ -3163,6 +3692,10 @@ $("clear").addEventListener("click",()=>{
   toast("เคลียร์ Prompt ทั้งสองภาพแล้ว");
 });
 
+$("aiPromptMode").value = aiPromptMode;
+$("aiPromptScope").value = aiPromptScope;
+$("aiBackendUrl").value = aiBackendUrl;
+updateAiPromptUI();
 $("watermark").value = watermarkText;
 $("birthdayName").value = birthdayName;
 $("birthdayRelation").value = birthdayRelation;
@@ -3191,6 +3724,11 @@ $("ageMode1").value = ageMode1;
 $("ageMode2").value = ageMode2;
 $("personSource1").value = personSource1;
 $("personSource2").value = personSource2;
+$("multiPhotoRole1").value = multiPhotoRole1;
+$("multiPhotoRole2").value = multiPhotoRole2;
+$("referenceUse1").value = referenceUse1;
+$("referenceUse2").value = referenceUse2;
+updateReferenceUseUI();
 $("animalMode").value = animalMode;
 $("animalType").value = animalType;
 $("animalStyle").value = animalStyle;
@@ -3229,9 +3767,14 @@ updateAnthroDescription();
 
 
 function updateUserPhotoNotice(){
-  const show=(imageHasPeople(1)&&personSource1==="user_photo") || (imageHasPeople(2)&&personSource2==="user_photo");
+  const useRef1=imageHasPeople(1)&&["user_photo","multi_photo"].includes(personSource1);
+  const useRef2=imageHasPeople(2)&&["user_photo","multi_photo"].includes(personSource2);
   const box=$("userPhotoNotice");
-  if(box) box.style.display=show ? "block" : "none";
+  if(box) box.style.display=(useRef1||useRef2) ? "block" : "none";
+  const m1=$("multiPhotoSettings1"), m2=$("multiPhotoSettings2");
+  if(m1) m1.style.display=(imageHasPeople(1)&&personSource1==="multi_photo") ? "block" : "none";
+  if(m2) m2.style.display=(imageHasPeople(2)&&personSource2==="multi_photo") ? "block" : "none";
+  updateReferenceUseUI();
 }
 
 function syncPeopleControls(){
@@ -3244,6 +3787,10 @@ function syncPeopleControls(){
   $("ageMode2").disabled = !on2;
   $("personSource1").disabled = !on1;
   $("personSource2").disabled = !on2;
+  $("multiPhotoRole1").disabled = !on1;
+  $("multiPhotoRole2").disabled = !on2;
+  $("referenceUse1").disabled = !on1;
+  $("referenceUse2").disabled = !on2;
 
   $("genderMode1").style.opacity = on1 ? "1" : ".55";
   $("genderMode2").style.opacity = on2 ? "1" : ".55";
@@ -3251,6 +3798,10 @@ function syncPeopleControls(){
   $("ageMode2").style.opacity = on2 ? "1" : ".55";
   $("personSource1").style.opacity = on1 ? "1" : ".55";
   $("personSource2").style.opacity = on2 ? "1" : ".55";
+  $("multiPhotoRole1").style.opacity = on1 ? "1" : ".55";
+  $("multiPhotoRole2").style.opacity = on2 ? "1" : ".55";
+  $("referenceUse1").style.opacity = on1 ? "1" : ".55";
+  $("referenceUse2").style.opacity = on2 ? "1" : ".55";
   updateUserPhotoNotice();
 }
 syncPeopleControls();
@@ -3400,6 +3951,28 @@ $("personSource2").addEventListener("change",e=>{
   localStorage.setItem("pokunPersonSource2",personSource2);
   updateUserPhotoNotice();
   toast("แหล่งบุคคลภาพที่ 2: "+e.target.options[e.target.selectedIndex].text);
+});
+$("multiPhotoRole1").addEventListener("change",e=>{
+  multiPhotoRole1=e.target.value;
+  localStorage.setItem("pokunMultiPhotoRole1",multiPhotoRole1);
+  toast("บทบาทรูปอ้างอิงภาพที่ 1: "+e.target.options[e.target.selectedIndex].text);
+});
+$("multiPhotoRole2").addEventListener("change",e=>{
+  multiPhotoRole2=e.target.value;
+  localStorage.setItem("pokunMultiPhotoRole2",multiPhotoRole2);
+  toast("บทบาทรูปอ้างอิงภาพที่ 2: "+e.target.options[e.target.selectedIndex].text);
+});
+$("referenceUse1").addEventListener("change",e=>{
+  referenceUse1=e.target.value;
+  localStorage.setItem("pokunReferenceUse1",referenceUse1);
+  updateReferenceUseUI();
+  toast("การใช้รูปอ้างอิงภาพที่ 1: "+e.target.options[e.target.selectedIndex].text);
+});
+$("referenceUse2").addEventListener("change",e=>{
+  referenceUse2=e.target.value;
+  localStorage.setItem("pokunReferenceUse2",referenceUse2);
+  updateReferenceUseUI();
+  toast("การใช้รูปอ้างอิงภาพที่ 2: "+e.target.options[e.target.selectedIndex].text);
 });
 
 $("frameMode1").addEventListener("change",e=>{
