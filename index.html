@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#111827">
-<title>POKUN Web v10.2</title>
+<title>POKUN Web v11.9</title>
 <style>
 :root{--bg:#f4f5f7;--card:#fff;--ink:#16181d;--muted:#6b7280;--line:#e5e7eb;--accent:#111827;--good:#087f5b;--warn:#b45309}
 *{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI","Noto Sans Thai",sans-serif;background:var(--bg);color:var(--ink)}
@@ -103,15 +103,75 @@ button{border:0;border-radius:12px;padding:12px 14px;font-weight:800;cursor:poin
   .workflow-group>.card{grid-column:1/-1}
   .workflow-nav{top:4px}
 }
+
+#buddhistQuickAccess{
+  margin:10px 0 12px;
+  border:2px solid #0b8f64;
+  box-shadow:0 8px 24px rgba(11,143,100,.10);
+}
+#buddhistQuickAccess .quick-title{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+}
+#buddhistQuickAccess .quick-badge{
+  font-size:11px;font-weight:900;padding:4px 8px;border-radius:999px;
+  background:#e9f8f2;color:#08714f;border:1px solid #b9dfd1;
+}
+
+#buddhistQuickAccess{
+  position:relative;
+  z-index:35;
+}
+
+#workflowNav{margin-top:8px}
+#buddhistQuickAccess{margin-top:8px}
+
+.mode-tabs-shell{
+  margin:10px 0 12px;padding:10px;
+  border:1px solid var(--line);border-radius:18px;
+  background:#fff;box-shadow:0 8px 24px rgba(15,23,42,.06);
+}
+.mode-tabs{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;
+}
+.mode-tab{
+  width:100%;padding:11px 10px;border-radius:14px;
+  border:1px solid var(--line);background:#fff;color:var(--ink);
+  font-weight:900;box-shadow:none;
+}
+.mode-tab.active{
+  background:#0b8f64;color:#fff;border-color:#0b8f64;
+}
+.mode-context-note{margin-top:8px}
+.context-hidden{display:none!important}
+#buddhistQuickAccess.context-inline{
+  border-color:#b9dfd1;
+}
+#auspiciousDeityBox.mode-deity-emphasis{
+  display:block!important;border:2px solid #c79a23;
+  background:linear-gradient(180deg,#fffdf5,#fff);
+}
+@media(max-width:600px){
+  .mode-tabs{grid-template-columns:1fr}
+}
 </style>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2215%22%20fill%3D%22%230b8f64%22%2F%3E%0A%3Cpath%20fill%3D%22%23ffffff%22%20d%3D%22M18%2012h20c10.5%200%2017%206.1%2017%2015.1C55%2036.2%2048.3%2042%2038%2042H29v10H18V12zm11%209v12h8.3c4.3%200%206.7-2.1%206.7-6s-2.4-6-6.7-6H29z%22%2F%3E%0A%3Ccircle%20cx%3D%2249%22%20cy%3D%2249%22%20r%3D%226%22%20fill%3D%22%23f6c344%22%2F%3E%0A%3C%2Fsvg%3E">
 </head>
 <body>
 <div class="wrap">
   <div class="hero">
-    <h1>POKUN Web <span class="small">v10.2</span></h1>
+    <h1>POKUN Web <span class="small">v11.9</span></h1>
     <p>Daily Greeting Prompt Generator — ใช้ได้บนมือถือและคอม</p>
   </div>
+
+  <section class="mode-tabs-shell" id="pokunModeTabsShell">
+    <div class="mode-tabs" id="pokunModeTabs" role="tablist" aria-label="POKUN mode">
+      <button type="button" class="mode-tab active" data-mode="general" role="tab">🌈 ทั่วไป</button>
+      <button type="button" class="mode-tab" data-mode="buddhist" role="tab">🪷 พุทธศิลป์</button>
+      <button type="button" class="mode-tab" data-mode="deity" role="tab">✨ เทพมงคล</button>
+    </div>
+    <div id="pokunModeContextNote" class="notice mode-context-note"></div>
+  </section>
+
 
   <div class="workflow-nav" id="workflowNav" aria-label="POKUN workflow navigation">
     <button type="button" data-go="workflowBasic">① งาน/วันที่</button>
@@ -122,6 +182,17 @@ button{border:0;border-radius:12px;padding:12px 14px;font-weight:800;cursor:poin
     <button type="button" data-go="workflowLayout">⑥ Layout</button>
     <button type="button" data-go="workflowOutput">⑦ สร้าง Prompt</button>
   </div>
+
+  <section class="card full" id="buddhistQuickAccess">
+      <div class="quick-title"><label style="margin:0">🪷 โหมดพุทธศิลป์สำหรับภาพที่ 1</label><span class="quick-badge">QUICK ACCESS</span></div>
+      <div class="toggle">
+        <input id="buddhistToggle" type="checkbox">
+        <div><b id="toggleText">OFF</b><div class="small">เปิดได้แม้ไม่ใช่วันพระ</div></div>
+      </div>
+      <div class="notice" style="margin-top:10px">ถ้าเป็นวันพระ ระบบจะใช้พุทธศิลป์อัตโนมัติ: ภาพ 1 มีพระพุทธรูป/พุทธศิลป์, ภาพ 2 เน้นปิ่นโต อาหาร ผลไม้ สังฆทาน และของทำบุญ โดยไม่มีบุคคล</div>
+      <div class="small" style="margin-top:6px">ปุ่มนี้ย้ายมาไว้บนสุดเพื่อเปิด–ปิดพุทธศิลป์ได้ทันที • หลังเปิดแล้วค่อยเลื่อนลงไปเลือกองค์ประกอบหลักและ Visual Style</div>
+    </section>
+
 
   <div class="grid" id="pokunMainGrid">
     <section class="card full" id="modeLauncherCard">
@@ -163,19 +234,10 @@ button{border:0;border-radius:12px;padding:12px 14px;font-weight:800;cursor:poin
       <div class="notice" style="margin-top:8px">ถ้าเป็นวันสำคัญ Headline, คำอวยพร และ Concept จะเปลี่ยนให้เข้ากับวันนั้นอัตโนมัติ</div>
     </section>
 
-    <section class="card">
-      <label>โหมดพุทธศิลป์สำหรับภาพที่ 1</label>
-      <div class="toggle">
-        <input id="buddhistToggle" type="checkbox">
-        <div><b id="toggleText">OFF</b><div class="small">เปิดได้แม้ไม่ใช่วันพระ</div></div>
-      </div>
-      <div class="notice" style="margin-top:10px">ถ้าเป็นวันพระ ระบบจะใช้พุทธศิลป์อัตโนมัติ: ภาพ 1 มีพระพุทธรูป/พุทธศิลป์, ภาพ 2 เน้นปิ่นโต อาหาร ผลไม้ สังฆทาน และของทำบุญ โดยไม่มีบุคคล</div>
-    </section>
-
     <section class="card full" id="buddhistSubjectSection" style="display:none">
       <label>🪷 องค์ประกอบหลักของพุทธศิลป์</label>
       <div class="notice" style="margin-bottom:10px">
-        ใช้เฉพาะเมื่อเปิดพุทธศิลป์หรือเป็นวันพระ/วันสำคัญทางพุทธศาสนา • พระพุทธรูปไม่นับเป็น “บุคคล” • พระสงฆ์/เกจิอาจารย์เป็นบุคคลจริงและใช้รูปอ้างอิงได้
+        ใช้เฉพาะเมื่อเปิดพุทธศิลป์หรือเป็นวันพระ/วันสำคัญทางพุทธศาสนา • พระพุทธรูปไม่นับเป็น “บุคคล” • เลือก “พระภิกษุ / พระสงฆ์ — สร้างใหม่” ได้โดยไม่อ้างอิงบุคคลจริง • หากต้องการพระ/เกจิอาจารย์บุคคลจริงให้ใช้โหมดรูปอ้างอิง
       </div>
       <div class="grid" style="grid-template-columns:repeat(2,minmax(0,1fr));gap:10px">
         <div class="stylebox">
@@ -183,6 +245,7 @@ button{border:0;border-radius:12px;padding:12px 14px;font-weight:800;cursor:poin
           <select id="buddhistSubject1" style="margin-top:8px">
             <option value="auto">AUTO — ให้ระบบเลือก</option>
             <option value="buddha_statue">พระพุทธรูป</option>
+            <option value="monk_generated">พระภิกษุ / พระสงฆ์ — สร้างใหม่ ไม่ใช่รูปเหมือนบุคคลจริง</option>
             <option value="no_figure">ไม่มีพระพุทธรูป/ไม่มีบุคคล — ใช้วัด เจดีย์ ดอกบัว ฯลฯ</option>
             <option value="buddha_reference">ใช้รูปพระพุทธรูปอ้างอิง</option>
             <option value="monk_reference">ใช้รูปพระสงฆ์ / เกจิอาจารย์อ้างอิง</option>
@@ -192,6 +255,11 @@ button{border:0;border-radius:12px;padding:12px 14px;font-weight:800;cursor:poin
           <div id="buddhistUploadBox1" style="display:none;margin-top:8px">
             <label class="small">เลือกรูปอ้างอิง</label>
             <input id="buddhistReferenceFile1" type="file" accept="image/*" style="margin-top:5px">
+          <div class="notice buddhist-reference-mode-note" style="margin-top:7px">
+            <b>📷 รูปอ้างอิง — สำหรับโหมด API</b><br>
+            หากใช้งานผ่าน API สามารถเลือกรูปอ้างอิงสำหรับภาพที่ 1จากเครื่องได้ที่ช่องนี้<br>
+            <b>โหมด Manual / ใช้กับ ChatGPT:</b> ไม่จำเป็นต้องเลือกไฟล์ในช่องนี้ หากต้องการใช้รูปพระพุทธรูป พระสงฆ์ หรือเกจิอาจารย์เป็นอ้างอิง ให้แนบรูปนั้นใน ChatGPT พร้อม Prompt ก่อนสร้างภาพ
+          </div>
             <div id="buddhistReferenceName1" class="small" style="margin-top:5px"></div>
           </div>
         </div>
@@ -200,6 +268,7 @@ button{border:0;border-radius:12px;padding:12px 14px;font-weight:800;cursor:poin
           <select id="buddhistSubject2" style="margin-top:8px">
             <option value="auto">AUTO — ให้ระบบเลือก</option>
             <option value="buddha_statue">พระพุทธรูป</option>
+            <option value="monk_generated">พระภิกษุ / พระสงฆ์ — สร้างใหม่ ไม่ใช่รูปเหมือนบุคคลจริง</option>
             <option value="no_figure">ไม่มีพระพุทธรูป/ไม่มีบุคคล — ใช้วัด เจดีย์ ดอกบัว ฯลฯ</option>
             <option value="buddha_reference">ใช้รูปพระพุทธรูปอ้างอิง</option>
             <option value="monk_reference">ใช้รูปพระสงฆ์ / เกจิอาจารย์อ้างอิง</option>
@@ -209,6 +278,11 @@ button{border:0;border-radius:12px;padding:12px 14px;font-weight:800;cursor:poin
           <div id="buddhistUploadBox2" style="display:none;margin-top:8px">
             <label class="small">เลือกรูปอ้างอิง</label>
             <input id="buddhistReferenceFile2" type="file" accept="image/*" style="margin-top:5px">
+          <div class="notice buddhist-reference-mode-note" style="margin-top:7px">
+            <b>📷 รูปอ้างอิง — สำหรับโหมด API</b><br>
+            หากใช้งานผ่าน API สามารถเลือกรูปอ้างอิงสำหรับภาพที่ 2จากเครื่องได้ที่ช่องนี้<br>
+            <b>โหมด Manual / ใช้กับ ChatGPT:</b> ไม่จำเป็นต้องเลือกไฟล์ในช่องนี้ หากต้องการใช้รูปพระพุทธรูป พระสงฆ์ หรือเกจิอาจารย์เป็นอ้างอิง ให้แนบรูปนั้นใน ChatGPT พร้อม Prompt ก่อนสร้างภาพ
+          </div>
             <div id="buddhistReferenceName2" class="small" style="margin-top:5px"></div>
           </div>
         </div>
@@ -381,6 +455,43 @@ button{border:0;border-radius:12px;padding:12px 14px;font-weight:800;cursor:poin
       <div style="height:8px"></div>
       <select id="styleSelect"></select>
       <div id="styleDetail" class="stylebox"></div>
+
+      <div class="stylebox" id="headlineFrameBox" style="margin-top:10px">
+        <strong>🖼️ ระบบกรอบข้อความ / Text Frame System</strong>
+        <div class="small" style="margin-top:6px">
+          กรอบเป็นคนละระบบกับ Stroke, Shadow / 3D และ Highlight • เลือกกรอบ Headline และกรอบคำอวยพรแยกกันได้
+        </div>
+
+        <div class="grid2" style="margin-top:9px">
+          <div>
+            <label class="small"><b>หมวดกรอบ Headline</b></label>
+            <select id="headlineFrameCategory" style="margin-top:5px"></select>
+          </div>
+          <div>
+            <label class="small"><b>แบบกรอบ Headline</b></label>
+            <select id="headlineFrameMode" style="margin-top:5px"></select>
+          </div>
+        </div>
+        <div id="headlineFrameDescription" class="notice" style="margin-top:7px"></div>
+
+        <hr style="border:0;border-top:1px solid var(--line);margin:12px 0">
+
+        <div class="grid2">
+          <div>
+            <label class="small"><b>หมวดกรอบคำอวยพร</b></label>
+            <select id="blessingFrameCategory" style="margin-top:5px"></select>
+          </div>
+          <div>
+            <label class="small"><b>แบบกรอบคำอวยพร</b></label>
+            <select id="blessingFrameMode" style="margin-top:5px"></select>
+          </div>
+        </div>
+        <div id="blessingFrameDescription" class="notice" style="margin-top:7px"></div>
+
+        <div class="small" style="margin-top:7px">
+          AUTO จะเลือกให้เข้ากับ Typography + Visual Style + แท็บปัจจุบัน • ภาพที่ 1 และ 2 ใช้ Frame Family เดียวกันเพื่อคุมความเป็นชุด แต่สามารถเปลี่ยนรายละเอียดตกแต่งเล็กน้อยได้
+        </div>
+      </div>
       <div class="notice" style="margin-top:10px">
         ✨ v9.9 เพิ่ม Buddhist Scene Filter + ชุดอาหาร/ขนมไทยทำบุญ และ Typography ใหม่: <b>Thai Sacred Kanok Ornamental Display — ไทยพุทธศิลป์กนกประดิษฐ์</b> สำหรับวันพระและวันสำคัญทางพุทธศาสนา โดยใช้รูปทรงอักษรไทยประดิษฐ์ เส้นโค้ง หางยาว และจังหวะกนกอย่างสง่างาม พร้อมใช้ Stroke / Shadow ของระบบ POKUN ได้
       </div>
@@ -537,10 +648,35 @@ button{border:0;border-radius:12px;padding:12px 14px;font-weight:800;cursor:poin
           <option value="auto">AUTO — ใช้สไตล์ภาพเดิมของ POKUN</option>
           <option value="cute_lifestyle">Cute Thai Lifestyle Greeting — หวาน สดใส เป็นกันเอง</option>
           <option value="positive_energy">Positive Energy Lifestyle Poster — พลังบวก สดใส โปสเตอร์ไลฟ์สไตล์</option>
+          <option value="wealth_prosperity">มั่งคั่งร่ำรวย — Wealth & Prosperity / ทองอร่าม ความรุ่งเรือง โชคลาภ</option>
           <option value="cute_playful_prop">Cute Playful Prop Greeting — สดใส ขี้เล่น คนเล่นกับพร็อพ</option>
         </select>
         <div id="lifestyleVisualDescription" class="notice" style="margin-top:6px"></div>
-        <div class="small" style="margin-top:5px">v6.4 เพิ่ม Cute Playful Prop Greeting: เน้นท่าทางสนุก + พร็อพสุ่ม + ฉากสว่าง + doodle โดยไม่ล็อกว่าต้องเป็นโดนัททุกครั้ง</div>
+        <div id="auspiciousDeityBox" class="stylebox" style="margin-top:10px;display:none">
+          <strong>🙏 เทพมงคล / เทพแห่งโชคลาภ</strong>
+          <div class="small" style="margin-top:5px">ใช้ร่วมกับ Visual Style “มั่งคั่งร่ำรวย” เพื่อกำหนดองค์เทพหรือสัญลักษณ์มงคลหลักของภาพ</div>
+          <select id="auspiciousDeityMode" style="margin-top:8px">
+            <option value="auto">AUTO — สุ่มเทพมงคลที่เหมาะกับภาพ</option>
+            <option value="ganesha">พระพิฆเนศ</option>
+            <option value="caishen">ไฉ่ซิงเอี๊ย / เทพเจ้าแห่งโชคลาภ</option>
+            <option value="guan_yu">กวนอู</option>
+            <option value="naga">พญานาคราช</option>
+            <option value="fu_lu_shou">ฮก–ลก–ซิ่ว</option>
+            <option value="auspicious_shrine">ศาลเทพมงคล / แท่นบูชา</option>
+            <option value="auspicious_offerings">เครื่องสักการะและของมงคล</option>
+            <option value="reference">ใช้รูปเทพ/องค์บูชาอ้างอิง</option>
+          </select>
+          <div id="auspiciousDeityDescription" class="notice" style="margin-top:7px"></div>
+          <div id="auspiciousDeityUploadBox" style="display:none;margin-top:8px">
+            <label class="small">📷 รูปอ้างอิง — สำหรับโหมด API</label>
+            <input id="auspiciousDeityReferenceFile" type="file" accept="image/*" style="margin-top:5px">
+            <div id="auspiciousDeityReferenceName" class="small" style="margin-top:5px"></div>
+            <div class="notice" style="margin-top:7px">
+              <b>โหมด Manual / ใช้กับ ChatGPT:</b> ไม่จำเป็นต้องเลือกไฟล์ที่นี่ ให้แนบรูปองค์เทพ/องค์บูชาใน ChatGPT พร้อม Prompt ก่อนสร้างภาพ
+            </div>
+          </div>
+        </div>
+        <div class="small" style="margin-top:5px">v10.8 เพิ่ม “มั่งคั่งร่ำรวย / Wealth & Prosperity” ทั้ง Visual Style และ Scene Template 8 แบบ เช่น เหรียญทอง ก้อนทอง ต้นไม้ทอง แดง–ทอง เส้นทางทอง และความมั่งคั่งแบบโมเดิร์น โดยสุ่มรายละเอียดเพื่อไม่ให้ภาพซ้ำ</div>
         <div class="small" style="margin-top:6px">
           ถ้าเลือก “การ์ตูน” ภาพที่ 1 และภาพที่ 2 จะใช้สไตล์การ์ตูนชุดเดียวกันทั้งหมด หากเลือกใช้รูปของฉัน ระบบ Prompt จะสั่งแปลงบุคคลจริงเป็นการ์ตูนที่ยังรักษาความคล้ายและเอกลักษณ์ของเจ้าของรูป
         </div>
@@ -1597,6 +1733,15 @@ function sceneFamilyAuthorityLines(c){
       "Do not introduce unrelated domestic decor, food, furniture clusters, or tabletop still-life styling.",
       "Playful energy may come from typography, sparse doodles, signature-color accents, exhibition geometry, artwork-native forms, controlled light, and composition."
     ],
+    wealth_prosperity:[
+      "WEALTH / PROSPERITY AUTHORITY:",
+      "Keep abundance, prosperity, financial growth, success, opportunity, and good fortune as the complete visual story.",
+      "Use only elegant prosperity-native symbols such as refined gold coins, traditional gold ingots, prosperity trees, golden leaves, premium red/gold accents, luminous pathways, polished gold forms, and restrained auspicious details when required by the Exact Scene.",
+      "Do not turn the scene into gambling, casino, lottery, betting, cryptocurrency trading, piles of banknotes, or cheap clip-art wealth imagery.",
+      "Avoid overcrowding. Use one clear prosperity hero concept with premium editorial negative space and sophisticated material realism.",
+      "If an auspicious deity mode is selected, that deity/sacred tradition becomes the hero authority and wealth symbols become supporting details only.",
+      "Do not combine unrelated deity traditions into one hybrid sacred figure or mixed pantheon composition."
+    ],
     floral_stilllife:[
       "FLORAL STILL-LIFE AUTHORITY:",
       "Keep the floral arrangement or botanical object as the hero subject with controlled supporting materials and negative space.",
@@ -2615,6 +2760,75 @@ function animalPromptDirection(s,setNo){
 
 
 
+
+const AUSPICIOUS_DEITIES={
+  auto:{
+    label:"AUTO — เทพมงคล",
+    prompt:"Select ONE auspicious deity or prosperity symbol appropriate to the artwork. Do not combine multiple unrelated deities unless the selected mode explicitly calls for a group such as Fu-Lu-Shou."
+  },
+  ganesha:{
+    label:"พระพิฆเนศ",
+    prompt:"Use a respectful original depiction of Ganesha as the principal sacred/auspicious focal subject. Preserve recognizable elephant-headed iconography, dignified posture, refined ornaments, and ceremonial presence. Do not blend facial anatomy, attributes, or costume with unrelated deities."
+  },
+  caishen:{
+    label:"ไฉ่ซิงเอี๊ย / เทพเจ้าแห่งโชคลาภ",
+    prompt:"Use a respectful Chinese prosperity-deity visual language centered on Caishen, with dignified ceremonial robes, auspicious red-and-gold palette, refined wealth symbols, and a clear singular focal identity. Do not merge with Guan Yu or Fu-Lu-Shou."
+  },
+  guan_yu:{
+    label:"กวนอู",
+    prompt:"Use a dignified Guan Yu-inspired Chinese auspicious guardian/business-prosperity depiction with recognizable heroic presence, formal traditional attire, restrained red/green/gold accents, and strong ceremonial composition. Do not merge with Caishen or other deities."
+  },
+  naga:{
+    label:"พญานาคราช",
+    prompt:"Use a majestic Thai/Lanna/Isan-inspired Naga sacred visual language with elegant serpent form, refined scales, gold or emerald accents, water/light symbolism when appropriate, and culturally respectful ornamental detail. Avoid turning the Naga into a generic fantasy dragon."
+  },
+  fu_lu_shou:{
+    label:"ฮก–ลก–ซิ่ว",
+    prompt:"Use the traditional auspicious Fu-Lu-Shou trio as a coordinated three-figure prosperity/longevity composition. Keep the trio visually distinct, balanced, dignified, and culturally coherent; do not add unrelated deities."
+  },
+  auspicious_shrine:{
+    label:"ศาลเทพมงคล / แท่นบูชา",
+    prompt:"Use an elegant auspicious shrine or ceremonial altar as the main prosperity focal subject, with culturally coherent offerings, gold/red details, refined lighting, and no unrelated deity mixture."
+  },
+  auspicious_offerings:{
+    label:"เครื่องสักการะและของมงคล",
+    prompt:"Use refined auspicious offerings and prosperity objects as the hero composition: incense/candles, flowers, fruit, red-and-gold ceremonial objects, gold ingots/coins, or other culturally coherent offerings. No human or deity figure is required."
+  },
+  reference:{
+    label:"ใช้รูปเทพ/องค์บูชาอ้างอิง",
+    prompt:"Use the user-provided deity/statue/shrine image as the visual identity reference. Create a NEW artwork rather than editing the source image. Preserve recognizable sacred-object identity, key facial/sculptural features, pose, silhouette, ornaments, and distinctive attributes while rebuilding lighting, environment, typography, and composition."
+  }
+};
+
+function auspiciousDeityMode(){
+  const el=document.getElementById("auspiciousDeityMode");
+  return el?.value || localStorage.getItem("pokunAuspiciousDeityMode") || "auto";
+}
+
+function auspiciousDeityReferenceName(){
+  const el=document.getElementById("auspiciousDeityReferenceFile");
+  return el?.files?.[0]?.name || "";
+}
+
+function auspiciousDeityLines(){
+  if(lifestyleVisualStyle!=="wealth_prosperity")return [];
+  const key=auspiciousDeityMode();
+  const d=AUSPICIOUS_DEITIES[key]||AUSPICIOUS_DEITIES.auto;
+  const file=auspiciousDeityReferenceName();
+  return [
+    "AUSPICIOUS DEITY / FORTUNE SUBJECT — AUTHORITATIVE:",
+    `Selected mode: ${d.label} (${key}).`,
+    d.prompt,
+    key==="reference"
+      ? (file?`Reference filename selected in POKUN: ${file}.`:"Manual/ChatGPT mode: attach the deity/statue/shrine reference image together with this Prompt.")
+      : "Create an original respectful artwork; do not copy a specific existing poster, statue photograph, logo, or copyrighted composition.",
+    "Use only ONE coherent religious/cultural visual system per image unless the selected mode explicitly defines a group.",
+    "Do not mix Buddhist Buddha imagery, Hindu, Chinese, Thai Naga, and other deity iconography into one hybrid figure.",
+    "Keep the deity/sacred subject dignified and visually clear; typography and wealth decoration must not cover the face, head, hands, sacred attributes, or principal symbolic details.",
+    ""
+  ];
+}
+
 function lifestyleVisualDirection(setNo){
   const hasPeople=(setNo===1||setNo===2) ? imageHasPeople(setNo) : false;
   if(lifestyleVisualStyle==="cute_lifestyle"){
@@ -2638,6 +2852,33 @@ function lifestyleVisualDirection(setNo){
       lighting:"bright clean natural daylight with soft flattering skin tones, fresh blue-sky or window ambience, gentle commercial clarity, and upbeat highlights"
     };
   }
+
+  if(lifestyleVisualStyle==="wealth_prosperity"){
+    const wealthSeed=hashString(`${userSeed}|wealth-prosperity|${setNo}|${Date.now()}|${Math.random()}`);
+    const motifs=[
+      "a refined cascade of gold coins and elegant gold ingots with luminous depth",
+      "an auspicious prosperity tree with golden leaves or coin-like accents, elegant rather than cartoonish",
+      "a premium red-and-gold prosperity composition with gold coins, restrained sparkles, and layered ceremonial depth",
+      "a luxurious golden pathway or flowing light motif symbolizing growing fortune and opportunity",
+      "an elegant treasure arrangement using gold ingots, coins, polished metallic forms, and premium negative space",
+      "a modern luxury prosperity scene with warm gold architecture/light, subtle wealth symbols, and sophisticated editorial depth",
+      "a Thai-inspired prosperity arrangement using gold, auspicious floral/leaf accents, refined trays or ornamental details without religious symbolism",
+      "a clean contemporary wealth composition with one strong golden hero symbol, luminous particles, and spacious premium background"
+    ];
+    const motif=motifs[seededIndex(wealthSeed,motifs.length)];
+    return hasPeople ? {
+      name:"WEALTH & PROSPERITY — มั่งคั่งร่ำรวย",
+      direction:`premium auspicious wealth-and-prosperity greeting artwork with a confident, positive non-famous human subject integrated naturally into ${motif}; communicate abundance, success, financial growth, opportunity, and good fortune without looking like gambling advertising or cheap clip-art`,
+      material:"polished gold metal, refined red/cream/black or signature-color accents, premium fabric/architecture when scene-native, realistic skin and clothing, subtle luminous particles, and sophisticated reflective surfaces",
+      lighting:"rich warm golden editorial light with controlled glow, crisp premium highlights, dimensional shadows, and luxurious cinematic depth"
+    } : {
+      name:"WEALTH & PROSPERITY — มั่งคั่งร่ำรวย",
+      direction:`premium auspicious wealth-and-prosperity greeting artwork built around ${motif}; communicate abundance, success, financial growth, opportunity, and good fortune with elegant premium composition, strong negative space for Thai typography, and no human subject`,
+      material:"polished gold metal, refined red/cream/black or signature-color accents, premium reflective surfaces, restrained auspicious botanical details, luminous particles, and scene-native luxury textures",
+      lighting:"rich warm golden editorial light with controlled glow, crisp premium highlights, dimensional shadows, and luxurious cinematic depth"
+    };
+  }
+
   if(lifestyleVisualStyle==="positive_energy"){
     return hasPeople ? {
       name:"POSITIVE ENERGY LIFESTYLE POSTER",
@@ -2661,6 +2902,7 @@ function updateLifestyleVisualUI(){
     auto:"ใช้ Visual Direction เดิมของ POKUN และสุ่มฉากตามระบบปัจจุบัน",
     cute_lifestyle:"ภาพสมจริง/ไลฟ์สไตล์หวานสดใส มีพื้นที่ว่างสำหรับข้อความ ใช้พร็อพเรียบง่ายและ doodle เล็ก ๆ — เข้าคู่กับ Thai Sweet Kawaii Handwritten Stroke",
     positive_energy:"โปสเตอร์ไลฟ์สไตล์พลังบวก ฉากโล่ง/ท้องฟ้า/สถาปัตย์ มีพื้นที่สำหรับคำใหญ่และ Hero Number — เข้าคู่กับ Thai Positive Energy Bold Stroke",
+    wealth_prosperity:"มั่งคั่งร่ำรวย / Wealth & Prosperity — โทนทองอร่าม พรีเมียม สื่อถึงความเจริญรุ่งเรือง เงินทอง โชคลาภ และโอกาส พร้อมเลือกสายเทพมงคลได้ เช่น พระพิฆเนศ ไฉ่ซิงเอี๊ย กวนอู พญานาคราช และฮก–ลก–ซิ่ว หรือใช้สัญลักษณ์ทองแบบไม่ใส่เทพก็ได้",
     cute_playful_prop:"ภาพทักทายไลฟ์สไตล์สดใสแบบขี้เล่น ให้คนมี Interaction กับพร็อพ เช่น โดนัท แว่น ดอกไม้ หนังสือ หรือของชิ้นเล็ก ๆ พร้อมฉากเมือง/หน้าต่าง/ท้องฟ้าและ doodle น่ารัก"
   };
   d.textContent=map[lifestyleVisualStyle]||map.auto;
@@ -5344,7 +5586,9 @@ function validatePromptRuntimeState(setNo){
    ========================================================= */
 
 const POKUN_V9 = (() => {
-  const VERSION="10.2";
+  const VERSION="11.9";
+  const ENGINE_LABEL=`POKUN v${VERSION}`;
+
 
 
   const TEMPLATE_LABELS={
@@ -5359,6 +5603,7 @@ const POKUN_V9 = (() => {
     travel_viewpoint:"ท่องเที่ยว / จุดชมวิว",
     cultural_market:"ตลาด / วัฒนธรรม / งานคราฟต์",
     food_hero:"อาหาร / ขนม / ผลไม้",
+    wealth_prosperity:"มั่งคั่งร่ำรวย / Wealth & Prosperity",
     floral_stilllife:"ดอกไม้ / Floral Still Life",
     art_gallery:"ศิลปะ / แกลเลอรี / สตูดิโอ",
     minimal_abstract:"Minimal / Abstract",
@@ -5462,6 +5707,24 @@ const POKUN_V9 = (() => {
       ["Healthy breakfast bowl","A clean healthy breakfast bowl with fresh ingredients, restrained supporting detail, and bright natural editorial light."],
       ["Seasonal fruit plate","A refined plate of seasonal tropical fruit with fresh textures, minimal supporting detail, and strong clean composition."],
       ["Traditional snack hero","A premium Thai traditional snack or sweet presented as one hero subject with restrained garnish and culturally appropriate serving ware."]
+    ],
+    wealth_prosperity:[
+      ["Golden coin abundance","A premium wealth-and-prosperity scene featuring layered gold coins with elegant reflective highlights, luminous depth, refined negative space, and no gambling context."],
+      ["Gold ingot prosperity","Elegant traditional gold ingots as the hero prosperity symbols, arranged with premium depth, warm golden glow, restrained sparkles, and sophisticated celebratory styling."],
+      ["Prosperity tree of gold","An elegant prosperity tree with refined golden leaves or coin-like accents, warm luminous background, graceful branching composition, and premium auspicious atmosphere."],
+      ["Red and gold fortune composition","A luxurious red-and-gold prosperity scene with selective gold coins or ingots, glowing light, refined ornamental depth, and strong negative space for Thai typography."],
+      ["Golden wealth pathway","A symbolic golden pathway or flowing ribbon of warm light leading toward a luminous horizon, communicating financial growth, opportunity, success, and forward prosperity."],
+      ["Modern luxury prosperity","A contemporary premium prosperity scene using polished gold architectural or sculptural forms, warm light, elegant reflections, and restrained symbols of abundance."],
+      ["Thai prosperity elegance","A refined Thai-inspired prosperity composition using gold, elegant auspicious leaves/flowers, tasteful ornamental details, and luxurious editorial balance without sacred Buddhist symbolism."],
+      ["Minimal golden abundance","A clean minimal wealth scene with one strong golden hero symbol, controlled luminous particles, premium shadow geometry, and abundant negative space."],
+      ["Ganesha prosperity shrine","A respectful premium prosperity artwork centered on an original Ganesha sacred figure or statue, elegant gold and warm light, refined offerings, and generous typography space."],
+      ["Caishen fortune blessing","A premium Chinese prosperity scene centered on a dignified Caishen-inspired deity figure, red-and-gold ceremonial atmosphere, refined wealth symbols, and clear editorial hierarchy."],
+      ["Guan Yu prosperity guardian","A dignified Guan Yu-inspired auspicious guardian/business-prosperity scene with strong ceremonial presence, refined red-green-gold palette, and controlled dramatic light."],
+      ["Naga prosperity blessing","A majestic Thai Naga prosperity scene with elegant serpent form, refined scales, gold/emerald accents, luminous water or sacred light when appropriate, and premium negative space."],
+      ["Fu Lu Shou auspicious trio","A coordinated Fu-Lu-Shou trio in an elegant Chinese prosperity composition, balanced three-figure hierarchy, refined gold/red tones, and clear space for Thai blessing text."],
+      ["Auspicious deity shrine","A refined prosperity shrine or altar with one coherent deity tradition, ceremonial offerings, warm gold/red light, and sophisticated sacred composition."],
+      ["Fortune offering altar","An elegant altar of culturally coherent prosperity offerings such as fruit, flowers, incense, candles, gold ingots, and red/gold ceremonial objects, without a required deity figure."],
+      ["Sacred prosperity reference","A premium prosperity artwork designed to use a user-provided deity, statue, shrine, or sacred-object image as the visual identity reference while rebuilding scene, lighting, and typography."]
     ],
     floral_stilllife:[
       ["Single floral hero","A single elegant floral arrangement as the hero subject with controlled background and generous negative space."],
@@ -5614,6 +5877,22 @@ const POKUN_V9 = (() => {
     "Healthy breakfast bowl":{name:"ชามอาหารเช้าเพื่อสุขภาพ",description:"ชามอาหารเช้าที่สะอาดและดูดี มีวัตถุดิบสด รายละเอียดประกอบพอดี และแสงธรรมชาติสว่าง"},
     "Seasonal fruit plate":{name:"จานผลไม้ตามฤดูกาล",description:"จานผลไม้เมืองร้อนตามฤดูกาลที่จัดอย่างประณีต มีเนื้อสัมผัสสด รายละเอียดประกอบน้อย และองค์ประกอบสะอาด"},
     "Traditional snack hero":{name:"ขนมพื้นบ้านเป็นจุดเด่น",description:"ขนมหรือของว่างไทยแบบดั้งเดิมเป็นจุดเด่น มีเครื่องตกแต่งพอดี และภาชนะเสิร์ฟที่เหมาะกับวัฒนธรรม"},
+    "Golden coin abundance":{name:"เหรียญทองแห่งความมั่งคั่ง",description:"เหรียญทองหลายชั้นในองค์ประกอบพรีเมียม มีประกายและมิติแสงอย่างสง่างาม สื่อถึงเงินทองเพิ่มพูนโดยไม่ให้ความรู้สึกเป็นการพนัน"},
+    "Gold ingot prosperity":{name:"ก้อนทองแห่งความรุ่งเรือง",description:"ก้อนทองมงคลเป็นจุดเด่น ใช้แสงทองอุ่น ประกายพอดี และองค์ประกอบหรู สื่อถึงความเจริญรุ่งเรืองและทรัพย์สินงอกเงย"},
+    "Prosperity tree of gold":{name:"ต้นไม้ทองแห่งความมั่งคั่ง",description:"ต้นไม้มงคลที่มีกิ่งใบสีทองหรือองค์ประกอบคล้ายเหรียญ สื่อถึงทรัพย์สินที่เติบโต โอกาส และความอุดมสมบูรณ์"},
+    "Red and gold fortune composition":{name:"โชคลาภแดง–ทอง",description:"ฉากมงคลโทนแดงและทอง มีเหรียญหรือก้อนทองเพียงพอดี แสงเรืองรอง และพื้นที่สำหรับข้อความอย่างพรีเมียม"},
+    "Golden wealth pathway":{name:"เส้นทางทองสู่ความสำเร็จ",description:"เส้นทางหรือสายแสงสีทองทอดไปสู่จุดสว่าง สื่อถึงโอกาส การเติบโตทางการเงิน ความสำเร็จ และอนาคตที่รุ่งเรือง"},
+    "Modern luxury prosperity":{name:"มั่งคั่งหรูร่วมสมัย",description:"ฉากความมั่งคั่งแบบโมเดิร์น ใช้รูปทรงทอง แสงหรู เงาสะท้อน และองค์ประกอบร่วมสมัยโดยไม่พึ่งสัญลักษณ์มงคลแบบเดิมทั้งหมด"},
+    "Thai prosperity elegance":{name:"มั่งคั่งแบบไทยร่วมสมัย",description:"งานมงคลไทยประณีต ใช้ทอง ใบไม้หรือดอกไม้มงคล และรายละเอียดไทยอย่างพอดี เน้นความร่ำรวยและรุ่งเรืองโดยไม่ใช้สัญลักษณ์ศาสนา"},
+    "Minimal golden abundance":{name:"มั่งคั่งทองมินิมอล",description:"ฉากทองแบบเรียบหรู มีวัตถุเด่นเพียงหนึ่งอย่าง ประกายแสงควบคุม พื้นที่ว่างมาก และความรู้สึกมั่งคั่งระดับพรีเมียม"},
+    "Ganesha prosperity shrine":{name:"พระพิฆเนศเสริมความสำเร็จ",description:"งานมงคลพรีเมียมที่มีพระพิฆเนศหรือองค์บูชาเป็นจุดเด่น ใช้แสงทอง เครื่องสักการะ และพื้นที่ข้อความอย่างสง่างาม"},
+    "Caishen fortune blessing":{name:"ไฉ่ซิงเอี๊ยเสริมโชคลาภ",description:"งานมงคลจีนโทนแดง–ทอง มีไฉ่ซิงเอี๊ยเป็นจุดเด่น ใช้สัญลักษณ์ความมั่งคั่งอย่างพอดีและองค์ประกอบพรีเมียม"},
+    "Guan Yu prosperity guardian":{name:"กวนอูเสริมบารมีและความรุ่งเรือง",description:"ภาพกวนอูในบรรยากาศมงคลจีนที่สง่างาม เน้นบารมี ความมั่นคง และความรุ่งเรือง พร้อมแสงและสีระดับพรีเมียม"},
+    "Naga prosperity blessing":{name:"พญานาคราชเสริมโชคลาภ",description:"พญานาคราชสง่างาม ใช้เกล็ดทองหรือเขียวมรกต แสงศักดิ์สิทธิ์และองค์ประกอบน้ำเมื่อเหมาะกับฉาก โดยไม่ทำให้กลายเป็นมังกรแฟนตาซีทั่วไป"},
+    "Fu Lu Shou auspicious trio":{name:"ฮก–ลก–ซิ่ว มงคลสามประการ",description:"ฮก–ลก–ซิ่วทั้งสามองค์ในองค์ประกอบสมดุล โทนแดง–ทอง สง่างาม เหมาะกับคำอวยพรด้านโชค ความรุ่งเรือง และอายุยืน"},
+    "Auspicious deity shrine":{name:"ศาลเทพมงคล",description:"ศาลหรือแท่นบูชาเทพมงคลที่ประณีต ใช้เครื่องสักการะและแสงมงคลที่สอดคล้องกับวัฒนธรรมขององค์เทพ"},
+    "Fortune offering altar":{name:"แท่นเครื่องสักการะโชคลาภ",description:"เครื่องสักการะ ผลไม้ ดอกไม้ ธูป เทียน และของมงคลจัดอย่างพรีเมียม โดยไม่จำเป็นต้องมีองค์เทพในภาพ"},
+    "Sacred prosperity reference":{name:"เทพมงคลจากรูปอ้างอิง",description:"ใช้รูปองค์เทพ องค์บูชา ศาล หรือวัตถุมงคลของผู้ใช้เป็น Reference แล้วสร้างฉาก แสง และองค์ประกอบใหม่รอบตัวแบบพรีเมียม"},
     "Single floral hero":{name:"ดอกไม้เดี่ยวเป็นจุดเด่น",description:"การจัดดอกไม้หนึ่งชุดอย่างสง่างามเป็นจุดเด่น มีฉากหลังควบคุมและพื้นที่ว่างมาก"},
     "Minimal ceramic flower study":{name:"ดอกไม้กับเซรามิกแบบมินิมอล",description:"ภาพดอกไม้แบบเรียบหรู ใช้ภาชนะเซรามิกหนึ่งชิ้น ดอกไม้พอดี พื้นผิวสะอาด เงาควบคุม และพื้นที่ว่างเด่น"},
     "Petal and glass composition":{name:"องค์ประกอบกลีบดอกไม้กับแก้ว",description:"งานพฤกษศาสตร์แบบมินิมอล ใช้กลีบดอกไม้ที่เลือกและรายละเอียดแก้วเพียงหนึ่งอย่าง พร้อมแสงแม่นยำและฉากหลังสะอาด"},
@@ -5919,6 +6198,7 @@ const PAIR_LOOKS={
     thai_architecture:["thai_architecture","travel_viewpoint"],
     travel_viewpoint:["travel_viewpoint","urban_city","thai_architecture","waterfront","nature_mountain"],
     food_hero:["food_hero"],
+    wealth_prosperity:["wealth_prosperity","minimal_abstract"],
     floral_stilllife:["floral_stilllife","garden_botanical"],
     minimal_abstract:["minimal_abstract","art_gallery"],
     cultural_market:["cultural_market","urban_city","travel_viewpoint"],
@@ -6053,6 +6333,7 @@ const PAIR_LOOKS={
     thai_architecture:"realistic timber, stone, roof tiles, plaster, courtyard/path textures, landscaped vegetation, and Thai architectural materials",
     travel_viewpoint:"realistic destination-native architecture, paving, railings, vegetation, water/landscape when applicable, and travel-environment textures",
     food_hero:"realistic food textures, ceramic serving ware, garnish, ingredients, syrup/gloss/moisture only when physically appropriate, and clean food-photography surfaces",
+    wealth_prosperity:"realistic polished gold metal, refined reflective surfaces, premium red/ivory/black or signature-color accents, controlled luminous particles, elegant ornamental details, and sophisticated prosperity-native materials",
     floral_stilllife:"realistic ceramic or glass only when named by the exact Scene Concept, petals, stems, botanical textures, clean surfaces, restrained reflections, and negative space",
     minimal_abstract:"realistic sculptural materials, restrained pedestal/surface texture, clean architectural wall surfaces when applicable, precise shadow geometry, and negative space",
     cultural_market:"realistic woven fibers, textiles, timber stall fronts, handcrafted goods, baskets, craft materials, and market-native architectural textures",
@@ -6110,6 +6391,7 @@ const PAIR_LOOKS={
     thai_architecture:["soft sunlight moving across architectural details","tree shadows shifting across courtyard/path surfaces","gentle breeze in surrounding foliage"],
     travel_viewpoint:["changing light across the destination","gentle breeze in scene-native vegetation","subtle water reflections or moving clouds when scene-appropriate"],
     food_hero:["physically appropriate freshly-served cues such as gloss, texture, garnish, moisture, or warmth only when naturally plausible"],
+    wealth_prosperity:["soft golden light moving across polished prosperity symbols","subtle luminous particles drifting through warm golden depth","controlled reflections changing across gold surfaces","gentle glow building toward a symbolic path or horizon"],
     floral_stilllife:["soft light shifting across petals/stems and the exact named vessel/surface","quiet botanical stillness with subtle shadow movement"],
     minimal_abstract:["slow shifting geometric light and shadow","quiet sculptural stillness with controlled light progression"],
     cultural_market:["hanging textiles or lightweight craft details moving gently in the breeze","changing morning light across handcrafted displays"],
@@ -6128,6 +6410,7 @@ const PAIR_LOOKS={
     thai_architecture:["Thai_pavilion","temple_courtyard","heritage_Thai_house","traditional_Thai_architecture"],
     travel_viewpoint:["scenic_overlook","city_viewpoint","historic_town_view","old_town_view","riverside_town","European_town","tourist_viewpoint"],
     food_hero:["food_scene","dessert_scene","dish_hero","fruit_scene","culinary_still_life","plated_food","food_photography"],
+    wealth_prosperity:["wealth_scene","prosperity_scene","gold_abundance","fortune_gold","gold_ingots","prosperity_tree","luxury_wealth","auspicious_wealth"],
     floral_stilllife:["flower_arrangement","vase_still_life","botanical_still_life","floral_tabletop","flower_hero_object"],
     minimal_abstract:["minimal_still_life","gallery_minimalism","abstract_object_scene","sculptural_still_life","paper_art_scene","minimal_pedestal"],
     cultural_market:["market_scene","handicraft_market","artisan_market","flower_market","traditional_market","craft_lane","cultural_street"],
@@ -6138,7 +6421,7 @@ const PAIR_LOOKS={
   };
 
   function mustFn(name, fn){
-    if(typeof fn!=="function") throw new Error("POKUN v9 dependency unavailable: "+name);
+    if(typeof fn!=="function") throw new Error(ENGINE_LABEL+" dependency unavailable: "+name);
     return fn;
   }
 
@@ -6164,7 +6447,7 @@ const PAIR_LOOKS={
 
   function buddhistSubjectAllowedFamilies(setNo){
     const mode=buddhistSubjectMode(setNo);
-    if(mode==="monk_reference") return new Set(["buddhist_sacred","thai_architecture","nature_mountain","garden_botanical","waterfront"]);
+    if(mode==="monk_reference" || mode==="monk_generated") return new Set(["buddhist_sacred","thai_architecture","nature_mountain","garden_botanical","waterfront"]);
     if(mode==="buddha_reference" || mode==="buddha_statue") return new Set(["buddhist_sacred","thai_architecture","nature_mountain","garden_botanical"]);
     if(mode==="temple_reference") return new Set(["buddhist_sacred","thai_architecture","nature_mountain","garden_botanical","waterfront"]);
     return BUDDHIST_ALLOWED_SCENE_FAMILIES;
@@ -6303,6 +6586,7 @@ const PAIR_LOOKS={
     if(AUTHORITY[explicit]) return explicit;
     const x=((c?.name||"")+" "+(c?.prompt||"")).toLowerCase();
     if(s?.buddhist || /buddha|temple|lotus|wan phra|วันพระ|พระพุทธ|วัด/.test(x)) return "buddhist_sacred";
+    if(/wealth|prosper|gold ingot|gold coin|prosperity tree|fortune gold|มั่งคั่ง|ร่ำรวย|ความรุ่งเรือง/.test(x)) return "wealth_prosperity";
     if(/dessert|food|dish|fruit|อาหาร|ขนม/.test(x)) return "food_hero";
     if(/flower|floral|petal|vase|bouquet|ดอกไม้/.test(x)) return "floral_stilllife";
     if(/market|artisan|handicraft|ตลาด/.test(x)) return "cultural_market";
@@ -6575,7 +6859,7 @@ const PAIR_LOOKS={
     const source=sourceFor(setNo);
     if(!people || source==="generated"){
       L.push(
-        "POKUN v9 CLEAN GENERATION PROMPT",
+        `${ENGINE_LABEL} CLEAN GENERATION PROMPT`,
         "Task type: ORIGINAL TEXT-TO-IMAGE.",
         "Start from a blank visual canvas.",
         "Create one entirely original 3:4 vertical artwork from this written brief.",
@@ -6586,7 +6870,7 @@ const PAIR_LOOKS={
       );
     }else{
       L.push(
-        "POKUN v9 NEW ARTWORK WITH USER IDENTITY GUIDANCE",
+        `${ENGINE_LABEL} NEW ARTWORK WITH USER IDENTITY GUIDANCE`,
         "Create a new scene, pose, clothing treatment, lighting, and composition.",
         "Use the user-provided photo(s) only for identity guidance.",
         ""
@@ -6604,7 +6888,9 @@ const PAIR_LOOKS={
     return el?.files?.[0]?.name || "";
   }
   function buddhistSubjectIsHuman(setNo,s){
-    return !!s?.buddhist && buddhistSubjectMode(setNo)==="monk_reference";
+    if(!s?.buddhist)return false;
+    const mode=buddhistSubjectMode(setNo);
+    return mode==="monk_reference" || mode==="monk_generated";
   }
   function buddhistSubjectPeopleAllowed(setNo,s){
     return boolPeople(setNo) || buddhistSubjectIsHuman(setNo,s);
@@ -6622,6 +6908,16 @@ const PAIR_LOOKS={
         "Use a respectful Buddha statue or Buddha image as the sacred focal subject.",
         "A Buddha statue/image is NOT a human person for the People toggle.",
         "Keep posture, hands, facial expression, proportions, and sacred context dignified and culturally appropriate."
+      );
+    }else if(mode==="monk_generated"){
+      lines.push(
+        "Subject mode: ORIGINAL GENERIC BUDDHIST MONK.",
+        "Include one respectful Buddhist monk / bhikkhu as a newly invented non-famous human subject.",
+        "This monk is NOT a portrait, NOT a real named monk, NOT a revered-teacher likeness, and NOT based on any specific person.",
+        "Invent a natural non-famous face specifically for this artwork.",
+        "Use culturally appropriate monastic robes, shaved head, calm dignified posture, and scene-appropriate Buddhist activity such as walking in a temple, meditating, receiving or carrying merit-making items, or standing peacefully when physically appropriate.",
+        "Do not imitate or resemble a known monk, abbot, celebrity monk, historical figure, or living public figure.",
+        "Keep hands, anatomy, robe folds, posture, and temple context natural and respectful."
       );
     }else if(mode==="no_figure"){
       lines.push(
@@ -6663,12 +6959,16 @@ const PAIR_LOOKS={
   function renderPeopleAnimal(setNo,s,L){
     const bMode=s?.buddhist ? buddhistSubjectMode(setNo) : "auto";
     const monkRef=s?.buddhist && bMode==="monk_reference";
+    const monkGenerated=s?.buddhist && bMode==="monk_generated";
     const noFigure=s?.buddhist && bMode==="no_figure";
     const buddhaFigure=s?.buddhist && ["buddha_statue","buddha_reference"].includes(bMode);
 
     if(monkRef){
       L.push("CHARACTER COMPOSITION: ONE REFERENCED HUMAN MONK / REVERED TEACHER — NO ANIMAL CHARACTER");
       L.push("PEOPLE: YES — only the referenced monk / revered teacher is required as the human focal subject.");
+    }else if(monkGenerated){
+      L.push("CHARACTER COMPOSITION: ONE ORIGINAL GENERIC BUDDHIST MONK — NO ANIMAL CHARACTER");
+      L.push("PEOPLE: YES — include one newly invented non-famous Buddhist monk; do not use or imply any real-person identity.");
     }else{
       L.push(`CHARACTER COMPOSITION: ${charLabel(setNo)}`);
       if(!boolPeople(setNo)){
@@ -6684,7 +6984,7 @@ const PAIR_LOOKS={
       L.push("STRICT NO FIGURE: no Buddha statue/image and no human figure of any kind.");
     }
 
-    if(boolAnimal(setNo) && !monkRef){
+    if(boolAnimal(setNo) && !monkRef && !monkGenerated){
       L.push("ANIMAL CHARACTER: include only the selected animal character according to the current UI settings.");
       if(typeof sharedAnimalCharacter==="function"){
         const a=sharedAnimalCharacter(s);
@@ -6724,7 +7024,7 @@ const PAIR_LOOKS={
         console.warn("POKUN v10.2: stale companion Pair Look ignored",ctx.other.pairLookKey,"=>",ctx.pairLook.key);
       }
     }
-    if(failures.length)throw new Error("POKUN v9 validation failed: "+failures.join("; "));
+    if(failures.length)throw new Error(ENGINE_LABEL+" validation failed: "+failures.join("; "));
     return prompt;
   }
 
@@ -6804,6 +7104,236 @@ const PAIR_LOOKS={
   }
 
 
+
+
+  const TEXT_FRAME_CATEGORIES={
+    auto:{label:"AUTO — เลือกให้เข้ากับงาน",contexts:["general","buddhist","deity"]},
+    none:{label:"ไม่มีกรอบ",contexts:["general","buddhist","deity"]},
+    cute_korean:{label:"น่ารัก / Cute Korean",contexts:["general"]},
+    doodle:{label:"ลายมือ / Doodle",contexts:["general"]},
+    floral:{label:"ดอกไม้ / Botanical",contexts:["general","buddhist"]},
+    paper:{label:"กระดาษ / Notebook",contexts:["general"]},
+    retro:{label:"Retro / Comic",contexts:["general"]},
+    modern:{label:"Modern / Editorial",contexts:["general"]},
+    luxury:{label:"Luxury / Premium",contexts:["general","deity"]},
+    buddhist:{label:"พุทธศิลป์ / Thai Sacred",contexts:["buddhist"]},
+    chinese:{label:"จีนมงคล / Chinese Auspicious",contexts:["deity"]},
+    naga:{label:"พญานาค / Thai Naga",contexts:["deity"]}
+  };
+
+  const TEXT_FRAMES={
+    none:{category:"none",label:"ไม่ใช้กรอบ",contexts:["general","buddhist","deity"],desc:"ไม่ใช้กรอบข้อความ"},
+    auto:{category:"auto",label:"AUTO — เลือกแบบให้เข้ากับงาน",contexts:["general","buddhist","deity"],desc:"ระบบเลือกกรอบตามโหมด Typography และ Visual Style"},
+
+    korean_sticker:{category:"cute_korean",label:"Korean Pastel Sticker",contexts:["general"],desc:"สติกเกอร์เกาหลีพาสเทล ขอบมนและเงานุ่ม"},
+    pastel_cloud:{category:"cute_korean",label:"Pastel Cloud",contexts:["general"],desc:"ก้อนเมฆพาสเทลนุ่ม ๆ เหมาะกับคำอวยพรสดใส"},
+    kawaii_bubble:{category:"cute_korean",label:"Kawaii Bubble",contexts:["general"],desc:"กรอบบับเบิลน่ารัก เส้นโค้งอวบและพื้นที่ข้อความกว้าง"},
+    heart_ribbon:{category:"cute_korean",label:"Heart & Ribbon",contexts:["general"],desc:"หัวใจและริบบิ้นเล็ก ๆ แบบเกาหลี ไม่รกข้อความ"},
+    candy_pop:{category:"cute_korean",label:"Candy Pop",contexts:["general"],desc:"กรอบสีลูกกวาด สดใส สนุก เหมาะกับ Typography ตัวหนา"},
+
+    hand_doodle:{category:"doodle",label:"Hand-drawn Doodle",contexts:["general"],desc:"เส้นวาดมือ ดาว หัวใจ ประกาย และเส้นขยุกขยิกอย่างพอดี"},
+    brush_patch:{category:"doodle",label:"Brush Patch",contexts:["general"],desc:"ปื้นพู่กันอิสระพร้อมเส้นวาดมือรอบข้อความ"},
+    smile_doodle:{category:"doodle",label:"Happy Doodle",contexts:["general"],desc:"Doodle พลังบวกน่ารัก ไม่แย่งความเด่นจากข้อความ"},
+
+    soft_flower:{category:"floral",label:"Soft Flower Border",contexts:["general"],desc:"ดอกไม้เล็กนุ่มรอบกรอบแบบโปร่ง"},
+    botanical_corner:{category:"floral",label:"Botanical Corners",contexts:["general"],desc:"ใบไม้/ดอกไม้เฉพาะมุม เว้นกลางโล่งอ่านง่าย"},
+    jasmine_delicate:{category:"floral",label:"Jasmine Delicate",contexts:["general","buddhist"],desc:"มะลิละเอียดอ่อน เหมาะกับงานไทยและวันสำคัญ"},
+
+    notebook_tape:{category:"paper",label:"Notebook Tape",contexts:["general"],desc:"กระดาษโน้ตและเทปน่ารักแบบสมุด"},
+    torn_paper:{category:"paper",label:"Torn Paper",contexts:["general"],desc:"กระดาษฉีกแบบ Editorial Handmade"},
+    polaroid_label:{category:"paper",label:"Polaroid Label",contexts:["general"],desc:"ป้ายกระดาษคล้าย Polaroid เรียบและเป็นกันเอง"},
+
+    retro_comic:{category:"retro",label:"Retro Comic",contexts:["general"],desc:"กรอบการ์ตูนย้อนยุค เส้นหนาและพลังโปสเตอร์"},
+    pop_burst:{category:"retro",label:"Pop Burst",contexts:["general"],desc:"กรอบรัศมี Pop สนุก ใช้กับคำสั้นและ Headline เด่น"},
+    vintage_badge:{category:"retro",label:"Vintage Badge",contexts:["general"],desc:"ป้ายวินเทจโค้งมน มีรายละเอียดพอดี"},
+
+    minimal_clean:{category:"modern",label:"Minimal Clean",contexts:["general"],desc:"กรอบเรียบสะอาดและพื้นที่ว่างมาก"},
+    editorial_line:{category:"modern",label:"Editorial Line",contexts:["general"],desc:"เส้นกรอบบางแบบนิตยสาร"},
+    soft_rounded:{category:"modern",label:"Soft Rounded",contexts:["general"],desc:"กรอบมนร่วมสมัย ใช้ง่ายกับงานประจำวัน"},
+    geometric_card:{category:"modern",label:"Geometric Card",contexts:["general"],desc:"รูปทรงเรขาคณิตสะอาดและทันสมัย"},
+
+    luxury_gold:{category:"luxury",label:"Luxury Gold",contexts:["general","deity"],desc:"กรอบทองเรียบหรูระดับพรีเมียม"},
+    pearl_elegant:{category:"luxury",label:"Pearl Elegant",contexts:["general"],desc:"กรอบงาช้าง/มุกบาง ๆ ดูสุภาพและแพง"},
+    boutique_curve:{category:"luxury",label:"Boutique Curve",contexts:["general"],desc:"เส้นโค้งแฟชั่นพรีเมียมแบบ Boutique"},
+
+    thai_kanok_gold:{category:"buddhist",label:"กรอบไทยกนกทอง",contexts:["buddhist"],desc:"ลายกนกทองแบบไทย สง่างาม"},
+    sacred_ornate_plaque:{category:"buddhist",label:"ป้ายไทยวิจิตรทองอร่าม — แบบยืดหยุ่น",contexts:["buddhist"],desc:"ป้ายพุทธศิลป์วิจิตรที่อนุญาตให้ AI ปรับรูปทรงตามองค์ประกอบ"},
+    thai_dark_sacred_plaque:{category:"buddhist",label:"🇹🇭 ป้ายกนกไทยวิจิตรพื้นเข้ม — แบบภาพตัวอย่าง",contexts:["buddhist"],desc:"Hard Lock: ป้ายทึบพื้นน้ำตาลเข้ม/ดำอมทอง ขอบทองนูนแกะสลัก กนกสมมาตร ยอดกนกกลางบน และดอกบัวทองกลางล่าง • Headline อยู่เฉพาะในพื้นที่กลางของป้ายและห้ามทับลายกรอบ • ถ้าข้อความยาวระบบต้องลดขนาดหรือแบ่งบรรทัด • วันที่แสดงแยกอยู่นอกป้าย"},
+    buddhist_lotus_gold:{category:"buddhist",label:"กรอบดอกบัวทอง",contexts:["buddhist"],desc:"กรอบทองใช้จังหวะดอกบัว สงบและศักดิ์สิทธิ์"},
+    temple_ornamental:{category:"buddhist",label:"กรอบลายวัดไทย",contexts:["buddhist"],desc:"รายละเอียดสถาปัตยกรรมไทยและยอดลายอย่างพอดี"},
+
+    chinese_red_gold:{category:"chinese",label:"กรอบจีนแดง–ทอง",contexts:["deity"],desc:"กรอบมงคลจีนสำหรับไฉ่ซิงเอี๊ย กวนอู ฮก–ลก–ซิ่ว"},
+    chinese_cloud:{category:"chinese",label:"เมฆมงคลจีน",contexts:["deity"],desc:"ลายเมฆมงคลจีนและขอบทองอย่างประณีต"},
+    deity_gold:{category:"luxury",label:"กรอบเทพมงคลทอง",contexts:["deity"],desc:"กรอบทองปรับรายละเอียดตามเทพที่เลือก"},
+
+    naga_ornamental:{category:"naga",label:"กรอบพญานาค / ลายไทย",contexts:["deity"],desc:"เส้นพญานาคและเกล็ดไทยสง่างาม"},
+    naga_emerald_gold:{category:"naga",label:"พญานาคมรกต–ทอง",contexts:["deity"],desc:"กรอบเขียวมรกตและทอง เหมาะกับพญานาคราช"}
+  };
+
+  function primaryModeForPrompt(s){
+    const saved=localStorage.getItem("pokunPrimaryModeV110")||"general";
+    if(saved==="deity" || lifestyleVisualStyle==="wealth_prosperity")return "deity";
+    if(saved==="buddhist" || s?.buddhist)return "buddhist";
+    return "general";
+  }
+
+  function autoFrameKey(s,target){
+    const mode=primaryModeForPrompt(s);
+    if(mode==="buddhist"){
+      if(target==="blessing") return "buddhist_lotus_gold";
+      const bv=(typeof buddhistVisualStyleKey==="function")?buddhistVisualStyleKey(s):"auto";
+      return (bv==="golden_sacred_ornate"||bv==="traditional_thai")?"thai_dark_sacred_plaque":"thai_kanok_gold";
+    }
+    if(mode==="deity"){
+      const deity=(typeof auspiciousDeityMode==="function")?auspiciousDeityMode():"auto";
+      if(["caishen","guan_yu","fu_lu_shou"].includes(deity)) return target==="headline"?"chinese_red_gold":"chinese_cloud";
+      if(deity==="naga") return target==="headline"?"naga_ornamental":"naga_emerald_gold";
+      return "deity_gold";
+    }
+    const styleName=(s?.style?.name||"").toLowerCase();
+    if(/kawaii|cute|pastel|rounded|playful|sticker/.test(styleName))
+      return target==="headline"?"korean_sticker":"pastel_cloud";
+    if(/retro|comic/.test(styleName))
+      return target==="headline"?"retro_comic":"vintage_badge";
+    if(/luxury|signature|boutique|premium/.test(styleName))
+      return target==="headline"?"luxury_gold":"pearl_elegant";
+    return target==="headline"?"soft_rounded":"editorial_line";
+  }
+
+  function resolvedTextFrame(s,target){
+    const mode=primaryModeForPrompt(s);
+    const id=target==="headline"?"headlineFrameMode":"blessingFrameMode";
+    let selected=value(id,"auto");
+
+    if(target==="blessing" && selected==="follow_headline"){
+      const hf=resolvedTextFrame(s,"headline");
+      return {...hf,target,followHeadline:true};
+    }
+    if(selected==="auto") selected=autoFrameKey(s,target);
+    const f=TEXT_FRAMES[selected]||TEXT_FRAMES.none;
+    if(!f.contexts.includes(mode) && selected!=="none"){
+      selected=autoFrameKey(s,target);
+    }
+    return {key:selected,mode,target,...(TEXT_FRAMES[selected]||TEXT_FRAMES.none)};
+  }
+
+  function framePromptLines(frame){
+    const common=[
+      `Selected frame: ${frame.label} (${frame.key}).`,
+      `Context mode: ${frame.mode}.`,
+      "The frame is a BACKGROUND graphic container around its assigned text only.",
+      "The frame is separate from letter Stroke, Shadow / 3D, and Text Highlight; never count its border as a Stroke layer.",
+      "Maintain generous inner padding around every Thai consonant, vowel, tone mark, descender, and ornamental terminal.",
+      "Do not cover faces, sacred attributes, hands, hero objects, or critical scene details."
+    ];
+    const special={
+      none:["Do not create any plaque, border, cartouche, bubble, sticker, paper panel, floral border, or ornamental frame for this text."],
+      korean_sticker:["Use a cute Korean-inspired pastel sticker frame with rounded irregular contour, clean white/pastel edging, tiny restrained doodle accents, and soft dimensional separation."],
+      pastel_cloud:["Use a soft pastel cloud-shaped text frame with airy rounded lobes, gentle depth, and uncluttered center."],
+      kawaii_bubble:["Use a kawaii rounded bubble frame with plump curves, subtle highlight, and playful but readable proportions."],
+      heart_ribbon:["Use a light cute frame with tiny hearts and ribbon accents kept mostly at corners/ends."],
+      candy_pop:["Use a cheerful candy-pop frame with rounded colorful layers and restrained sticker-like depth."],
+      hand_doodle:["Use a loose hand-drawn frame with selective stars, hearts, sparkles, and imperfect line rhythm."],
+      brush_patch:["Use an organic painted brush-patch container with hand-drawn edge accents; do not confuse it with Text Highlight."],
+      smile_doodle:["Use a positive-energy doodle frame with small cheerful marks and generous clear text space."],
+      soft_flower:["Use a light floral border with small scene-compatible flowers and open center."],
+      botanical_corner:["Use botanical details only at corners/ends, leaving most of the text zone clean."],
+      jasmine_delicate:["Use delicate jasmine-inspired accents with refined Thai softness and generous negative space."],
+      notebook_tape:["Use a cute notebook-paper label with small tape pieces and subtle handmade texture."],
+      torn_paper:["Use a refined torn-paper editorial panel with believable paper fibers and restrained shadow."],
+      polaroid_label:["Use a clean white paper/Polaroid-style label with simple dimensional edge."],
+      retro_comic:["Use a retro comic plaque with bold contour, energetic geometry, and controlled vintage print character."],
+      pop_burst:["Use a restrained pop-art burst behind short text; keep spikes away from Thai marks."],
+      vintage_badge:["Use a rounded vintage badge/cartouche with simple retro edging."],
+      minimal_clean:["Use a clean minimal frame with simple geometry and thin restrained edge."],
+      editorial_line:["Use a thin editorial line frame or partial border with magazine-like spacing."],
+      soft_rounded:["Use a contemporary rounded rectangle/plaque with soft separation and clean padding."],
+      geometric_card:["Use a modern geometric card/frame with controlled shapes and clean hierarchy."],
+      luxury_gold:["Use a refined luxury-gold frame with subtle metallic edging and premium restraint."],
+      pearl_elegant:["Use a thin pearl/ivory elegant frame with soft sheen and sophisticated minimal detail."],
+      boutique_curve:["Use elegant boutique-style curved lines with fashion-editorial restraint."],
+      thai_kanok_gold:["Use an original Thai kanok-inspired golden ornamental frame with balanced sacred curves."],
+      sacred_ornate_plaque:["Use a richly ornamented Thai sacred plaque: dark warm inner panel, luminous carved-gold border, symmetrical kanok/flame details, and restrained lotus/crest accent."],
+      thai_dark_sacred_plaque:[
+        "HARD-LOCKED FRAME TEMPLATE: THAI DARK SACRED ORNAMENTAL PLAQUE.",
+        "SOLID ORNAMENTAL PLAQUE REQUIRED. This must be a complete opaque ceremonial plaque/sign behind the HEADLINE ONLY, NOT merely decorative linework around floating text.",
+        "CONTENT OWNERSHIP LOCK: ONLY the visible Thai headline belongs inside this plaque.",
+        "The DATE, date highlight, blessing/supporting text, watermark, and any secondary caption MUST remain OUTSIDE the headline plaque.",
+        "Do not enlarge the plaque to contain the date or blessing text.",
+        "Place one large horizontal ceremonial Thai plaque across the upper headline zone, approximately 22–30% of the full artwork height when the authoritative Layout permits.",
+        "PLAQUE BODY: a continuous solid dark chocolate-brown / dark umber / near-black inner panel with subtle warm-gold undertone.",
+        "STRICT COLOR LOCK: the plaque center must NOT be white, cream, ivory, beige, parchment, pale gold, or light pastel.",
+        "OUTER BORDER: thick raised sculpted metallic-gold carving, visually substantial, approximately 8–14% of the plaque height in apparent border depth, with clearly visible 3D relief, bevel, highlights, and soft cast shadow.",
+        "ORNAMENT STRUCTURE: symmetrical Thai kanok/flame carving on the upper left and upper right, elegant side flourishes, and a prominent centered Thai flame/kanok crest at the top.",
+        "BOTTOM CENTER: include one refined gold lotus ornament centered on the lower border of the plaque.",
+        "SHAPE: broad horizontal ceremonial cartouche with rounded/curved shoulders and a clearly enclosed dark center; the silhouette must feel carved, ornate, luxurious, and sacred.",
+        "TEXT PLACEMENT: all HEADLINE lines remain fully contained within the dark center panel with generous safe padding on every side.",
+        "PLAQUE TEXT SAFE ZONE — STRICT: reserve a clear inner text area inside the dark panel. Keep every Thai glyph, vowel, tone mark, swash, and shadow comfortably away from the sculpted gold border and kanok ornaments.",
+        "MINIMUM INNER CLEARANCE: visually keep at least about 10–14% of plaque width clear on the left and right, and about 14–18% of plaque height clear above and below the headline text block.",
+        "NO TEXT-ON-ORNAMENT: no Thai letter, vowel, tone mark, flourish, Stroke, Shadow / 3D, or decorative swash may overlap, touch, cross, sit on top of, or hide any gold border, lotus ornament, kanok flame, corner carving, crest, or sculpted edge.",
+        "TEXT FIT RULE: if the headline is too long for the safe zone, REDUCE font size, tighten hierarchy moderately, wrap naturally into 2–3 balanced lines, or widen the plaque within the Layout text zone.",
+        "NEVER solve text overflow by enlarging the letters into the border or by placing text over the ornaments.",
+        "Keep the headline visually centered within the usable dark-panel safe zone, not centered against the outermost gold silhouette.",
+        "TEXT CONTRAST: prefer ivory, warm white, pale gold, or coordinated high-contrast Thai lettering suitable for the dark plaque.",
+        "LIGHTING: warm sacred golden illumination with polished-metal highlights on the raised gold carving; preserve readable separation between the dark center and gold border.",
+        "NEGATIVE LOCK — FORBIDDEN PLAQUE INTERPRETATIONS:",
+        "NO white or cream label.",
+        "NO certificate-style frame.",
+        "NO invitation-card frame.",
+        "NO thin gold outline.",
+        "NO simple rounded rectangle.",
+        "NO pastel sticker.",
+        "NO paper-card look.",
+        "NO brush-swatch container.",
+        "NO transparent center.",
+        "NO detached corner ornaments used as a substitute for the solid plaque.",
+        "DO NOT render this as a thin border around floating text.",
+        "DO NOT replace the solid dark plaque with a transparent frame, open corner ornaments, ribbon, sticker, speech bubble, or simple rectangular outline.",
+        "Do not copy any exact existing sign or artwork; create an original plaque using this locked structural grammar."
+      ],
+      buddhist_lotus_gold:["Use a refined lotus-inspired golden sacred frame, quieter than the full ornate plaque."],
+      temple_ornamental:["Use original Thai temple-ornamental edging with restrained finials and kanok rhythm."],
+      chinese_red_gold:["Use a refined Chinese auspicious red-and-gold frame with cloud/ruyi-inspired rhythm."],
+      chinese_cloud:["Use a lighter Chinese auspicious cloud frame with restrained gold linework and red accents."],
+      deity_gold:["Use a premium gold frame adapted to the selected deity tradition without mixing unrelated sacred systems."],
+      naga_ornamental:["Use an elegant Thai Naga-inspired frame with serpent/scale rhythm and gold accents; never generic fantasy dragon styling."],
+      naga_emerald_gold:["Use a lighter emerald-and-gold Naga-inspired frame with refined scale/curve details."]
+    };
+    return [...common,...(special[frame.key]||[])];
+  }
+
+  function textFrameLines(s){
+    const hf=resolvedTextFrame(s,"headline");
+    const bf=resolvedTextFrame(s,"blessing");
+    return [
+      "TEXT FRAME SYSTEM — AUTHORITATIVE:",
+      "HEADLINE FRAME:",
+      ...framePromptLines(hf),
+      "",
+      "GREETING / BLESSING FRAME:",
+      ...(bf.followHeadline?["Frame relationship: FOLLOW HEADLINE FRAME FAMILY with a lighter, simpler variation suitable for longer supporting text."]:[]),
+      ...framePromptLines(bf),
+      "",
+      "PAIR FRAME COHERENCE:",
+      "Image 1 and Image 2 must use the same selected frame family and overall graphic language when generated as a pair.",
+      "Small decorative variation is allowed between the two images, but do not switch to a conflicting frame family, cultural system, or visual era.",
+      "For blessing text, reduce ornament density and keep more inner whitespace than the headline frame.",
+      ...(hf.key==="thai_dark_sacred_plaque" ? [
+        "HARD-LOCK PRIORITY: the Thai Dark Sacred Plaque structural requirements outrank generic Typography decoration, Headline Highlight shape, doodles, and stylistic frame suggestions.",
+        "HEADLINE-ONLY OWNERSHIP: the plaque may contain ONLY the headline text. Keep the full date line and all blessing/supporting text OUTSIDE the plaque.",
+        "PLAQUE SAFE-ZONE PRIORITY: all headline typography must remain entirely inside the dark-panel inner safe zone and must never touch or overlap the gold ornamental border.",
+        "If the headline is long, reduce headline scale or reflow it before changing the plaque ornament geometry.",
+        "DATE SEPARATION: render the date as a separate element below or near the plaque, never inside it.",
+        "DATE IS REQUIRED: do not remove, hide, crop, merge, abbreviate, or replace the date. The full Thai date line must remain visibly readable.",
+        "DATE HIERARCHY: date is a distinct secondary text element — smaller than the headline, larger/clearer than watermark text, and visually separated from the blessing paragraph.",
+        "BLESSING SEPARATION: render the blessing/supporting text in its own negative-space zone or Blessing Frame, never inside the headline plaque.",
+        "If Headline Highlight would visually obscure or compete with the solid dark plaque, omit the Headline Highlight entirely and preserve the selected daily signature color elsewhere.",
+        "The Date Highlight may remain active, but it must be a separate element outside the plaque and must never cause the date to disappear."
+      ] : []),
+      ""
+    ];
+  }
+
   function sacredKanokTypographyAuthority(style){
     if(style?.name!=="Thai Sacred Kanok Ornamental Display")return [];
     return [
@@ -6820,7 +7350,7 @@ const PAIR_LOOKS={
   }
 
   function build(setNo){
-    if(setNo!==1 && setNo!==2)throw new Error("POKUN v9 invalid image number.");
+    if(setNo!==1 && setNo!==2)throw new Error(`${ENGINE_LABEL} invalid image number.`);
     mustFn("effectiveState",effectiveState);
 
     const s=effectiveState(setNo);
@@ -6845,7 +7375,7 @@ const PAIR_LOOKS={
     renderPeopleAnimal(setNo,s,L);
 
     L.push(
-      "POKUN v9 RESOLVED STATE — AUTHORITATIVE:",
+      `${ENGINE_LABEL} RESOLVED STATE — AUTHORITATIVE:`,
       `Image: ${setNo}`,
       `Scene Family: ${family}`,
       `Exact Scene: ${scene.name}`,
@@ -6858,6 +7388,8 @@ const PAIR_LOOKS={
       `Animals allowed: ${boolAnimal(setNo)?"YES":"NO"}`,
       `Stroke layers: ${stroke.count}`,
       `Blessing stroke: ${blessing.stroke}`,
+      `Headline Frame: ${resolvedTextFrame(s,"headline").label} (${resolvedTextFrame(s,"headline").key})`,
+      `Blessing Frame: ${resolvedTextFrame(s,"blessing").label} (${resolvedTextFrame(s,"blessing").key})`,
       `Layout: ${layout.label}`,
       "Forbidden Thai words: นะคะ , นะค่ะ",
       ""
@@ -6899,6 +7431,11 @@ const PAIR_LOOKS={
       `Date: ${s.day.dateThai}`,
       `Signature color: ${s.day.colorThai} / ${s.day.colorEnglish} / ${s.day.hex}`,
       `Use ${s.day.hex} as the recognizable daily signature accent; natural complementary colors are allowed.`,
+      "",
+      "VISIBLE DATE — AUTHORITATIVE:",
+      `The artwork MUST visibly include the complete Thai date: ${s.day.dateThai}`,
+      "Do not omit, abbreviate, crop, hide, or merge the date into unrelated text.",
+      "Keep the date readable as its own text element and clear of the main focal subject.",
       ""
     );
 
@@ -6908,7 +7445,40 @@ const PAIR_LOOKS={
 
     if(typeof textHighlightDirection==="function"){
       const fakeVariation={seed};
-      L.push(...textHighlightDirection(s,fakeVariation));
+      const frameNow=resolvedTextFrame(s,"headline");
+      if(frameNow.key==="thai_dark_sacred_plaque"){
+        L.push(
+          "TEXT HIGHLIGHT OVERRIDE FOR HARD-LOCKED SACRED PLAQUE:",
+          "Headline Highlight: DISABLED for this frame. Do not place any brush swash, marker, rounded paint patch, ribbon, or colored band behind headline text inside the plaque.",
+          "Date Highlight: may remain active only as a separate graphic element OUTSIDE the plaque.",
+          `MANDATORY DATE TEXT: render "${s.day.dateThai}" visibly on top of or immediately adjacent to the separate Date Highlight.`,
+          "If the Date Highlight is NONE, the date text is still mandatory and must remain visible on clean negative space.",
+          "Use the daily signature color elsewhere in the artwork or on the separate date element when needed.",
+          ""
+        );
+      }else{
+        L.push(...textHighlightDirection(s,fakeVariation));
+      }
+    }
+
+    const activeHeadlineFrame=resolvedTextFrame(s,"headline");
+    if(activeHeadlineFrame.key==="thai_dark_sacred_plaque"){
+      L.push(
+        "HEADLINE PLAQUE CONTENT OWNERSHIP — HIGHEST PRIORITY:",
+        "Inside the dark ornate plaque: HEADLINE ONLY.",
+        "Outside the plaque: DATE, blessing/supporting text, watermark, secondary captions.",
+        "MANDATORY DATE VISIBILITY: the complete visible Thai date MUST appear in the artwork and MUST NOT be omitted.",
+        `Required visible date text: ${s.day.dateThai}`,
+        "Preferred date placement: immediately below the headline plaque and above the blessing text when space allows; otherwise use another clean separate text zone required by the authoritative Layout.",
+        "The date must remain visually separate from both the headline plaque and the blessing paragraph.",
+        "Never merge the date and headline into one plaque.",
+        "Never expand the plaque downward to capture the date or blessing.",
+        "HEADLINE FIT INSIDE PLAQUE:",
+        "Keep the headline text block smaller than the usable dark-panel area and leave a clearly visible empty margin between text and every gold ornament.",
+        "If any line would touch the gold frame, first reduce the headline font size or rewrap it into additional balanced lines.",
+        "Never allow Stroke, Shadow / 3D, or decorative Thai swashes to extend beyond the dark-panel safe zone into the gold border.",
+        ""
+      );
     }
 
     L.push(
@@ -6916,6 +7486,10 @@ const PAIR_LOOKS={
       `Thai typography style: ${s.style?.name||"Selected Thai typography"}`,
       s.style?.direction||"",
       `Headline treatment: ${s.style?.headline||"Use clear premium Thai headline lettering."}`,
+      ...(activeHeadlineFrame.key==="thai_dark_sacred_plaque" ? [
+        "PLAQUE TYPOGRAPHY OVERRIDE: do not oversize any hero word or decorative numeral beyond the dark-panel safe zone.",
+        "Prefer balanced headline proportions over extreme oversized typography when this hard-locked plaque is active."
+      ] : []),
       `STROKE SYSTEM: ${stroke.headline}`,
       `Headline shadow / 3D: ${shadow}`,
       `GREETING / BLESSING STROKE: ${blessing.stroke}`,
@@ -6926,6 +7500,7 @@ const PAIR_LOOKS={
     );
 
     L.push(...sacredKanokTypographyAuthority(s.style));
+    L.push(...textFrameLines(s));
 
     L.push(
       "THAI WORDING RULE:",
@@ -6948,6 +7523,8 @@ const PAIR_LOOKS={
         ""
       );
     }
+
+    L.push(...auspiciousDeityLines());
 
     L.push(
       `SCENE CONCEPT — EXACT: ${scene.name}`,
@@ -7091,6 +7668,13 @@ const PAIR_LOOKS={
       })),
       buddhistAllowed:[...BUDDHIST_ALLOWED_SCENE_FAMILIES],
       buddhistVisualStyles:Object.fromEntries(Object.entries(BUDDHIST_VISUAL_STYLES).map(([k,v])=>[k,{label:v.label,description:v.description}])),
+      textFrameCategories:Object.fromEntries(Object.entries(TEXT_FRAME_CATEGORIES).map(([k,v])=>[k,{label:v.label,contexts:[...(v.contexts||[])]}])),
+      textFrames:Object.fromEntries(Object.entries(TEXT_FRAMES).map(([k,v])=>[k,{
+        category:v.category,
+        label:v.label,
+        contexts:[...(v.contexts||[])],
+        desc:v.desc||""
+      }])),
       looks:Object.fromEntries(Object.entries(PAIR_LOOKS).map(([k,v])=>[k,{...v}]))
     };
   }
@@ -7716,7 +8300,7 @@ window.addEventListener("load",()=>{
     const mode=cardById("modeLauncherCard");
     const date=cardByContainedId("date");
     const special=cardById("specialDayBox");
-    const buddhist=cardByContainedId("buddhistToggle");
+    // v10.5: Buddhist Quick Access stays at the very top; do NOT capture/move it into workflow group 1.
     const birthday=cardById("birthdaySettings");
     const quote=cardById("quoteSettings");
 
@@ -7732,7 +8316,7 @@ window.addEventListener("load",()=>{
     const output=cardById("promptBuildSection");
 
     const g1=makeGroup("workflowBasic","1","ประเภทงาน / วันที่ / โหมดพิเศษ","เริ่มจากสิ่งที่กำหนดกฎหลักของงาน");
-    move(g1,mode,date,special,buddhist,birthday,quote);
+    move(g1,mode,date,special,birthday,quote);
 
     const g2=makeGroup("workflowScene","2","Scene Template — ภาพที่ 1 และภาพที่ 2","เลือกโลกของภาพทั้งคู่ในจุดเดียว");
     move(g2,scene);
@@ -7815,6 +8399,7 @@ window.addEventListener("load",()=>{
       const map={
         auto:"AUTO — ระบบเลือกพระพุทธรูป วัด หรือองค์ประกอบพุทธศิลป์ที่เหมาะกับฉาก",
         buddha_statue:"พระพุทธรูปเป็นวัตถุศักดิ์สิทธิ์ ไม่ถือเป็นบุคคลใน Character Composition",
+        monk_generated:"พระภิกษุ / พระสงฆ์แบบสร้างใหม่ — ระบบสร้างใบหน้าใหม่ที่ไม่ใช่รูปเหมือนพระหรือเกจิอาจารย์บุคคลจริง และจัดจีวร/ท่าทางให้สุภาพเหมาะกับฉาก",
         no_figure:"ไม่มีพระพุทธรูปและไม่มีบุคคล ใช้วัด เจดีย์ ดอกบัว เทียน เครื่องสักการะ หรือของทำบุญแทน",
         buddha_reference:"ใช้รูปพระพุทธรูปที่คุณเลือกเป็น Reference ขององค์ประกอบศักดิ์สิทธิ์",
         monk_reference:"ใช้รูปพระสงฆ์/เกจิอาจารย์เป็น Identity Reference — ระบบจะถือว่าภาพนี้มีบุคคลโดยอัตโนมัติ",
@@ -7827,7 +8412,7 @@ window.addEventListener("load",()=>{
       if(!isBuddhistActive())return true;
       const m=mode(n);
       let allowed;
-      if(m==="monk_reference")allowed=["buddhist_sacred","thai_architecture","nature_mountain","garden_botanical","waterfront"];
+      if(m==="monk_reference" || m==="monk_generated")allowed=["buddhist_sacred","thai_architecture","nature_mountain","garden_botanical","waterfront"];
       else if(["buddha_reference","buddha_statue"].includes(m))allowed=["buddhist_sacred","thai_architecture","nature_mountain","garden_botanical"];
       else if(m==="temple_reference")allowed=["buddhist_sacred","thai_architecture","nature_mountain","garden_botanical","waterfront"];
       else allowed=["buddhist_sacred","rice_countryside","nature_mountain","waterfront","garden_botanical","thai_architecture","food_hero","floral_stilllife"];
@@ -7924,6 +8509,380 @@ window.addEventListener("load",()=>{
   }
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",run);else run();
 })();
+
+
+(function protectTopControlsV110(){
+  function run(){
+    const tabs=document.getElementById("pokunModeTabsShell");
+    const nav=document.getElementById("workflowNav");
+    const wrap=document.querySelector(".wrap");
+    if(!tabs||!nav||!wrap)return;
+    const hero=wrap.querySelector(".hero");
+    if(hero && hero.nextElementSibling!==tabs){
+      wrap.insertBefore(tabs,hero.nextElementSibling);
+    }
+    if(tabs.nextElementSibling!==nav){
+      wrap.insertBefore(nav,tabs.nextElementSibling);
+    }
+    const observer=new MutationObserver(()=>{
+      const t=document.getElementById("pokunModeTabsShell");
+      const n=document.getElementById("workflowNav");
+      const w=document.querySelector(".wrap");
+      const hr=w?.querySelector(".hero");
+      if(!t||!n||!w||!hr)return;
+      if(hr.nextElementSibling!==t)w.insertBefore(t,hr.nextElementSibling);
+      if(t.nextElementSibling!==n)w.insertBefore(n,t.nextElementSibling);
+    });
+    observer.observe(document.getElementById("pokunMainGrid")||document.body,{childList:true,subtree:true});
+  }
+  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",run);
+  else run();
+})();
+
+
+(function initPokunV109AuspiciousDeityUI(){
+  function run(){
+    const style=document.getElementById("lifestyleVisualStyle");
+    const box=document.getElementById("auspiciousDeityBox");
+    const mode=document.getElementById("auspiciousDeityMode");
+    const desc=document.getElementById("auspiciousDeityDescription");
+    const upload=document.getElementById("auspiciousDeityUploadBox");
+    const file=document.getElementById("auspiciousDeityReferenceFile");
+    const name=document.getElementById("auspiciousDeityReferenceName");
+    if(!style||!box||!mode||!desc||!upload)return;
+
+    const saved=localStorage.getItem("pokunAuspiciousDeityMode");
+    if(saved && [...mode.options].some(o=>o.value===saved))mode.value=saved;
+
+    const map={
+      auto:"AUTO — สุ่มเทพมงคลหรือสัญลักษณ์โชคลาภ 1 แบบ โดยไม่ผสมหลายสายเข้าด้วยกัน",
+      ganesha:"พระพิฆเนศ — ใช้องค์พระพิฆเนศเป็นจุดเด่นของภาพ เน้นความสง่างามและรายละเอียดองค์บูชา",
+      caishen:"ไฉ่ซิงเอี๊ย — โทนมงคลจีนแดง–ทอง เน้นโชคลาภและความมั่งคั่ง",
+      guan_yu:"กวนอู — ภาพมงคลจีนที่เน้นบารมี ความมั่นคง และความรุ่งเรือง",
+      naga:"พญานาคราช — งานไทย/ล้านนา/อีสาน เน้นพญานาคสง่างาม แสงทองหรือเขียวมรกต",
+      fu_lu_shou:"ฮก–ลก–ซิ่ว — ใช้สามองค์ร่วมกันเป็นชุดเดียว ไม่สุ่มเทพอื่นเข้ามาปน",
+      auspicious_shrine:"ศาลเทพมงคล — ให้ศาลหรือแท่นบูชาเป็นพระเอกของภาพ",
+      auspicious_offerings:"เครื่องสักการะและของมงคล — ไม่มีองค์เทพก็ได้ ใช้ผลไม้ ดอกไม้ ธูป เทียน ของมงคลและทองเป็นองค์ประกอบ",
+      reference:"ใช้รูปอ้างอิง — Manual/ChatGPT ให้แนบรูปองค์เทพหรือองค์บูชาใน ChatGPT พร้อม Prompt"
+    };
+
+    function refresh(){
+      box.style.display=style.value==="wealth_prosperity"?"block":"none";
+      desc.textContent=map[mode.value]||map.auto;
+      upload.style.display=mode.value==="reference"?"block":"none";
+    }
+
+    style.addEventListener("change",refresh);
+    mode.addEventListener("change",()=>{
+      localStorage.setItem("pokunAuspiciousDeityMode",mode.value);
+      refresh();
+      if(typeof toast==="function")toast("เทพมงคล: "+mode.options[mode.selectedIndex].text);
+    });
+    if(file)file.addEventListener("change",()=>{
+      if(name)name.textContent=file.files?.[0]?`ไฟล์ที่เลือก: ${file.files[0].name}`:"";
+    });
+    refresh();
+  }
+  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",run);else run();
+})();
+
+
+(function initPokunV110ModeTabs(){
+  function ready(fn){
+    if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",fn);
+    else fn();
+  }
+
+  ready(()=>{
+    const tabs=[...document.querySelectorAll("#pokunModeTabs .mode-tab")];
+    const note=document.getElementById("pokunModeContextNote");
+    const buddhistQuick=document.getElementById("buddhistQuickAccess");
+    const buddhistSubject=document.getElementById("buddhistSubjectSection");
+    const buddhistVisual=document.getElementById("buddhistVisualStyleSection");
+    const buddhistToggle=document.getElementById("buddhistToggle");
+    const deityBox=document.getElementById("auspiciousDeityBox");
+    const lifestyle=document.getElementById("lifestyleVisualStyle");
+
+    const MODE_KEY="pokunPrimaryModeV110";
+    const modeText={
+      general:"โหมดทั่วไป — แสดงเครื่องมือหลักสำหรับสวัสดีประจำวัน คำคม วันเกิด คน/สัตว์ Scene Typography และ Layout โดยซ่อนตัวเลือกพุทธศิลป์/เทพมงคลที่ไม่จำเป็น",
+      buddhist:"โหมดพุทธศิลป์ — เปิดพุทธศิลป์และแสดงเฉพาะเครื่องมือพระพุทธรูป พระ/เกจิ วัด ของทำบุญ อาหาร/ขนมไทย และ Visual Style พุทธศิลป์",
+      deity:"โหมดเทพมงคล — ใช้สายมั่งคั่งร่ำรวย พร้อมพระพิฆเนศ ไฉ่ซิงเอี๊ย กวนอู พญานาคราช ฮก–ลก–ซิ่ว ศาลเทพ และเครื่องสักการะ"
+    };
+
+    function setHidden(el,hidden){
+      if(!el)return;
+      el.classList.toggle("context-hidden",!!hidden);
+    }
+
+    function showOnlyCompatibleSceneOptionsForDeity(){
+      const allowed=new Set(["auto","wealth_prosperity","thai_architecture","garden_botanical","nature_mountain","waterfront","minimal_abstract"]);
+      [1,2].forEach(n=>{
+        const fam=document.getElementById(`sceneTemplateFamily${n}`);
+        if(!fam)return;
+        [...fam.options].forEach(opt=>{
+          if(!opt.value)return;
+          const hidden=!allowed.has(opt.value);
+          opt.hidden=hidden;
+          opt.disabled=hidden;
+        });
+        const selected=fam.options[fam.selectedIndex];
+        if(selected?.disabled){
+          fam.value="auto";
+          localStorage.setItem(`pokunSceneTemplateFamily${n}`,"auto");
+          localStorage.setItem(`pokunSceneTemplateExact${n}`,"auto");
+          fam.dispatchEvent(new Event("change"));
+        }
+      });
+    }
+
+    function restoreSceneOptions(){
+      [1,2].forEach(n=>{
+        const fam=document.getElementById(`sceneTemplateFamily${n}`);
+        if(!fam)return;
+        [...fam.options].forEach(opt=>{
+          opt.hidden=false;
+          opt.disabled=false;
+        });
+      });
+    }
+
+    function apply(mode){
+      tabs.forEach(t=>t.classList.toggle("active",t.dataset.mode===mode));
+      localStorage.setItem(MODE_KEY,mode);
+      if(note)note.textContent=modeText[mode]||modeText.general;
+
+      // GENERAL
+      if(mode==="general"){
+        if(buddhistToggle?.checked){
+          buddhistToggle.checked=false;
+          buddhistToggle.dispatchEvent(new Event("change"));
+        }
+        setHidden(buddhistQuick,true);
+        setHidden(buddhistSubject,true);
+        setHidden(buddhistVisual,true);
+        if(deityBox){
+          deityBox.classList.remove("mode-deity-emphasis");
+          deityBox.style.display="none";
+        }
+        restoreSceneOptions();
+        return;
+      }
+
+      // BUDDHIST
+      if(mode==="buddhist"){
+        setHidden(buddhistQuick,false);
+        if(buddhistQuick)buddhistQuick.classList.add("context-inline");
+        if(buddhistToggle && !buddhistToggle.checked){
+          buddhistToggle.checked=true;
+          buddhistToggle.dispatchEvent(new Event("change"));
+        }
+        setHidden(buddhistSubject,false);
+        setHidden(buddhistVisual,false);
+        if(deityBox){
+          deityBox.classList.remove("mode-deity-emphasis");
+          deityBox.style.display="none";
+        }
+        restoreSceneOptions();
+        return;
+      }
+
+      // DEITY / WEALTH
+      if(mode==="deity"){
+        if(buddhistToggle?.checked){
+          buddhistToggle.checked=false;
+          buddhistToggle.dispatchEvent(new Event("change"));
+        }
+        setHidden(buddhistQuick,true);
+        setHidden(buddhistSubject,true);
+        setHidden(buddhistVisual,true);
+
+        if(lifestyle && lifestyle.value!=="wealth_prosperity"){
+          lifestyle.value="wealth_prosperity";
+          lifestyle.dispatchEvent(new Event("change"));
+        }
+        if(deityBox){
+          deityBox.classList.add("mode-deity-emphasis");
+          deityBox.style.display="block";
+        }
+        showOnlyCompatibleSceneOptionsForDeity();
+      }
+    }
+
+    tabs.forEach(btn=>btn.addEventListener("click",()=>apply(btn.dataset.mode)));
+
+    let saved=localStorage.getItem(MODE_KEY)||"general";
+    if(!["general","buddhist","deity"].includes(saved))saved="general";
+    apply(saved);
+  });
+})();
+
+
+(function initPokunV113TextFrames(){
+  function run(){
+    const hCat=document.getElementById("headlineFrameCategory");
+    const hMode=document.getElementById("headlineFrameMode");
+    const hDesc=document.getElementById("headlineFrameDescription");
+    const bCat=document.getElementById("blessingFrameCategory");
+    const bMode=document.getElementById("blessingFrameMode");
+    const bDesc=document.getElementById("blessingFrameDescription");
+    const box=document.getElementById("headlineFrameBox");
+    if(!hCat||!hMode||!hDesc||!bCat||!bMode||!bDesc||!box)return;
+
+    let catalog=null;
+    try{
+      catalog=POKUN_V9.uiCatalog();
+    }catch(err){
+      console.error("POKUN v11.3: cannot load Text Frame catalog",err);
+    }
+
+    const CATS=catalog?.textFrameCategories||{};
+    const FRAMES=catalog?.textFrames||{};
+
+    // Visible fallback instead of silently leaving empty dropdowns.
+    if(!Object.keys(CATS).length || !Object.keys(FRAMES).length){
+      box.style.display="block";
+      hCat.innerHTML='<option value="auto">AUTO — เลือกให้เข้ากับงาน</option>';
+      hMode.innerHTML='<option value="auto">AUTO — เลือกแบบให้เข้ากับงาน</option>';
+      bCat.innerHTML='<option value="auto">AUTO — เลือกให้เข้ากับงาน</option><option value="follow">ตามกรอบ Headline</option>';
+      bMode.innerHTML='<option value="auto">AUTO — เลือกแบบให้เข้ากับงาน</option>';
+      hDesc.textContent="ระบบกรอบพร้อมใช้งานแบบ AUTO";
+      bDesc.textContent="ระบบกรอบคำอวยพรพร้อมใช้งานแบบ AUTO";
+      return;
+    }
+
+    function currentMode(){
+      return localStorage.getItem("pokunPrimaryModeV110")||"general";
+    }
+    function allowedCategory(key,mode){
+      return (CATS[key]?.contexts||[]).includes(mode);
+    }
+    function addOption(select,value,text){
+      const o=document.createElement("option");
+      o.value=value;
+      o.textContent=text;
+      select.appendChild(o);
+    }
+
+    function buildCategories(select,target){
+      const mode=currentMode();
+      select.innerHTML="";
+      Object.entries(CATS).forEach(([key,c])=>{
+        if(!allowedCategory(key,mode))return;
+        addOption(select,key,c.label);
+      });
+      if(target==="blessing"){
+        const o=document.createElement("option");
+        o.value="follow";
+        o.textContent="ตามกรอบ Headline";
+        const afterAuto=[...select.options].findIndex(x=>x.value==="auto");
+        select.insertBefore(o, afterAuto>=0 ? select.children[afterAuto+1]||null : select.firstChild);
+      }
+    }
+
+    function buildModes(categorySelect,frameSelect,target){
+      const mode=currentMode();
+      const cat=categorySelect.value;
+      frameSelect.innerHTML="";
+
+      if(target==="blessing" && cat==="follow"){
+        addOption(frameSelect,"follow_headline","ตาม Headline — ใช้แบบที่เบากว่า");
+        return;
+      }
+      if(cat==="auto"){
+        addOption(frameSelect,"auto","AUTO — เลือกแบบให้เข้ากับงาน");
+        return;
+      }
+      if(cat==="none"){
+        addOption(frameSelect,"none","ไม่ใช้กรอบ");
+        return;
+      }
+
+      Object.entries(FRAMES).forEach(([key,f])=>{
+        if(f.category!==cat)return;
+        if(!(f.contexts||[]).includes(mode))return;
+        addOption(frameSelect,key,f.label);
+      });
+
+      // Defensive fallback if a category accidentally has no children.
+      if(!frameSelect.options.length){
+        addOption(frameSelect,"auto","AUTO — เลือกแบบให้เข้ากับงาน");
+      }
+    }
+
+    function describe(frameSelect,desc){
+      if(frameSelect.value==="follow_headline"){
+        desc.innerHTML="<b>ตามกรอบ Headline</b><br>ใช้ Frame Family เดียวกับ Headline แต่ลดความหนาแน่นของลวดลายและเพิ่มพื้นที่ว่างสำหรับคำอวยพร";
+        return;
+      }
+      const f=FRAMES[frameSelect.value];
+      if(frameSelect.value==="auto" || !f){
+        desc.innerHTML="<b>AUTO — เลือกแบบให้เข้ากับงาน</b><br>ระบบเลือก Frame Family จากแท็บ, Typography และ Visual Style โดยอัตโนมัติ";
+        return;
+      }
+      desc.innerHTML=`<b>${f.label}</b><br>${f.desc||""}`;
+    }
+
+    function restore(){
+      // Ensure the frame control itself remains visibly rendered.
+      box.style.display="block";
+
+      buildCategories(hCat,"headline");
+      buildCategories(bCat,"blessing");
+
+      const hc=localStorage.getItem("pokunHeadlineFrameCategory")||"auto";
+      const bc=localStorage.getItem("pokunBlessingFrameCategory")||"auto";
+      if([...hCat.options].some(o=>o.value===hc))hCat.value=hc;
+      if([...bCat.options].some(o=>o.value===bc))bCat.value=bc;
+
+      buildModes(hCat,hMode,"headline");
+      buildModes(bCat,bMode,"blessing");
+
+      const hm=localStorage.getItem("pokunHeadlineFrameMode")||"auto";
+      const bm=localStorage.getItem("pokunBlessingFrameMode")||"auto";
+      if([...hMode.options].some(o=>o.value===hm))hMode.value=hm;
+      if([...bMode.options].some(o=>o.value===bm))bMode.value=bm;
+
+      describe(hMode,hDesc);
+      describe(bMode,bDesc);
+    }
+
+    hCat.addEventListener("change",()=>{
+      localStorage.setItem("pokunHeadlineFrameCategory",hCat.value);
+      buildModes(hCat,hMode,"headline");
+      localStorage.setItem("pokunHeadlineFrameMode",hMode.value);
+      describe(hMode,hDesc);
+    });
+
+    bCat.addEventListener("change",()=>{
+      localStorage.setItem("pokunBlessingFrameCategory",bCat.value);
+      buildModes(bCat,bMode,"blessing");
+      localStorage.setItem("pokunBlessingFrameMode",bMode.value);
+      describe(bMode,bDesc);
+    });
+
+    hMode.addEventListener("change",()=>{
+      localStorage.setItem("pokunHeadlineFrameMode",hMode.value);
+      describe(hMode,hDesc);
+      if(typeof toast==="function")toast("กรอบ Headline: "+hMode.options[hMode.selectedIndex].text);
+    });
+
+    bMode.addEventListener("change",()=>{
+      localStorage.setItem("pokunBlessingFrameMode",bMode.value);
+      describe(bMode,bDesc);
+      if(typeof toast==="function")toast("กรอบคำอวยพร: "+bMode.options[bMode.selectedIndex].text);
+    });
+
+    document.querySelectorAll("#pokunModeTabs .mode-tab").forEach(btn=>{
+      btn.addEventListener("click",()=>setTimeout(restore,10));
+    });
+
+    restore();
+  }
+
+  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",run);
+  else run();
+})();;;
 
 </script>
 </body>
