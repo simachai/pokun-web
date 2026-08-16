@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#111827">
-<title>POKUN Web v11.9</title>
+<title>POKUN Web v11.23</title>
 <style>
 :root{--bg:#f4f5f7;--card:#fff;--ink:#16181d;--muted:#6b7280;--line:#e5e7eb;--accent:#111827;--good:#087f5b;--warn:#b45309}
 *{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI","Noto Sans Thai",sans-serif;background:var(--bg);color:var(--ink)}
@@ -153,13 +153,34 @@ button{border:0;border-radius:12px;padding:12px 14px;font-weight:800;cursor:poin
 @media(max-width:600px){
   .mode-tabs{grid-template-columns:1fr}
 }
+
+#masterRenderingStyleCard.master-rendering-top{
+  margin:10px 0 12px;
+  padding:14px;
+  border:2px solid #0b8f64;
+  border-radius:18px;
+  background:#fff;
+  box-shadow:0 8px 24px rgba(15,23,42,.06);
+  width:auto;
+}
+#masterRenderingStyleCard.master-rendering-top select{max-width:520px}
+
+#workflowCharacter #characterModeSelectorCard{
+  margin-top:0;
+  border:2px solid #d1fae5;
+  background:#fbfffd;
+}
+#workflowCharacter #characterCompositionSection,
+#workflowCharacter #animalSettingsSection{
+  margin-top:10px;
+}
 </style>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2215%22%20fill%3D%22%230b8f64%22%2F%3E%0A%3Cpath%20fill%3D%22%23ffffff%22%20d%3D%22M18%2012h20c10.5%200%2017%206.1%2017%2015.1C55%2036.2%2048.3%2042%2038%2042H29v10H18V12zm11%209v12h8.3c4.3%200%206.7-2.1%206.7-6s-2.4-6-6.7-6H29z%22%2F%3E%0A%3Ccircle%20cx%3D%2249%22%20cy%3D%2249%22%20r%3D%226%22%20fill%3D%22%23f6c344%22%2F%3E%0A%3C%2Fsvg%3E">
 </head>
 <body>
 <div class="wrap">
   <div class="hero">
-    <h1>POKUN Web <span class="small">v11.9</span></h1>
+    <h1>POKUN Web <span class="small">v11.23</span></h1>
     <p>Daily Greeting Prompt Generator — ใช้ได้บนมือถือและคอม</p>
   </div>
 
@@ -583,7 +604,13 @@ button{border:0;border-radius:12px;padding:12px 14px;font-weight:800;cursor:poin
     </section>
 
     <section class="card full" id="characterCompositionSection">
-      <label>องค์ประกอบตัวละครในภาพ</label>
+      <div class="stylebox" id="characterModeSelectorCard" style="margin-bottom:12px">
+        <div class="quick-title" style="margin-bottom:8px">
+          <label style="margin:0">👥 องค์ประกอบตัวละครในภาพ</label>
+          <span class="quick-badge">เลือกภาพ 1–2 ก่อน</span>
+        </div>
+        <div class="small" style="margin-bottom:10px">กำหนดก่อนว่าภาพแต่ละภาพจะมีคน สัตว์ ทั้งสองอย่าง หรือไม่มีตัวละคร แล้วค่อยตั้งรายละเอียดบุคคล/สัตว์ด้านล่าง</div>
+
       <div id="birthdayCharacterNotice" class="notice" style="margin-bottom:10px;display:none">
         🎂 โหมดการ์ดวันเกิด: เลือก “ไม่มีบุคคล” หรือ “มีบุคคล” เท่านั้น ระบบสัตว์จะซ่อนอัตโนมัติ หากใช้รูปของฉัน สามารถเลือก “คนสมจริง” หรือ “การ์ตูน” ได้
       </div>
@@ -611,14 +638,25 @@ button{border:0;border-radius:12px;padding:12px 14px;font-weight:800;cursor:poin
         เลือกแยกได้อิสระ เช่น ภาพที่ 1 มีคนอย่างเดียว และภาพที่ 2 มีสัตว์อย่างเดียว หรือเลือกมีทั้งคนและสัตว์ในภาพเดียวกัน
       </div>
 
-      <label>ตั้งค่าบุคคล</label>
+      </div>
 
-      <div class="stylebox" style="margin-bottom:10px">
-        <strong>รูปแบบภาพ / บุคคล — ใช้ร่วมกันทั้งภาพที่ 1 และภาพที่ 2</strong>
+      <label>👤 ตั้งค่ารายละเอียดบุคคล</label>
+
+      <div class="stylebox" id="masterRenderingStyleCard" style="margin-bottom:10px">
+        <strong>🎨 รูปแบบภาพหลัก / Master Rendering Style</strong>
+        <div class="small" style="margin-top:5px">ใช้ร่วมกันทั้งภาพที่ 1 และภาพที่ 2 และควบคุมทั้งฉาก บุคคล พระพุทธรูป พระภิกษุ เทพมงคล อาหาร วัตถุ และองค์ประกอบทั้งหมด</div>
         <select id="humanStyle" style="margin-top:8px">
-          <option value="realistic">คนสมจริง / ภาพสมจริง</option>
-          <option value="cartoon">การ์ตูน / Illustration</option>
+          <option value="realistic">📷 สมจริง / Photorealistic — ทั้ง 2 ภาพ</option>
+          <option value="cartoon">🎨 การ์ตูน / Illustration — ทั้ง 2 ภาพ</option>
         </select>
+        <div class="notice" style="margin-top:8px">MASTER LOCK: เมื่อเลือกแล้ว Scene Template / พุทธศิลป์ / เทพมงคล / Character / Visual Style จะไม่เปลี่ยนภาพใดภาพหนึ่งไปเป็นคนละ Rendering Style</div>
+        <div class="small" style="margin-top:8px"><b>ขั้นตอนแรก:</b> เลือกสมจริงหรือการ์ตูนตรงนี้ก่อน แล้วจึงเลือกแท็บงานด้านล่าง</div>
+        <div class="notice" style="margin-top:8px"><b>v11.23 Day Consistency Lock:</b> ชื่อวันถูกคำนวณใหม่จากวันที่ที่เลือกทุกครั้ง และ Headline / คำอวยพรที่มีชื่อวันเก่าจะถูกแก้เป็นวันปัจจุบันก่อนสร้าง Prompt</div>
+        <div class="notice" style="margin-top:8px"><b>v11.20:</b> หากเลือก <b>ทั่วไป + การ์ตูน</b> ระบบจะล็อกทั้ง 2 ภาพเป็นการ์ตูนน่ารักแนว Cute / Kawaii / Storybook / Soft 3D / Chibi และป้องกันพระภิกษุ พระพุทธรูป คนไหว้พระ หรือกิจกรรมพุทธศาสนาหลุดเข้ามาจากค่าพุทธศิลป์เดิม</div>
+      </div>
+
+      <div class="stylebox" id="textHighlightCard" style="margin-bottom:10px">
+        <strong>🖍️ Text Highlight / แถบสีคาดหลังข้อความ</strong>
         <label class="small" style="display:block;margin-top:10px">Text Highlight / แถบสีคาดหลังข้อความ</label>
         <div class="grid2" style="margin-top:5px">
           <div>
@@ -643,6 +681,11 @@ button{border:0;border-radius:12px;padding:12px 14px;font-weight:800;cursor:poin
           </div>
         </div>
         <div class="small" style="margin-top:6px">AUTO ใช้ Signature Color ของวันโดยอัตโนมัติ และ Headline / วันที่เปิด-ปิดแยกกันได้ โดยไม่กระทบ Stroke หรือ Shadow / 3D</div>
+      </div>
+
+      <div class="stylebox" id="generalVisualStyleCard" style="margin-bottom:10px">
+        <strong>✨ Visual Style / สไตล์ภาพทั่วไป</strong>
+        <div class="small" style="margin-top:5px">กำหนดภาษาภาพและอารมณ์เพิ่มเติม ภายใต้ Master Rendering Style ที่เลือกไว้ด้านบน</div>
         <label class="small" style="display:block;margin-top:10px">Visual Style / สไตล์ภาพ</label>
         <select id="lifestyleVisualStyle" style="margin-top:5px">
           <option value="auto">AUTO — ใช้สไตล์ภาพเดิมของ POKUN</option>
@@ -823,7 +866,7 @@ button{border:0;border-radius:12px;padding:12px 14px;font-weight:800;cursor:poin
     </section>
 
 <section class="card full" id="animalSettingsSection">
-      <label>ตั้งค่าสัตว์ / Animal Character</label>
+      <label>🐾 ตั้งค่ารายละเอียดสัตว์ / Animal Character</label>
       <div class="notice" style="margin-bottom:10px">
         ตั้งค่าส่วนนี้ต่อจาก “องค์ประกอบตัวละครในภาพ” ด้านบน หากภาพที่ 1 หรือภาพที่ 2 เลือก “มีสัตว์อย่างเดียว” หรือ “มีทั้งคนและสัตว์” ให้กำหนดชนิด รูปแบบ และพฤติกรรมของสัตว์ที่นี่
       </div>
@@ -846,10 +889,27 @@ button{border:0;border-radius:12px;padding:12px 14px;font-weight:800;cursor:poin
             <option value="auto">AUTO</option>
             <option value="cat">แมว</option>
             <option value="dog">สุนัข</option>
+            <option value="horse">ม้า</option>
             <option value="rabbit">กระต่าย</option>
             <option value="bear">หมี</option>
             <option value="bird">นก</option>
             <option value="elephant">ช้าง</option>
+            <option value="deer">กวาง</option>
+            <option value="squirrel">กระรอก</option>
+            <option value="hamster">แฮมสเตอร์</option>
+            <option value="duck">เป็ด</option>
+            <option value="chicken">ไก่</option>
+            <option value="goat">แพะ</option>
+            <option value="sheep">แกะ</option>
+            <option value="cow">วัว</option>
+            <option value="buffalo">ควาย</option>
+            <option value="pig">หมู</option>
+            <option value="fox">สุนัขจิ้งจอก</option>
+            <option value="panda">แพนด้า</option>
+            <option value="monkey">ลิง</option>
+            <option value="turtle">เต่า</option>
+            <option value="fish">ปลา</option>
+            <option value="butterfly">ผีเสื้อ</option>
           </select>
         </div>
 
@@ -873,8 +933,18 @@ button{border:0;border-radius:12px;padding:12px 14px;font-weight:800;cursor:poin
             <option value="white_cat">แมวขาว</option>
             <option value="black_cat">แมวดำ</option>
             <option value="golden_dog">สุนัขสีทอง</option>
+            <option value="white_dog">สุนัขสีขาว</option>
+            <option value="brown_horse">ม้าสีน้ำตาล</option>
+            <option value="white_horse">ม้าสีขาว</option>
+            <option value="black_horse">ม้าสีดำ</option>
             <option value="white_rabbit">กระต่ายขาว</option>
             <option value="brown_bear">หมีสีน้ำตาล</option>
+            <option value="spotted_deer">กวางลายจุด</option>
+            <option value="red_squirrel">กระรอกสีน้ำตาลแดง</option>
+            <option value="yellow_duck">เป็ดสีเหลือง</option>
+            <option value="white_sheep">แกะขาว</option>
+            <option value="panda_classic">แพนด้าขาวดำ</option>
+            <option value="green_turtle">เต่าสีเขียว</option>
           </select>
         </div>
 
@@ -901,6 +971,7 @@ button{border:0;border-radius:12px;padding:12px 14px;font-weight:800;cursor:poin
       <div class="notice" style="margin-top:8px">
         ถ้าเลือก “การ์ตูน” ในรูปแบบภาพหลัก แนะนำให้สัตว์ใช้ “ตามรูปแบบภาพหลัก” เพื่อให้คน สัตว์ และฉากเป็นการ์ตูนชุดเดียวกัน
       </div>
+      <div class="small" style="margin-top:7px"><b>v11.22:</b> เพิ่มม้า กวาง กระรอก แฮมสเตอร์ เป็ด ไก่ แพะ แกะ วัว ควาย หมู สุนัขจิ้งจอก แพนด้า ลิง เต่า ปลา และผีเสื้อ พร้อมตัวเลือกลักษณะย่อยตามชนิดสัตว์</div>
     </section>
 
 
@@ -1249,8 +1320,12 @@ function dateSeed(d){return d.getFullYear()*10000+(d.getMonth()+1)*100+d.getDate
 function isoBE(d){return `${d.getFullYear()+543}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`}
 function isoCE(d){return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`}
 function localDateFromInput(v){const [y,m,d]=v.split("-").map(Number);return new Date(y,m-1,d,12,0,0)}
+function canonicalWeekdayIndex(d){
+  // Calculate from the selected Y/M/D only, independent of browser timezone/DST.
+  return new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate(),12,0,0)).getUTCDay();
+}
 function daily(d){
-  const i=d.getDay();
+  const i=canonicalWeekdayIndex(d);
   return {
     dayThai:DAYS_TH[i], dayEnglish:DAYS_EN[i],
     colorThai:COLOR_TH[i], colorEnglish:COLOR_EN[i], hex:COLOR_HEX[i],
@@ -1283,6 +1358,32 @@ function sanitizeThaiWeekdayText(s){
 }
 function replaceDay(s,day){
   return sanitizeThaiWeekdayText(s.replaceAll("{DAY}",day));
+}
+
+const THAI_WEEKDAY_NAMES=["วันอาทิตย์","วันจันทร์","วันอังคาร","วันพุธ","วันพฤหัสบดี","วันศุกร์","วันเสาร์"];
+
+function enforceAuthoritativeWeekdayText(text,correctDay){
+  if(text==null)return "";
+  let out=String(text);
+
+  // First resolve explicit template placeholders.
+  out=out.replaceAll("{DAY}",correctDay);
+
+  // Any concrete weekday left in generated/stored text is canonicalized to the selected date.
+  for(const dayName of THAI_WEEKDAY_NAMES){
+    if(dayName!==correctDay) out=out.replaceAll(dayName,correctDay);
+  }
+
+  return sanitizeThaiWeekdayText(out);
+}
+
+function assertAuthoritativeWeekdayText(text,correctDay,label){
+  const found=THAI_WEEKDAY_NAMES.filter(d=>String(text||"").includes(d));
+  const wrong=found.filter(d=>d!==correctDay);
+  if(wrong.length){
+    throw new Error(`DAY CONSISTENCY LOCK: ${label} contains wrong weekday ${wrong.join(", ")}; expected ${correctDay}.`);
+  }
+  return true;
 }
 function normalTexts(d,day){
   const seed=dateSeed(d);
@@ -1363,7 +1464,11 @@ function specialTextVariant(sp,s,setNo,seed){
 function specialTexts(sp){return {headline1:sp.h1,headline2:sp.h2,greeting1:sp.g1,greeting2:sp.g2}}
 function specialConceptPair(sp,d){if(sp.category==="buddhist")return buddhistConceptPair(d); if(sp.c1&&sp.c2)return {image1:sp.c1,image2:sp.c2}; return normalConceptPair(d)}
 function effectiveState(setNo){
-  const d=localDateFromInput($("date").value), day=daily(d), holy=holyInfo(d), special=specialDayInfo(d);
+  const rawDate=$("date").value;
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(rawDate||"")){
+    throw new Error("DAY CONSISTENCY LOCK: invalid selected date.");
+  }
+  const d=localDateFromInput(rawDate), day=daily(d), holy=holyInfo(d), special=specialDayInfo(d);
   let style, concepts, texts, buddhist=false;
   if(special){
     buddhist=special.category==="buddhist";
@@ -2629,20 +2734,31 @@ function chooseDistinctDeepPair(s,seed1,seed2){
 
 
 function sharedCartoonStyle(s){
-  const seed=hashString(`${userSeed}|${s.day.isoDate}|shared-cartoon-style-v28`);
+  const seed=hashString(`${userSeed}|${s.day.isoDate}|shared-cartoon-style-v1120`);
+  if(resolveMainArtworkMode()==="general"){
+    return pick([
+      "cute polished 3D cartoon illustration with rounded friendly forms, charming expressive characters, soft dimensional shading, cheerful premium greeting-card finish",
+      "Korean-inspired kawaii editorial illustration with adorable proportions, clean shapes, playful tiny accents, soft friendly surfaces, and warm approachable mood",
+      "charming storybook cartoon illustration with whimsical simplified forms, gentle painterly texture, cozy light, friendly visual storytelling, and premium finish",
+      "soft cute commercial illustration with rounded shapes, bright friendly expressions, clean illustrated textures, subtle depth, and delightful everyday atmosphere",
+      "adorable chibi-inspired premium cartoon with tasteful proportions, expressive poses, soft 3D-like shading, cute decorative accents, and polished Thai greeting-poster composition",
+      "premium cute lifestyle cartoon with friendly everyday scenery, charming props, clean dimensional illustration, warm cheerful light, and clearly non-photographic rendering"
+    ],seed+5101);
+  }
   return pick([
-    "premium soft 3D cartoon illustration with polished character modeling, expressive natural faces, soft cinematic shading, and elegant Thai greeting-poster finish",
-    "high-end semi-realistic digital cartoon illustration with graceful character design, clean facial features, refined lighting, and premium editorial detail",
-    "polished anime-inspired Thai greeting illustration with soft realistic proportions, elegant eyes, natural poses, refined textures, and sophisticated color rendering",
-    "premium cute editorial character illustration with smooth dimensional shading, tasteful stylization, expressive faces, and refined commercial-art finish"
+    "premium hand-painted digital illustration with refined stylization and elegant non-photographic surfaces",
+    "polished illustrated artwork with artistic brushwork, dimensional shading, refined forms, and premium editorial finish",
+    "elegant storybook-style digital painting with controlled stylization, sophisticated lighting, and clearly illustrated surfaces"
   ],seed+5101);
 }
 
 
-
 function imageHasPeople(setNo){
   const mode=setNo===1 ? characterMode1 : characterMode2;
-  return mode==="people" || mode==="both";
+  const subjectEl=document.getElementById(setNo===1?"buddhistSubject1":"buddhistSubject2");
+  const buddhistSubject=subjectEl?.value||"auto";
+  const buddhistHuman=resolveMainArtworkMode()==="buddhist" && ["monk_generated","monk_reference"].includes(buddhistSubject);
+  return mode==="people" || mode==="both" || buddhistHuman;
 }
 function imageHasAnimal(setNo){
   const mode=setNo===1 ? characterMode1 : characterMode2;
@@ -2664,14 +2780,10 @@ function resolvedAnimalStyle(){
 }
 
 function animalSpeciesDirection(s){
-  if(animalType==="cat") return "cat";
-  if(animalType==="dog") return "dog";
-  if(animalType==="rabbit") return "rabbit";
-  if(animalType==="bear") return "bear";
-  if(animalType==="bird") return "bird";
-  if(animalType==="elephant") return "elephant";
-  const seed=hashString(`${userSeed}|${s.day.isoDate}|animal-species-v33`);
-  return pick(["cat","dog","rabbit","bird"],seed+8101);
+  const supported=["cat","dog","horse","rabbit","bear","bird","elephant","deer","squirrel","hamster","duck","chicken","goat","sheep","cow","buffalo","pig","fox","panda","monkey","turtle","fish","butterfly"];
+  if(supported.includes(animalType)) return animalType;
+  const seed=hashString(`${userSeed}|${s.day.isoDate}|animal-species-v1122`);
+  return pick(["cat","dog","horse","rabbit","bird","deer","squirrel","duck","sheep","panda"],seed+8101);
 }
 
 function animalLookDirection(s){
@@ -2679,14 +2791,41 @@ function animalLookDirection(s){
   if(animalLook==="white_cat") return "a clean white cat with soft bright fur and a gentle expressive face";
   if(animalLook==="black_cat") return "a sleek black cat with expressive eyes and elegant silhouette";
   if(animalLook==="golden_dog") return "a friendly golden-colored dog with warm fur and expressive features";
+  if(animalLook==="white_dog") return "a friendly white dog with clean soft fur and expressive features";
+  if(animalLook==="brown_horse") return "a graceful warm brown horse with a flowing mane and friendly expressive eyes";
+  if(animalLook==="white_horse") return "an elegant white horse with a clean flowing mane and gentle expressive eyes";
+  if(animalLook==="black_horse") return "a sleek black horse with a glossy mane and elegant silhouette";
   if(animalLook==="white_rabbit") return "a soft white rabbit with clean fur, expressive ears, and a gentle face";
   if(animalLook==="brown_bear") return "a warm brown bear character with soft rounded features";
+  if(animalLook==="spotted_deer") return "a gentle spotted deer with delicate markings and expressive eyes";
+  if(animalLook==="red_squirrel") return "a cute reddish-brown squirrel with a fluffy tail and bright expressive eyes";
+  if(animalLook==="yellow_duck") return "a cheerful yellow duck with a friendly rounded silhouette";
+  if(animalLook==="white_sheep") return "a fluffy white sheep with soft wool and a gentle friendly face";
+  if(animalLook==="panda_classic") return "a cute black-and-white panda with rounded friendly features";
+  if(animalLook==="green_turtle") return "a charming green turtle with a patterned shell and gentle expression";
   const species=animalSpeciesDirection(s);
   if(species==="cat") return "a distinctive friendly cat with a memorable face and consistent fur markings";
   if(species==="dog") return "a friendly dog with a memorable face, consistent coat color, and recognizable markings";
   if(species==="rabbit") return "a charming rabbit with consistent fur color, ears, and facial markings";
   if(species==="bird") return "a charming small bird with consistent plumage colors and recognizable markings";
   if(species==="elephant") return "a gentle Asian elephant character with consistent facial features and proportions";
+  if(species==="horse") return "a graceful friendly horse with a flowing mane, expressive eyes, and consistent coat markings";
+  if(species==="deer") return "a gentle deer with elegant proportions and recognizable markings";
+  if(species==="squirrel") return "a cute squirrel with a fluffy tail and lively expressive face";
+  if(species==="hamster") return "a tiny round hamster with soft fur and an adorable expressive face";
+  if(species==="duck") return "a cheerful duck with a rounded friendly silhouette and expressive face";
+  if(species==="chicken") return "a charming chicken with clean plumage and friendly illustrated character";
+  if(species==="goat") return "a friendly goat with expressive eyes and recognizable coat markings";
+  if(species==="sheep") return "a fluffy sheep with soft wool and a gentle friendly face";
+  if(species==="cow") return "a friendly cow with recognizable coat markings and gentle expressive eyes";
+  if(species==="buffalo") return "a gentle water buffalo with distinctive curved horns and calm expression";
+  if(species==="pig") return "a cute friendly pig with rounded features and expressive eyes";
+  if(species==="fox") return "a charming fox with a fluffy tail, warm coat, and bright expressive eyes";
+  if(species==="panda") return "a cute black-and-white panda with rounded friendly features";
+  if(species==="monkey") return "a playful friendly monkey with expressive face and clear natural anatomy";
+  if(species==="turtle") return "a charming turtle with a patterned shell and gentle expression";
+  if(species==="fish") return "a beautiful friendly ornamental fish with distinctive fins and consistent markings";
+  if(species==="butterfly") return "a delicate colorful butterfly with distinctive symmetrical wing patterns";
   return "a distinctive friendly animal character with consistent visual identity";
 }
 
@@ -3121,7 +3260,7 @@ function getPeopleDirection(s,setNo){
       : "Feature a different Chinese New Year family activity, such as arranging oranges, lanterns, or making a respectful family greeting. Do not repeat the first artwork's pose or props.";
   }
 
-  if(category==="buddhist" || s.buddhist || s.holy.isHoly){
+  if(resolveMainArtworkMode()==="buddhist" && (category==="buddhist" || s.buddhist || s.holy.isHoly)){
     if(setNo===1){
       return "Feature respectful Thai Buddhist merit-making activity. Suitable people may include laypeople in modest clothing praying, offering lotus flowers, lighting candles, or making merit at a temple. Monks may appear respectfully if appropriate, but keep Buddha imagery dignified and never use casual or comedic posing.";
     }
@@ -3920,7 +4059,24 @@ const ANIMAL_LOOK_OPTIONS={
  rabbit:[["auto","AUTO"],["white_rabbit","กระต่ายขาว"],["brown_rabbit","กระต่ายน้ำตาล"],["lop_rabbit","Holland Lop"],["gray_rabbit","กระต่ายสีเทา"]],
  bear:[["auto","AUTO"],["brown_bear","หมีสีน้ำตาล"],["polar_bear","หมีขั้วโลก"],["black_bear","หมีดำ"],["bear_cub","ลูกหมี"]],
  bird:[["auto","AUTO"],["parrot","นกแก้ว"],["sparrow","นกกระจอก"],["owl","นกฮูก"],["blue_bird","นกสีฟ้า"],["small_bird","นกตัวเล็กน่ารัก"]],
- elephant:[["auto","AUTO"],["thai_elephant","ช้างไทย"],["asian_elephant","ช้างเอเชีย"],["baby_elephant","ลูกช้าง"],["adult_elephant","ช้างโตเต็มวัย"]]
+ elephant:[["auto","AUTO"],["thai_elephant","ช้างไทย"],["asian_elephant","ช้างเอเชีย"],["baby_elephant","ลูกช้าง"],["adult_elephant","ช้างโตเต็มวัย"]],
+ horse:[["auto","AUTO"],["brown_horse","ม้าสีน้ำตาล"],["white_horse","ม้าสีขาว"],["black_horse","ม้าสีดำ"],["pony","ม้าโพนี่"],["foal","ลูกม้า"]],
+ deer:[["auto","AUTO"],["spotted_deer","กวางลายจุด"],["white_deer","กวางสีขาว"],["young_deer","ลูกกวาง"]],
+ squirrel:[["auto","AUTO"],["red_squirrel","กระรอกสีน้ำตาลแดง"],["gray_squirrel","กระรอกสีเทา"]],
+ hamster:[["auto","AUTO"],["golden_hamster","แฮมสเตอร์สีทอง"],["white_hamster","แฮมสเตอร์สีขาว"]],
+ duck:[["auto","AUTO"],["yellow_duck","เป็ดสีเหลือง"],["white_duck","เป็ดสีขาว"],["duckling","ลูกเป็ด"]],
+ chicken:[["auto","AUTO"],["white_chicken","ไก่สีขาว"],["brown_chicken","ไก่สีน้ำตาล"],["chick","ลูกเจี๊ยบ"]],
+ goat:[["auto","AUTO"],["white_goat","แพะสีขาว"],["brown_goat","แพะสีน้ำตาล"],["baby_goat","ลูกแพะ"]],
+ sheep:[["auto","AUTO"],["white_sheep","แกะขาว"],["black_sheep","แกะดำ"],["lamb","ลูกแกะ"]],
+ cow:[["auto","AUTO"],["dairy_cow","วัวขาวดำ"],["brown_cow","วัวสีน้ำตาล"],["calf","ลูกวัว"]],
+ buffalo:[["auto","AUTO"],["thai_buffalo","ควายไทย"],["baby_buffalo","ลูกควาย"]],
+ pig:[["auto","AUTO"],["pink_pig","หมูสีชมพู"],["piglet","ลูกหมู"]],
+ fox:[["auto","AUTO"],["red_fox","สุนัขจิ้งจอกสีแดง"],["white_fox","สุนัขจิ้งจอกสีขาว"],["fox_cub","ลูกสุนัขจิ้งจอก"]],
+ panda:[["auto","AUTO"],["panda_classic","แพนด้าขาวดำ"],["panda_cub","ลูกแพนด้า"]],
+ monkey:[["auto","AUTO"],["brown_monkey","ลิงสีน้ำตาล"],["baby_monkey","ลูกลิง"]],
+ turtle:[["auto","AUTO"],["green_turtle","เต่าสีเขียว"],["land_turtle","เต่าบก"]],
+ fish:[["auto","AUTO"],["goldfish","ปลาทอง"],["koi","ปลาคาร์ป"],["betta","ปลากัด"]],
+ butterfly:[["auto","AUTO"],["yellow_butterfly","ผีเสื้อสีเหลือง"],["blue_butterfly","ผีเสื้อสีฟ้า"],["multicolor_butterfly","ผีเสื้อหลากสี"]]
 };
 function updateAnimalLookOptions(){
  const type=$("animalType").value;
@@ -5585,8 +5741,75 @@ function validatePromptRuntimeState(setNo){
    Typography/Stroke -> Visible Text -> Materials -> Validate
    ========================================================= */
 
+
+function pairMasterVisualState(s){
+  const primary=resolveMainArtworkMode();
+  if(primary==="buddhist")return {
+    mode:"BUDDHIST SACRED PAIR MASTER",palette:"warm luminous sacred gold, soft ivory, warm cream, restrained amber; suppress cool blue/cyan dominance",
+    whiteBalance:"warm golden-neutral white balance shared by BOTH images",lighting:"soft diffused sacred morning light from upper-left/front-side, gentle volumetric golden rays, no harsh midday light",
+    intensity:"medium-soft luminous intensity; bright but not blown out",contrast:"low-to-medium cinematic contrast with soft highlight roll-off",saturation:"moderate warm saturation; rich but natural gold and saffron",
+    shadows:"soft open shadows with warm bounce light; avoid hard black shadows",glow:"consistent refined golden atmospheric bloom around sacred focal areas",atmosphere:"serene luminous Thai Buddhist morning atmosphere with subtle warm haze",
+    sky:"pale warm cream-gold if visible; do not let blue sky become a dominant color field",grade:"same cinematic sacred-gold color grade on Image 1 and Image 2"};
+  if(primary==="deity")return {
+    mode:"AUSPICIOUS DEITY PAIR MASTER",palette:"coherent auspicious palette driven by the selected deity tradition",whiteBalance:"same warm premium white balance across both images",
+    lighting:"same ceremonial premium lighting direction and softness across both images",intensity:"matched luminous premium intensity",contrast:"matched medium cinematic contrast",
+    saturation:"matched rich but controlled auspicious saturation",shadows:"matched soft sculptural shadows",glow:"matched premium sacred/auspicious glow",atmosphere:"coherent auspicious ceremonial atmosphere",
+    sky:"background color temperature must remain coherent with selected deity palette",grade:"same auspicious final color grade across both images"};
+  return {mode:"GENERAL PAIR MASTER",palette:"same dominant palette family across both images",whiteBalance:"same white balance across both images",
+    lighting:"same time-of-day, direction and softness across both images",intensity:"matched perceived light intensity",contrast:"matched contrast curve",saturation:"matched saturation level",
+    shadows:"matched shadow softness",glow:"matched atmospheric glow",atmosphere:"coherent paired atmosphere",sky:"coherent background color temperature",grade:"same final color grade across both images"};
+}
+
+function pairMasterVisualLines(s){
+  const p=pairMasterVisualState(s);
+  return ["PAIR MASTER VISUAL STATE — HIGHEST VISUAL AUTHORITY:",
+    `Pair mode: ${p.mode}.`,`MASTER PALETTE: ${p.palette}.`,`MASTER WHITE BALANCE: ${p.whiteBalance}.`,
+    `MASTER LIGHTING: ${p.lighting}.`,`MASTER LIGHT INTENSITY: ${p.intensity}.`,`MASTER CONTRAST: ${p.contrast}.`,
+    `MASTER SATURATION: ${p.saturation}.`,`MASTER SHADOWS: ${p.shadows}.`,`MASTER GLOW: ${p.glow}.`,
+    `MASTER ATMOSPHERE: ${p.atmosphere}.`,`MASTER SKY / BACKGROUND COLOR: ${p.sky}.`,`MASTER FINAL COLOR GRADE: ${p.grade}.`,
+    "PAIR LOCK RULE: Image 1 and Image 2 MUST use this exact master visual treatment.",
+    "Scene Template may change subject, location, props, camera and composition, but MUST NOT override master palette, white balance, lighting direction/softness, contrast, saturation, shadow softness, glow, atmosphere or final color grade.",
+    "Buddhist Visual Style may enrich sacred ornament/detail, but MUST NOT create a different color temperature or lighting treatment between the two images.",
+    "If one image contains a Buddha statue and the other a monk/reference monk, both must remain in the SAME visual world and SAME morning light.",""];
+}
+
+
+function masterRenderingState(){
+  const el=document.getElementById("humanStyle");
+  const mode=(el?.value||globalThis.humanStyle||"realistic")==="cartoon" ? "cartoon" : "realistic";
+  return {
+    mode,
+    label:mode==="cartoon" ? "CARTOON / ILLUSTRATION — GLOBAL FOR BOTH IMAGES" : "PHOTOREALISTIC — GLOBAL FOR BOTH IMAGES"
+  };
+}
+function masterRenderingLines(){
+  const r=masterRenderingState();
+  if(r.mode==="cartoon")return [
+    "MASTER RENDERING STYLE — HIGHEST RENDERING AUTHORITY:",
+    "GLOBAL MODE: CARTOON / ILLUSTRATION.",
+    "Image 1 and Image 2 MUST BOTH be visibly illustrated artwork, never photography and never photorealistic CGI.",
+    `GLOBAL ILLUSTRATION FAMILY: ${resolveMainArtworkMode()==="general" ? "CUTE FRIENDLY GENERAL CARTOON — charming Kawaii / Storybook / Soft 3D / Chibi-inspired / premium cute editorial illustration; rounded friendly shapes, expressive stylization, cheerful visual rhythm, soft dimensional shading, clean illustrated surfaces, and unmistakably non-photographic rendering." : "premium hand-painted digital illustration with clearly painted shapes, simplified illustrated surfaces, artistic brushwork, softly stylized forms, and intentional non-photographic rendering."}`,
+    resolveMainArtworkMode()==="general"
+      ? "GENERAL + CARTOON ABSOLUTE STYLE: BOTH images must be cute, friendly, charming and clearly cartoon/illustration. Prefer cheerful everyday subjects and playful visual storytelling. Do NOT drift into solemn devotional painting, realistic monk imagery, sacred Buddhist poster aesthetics, or semi-photorealistic cinematic religious art."
+      : "Apply illustration rendering to the ENTIRE artwork: environment, architecture, landscape, food, flowers, objects, Buddha statues, Buddhist monks, deity figures, animals and people.",
+    "A user/reference photo may guide identity only; transform that referenced subject into the SAME illustrated painting family as the complete artwork.",
+    "NO photographic skin, NO photographic statue material, NO camera-photo realism, NO hyperrealistic 3D render, NO ray-traced CGI, NO physically realistic product-photo surfaces.",
+    "Scene Template, Buddhist mode, Deity mode, Character settings, materials and Visual Style MUST NOT switch either image back to photorealistic rendering.",
+    "For Buddhist mode specifically, use THAI SACRED ILLUSTRATION: dignified devotional painted artwork, not cute-child cartoon unless a Cute/Kawaii style is explicitly selected.",
+    ""
+  ];
+  return [
+    "MASTER RENDERING STYLE — HIGHEST RENDERING AUTHORITY:",
+    "GLOBAL MODE: PHOTOREALISTIC.",
+    "Image 1 and Image 2 MUST BOTH be rendered as realistic / photorealistic artwork.",
+    "Apply realistic rendering consistently to the ENTIRE artwork: environment, architecture, landscape, food, flowers, objects, Buddha statues, Buddhist monks, deity figures, animals and people.",
+    "Scene Template, Buddhist mode, Deity mode, Character settings and Visual Style MUST NOT switch either image into cartoon / illustration rendering.",
+    ""
+  ];
+}
+
 const POKUN_V9 = (() => {
-  const VERSION="11.9";
+  const VERSION="11.23";
   const ENGINE_LABEL=`POKUN v${VERSION}`;
 
 
@@ -6023,8 +6246,12 @@ const POKUN_V9 = (() => {
     const key=buddhistVisualStyleKey(s);
     const st=BUDDHIST_VISUAL_STYLES[key];
     return [
-      "BUDDHIST VISUAL STYLE — PAIR AUTHORITY:",
+      "BUDDHIST VISUAL STYLE — PAIR AUTHORITY (SUBORDINATE TO MASTER RENDERING STYLE):",
       `Selected Buddhist Visual Style: ${st.label} (${key}).`,
+      ...(masterRenderingState().mode==="cartoon" ? [
+        "ILLUSTRATION TRANSLATION RULE: interpret every Buddhist visual-style instruction as painted/illustrated design language, never as photography, photorealistic sculpture, or realistic CGI.",
+        "Buddha statues must read as illustrated sacred figures/statues with painted stylization; monks must read as dignified illustrated characters; temple architecture, lotus, gold ornament and light must share the same illustrated surface treatment."
+      ] : []),
       ...st.lines,
       "PAIR STYLE CONSISTENCY: Image 1 and Image 2 MUST use the same sacred gold intensity, ornamental density, glow character, contrast family, surface richness, and overall Buddhist visual language.",
       "The two scenes may differ completely, but they must look like one coordinated artwork set.",
@@ -6585,7 +6812,7 @@ const PAIR_LOOKS={
     const explicit=String(c?._deepSceneFamily||c?.category||"");
     if(AUTHORITY[explicit]) return explicit;
     const x=((c?.name||"")+" "+(c?.prompt||"")).toLowerCase();
-    if(s?.buddhist || /buddha|temple|lotus|wan phra|วันพระ|พระพุทธ|วัด/.test(x)) return "buddhist_sacred";
+    if(resolveMainArtworkMode()==="buddhist" && (s?.buddhist || /buddha|temple|lotus|wan phra|วันพระ|พระพุทธ|วัด/.test(x))) return "buddhist_sacred";
     if(/wealth|prosper|gold ingot|gold coin|prosperity tree|fortune gold|มั่งคั่ง|ร่ำรวย|ความรุ่งเรือง/.test(x)) return "wealth_prosperity";
     if(/dessert|food|dish|fruit|อาหาร|ขนม/.test(x)) return "food_hero";
     if(/flower|floral|petal|vase|bouquet|ดอกไม้/.test(x)) return "floral_stilllife";
@@ -6609,6 +6836,7 @@ const PAIR_LOOKS={
   }
 
   function chooseFamily(s,setNo,seed){
+    const subjectResolved=resolveBuddhistSubjectComposition(setNo,s);
     const manual=selectedTemplateFamily(setNo);
     if(manual!=="auto" && TEMPLATE_CATALOG[manual]) return manual;
 
@@ -6619,7 +6847,10 @@ const PAIR_LOOKS={
     }
 
     let all=Object.keys(TEMPLATE_CATALOG);
-    if(s.buddhist) all=all.filter(f=>BUDDHIST_ALLOWED_SCENE_FAMILIES.has(f));
+    if(resolveMainArtworkMode()==="buddhist" && subjectResolved.buddhistOn){
+      const allowed=buddhistSubjectAllowedFamilies(setNo);
+      all=all.filter(f=>allowed.has(f));
+    }
     const blocked=familyBlockedByOther(setNo,s.day.isoDate);
     let candidates=all.filter(f=>!blocked.has(f));
     if(!candidates.length)candidates=all.slice();
@@ -6634,6 +6865,7 @@ const PAIR_LOOKS={
   }
 
   function chooseExactScene(s,setNo,family,seed){
+    const subjectResolved=resolveBuddhistSubjectComposition(setNo,s);
     const manualFamily=selectedTemplateFamily(setNo);
     const manualExact=selectedTemplateExact(setNo);
 
@@ -6851,12 +7083,44 @@ const PAIR_LOOKS={
       if(t){headline=t.headline;greeting=t.greeting;}
     }
 
-    return {headline:sanitizeVisible(headline),greeting:sanitizeVisible(greeting),quoteData};
+    headline=sanitizeVisible(enforceAuthoritativeWeekdayText(headline,s.day.dayThai));
+    greeting=sanitizeVisible(enforceAuthoritativeWeekdayText(greeting,s.day.dayThai));
+
+    assertAuthoritativeWeekdayText(headline,s.day.dayThai,"headline");
+    assertAuthoritativeWeekdayText(greeting,s.day.dayThai,"greeting");
+
+    return {headline,greeting,quoteData};
   }
 
-  function renderWorkflow(setNo,L){
-    const people=boolPeople(setNo);
+  function renderWorkflow(setNo,s,resolved,L){
+    const people=resolved?.humanRequired || boolPeople(setNo);
     const source=sourceFor(setNo);
+    const mode=resolved?.mode||"auto";
+
+    if(mode==="monk_reference"){
+      L.push(
+        `${ENGINE_LABEL} NEW ARTWORK WITH BUDDHIST MONK REFERENCE`,
+        "Task type: NEW ORIGINAL ARTWORK USING A HUMAN IDENTITY REFERENCE.",
+        "Create a new 3:4 vertical scene, pose, lighting, environment, and composition.",
+        "The attached monk / revered-teacher image is REQUIRED identity/reference guidance, not an editing canvas.",
+        "Do not remove the referenced monk because the standard Character selector is set to no people.",
+        ""
+      );
+      return;
+    }
+
+    if(mode==="monk_generated"){
+      L.push(
+        `${ENGINE_LABEL} CLEAN GENERATION PROMPT`,
+        "Task type: ORIGINAL TEXT-TO-IMAGE.",
+        "Start from a blank visual canvas.",
+        "Create one entirely original 3:4 vertical artwork from this written brief.",
+        "PERSON SOURCE: Invent one new non-famous Buddhist monk specifically for this artwork.",
+        ""
+      );
+      return;
+    }
+
     if(!people || source==="generated"){
       L.push(
         `${ENGINE_LABEL} CLEAN GENERATION PROMPT`,
@@ -6888,7 +7152,6 @@ const PAIR_LOOKS={
     return el?.files?.[0]?.name || "";
   }
   function buddhistSubjectIsHuman(setNo,s){
-    if(!s?.buddhist)return false;
     const mode=buddhistSubjectMode(setNo);
     return mode==="monk_reference" || mode==="monk_generated";
   }
@@ -6896,7 +7159,8 @@ const PAIR_LOOKS={
     return boolPeople(setNo) || buddhistSubjectIsHuman(setNo,s);
   }
   function buddhistSubjectLines(setNo,s){
-    if(!s?.buddhist)return [];
+    const resolved=resolveBuddhistSubjectComposition(setNo,s);
+    if(!resolved.buddhistOn)return [];
     const mode=buddhistSubjectMode(setNo);
     const file=buddhistReferenceFileName(setNo);
     const lines=["BUDDHIST SUBJECT — AUTHORITATIVE:"];
@@ -6957,18 +7221,38 @@ const PAIR_LOOKS={
   }
 
   function renderPeopleAnimal(setNo,s,L){
-    const bMode=s?.buddhist ? buddhistSubjectMode(setNo) : "auto";
-    const monkRef=s?.buddhist && bMode==="monk_reference";
-    const monkGenerated=s?.buddhist && bMode==="monk_generated";
-    const noFigure=s?.buddhist && bMode==="no_figure";
-    const buddhaFigure=s?.buddhist && ["buddha_statue","buddha_reference"].includes(bMode);
-
-    if(monkRef){
+    const resolvedCombo=resolveBuddhistSubjectComposition(setNo,s);
+    const currentMainMode=resolveMainArtworkMode();
+    if(currentMainMode==="general"){
+      L.push(
+        "GENERAL CHARACTER LOCK — ABSOLUTE:",
+        "No Buddhist monk, bhikkhu, novice monk, Buddha statue/image, religious worshipper, merit-making participant, or Buddhist ritual figure may be generated.",
+        boolPeople(setNo)
+          ? "A person is selected: use only an ordinary non-religious everyday character appropriate to the current general scene."
+          : "No person is selected: keep the scene completely free of human figures.",
+        masterRenderingState().mode==="cartoon"
+          ? "Any selected general character MUST be visibly cute/cartoon illustrated — friendly, charming, stylized and non-photographic."
+          : "Any selected general character must remain an ordinary non-religious person.",
+        ""
+      );
+    }
+    const bMode=resolvedCombo.mode;
+    const monkRef=resolvedCombo.buddhistOn && bMode==="monk_reference";
+    const monkGenerated=resolvedCombo.buddhistOn && bMode==="monk_generated";
+    const noFigure=resolvedCombo.buddhistOn && bMode==="no_figure";
+    const buddhaFigure=resolvedCombo.buddhistOn && ["buddha_statue","buddha_reference"].includes(bMode);
+    if(resolvedCombo.hasBuddha && resolvedCombo.humanRequired && !monkRef && !monkGenerated){
+      L.push("CHARACTER COMPOSITION: BUDDHA STATUE / IMAGE + SELECTED HUMAN SUBJECT(S) TOGETHER — NO ANIMAL CHARACTER");
+      L.push("PEOPLE: YES — selected human subject(s) are required together with the Buddha statue/image.");
+    }else if(monkRef){
       L.push("CHARACTER COMPOSITION: ONE REFERENCED HUMAN MONK / REVERED TEACHER — NO ANIMAL CHARACTER");
       L.push("PEOPLE: YES — only the referenced monk / revered teacher is required as the human focal subject.");
     }else if(monkGenerated){
       L.push("CHARACTER COMPOSITION: ONE ORIGINAL GENERIC BUDDHIST MONK — NO ANIMAL CHARACTER");
       L.push("PEOPLE: YES — include one newly invented non-famous Buddhist monk; do not use or imply any real-person identity.");
+    }else if(resolvedCombo.humanRequired){
+      L.push("CHARACTER COMPOSITION: SELECTED HUMAN SUBJECT(S) REQUIRED — NO UNSELECTED EXTRA PEOPLE.");
+      L.push("PEOPLE: YES — selected Buddhist/Character subject authority overrides generic NO PEOPLE rules.");
     }else{
       L.push(`CHARACTER COMPOSITION: ${charLabel(setNo)}`);
       if(!boolPeople(setNo)){
@@ -7000,6 +7284,31 @@ const PAIR_LOOKS={
 
   function validatePrompt(prompt,ctx){
     const failures=[];
+    const masterRender=masterRenderingState().mode;
+    if(!/MASTER RENDERING STYLE — HIGHEST RENDERING AUTHORITY:/i.test(prompt)){
+      failures.push("missing Master Rendering Style");
+    }
+    if(!/CURRENT ARTWORK SESSION — SELF-CONTAINED ABSOLUTE AUTHORITY:/i.test(prompt)){
+      failures.push("missing self-contained current-artwork authority");
+    }
+    if(!/DESIGN SYSTEM LOCK — ABSOLUTE \/ CURRENT ARTWORK ONLY:/i.test(prompt)){
+      failures.push("missing absolute Design System Lock");
+    }
+    if(!/VISIBLE DAY \/ DATE — ABSOLUTE TEXT LOCK:/i.test(prompt)){
+      failures.push("missing absolute weekday/date lock");
+    }
+    if(!/FINAL DESIGN COMPLIANCE CHECK — MUST PASS BEFORE RENDERING:/i.test(prompt)){
+      failures.push("missing final design compliance check");
+    }
+    if(masterRender==="cartoon" && /ARTWORK RENDERING:\s*PHOTOREALISTIC/i.test(prompt)){
+      failures.push("Global Cartoon mode conflicts with PHOTOREALISTIC final rendering");
+    }
+    if(masterRender==="cartoon" && !/STRICT NEGATIVE RENDERING: photography, photorealism, hyperrealism/i.test(prompt)){
+      failures.push("Cartoon mode missing strict non-photographic final lock");
+    }
+    if(masterRender==="realistic" && /ARTWORK RENDERING:\s*CARTOON \/ ILLUSTRATION/i.test(prompt)){
+      failures.push("Global Photorealistic mode conflicts with CARTOON final rendering");
+    }
     if(/\bundefined\b/.test(prompt))failures.push("contains undefined");
     if(/\bnull\b/.test(prompt))failures.push("contains null");
     if(ctx.blessing.stroke==="NO STROKE." && /Greeting \/ blessing typography treatment:[^\n]*(outline layer|with outline)/i.test(prompt)){
@@ -7007,6 +7316,52 @@ const PAIR_LOOKS={
     }
     if(!ctx.people && /(natural believable human appearance|soft flattering skin tones|human subject posing)/i.test(prompt)){
       failures.push("NO PEOPLE contains positive human cue");
+    }
+    const expectedDay=ctx?.s?.day?.dayThai;
+    if(expectedDay){
+      const visibleHeadMatch=prompt.match(/Visible Thai headline:\s*\n([^\n]+)/i);
+      const visibleGreetingMatch=prompt.match(/Visible Thai greeting \/ blessing:\s*\n([^\n]+)/i);
+      if(visibleHeadMatch) assertAuthoritativeWeekdayText(visibleHeadMatch[1],expectedDay,"prompt visible headline");
+      if(visibleGreetingMatch) assertAuthoritativeWeekdayText(visibleGreetingMatch[1],expectedDay,"prompt visible greeting");
+      if(!/DAY CONSISTENCY LOCK — ENGINE VERIFIED:/i.test(prompt))failures.push("Day Consistency Lock missing");
+      if(!/AUTHORITATIVE CALENDAR SOURCE:/i.test(prompt))failures.push("Authoritative calendar source missing");
+    }
+
+    const currentMainMode=resolveMainArtworkMode();
+    if(currentMainMode!=="buddhist"){
+      if(/BUDDHIST MODE ACTIVE:/i.test(prompt))failures.push("Buddhist mode leaked outside Buddhist main mode");
+      if(/COMBINED SACRED COMPOSITION:/i.test(prompt) || /Buddha statue \/ Buddha image: REQUIRED/i.test(prompt) || /Buddhist monk \/ bhikkhu human subject: REQUIRED/i.test(prompt)){
+        failures.push("Buddhist subject authority leaked outside Buddhist main mode");
+      }
+    }
+    if(currentMainMode==="general"){
+      if(!/GENERAL SUBJECT EXCLUSION — ABSOLUTE:/i.test(prompt))failures.push("General religious exclusion lock missing");
+      if(!/GENERAL CHARACTER LOCK — ABSOLUTE:/i.test(prompt))failures.push("General character lock missing");
+      if(/include one newly invented non-famous Buddhist monk|PEOPLE: YES — only the referenced monk|Feature respectful Thai Buddhist merit-making activity|presenting offerings to monks/i.test(prompt)){
+        failures.push("Positive Buddhist monk/ritual instruction leaked into General mode");
+      }
+      if(masterRender==="cartoon"){
+        if(!/GENERAL \+ CARTOON ABSOLUTE STYLE:/i.test(prompt))failures.push("General Cute Cartoon master lock missing");
+        if(!/GENERAL CUTE CARTOON LOCK: ACTIVE/i.test(prompt))failures.push("General Cute Cartoon final lock missing");
+      }
+    }
+    if(currentMainMode==="deity"){
+      const d=resolveDeitySubject();
+      if(d.deityMode==="ganesha" && !/GANESHA \/ พระพิฆเนศ/i.test(prompt))failures.push("Ganesha selected but deity authority missing");
+    }
+    if(ctx.people){
+      if(/SUBJECT SOURCE: Invent all visible non-human subjects/i.test(prompt)){
+        failures.push("selected human subject conflicts with non-human-only workflow source");
+      }
+      if(/CHARACTER COMPOSITION: NO PEOPLE AND NO ANIMAL CHARACTERS/i.test(prompt)){
+        failures.push("selected human subject conflicts with generic NO PEOPLE character composition");
+      }
+      if(/ARTWORK RENDERING:[^\n]*\/ NO PEOPLE\./i.test(prompt)){
+        failures.push("selected human subject conflicts with NO PEOPLE rendering");
+      }
+      if(/NO PEOPLE: no man, woman, child, monk as a human figure/i.test(prompt)){
+        failures.push("selected human subject conflicts with generic NO PEOPLE prohibition");
+      }
     }
     if(prompt.includes("SCENE-FAMILY AUTHORITY:"))failures.push("legacy scene-family authority leaked");
     if(prompt.includes("CUTE PLAYFUL VISUAL ENERGY —"))failures.push("legacy cute-playful block leaked");
@@ -7171,9 +7526,9 @@ const PAIR_LOOKS={
   };
 
   function primaryModeForPrompt(s){
-    const saved=localStorage.getItem("pokunPrimaryModeV110")||"general";
-    if(saved==="deity" || lifestyleVisualStyle==="wealth_prosperity")return "deity";
-    if(saved==="buddhist" || s?.buddhist)return "buddhist";
+    const saved=resolveMainArtworkMode();
+    if(saved==="buddhist")return "buddhist";
+    if(saved==="deity")return "deity";
     return "general";
   }
 
@@ -7354,6 +7709,8 @@ const PAIR_LOOKS={
     mustFn("effectiveState",effectiveState);
 
     const s=effectiveState(setNo);
+    const buddhistSubjectResolved=resolveBuddhistSubjectComposition(setNo,s);
+    const effectivePeopleAllowed=buddhistSubjectResolved.humanRequired || buddhistSubjectPeopleAllowed(setNo,s);
     const seed=(typeof variationSeed==="function")?variationSeed(s,setNo):(Date.now()+setNo*997);
     const pairLook=resolvePairLook(s,seed);
     const family=chooseFamily(s,setNo,seed);
@@ -7371,7 +7728,38 @@ const PAIR_LOOKS={
     const other=getPair(setNo===1?2:1);
 
     const L=[];
-    renderWorkflow(setNo,L);
+    renderWorkflow(setNo,s,buddhistSubjectResolved,L);
+    L.push(...mainModeIsolationLines());
+    L.push(
+      "CURRENT ARTWORK SESSION — SELF-CONTAINED ABSOLUTE AUTHORITY:",
+      `AUTHORITATIVE CALENDAR SOURCE: selected date ${s.day.isoDate} = ${s.day.dayThai}.`,
+      `AUTHORITATIVE WEEKDAY: ${s.day.dayThai}.`,
+      `AUTHORITATIVE THAI DATE: ${s.day.dateThai}.`,
+      "The selected date is the sole source of truth for weekday wording.",
+      "Use ONLY the specifications resolved in THIS prompt for artwork design decisions.",
+      "CURRENT PROMPT OVERRIDES any previous artwork, previous chat design habit, remembered weekday, remembered typography, remembered frame, remembered layout, and previous visual treatment.",
+      "Do NOT reuse a weekday, date, font treatment, headline frame, date treatment, layout, rendering style, or decoration merely because it appeared frequently in earlier images or conversation context.",
+      "If prior conversation context conflicts with this prompt, IGNORE the prior context and follow THIS prompt.",
+      ""
+    );
+    L.push(...masterRenderingLines());
+    L.push(...pairMasterVisualLines(s));
+    L.push(...buddhistSubjectAuthorityLines(setNo,s));
+    const deityResolved=resolveDeitySubject();
+    if(deityResolved.active && deityResolved.deityMode!=="auto"){
+      const deityMap={
+        ganesha:["GANESHA / พระพิฆเนศ","elephant-headed Hindu deity Ganesha as the unmistakable central sacred subject","Do not replace with Buddha, monk, generic worshipper, or another deity."],
+        caishen:["CAISHEN / ไฉ่ซิงเอี๊ย","Chinese God of Wealth Caishen as the unmistakable central auspicious subject","Do not replace with Buddha, monk, generic worshipper, or another deity."],
+        guan_yu:["GUAN YU / กวนอู","Guan Yu as the unmistakable central auspicious subject","Do not replace with Buddha, monk, generic worshipper, or another deity."],
+        naga:["NAGA / พญานาคราช","Thai Naga / Phaya Naga as the unmistakable central auspicious subject","Do not replace with Buddha, monk, generic worshipper, or another deity."],
+        fu_lu_shou:["FU LU SHOU / ฮก–ลก–ซิ่ว","Fu Lu Shou as the required three-deity auspicious group","Do not replace with Buddha, monk, generic worshipper, or another deity."],
+        auspicious_shrine:["AUSPICIOUS SHRINE","an auspicious shrine / altar as the unmistakable hero subject","Do not replace with Buddhist temple worship scene."],
+        auspicious_offerings:["AUSPICIOUS OFFERINGS","auspicious offerings and prosperity symbols as the hero subject","Do not replace with Buddhist merit-making offerings unless explicitly requested."],
+        reference:["REFERENCE DEITY","the attached/reference deity or sacred object as the required hero subject","Do not replace the reference subject with Buddha, monk, generic worshipper, or another deity."]
+      };
+      const d=deityMap[deityResolved.deityMode]||[deityResolved.deityMode,deityResolved.deityMode,"Do not substitute another sacred subject."];
+      L.push("DEITY SUBJECT AUTHORITY — ABSOLUTE:",`Required subject: ${d[0]}.`,`Visual subject requirement: ${d[1]}.`,d[2],"The required deity/auspicious subject must remain visible and identifiable in the final artwork.","");
+    }
     renderPeopleAnimal(setNo,s,L);
 
     L.push(
@@ -7384,7 +7772,23 @@ const PAIR_LOOKS={
       `Pair Look: ${pairLook.label} (${pairLook.key})`,
       `Buddhist Visual Style: ${s.buddhist ? BUDDHIST_VISUAL_STYLES[buddhistVisualStyleKey(s)].label : "OFF"}`,
       `Variation source: exact-scene`,
-      `People allowed: ${buddhistSubjectPeopleAllowed(setNo,s)?"YES":"NO"}`,
+      `Main Artwork Mode: ${resolveMainArtworkMode().toUpperCase()}`,
+      `Mode Isolation: HARD`,
+      `Buddhist mode active for this image: ${buddhistSubjectResolved.buddhistOn?"YES":"NO"}`,
+      `Buddhist Subject Mode: ${buddhistSubjectResolved.buddhistOn?buddhistSubjectResolved.mode:"IGNORED OUTSIDE BUDDHIST MODE"}`,
+      `Deity Subject Mode: ${resolveDeitySubject().active?resolveDeitySubject().deityMode:"OFF"}`,
+      `Buddhist Subject source: DIRECT UI STATE for Image ${setNo}`,
+      `Master Rendering Style: ${masterRenderingState().label}`,
+      `Master Rendering Scope: BOTH IMAGES / ENTIRE ARTWORK`,
+      `Pair Master Visual Mode: ${pairMasterVisualState(s).mode}`,
+      `Pair Master Palette: ${pairMasterVisualState(s).palette}`,
+      `Pair Master Lighting: ${pairMasterVisualState(s).lighting}`,
+      `Pair Master Color Grade: ${pairMasterVisualState(s).grade}`,
+      `Reference file selected: ${buddhistSubjectResolved.refFile||"NONE"}`,
+      `Legacy Character Mode: ${buddhistSubjectResolved.characterMode}`,
+      `People allowed: ${effectivePeopleAllowed?"YES":"NO"}`,
+      `Human subject required: ${buddhistSubjectResolved.humanRequired?"YES":"NO"}`,
+      `Buddha statue/image required: ${buddhistSubjectResolved.sacredRequired?"YES":"NO"}`,
       `Animals allowed: ${boolAnimal(setNo)?"YES":"NO"}`,
       `Stroke layers: ${stroke.count}`,
       `Blessing stroke: ${blessing.stroke}`,
@@ -7392,6 +7796,37 @@ const PAIR_LOOKS={
       `Blessing Frame: ${resolvedTextFrame(s,"blessing").label} (${resolvedTextFrame(s,"blessing").key})`,
       `Layout: ${layout.label}`,
       "Forbidden Thai words: นะคะ , นะค่ะ",
+      ""
+    );
+
+    const lockedHeadlineFrame=resolvedTextFrame(s,"headline");
+    const lockedBlessingFrame=resolvedTextFrame(s,"blessing");
+    L.push(
+      "DESIGN SYSTEM LOCK — ABSOLUTE / CURRENT ARTWORK ONLY:",
+      `MASTER RENDERING: ${masterRenderingState().label}`,
+      `EXACT WEEKDAY: ${s.day.dayThai}`,
+      `EXACT DATE: ${s.day.dateThai}`,
+      `EXACT HEADLINE TEXT: ${texts.headline}`,
+      `EXACT GREETING / BLESSING TEXT: ${texts.greeting}`,
+      `TYPOGRAPHY STYLE: ${s.style?.name||"Selected Thai typography"}`,
+      `HEADLINE FRAME REQUIRED: ${lockedHeadlineFrame.label} (${lockedHeadlineFrame.key})`,
+      `BLESSING FRAME REQUIRED: ${lockedBlessingFrame.label} (${lockedBlessingFrame.key})`,
+      `LAYOUT REQUIRED: ${layout.label}`,
+      "The selected Typography, Headline Frame, Blessing Frame, Date treatment and Layout are REQUIRED design components, not optional inspiration.",
+      "Do not silently substitute a familiar font style, omit a selected frame, simplify the date treatment, or redesign the composition from previous artwork habits.",
+      "When a selected frame is not NONE, visibly render that frame family in the finished artwork. Do not replace it with plain floating text.",
+      ""
+    );
+
+    L.push(
+      "DAY CONSISTENCY LOCK — ENGINE VERIFIED:",
+      `Selected input date: ${$("date").value}`,
+      `Canonical weekday calculated from selected date: ${s.day.dayThai}`,
+      `Canonical visible date: ${s.day.dateThai}`,
+      `Verified headline: ${texts.headline}`,
+      `Verified greeting: ${texts.greeting}`,
+      "The engine has normalized any stale weekday wording in generated/stored text to this canonical weekday.",
+      "Do not introduce any different weekday during image rendering.",
       ""
     );
 
@@ -7432,7 +7867,16 @@ const PAIR_LOOKS={
       `Signature color: ${s.day.colorThai} / ${s.day.colorEnglish} / ${s.day.hex}`,
       `Use ${s.day.hex} as the recognizable daily signature accent; natural complementary colors are allowed.`,
       "",
-      "VISIBLE DATE — AUTHORITATIVE:",
+      "VISIBLE DAY / DATE — ABSOLUTE TEXT LOCK:",
+      `Required weekday text EXACTLY: ${s.day.dayThai}`,
+      `Required date text EXACTLY: ${s.day.dateThai}`,
+      `LOCKED CONSISTENCY: ${s.day.dateThai} = ${s.day.dayThai}.`,
+      `VISIBLE HEADLINE AFTER DAY NORMALIZATION: ${texts.headline}`,
+      `VISIBLE GREETING AFTER DAY NORMALIZATION: ${texts.greeting}`,
+      "Any Thai weekday other than the required weekday is PROHIBITED in the finished artwork.",
+      "Do not infer, recalculate, autocorrect, translate, paraphrase, or substitute another weekday.",
+      "Do not use a weekday remembered from earlier artwork, browser state, localStorage, or conversation context.",
+      "If the image renderer starts to write another weekday, correct it to the required weekday before finalizing.",
       `The artwork MUST visibly include the complete Thai date: ${s.day.dateThai}`,
       "Do not omit, abbreviate, crop, hide, or merge the date into unrelated text.",
       "Keep the date readable as its own text element and clear of the main focal subject.",
@@ -7548,6 +7992,7 @@ const PAIR_LOOKS={
 
     L.push(
       "AUTHORITY PRECEDENCE:",
+      "Selected Buddhist Subject / Reference Image Authority > Character Composition > Exact Scene Authority > Scene Concept > Scene Family Authority > generic visual/style suggestions.",
       "Exact Scene Authority > Scene Concept > Scene Family Authority > generic visual/style suggestions.",
       "A lower-priority rule must never suppress a material, object, environment, or visual feature explicitly required by the Exact Scene.",
       ""
@@ -7586,15 +8031,49 @@ const PAIR_LOOKS={
 
     L.push(
       "VISUAL MATERIALS — RESOLVED BY SCENE FAMILY:",
-      MATERIALS[family]||"realistic materials and environmental textures native to the exact Scene Concept",
+      masterRenderingState().mode==="cartoon"
+        ? `ILLUSTRATED MATERIAL TRANSLATION: ${MATERIALS[family]||"native scene materials"}. Render these as hand-painted illustrated textures and stylized surfaces; do NOT use photographic or hyperrealistic material rendering.`
+        : (MATERIALS[family]||"realistic materials and environmental textures native to the exact Scene Concept"),
       ""
     );
 
-    if(humanStyle==="cartoon"){
-      L.push("ARTWORK RENDERING: CARTOON / ILLUSTRATION.","Keep Image 1 and Image 2 in one coherent illustration family.","");
+    L.push(
+      "FINAL DESIGN COMPLIANCE CHECK — MUST PASS BEFORE RENDERING:",
+      `1. WEEKDAY must read exactly: ${s.day.dayThai}`,
+      `2. DATE must read exactly: ${s.day.dateThai}`,
+      `3. HEADLINE text must remain exactly: ${texts.headline}`,
+      `4. GREETING text must remain exactly: ${texts.greeting}`,
+      `5. HEADLINE typography must use: ${s.style?.name||"Selected Thai typography"}`,
+      `6. HEADLINE FRAME must visibly follow: ${resolvedTextFrame(s,"headline").label}`,
+      `7. BLESSING FRAME must visibly follow: ${resolvedTextFrame(s,"blessing").label}`,
+      "8. DATE treatment / highlight selected in this prompt must remain visible and separate where specified.",
+      `9. LAYOUT must follow: ${layout.label}`,
+      `10. MASTER RENDERING must follow: ${masterRenderingState().label}`,
+      "11. Do not import typography, frames, weekday, layout, or design choices from previous artwork/chat history.",
+      `12. MAIN MODE must remain: ${resolveMainArtworkMode().toUpperCase()} — do not import subject logic from another mode.`,
+      `13. DEITY SUBJECT must remain: ${resolveDeitySubject().active?resolveDeitySubject().deityMode:"OFF"}.`,
+      `14. GENERAL RELIGIOUS EXCLUSION: ${resolveMainArtworkMode()==="general" ? "ACTIVE — no monk, Buddha image/statue, Buddhist worshipper or merit-making ritual may appear." : "not applicable"}`,
+      `15. GENERAL CUTE CARTOON LOCK: ${resolveMainArtworkMode()==="general" && masterRenderingState().mode==="cartoon" ? "ACTIVE — both images must be cute/friendly cartoon illustration, not solemn or semi-realistic religious artwork." : "not applicable"}`,
+      "If any item above is missing or conflicts with an earlier suggestion, correct it to THIS CURRENT PROMPT before finalizing the image.",
+      ""
+    );
+
+    if(masterRenderingState().mode==="cartoon"){
+      L.push(
+        "FINAL MASTER RENDERING CHECK — ABSOLUTE: CARTOON / ILLUSTRATION is mandatory for this ENTIRE image.",
+        "ARTWORK RENDERING: PREMIUM HAND-PAINTED DIGITAL ILLUSTRATION / NON-PHOTOGRAPHIC.",
+        "For Buddhist artwork use dignified THAI SACRED ILLUSTRATION: elegant painted forms, softly stylized anatomy/statues, illustrated temple details, painterly lotus and foliage, and painted golden light.",
+        "Image 1 and Image 2 MUST look like they were painted by the same illustration artist in the same visual family.",
+        "Do not render ANY element photorealistically, including Buddha statues, monks, uploaded reference subjects, architecture, flowers, food, gold surfaces, frames or background.",
+        "STRICT NEGATIVE RENDERING: photography, photorealism, hyperrealism, realistic CGI, 3D render, ray tracing, photographic skin, photographic metal, product photography, camera realism.",
+        "If an earlier instruction contains words such as realistic, natural believable, cinematic photography, realistic materials, metallic realism, or photographic detail, reinterpret ONLY its subject/detail intent and DISCARD its realism instruction.",
+        ""
+      );
     }else{
       L.push(
-        `ARTWORK RENDERING: PHOTOREALISTIC${!boolPeople(setNo)?" / NO PEOPLE":""}.`,
+        "FINAL MASTER RENDERING CHECK: PHOTOREALISTIC is mandatory for this ENTIRE image.",
+        "FINAL PAIR COLOR/LIGHT CHECK: normalize this image back to PAIR MASTER VISUAL STATE before rendering. Ignore scene-specific cool/blue, harsh, high-contrast, or mismatched lighting cues that conflict with the Pair Master.",
+        `ARTWORK RENDERING: PHOTOREALISTIC${effectivePeopleAllowed?" / SELECTED PEOPLE ALLOWED / REQUIRED":" / NO PEOPLE"}.`,
         "Use high-end editorial quality, natural believable lighting, cinematic depth, elegant composition, and polished professional finish.",
         ""
       );
@@ -7627,7 +8106,7 @@ const PAIR_LOOKS={
     };
 
     const prompt=L.filter(x=>x!==undefined && x!==null && String(x).trim()!=="").join("\n");
-    validatePrompt(prompt,{s,scene,variation,stroke,blessing,people:buddhistSubjectPeopleAllowed(setNo,s),other,pairLook});
+    validatePrompt(prompt,{s,scene,variation,stroke,blessing,people:effectivePeopleAllowed,other,pairLook});
     setPair(setNo,signature);
     return prompt;
   }
@@ -7681,7 +8160,147 @@ const PAIR_LOOKS={
   return {build,selfTest,activityCategory,uiCatalog};
 })();
 
+
+
+function resolveMainArtworkMode(){
+  const saved=localStorage.getItem("pokunPrimaryModeV110")||"general";
+  if(saved==="buddhist") return "buddhist";
+  if(saved==="deity") return "deity";
+  return "general";
+}
+function resolveDeitySubject(){
+  const modeEl=document.getElementById("auspiciousDeityMode");
+  const styleEl=document.getElementById("lifestyleVisualStyle");
+  const primary=resolveMainArtworkMode();
+  const deityMode=modeEl?.value||"auto";
+  const wealthStyle=styleEl?.value==="wealth_prosperity";
+  const active=(primary==="deity") || (primary==="general" && wealthStyle);
+  return {active,primary,deityMode,wealthStyle};
+}
+function mainModeIsolationLines(){
+  const mode=resolveMainArtworkMode();
+  const deity=resolveDeitySubject();
+  const L=["MAIN MODE ISOLATION — HIGHEST SUBJECT AUTHORITY:",`Current Main Mode: ${mode.toUpperCase()}.`];
+  if(mode==="buddhist"){
+    L.push("BUDDHIST MODE ACTIVE: Buddhist Subject / Buddhist Scene / Buddhist Visual Style may be used.","Deity-only subject logic must remain OFF unless the user explicitly switches to Deity mode.");
+  }else if(mode==="deity"){
+    L.push("DEITY MODE ACTIVE: auspicious deity subject logic is authoritative.","Buddhist auto-subject logic is OFF.","Do NOT introduce Buddha statues, Buddhist monks, Wan Phra offerings, sangkhathan, or Buddhist holy-day pair behavior unless explicitly selected in this current prompt.");
+  }else{
+    L.push(
+      "GENERAL MODE ACTIVE: generic/general artwork logic is authoritative.",
+      "Buddhist auto-subject logic is OFF.",
+      "Do NOT import Buddha statues, Buddhist monks, Wan Phra pair behavior, merit-making offerings, or Buddhist sacred scene logic from previous settings, localStorage, or previous artwork.",
+      "Deity subject may appear only when explicitly selected through the current Deity/Wealth subject control.",
+      "GENERAL SUBJECT EXCLUSION — ABSOLUTE: do not generate a Buddhist monk, bhikkhu, novice monk, Buddha statue/image, layperson praying to Buddha, merit-making ritual, alms-giving scene, sangkhathan scene, or Buddhist devotional activity.",
+      "A temple-like or old Thai architectural location, if selected as a general scene, is architecture/background only and MUST NOT cause monks, Buddha images, worshippers, or Buddhist ritual content to appear.",
+      "If a generic Character is enabled in General mode, create an ordinary non-religious person appropriate to the scene — NEVER convert that person into a monk, priest, worshipper, or religious figure."
+    );
+  }
+  if(deity.active && deity.deityMode!=="auto"){
+    const labels={ganesha:"GANESHA / พระพิฆเนศ",caishen:"CAISHEN / ไฉ่ซิงเอี๊ย",guan_yu:"GUAN YU / กวนอู",naga:"NAGA / พญานาคราช",fu_lu_shou:"FU LU SHOU / ฮก–ลก–ซิ่ว",auspicious_shrine:"AUSPICIOUS SHRINE / ศาลเทพมงคล",auspicious_offerings:"AUSPICIOUS OFFERINGS / เครื่องสักการะและของมงคล",reference:"REFERENCE DEITY / องค์เทพจากรูปอ้างอิง"};
+    const label=labels[deity.deityMode]||deity.deityMode;
+    L.push(`SELECTED DEITY SUBJECT — REQUIRED: ${label}.`,"The selected deity/auspicious subject is the required focal subject for this artwork.","Do NOT substitute Buddha, Buddhist monk, generic worshipper, or another deity.","Do NOT remove the selected deity subject.","Scene and decorative details must support the selected deity subject, not replace it.");
+  }
+  L.push("");
+  return L;
+}
+
+function resolveBuddhistSubjectComposition(setNo,s){
+    const subjectEl=document.getElementById(setNo===1?"buddhistSubject1":"buddhistSubject2");
+    const referenceEl=document.getElementById(setNo===1?"buddhistReferenceFile1":"buddhistReferenceFile2");
+    const characterEl=document.getElementById(setNo===1?"characterMode1":"characterMode2");
+    const mode=subjectEl?.value || "auto";
+    const refFile=referenceEl?.files?.[0]?.name || "";
+    const characterMode=characterEl?.value || (setNo===1 ? globalThis.characterMode1 : globalThis.characterMode2) || "none";
+    const primaryMode=resolveMainArtworkMode();
+    const buddhistOn = primaryMode==="buddhist";
+    const explicitSubject = buddhistOn && mode!=="auto";
+    const hasBuddha=buddhistOn && ["buddha_statue","buddha_reference"].includes(mode);
+    const hasMonk=buddhistOn && ["monk_generated","monk_reference"].includes(mode);
+    const hasReference=buddhistOn && (["buddha_reference","monk_reference","temple_reference"].includes(mode) || !!refFile);
+    const noFigure=buddhistOn && mode==="no_figure";
+    const uiPeople=characterMode==="people" || characterMode==="both";
+    const humanRequired = buddhistOn ? (hasMonk || uiPeople) : uiPeople;
+    const sacredRequired = buddhistOn && hasBuddha;
+    return {setNo,primaryMode,buddhistOn,mode,refFile,characterMode,explicitSubject,hasBuddha,hasMonk,hasReference,noFigure,uiPeople,humanRequired,sacredRequired};
+  }
+
+function buddhistSubjectAuthorityLines(setNo,s){
+    const r=resolveBuddhistSubjectComposition(setNo,s);
+    if(!r.buddhistOn)return [];
+
+    const L=[
+      "BUDDHIST SUBJECT COMPOSITION — HIGHEST PRIORITY:",
+      `Image: ${setNo}`,
+      `Selected Buddhist Subject Mode: ${r.mode}.`
+    ];
+
+    if(r.mode==="buddha_statue"){
+      L.push(
+        "Buddha statue / Buddha image: REQUIRED.",
+        "This is a sacred statue/image, not a living human person."
+      );
+    }else if(r.mode==="buddha_reference"){
+      L.push(
+        "Referenced Buddha statue/image: REQUIRED.",
+        r.refFile ? `Reference filename selected in POKUN: ${r.refFile}.` : "Manual/ChatGPT mode: attach the Buddha reference image together with this Prompt."
+      );
+    }else if(r.mode==="monk_generated"){
+      L.push(
+        "Buddhist monk / bhikkhu human subject: REQUIRED.",
+        "Use ONE newly invented, non-famous Buddhist monk.",
+        "This is NOT a portrait of a real monk, abbot, revered teacher, celebrity monk, historical figure, or public figure.",
+        "Do not remove the monk because of any generic NO PEOPLE rule."
+      );
+    }else if(r.mode==="monk_reference"){
+      L.push(
+        "Referenced monk / revered teacher human subject: REQUIRED.",
+        r.refFile ? `Reference filename selected in POKUN: ${r.refFile}.` : "Manual/ChatGPT mode: attach the monk / revered-teacher reference image together with this Prompt.",
+        "Use the uploaded image as identity/reference guidance for the selected monk.",
+        "Preserve recognizable facial characteristics, age impression, shaved head, robe appearance, and dignified presentation.",
+        "Do not replace the referenced monk with a generic different monk."
+      );
+    }else if(r.mode==="no_figure"){
+      L.push(
+        "NO FIGURE MODE: no Buddha statue/image and no human figure are required."
+      );
+    }else if(r.mode==="temple_reference"){
+      L.push(
+        "Referenced temple / sacred object: REQUIRED.",
+        r.refFile ? `Reference filename selected in POKUN: ${r.refFile}.` : "Manual/ChatGPT mode: attach the temple/sacred-object reference image together with this Prompt."
+      );
+    }
+
+    if(r.uiPeople && !r.hasMonk){
+      L.push("Character UI also requires selected human subject(s).");
+    }
+
+    if(r.humanRequired){
+      L.push(
+        "CHARACTER OVERRIDE: PEOPLE ARE ALLOWED AND REQUIRED.",
+        "The selected Buddhist human subject overrides generic NO PEOPLE instructions.",
+        "DO NOT output: NO PEOPLE, no monk, no face, no body, or any equivalent prohibition against the selected human subject."
+      );
+    }
+
+    if(r.hasBuddha && r.humanRequired){
+      L.push(
+        "COMBINED SACRED COMPOSITION: Buddha statue/image + selected human subject(s) are BOTH REQUIRED.",
+        "Show both together respectfully; do not remove either selected subject.",
+        "Keep typography and frames clear of Buddha face/head and human face, hands, and important religious details."
+      );
+    }
+
+    L.push(
+      "FRAME CONTEXT AUTHORITY: Buddhist subject selections use Buddhist / Thai sacred frame language, not deity-only frame context, unless the user explicitly selects the Deity tab.",
+      ""
+    );
+    return L;
+  }
+
+
 function buildPrompt(setNo){
+
   return POKUN_V9.build(setNo);
 }
 
@@ -8305,6 +8924,7 @@ window.addEventListener("load",()=>{
     const quote=cardById("quoteSettings");
 
     const scene=cardById("sceneTemplatePairSection");
+    const characterSelector=document.getElementById("characterModeSelectorCard");
     const character=cardById("characterCompositionSection");
     const animal=cardById("animalSettingsSection");
     const look=cardById("pairVisualLockSection");
@@ -8315,20 +8935,23 @@ window.addEventListener("load",()=>{
     const watermark=cardByContainedId("watermark");
     const output=cardById("promptBuildSection");
 
-    const g1=makeGroup("workflowBasic","1","ประเภทงาน / วันที่ / โหมดพิเศษ","เริ่มจากสิ่งที่กำหนดกฎหลักของงาน");
+    const textHighlight=cardById("textHighlightCard");
+    const generalVisualStyle=cardById("generalVisualStyleCard");
+
+    const g1=makeGroup("workflowBasic","1","ประเภทงาน / วันที่ / โหมดพิเศษ","หลังเลือกรูปแบบภาพหลักด้านบนแล้ว ค่อยเลือกโหมดทั่วไป / พุทธศิลป์ / เทพมงคล และกฎหลักของงาน");
     move(g1,mode,date,special,birthday,quote);
 
     const g2=makeGroup("workflowScene","2","Scene Template — ภาพที่ 1 และภาพที่ 2","เลือกโลกของภาพทั้งคู่ในจุดเดียว");
     move(g2,scene);
 
-    const g3=makeGroup("workflowCharacter","3","คน / สัตว์ / องค์ประกอบตัวละคร","ตั้ง Character หลังจากรู้ฉากแล้ว");
-    move(g3,character,animal);
+    const g3=makeGroup("workflowCharacter","3","คน / สัตว์ / องค์ประกอบตัวละคร","เริ่มจากเลือกองค์ประกอบของภาพที่ 1–2 แล้วค่อยกำหนดรายละเอียดบุคคลและสัตว์");
+    move(g3,characterSelector,character,animal);
 
-    const g4=makeGroup("workflowLook","4","Pair Visual Lock — โทนสีและแสงร่วม","ล็อกให้ภาพ 1–2 ดูเป็นชุดเดียวกัน");
-    move(g4,look);
+    const g4=makeGroup("workflowLook","4","Pair Visual Lock / Visual Style — โทนสีและภาษาภาพ","คุมโทนสี แสง และ Visual Style ภายใต้ Master Rendering Style");
+    move(g4,look,generalVisualStyle);
 
-    const g5=makeGroup("workflowType","5","Typography / Stroke / กรอบข้อความ","รวมการตั้งค่าตัวอักษรไว้ใกล้กัน");
-    move(g5,typography,frame);
+    const g5=makeGroup("workflowType","5","Typography / Stroke / กรอบ / Text Highlight","รวมการตั้งค่าตัวอักษรและแถบสีข้อความไว้ใกล้กัน");
+    move(g5,typography,frame,textHighlight);
 
     const g6=makeGroup("workflowLayout","6","Layout / ตำแหน่งข้อความ / ลายน้ำ","จัดองค์ประกอบก่อนสร้าง Prompt");
     move(g6,layout,watermark);
@@ -8359,6 +8982,35 @@ window.addEventListener("load",()=>{
   });
 })();
 
+
+
+(function ensureCharacterWorkflowV1121(){
+  function run(){
+    const group=document.getElementById("workflowCharacter");
+    const selector=document.getElementById("characterModeSelectorCard");
+    const character=document.getElementById("characterCompositionSection");
+    const animal=document.getElementById("animalSettingsSection");
+    if(!group||!selector||!character||!animal)return;
+
+    // Selector must be immediately below the workflow heading.
+    const head=group.querySelector(".workflow-head");
+    if(head){
+      group.insertBefore(selector,head.nextSibling);
+    }else{
+      group.insertBefore(selector,group.firstChild);
+    }
+
+    // Person settings next, animal settings last.
+    if(selector.nextElementSibling!==character){
+      group.insertBefore(character,selector.nextElementSibling);
+    }
+    if(character.nextElementSibling!==animal){
+      group.insertBefore(animal,character.nextElementSibling);
+    }
+  }
+  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",()=>setTimeout(run,0));
+  else setTimeout(run,0);
+})();
 
 (function initPokunV96TemplateVariation(){
   const run=()=>{
@@ -8511,33 +9163,38 @@ window.addEventListener("load",()=>{
 })();
 
 
-(function protectTopControlsV110(){
-  function run(){
+(function protectTopControlsV116(){
+  function enforce(){
+    const master=document.getElementById("masterRenderingStyleCard");
     const tabs=document.getElementById("pokunModeTabsShell");
     const nav=document.getElementById("workflowNav");
     const wrap=document.querySelector(".wrap");
-    if(!tabs||!nav||!wrap)return;
-    const hero=wrap.querySelector(".hero");
-    if(hero && hero.nextElementSibling!==tabs){
-      wrap.insertBefore(tabs,hero.nextElementSibling);
+    const hero=wrap?.querySelector(".hero");
+    if(!master||!tabs||!nav||!wrap||!hero)return;
+
+    master.classList.add("master-rendering-top");
+
+    // Required top workflow:
+    // HERO -> Master Rendering -> General/Buddhist/Deity tabs -> Workflow nav
+    if(hero.nextElementSibling!==master){
+      wrap.insertBefore(master,hero.nextElementSibling);
+    }
+    if(master.nextElementSibling!==tabs){
+      wrap.insertBefore(tabs,master.nextElementSibling);
     }
     if(tabs.nextElementSibling!==nav){
       wrap.insertBefore(nav,tabs.nextElementSibling);
     }
-    const observer=new MutationObserver(()=>{
-      const t=document.getElementById("pokunModeTabsShell");
-      const n=document.getElementById("workflowNav");
-      const w=document.querySelector(".wrap");
-      const hr=w?.querySelector(".hero");
-      if(!t||!n||!w||!hr)return;
-      if(hr.nextElementSibling!==t)w.insertBefore(t,hr.nextElementSibling);
-      if(t.nextElementSibling!==n)w.insertBefore(n,t.nextElementSibling);
-    });
+  }
+
+  function run(){
+    enforce();
+    const observer=new MutationObserver(()=>enforce());
     observer.observe(document.getElementById("pokunMainGrid")||document.body,{childList:true,subtree:true});
   }
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",run);
   else run();
-})();
+})();;
 
 
 (function initPokunV109AuspiciousDeityUI(){
