@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#111827">
-<title>POKUN Web v11.23</title>
+<title>POKUN Web v11.29</title>
 <style>
 :root{--bg:#f4f5f7;--card:#fff;--ink:#16181d;--muted:#6b7280;--line:#e5e7eb;--accent:#111827;--good:#087f5b;--warn:#b45309}
 *{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI","Noto Sans Thai",sans-serif;background:var(--bg);color:var(--ink)}
@@ -180,7 +180,7 @@ button{border:0;border-radius:12px;padding:12px 14px;font-weight:800;cursor:poin
 <body>
 <div class="wrap">
   <div class="hero">
-    <h1>POKUN Web <span class="small">v11.23</span></h1>
+    <h1>POKUN Web <span class="small">v11.29</span></h1>
     <p>Daily Greeting Prompt Generator — ใช้ได้บนมือถือและคอม</p>
   </div>
 
@@ -637,6 +637,8 @@ button{border:0;border-radius:12px;padding:12px 14px;font-weight:800;cursor:poin
       <div class="notice" style="margin-bottom:10px">
         เลือกแยกได้อิสระ เช่น ภาพที่ 1 มีคนอย่างเดียว และภาพที่ 2 มีสัตว์อย่างเดียว หรือเลือกมีทั้งคนและสัตว์ในภาพเดียวกัน
       </div>
+      <div class="notice" style="margin-bottom:10px"><b>v11.25 Exact Character Lock:</b> เมื่อเลือกเพศ/ช่วงวัย/ชนิดสัตว์/ลักษณะสัตว์แล้ว ระบบจะใช้ค่าที่เลือกแบบตรงตัวและห้าม Random Prompt Engine เปลี่ยนเอง เช่น เลือก “ผู้ชาย” ต้องเป็นผู้ชาย และเลือก “ม้า” ต้องเป็นม้า</div>
+      <div class="notice" style="margin-bottom:10px"><b>v11.24 เทพมงคล:</b> เทพที่เลือกใช้เป็น Subject หลักเฉพาะภาพที่ 1 เท่านั้น ส่วนภาพที่ 2 ยึด “องค์ประกอบตัวละครในภาพ” ของภาพที่ 2 เป็นหลัก — ถ้าเลือกไม่มีคนและสัตว์ ภาพที่ 2 จะเป็นฉาก/วัตถุเท่านั้นและห้ามมีเทพหรือบุคคล</div>
 
       </div>
 
@@ -977,6 +979,9 @@ button{border:0;border-radius:12px;padding:12px 14px;font-weight:800;cursor:poin
 
     <section class="card full" id="sceneTemplatePairSection">
       <label>🧩 Scene Template / เลือกองค์ประกอบฉากแยกภาพ</label>
+      <div class="notice" style="margin-bottom:10px"><b>v11.29 Portable Prompt:</b> Prompt จะเริ่มด้วยสัญญาคำสั่งแบบ Clean-room ที่ล็อก Subject → Character → Scene → Text/Typography → Layout ก่อนรายละเอียดอื่น เพื่อลดผลจาก Memory/แชตเก่าและช่วยให้บัญชี Free/Plus ตีความใกล้กันมากขึ้น</div>
+      <div class="notice" style="margin-bottom:10px"><b>v11.28:</b> Template ย่อยของหมวดทะเลและช่อง “รายละเอียด” แสดงเป็นภาษาไทยทั้งหมดเพื่อให้อ่านง่าย ส่วนคำสั่งภาษาอังกฤษยังเก็บไว้ภายใน Engine สำหรับสร้าง Prompt</div>
+      <div class="notice" style="margin-bottom:10px"><b>v11.26:</b> เพิ่มหมวด <b>ทะเล / ชายหาด / ชายฝั่ง / เกาะ</b> แยกออกจาก “ริมน้ำ / ทะเลสาบ / แม่น้ำ” โดยมี True Ocean Lock ป้องกัน AI เปลี่ยนทะเลเป็นทะเลสาบ</div>
       <div class="notice" style="margin-bottom:10px">
         เลือก Template ของภาพที่ 1 และภาพที่ 2 แยกกันได้ เช่น <b>ภาพ 1 = วัด / พุทธศิลป์</b> และ <b>ภาพ 2 = ชนบท / ทุ่งนา</b>
         หากเลือกเอง ระบบจะถือเป็น <b>ล็อกเทมเพลต</b> และจะไม่สุ่มเปลี่ยน Scene Family ที่เลือก แต่ยังสุ่มรายละเอียดภายในฉากได้อย่างเหมาะสม
@@ -1782,7 +1787,7 @@ function sceneFamilyKey(c){
 function sceneFamilyAuthorityLines(c){
   const family=sceneFamilyKey(c);
 
-  if(["nature_mountain","rice_countryside","waterfront","travel_viewpoint"].includes(family)){
+  if(["nature_mountain","rice_countryside","waterfront","sea_coastal","travel_viewpoint"].includes(family)){
     return [
       "LANDSCAPE / LOCATION AUTHORITY:",
       "The selected landscape/location itself is the hero subject and the complete visual world.",
@@ -2347,6 +2352,14 @@ const SCENE_FAMILY_LIBRARY = {
   ["Lakeside morning","A calm lakeside scene with gentle water reflections, grasses, distant hills, and soft sunrise light."],
   ["Riverside walkway","An elegant riverside promenade with trees, reflections, railings, and airy sky."],
   ["Quiet pier view","A simple wooden pier leading into tranquil water with misty horizon and minimal props."]],ban:["vase","cushion","sofa","interior"]},
+ sea_coastal:{label:"ทะเล / ชายฝั่ง",scenes:[
+  ["Tropical beach sunrise","A true tropical beach at sunrise with open ocean horizon, gentle waves, pale sand, coastal sky, and no lake or river characteristics."],
+  ["Turquoise island bay","A tropical island bay with clear turquoise seawater, sandy shoreline, distant island cliffs, and unmistakable marine horizon."],
+  ["Ocean cliff viewpoint","A dramatic coastal cliff viewpoint above expansive blue ocean with rocky shore, native coastal vegetation, and open sea horizon."],
+  ["Quiet white-sand beach","A peaceful white-sand beach with shallow sea waves, clean shoreline, open ocean, and generous negative space."],
+  ["Rocky coast morning","A natural rocky coast with ocean waves, sea spray, coastal grasses, and broad marine horizon."],
+  ["Island viewpoint above the sea","An elevated tropical island viewpoint across layered islands and deep blue open sea with atmospheric distance."]
+ ],ban:["lake","river","canal","pond","vase","cushion","sofa","interior"]},
  thai_architecture:{label:"สถาปัตยกรรมไทย",scenes:[
   ["Traditional Thai pavilion","A graceful Thai pavilion with elegant rooflines, landscaped grounds, polished wood, and travel-editorial composition."],
   ["Historic temple courtyard","A respectful Thai temple courtyard with architecture, stone path, trees, and calm natural light; no people unless selected."],
@@ -2381,6 +2394,7 @@ const SCENE_COMPONENT_TAGS=[
  ["table",/\btable\b|โต๊ะ/gi],["vase",/\bvase\b|แจกัน/gi],["cushion",/\bcushion\b|หมอน/gi],
  ["sofa",/\bsofa\b|โซฟา/gi],["veranda",/\bveranda\b|ระเบียง/gi],["flowers",/\bflowers?\b|ดอกไม้/gi],
  ["garden",/\bgarden\b|สวน/gi],["mountain",/\bmountain\b|ภูเขา/gi],["city",/\bcity\b|เมือง/gi],
+ ["sea",/\bsea\b|\bocean\b|\bbeach\b|\bcoast\b|\bcoastal\b|\bisland\b|ทะเล|ชายหาด|ชายฝั่ง|เกาะ/gi],
  ["water",/\blake\b|\briver\b|\bwater\b|น้ำ|แม่น้ำ|ทะเลสาบ/gi],["food",/\bfood\b|\bdessert\b|\bdish\b|อาหาร|ของกิน/gi],
  ["architecture",/\barchitecture\b|\bpavilion\b|\btemple\b|สถาปัตยกรรม|วัด/gi]
 ];
@@ -2397,7 +2411,8 @@ const SCENE_FAMILY_NEAR_EQUIVALENTS={
   nature_mountain:["nature_mountain","travel_viewpoint"],
   rice_countryside:["rice_countryside"],
   garden_botanical:["garden_botanical","floral_stilllife"],
-  waterfront:["waterfront","travel_viewpoint"],
+  waterfront:["waterfront","travel_viewpoint","sea_coastal"],
+  sea_coastal:["sea_coastal","waterfront","travel_viewpoint"],
   food_hero:["food_hero"],
   floral_stilllife:["floral_stilllife","garden_botanical"],
   minimal_abstract:["minimal_abstract","art_gallery"],
@@ -2431,6 +2446,11 @@ const SCENE_FAMILY_VISUAL_ALIASES={
   waterfront:[
     "waterfront","lake_nature","riverside_view","pier_view","waterside_landscape",
     "river_view","lakeside_view","calm_water_view","shoreline_view"
+  ],
+  sea_coastal:[
+    "sea_coastal","ocean_view","sea_view","beach_scene","coastal_landscape",
+    "island_view","tropical_beach","rocky_coast","ocean_cliff","seaside_view",
+    "marine_horizon","open_ocean","coastal_resort","seaside_promenade"
   ],
   garden_botanical:[
     "garden_botanical","flower_garden","botanical_garden","greenhouse_scene",
@@ -2780,13 +2800,16 @@ function resolvedAnimalStyle(){
 }
 
 function animalSpeciesDirection(s){
+  const currentAnimalType=document.getElementById("animalType")?.value || animalType || "auto";
   const supported=["cat","dog","horse","rabbit","bear","bird","elephant","deer","squirrel","hamster","duck","chicken","goat","sheep","cow","buffalo","pig","fox","panda","monkey","turtle","fish","butterfly"];
-  if(supported.includes(animalType)) return animalType;
+  if(supported.includes(currentAnimalType)) return currentAnimalType;
   const seed=hashString(`${userSeed}|${s.day.isoDate}|animal-species-v1122`);
   return pick(["cat","dog","horse","rabbit","bird","deer","squirrel","duck","sheep","panda"],seed+8101);
 }
 
 function animalLookDirection(s){
+  const currentAnimalLook=document.getElementById("animalLook")?.value || animalLook || "auto";
+  const animalLook=currentAnimalLook;
   if(animalLook==="orange_cat") return "an orange tabby cat with warm ginger fur and a distinctive friendly face";
   if(animalLook==="white_cat") return "a clean white cat with soft bright fur and a gentle expressive face";
   if(animalLook==="black_cat") return "a sleek black cat with expressive eyes and elegant silhouette";
@@ -2830,7 +2853,7 @@ function animalLookDirection(s){
 }
 
 function animalBehaviorDirection(s,setNo){
-  const mode=animalBehavior;
+  const mode=document.getElementById("animalBehavior")?.value || animalBehavior || "auto";
   const seed=hashString(`${userSeed}|${s.day.isoDate}|${setNo}|animal-behavior-v33`);
   if(mode==="natural"){
     return "Use natural species-appropriate animal behavior and posture. Do not make the animal perform human actions.";
@@ -3351,7 +3374,7 @@ function familyAwareCanonicalExclusion(token,family){
   if(t==="architecture"){
     if(["food_hero","floral_stilllife","minimal_abstract"].includes(family))
       return "architecture as a competing scene or hero subject";
-    if(["waterfront","nature_mountain","rice_countryside","travel_viewpoint"].includes(family))
+    if(["waterfront","sea_coastal","nature_mountain","rice_countryside","travel_viewpoint"].includes(family))
       return "urban or decorative architecture as a competing focal subject";
     return "architecture";
   }
@@ -3439,7 +3462,7 @@ function sceneSpecificExclusions(c){
     base.push("sofa","cushion pile","home veranda styling","monumental architecture as a competing hero subject","food props","tabletop still-life styling");
   }
 
-  if(["nature_mountain","rice_countryside","waterfront","travel_viewpoint"].includes(family)){
+  if(["nature_mountain","rice_countryside","waterfront","sea_coastal","travel_viewpoint"].includes(family)){
     base=base.filter(x=>String(x).trim().toLowerCase()!=="architecture");
     base.push("table","vase","cushion","sofa","veranda styling","interior architecture","decorative built structures");
   }
@@ -5449,7 +5472,7 @@ function buildPromptLegacyV87(setNo){
   const knownAuthorityFamilies=new Set([
     "minimal_abstract","cultural_market","thai_architecture","food_hero",
     "urban_city","garden_botanical","art_gallery","floral_stilllife",
-    "nature_mountain","rice_countryside","waterfront","travel_viewpoint"
+    "nature_mountain","rice_countryside","waterfront","sea_coastal","travel_viewpoint"
   ]);
   if(knownAuthorityFamilies.has(sceneFamilyKey(c)) && getSceneFamilyAuthorityLines(c).length===0){
     throw new Error("Scene Authority Resolver failed for family: "+sceneFamilyKey(c));
@@ -5809,7 +5832,7 @@ function masterRenderingLines(){
 }
 
 const POKUN_V9 = (() => {
-  const VERSION="11.23";
+  const VERSION="11.29";
   const ENGINE_LABEL=`POKUN v${VERSION}`;
 
 
@@ -5820,6 +5843,7 @@ const POKUN_V9 = (() => {
     rice_countryside:"ชนบท / ทุ่งนา",
     nature_mountain:"ภูเขา / ธรรมชาติ",
     waterfront:"ริมน้ำ / ทะเลสาบ / แม่น้ำ",
+    sea_coastal:"ทะเล / ชายหาด / ชายฝั่ง / เกาะ",
     garden_botanical:"สวน / ดอกไม้ / พฤกษชาติ",
     urban_city:"เมือง / สถาปัตย์สมัยใหม่",
     thai_architecture:"สถาปัตยกรรมไทย",
@@ -5875,6 +5899,18 @@ const POKUN_V9 = (() => {
       ["Minimal lakeshore reeds","A minimal lakeshore view with reeds, calm water, distant horizon, soft sky, and strong negative space."],
       ["River bridge distance","A broad river scene with a modest bridge in the distance, reflections, shoreline vegetation, and clean atmospheric depth."]
     ],
+    sea_coastal:[
+      ["Tropical beach sunrise","A true tropical sea beach at sunrise with open ocean horizon, gentle waves, pale sand, coastal sky, and soft warm morning light. This is SEA/OCEAN, not a lake or river."],
+      ["Turquoise island bay","A bright tropical island bay with clear turquoise seawater, curved sandy shoreline, distant island cliffs, open marine horizon, and airy sunlight. No lake, no river."],
+      ["Ocean cliff viewpoint","A dramatic seaside cliff viewpoint overlooking expansive blue ocean, rocky coast, native coastal vegetation, sea horizon, and strong travel-editorial depth."],
+      ["Quiet white-sand beach","A peaceful white-sand beach with shallow sea waves, clean shoreline, scattered coastal plants, broad ocean horizon, and generous negative space."],
+      ["Seaside resort promenade","An elegant seaside promenade beside the open sea with palm trees, coastal railings, ocean horizon, tasteful resort architecture, and luminous morning light."],
+      ["Rocky coast morning","A natural rocky coastline with ocean waves breaking gently against rocks, sea spray, distant horizon, coastal grasses, and cinematic morning light."],
+      ["Island viewpoint above the sea","An elevated island viewpoint looking across layered tropical islands, deep blue open sea, coastal cliffs, sky, and atmospheric distance."],
+      ["Golden sunset over the ocean","A wide open-sea sunset with glowing horizon, gentle waves, reflective shoreline, warm golden-orange sky, and clean cinematic coastal composition."],
+      ["Fishing village by the sea","A picturesque coastal fishing village beside genuine seawater with small boats, wooden pier details, ocean horizon, coastal houses, and warm documentary light."],
+      ["Blue-hour beach","A calm beach at early blue hour with soft ocean waves, cool marine horizon, pale sand, subtle sky gradient, and elegant serene mood."]
+    ],
     garden_botanical:[
       ["Botanical garden path","A landscaped botanical garden with layered greenery, curved path, selective signature-color flowers, and refined depth."],
       ["Flower meadow morning","A natural flower meadow with soft breeze, warm light, open sky, and no furniture."],
@@ -5908,7 +5944,7 @@ const POKUN_V9 = (() => {
       ["Old town street morning","A charming old-town street with textured facades, selective flowers as native accents, perspective depth, and warm morning light."],
       ["European-style riverside town","A picturesque riverside town with elegant facades, bridge, reflections, and editorial travel-photography mood."],
       ["Historic stone alley","A refined historic stone alley with textured walls, soft morning light, long perspective, and destination-native details."],
-      ["Coastal cliff viewpoint","A dramatic coastal overlook with cliffs, distant water, native vegetation, sky, and strong travel-editorial depth."],
+      ["Coastal cliff viewpoint","A dramatic coastal overlook with cliffs and expansive open ocean, visible marine horizon, native vegetation, sky, and strong travel-editorial depth. This is a true sea/coastal view, not a lake."],
       ["Mountain town overlook","A scenic town nestled among mountains viewed from an elevated overlook with rooftops, ridges, and atmospheric distance."],
       ["Heritage riverside promenade","A heritage riverside promenade with old facades, railings, reflections, and calm morning light."],
       ["Countryside travel overlook","A scenic elevated travel overlook across farmland or valley with railings only when natural to the location, sky, and layered distance."]
@@ -6147,7 +6183,19 @@ const POKUN_V9 = (() => {
     "Tea and pastry editorial":{name:"ชาและขนมแบบ Editorial",description:"องค์ประกอบชาและขนมที่ประณีต ใช้ภาชนะที่เข้ากับฉาก รายละเอียดอาหารพอดี และแสง Editorial ระดับพรีเมียม"},
     "Bakery display morning":{name:"ตู้เบเกอรียามเช้า",description:"ตู้แสดงเบเกอรี่สะอาด มีขนมอบที่เลือก กระจก แสงธรรมชาติอบอุ่น และสไตล์ภายในที่ไม่รก"},
     "Outdoor cafe terrace":{name:"ระเบียงคาเฟ่กลางแจ้ง",description:"ระเบียงคาเฟ่กลางแจ้งที่ประณีต มีบริบทสถาปัตยกรรม โต๊ะและเก้าอี้เท่าที่จำเป็น พรรณไม้ และแสงกลางวันที่สอดคล้อง"},
-    "Minimal brunch editorial":{name:"บรันช์มินิมอลแบบ Editorial",description:"ฉากบรันช์สะอาด มีอาหารหลักหนึ่งจาน ภาชนะพอดี แสงกลางวันนุ่ม และองค์ประกอบไลฟ์สไตล์ระดับพรีเมียม"}
+    "Minimal brunch editorial":{name:"บรันช์มินิมอลแบบ Editorial",description:"ฉากบรันช์สะอาด มีอาหารหลักหนึ่งจาน ภาชนะพอดี แสงกลางวันนุ่ม และองค์ประกอบไลฟ์สไตล์ระดับพรีเมียม"},
+
+    "Tropical beach sunrise":{name:"ชายหาดเขตร้อนยามพระอาทิตย์ขึ้น",description:"ชายหาดทะเลเขตร้อนยามพระอาทิตย์ขึ้น มีเส้นขอบฟ้าทะเลเปิด คลื่นเบา ๆ หาดทรายสีอ่อน ท้องฟ้าริมชายฝั่ง และแสงเช้าโทนอุ่นนุ่มอย่างเป็นธรรมชาติ โดยต้องเป็นทะเลหรือมหาสมุทรจริง ไม่ใช่ทะเลสาบหรือแม่น้ำ"},
+    "Turquoise island bay":{name:"อ่าวเกาะน้ำทะเลสีฟ้าเทอร์ควอยซ์",description:"อ่าวบนเกาะเขตร้อนที่มีน้ำทะเลสีฟ้าเทอร์ควอยซ์ใส ชายหาดโค้งสวย หน้าผาเกาะอยู่ไกล เส้นขอบฟ้าทะเลเปิด และแสงกลางวันโปร่งสบาย โดยต้องเป็นฉากทะเลจริง ไม่ใช่ทะเลสาบหรือแม่น้ำ"},
+    "Ocean cliff viewpoint":{name:"จุดชมวิวหน้าผาริมทะเล",description:"จุดชมวิวบนหน้าผาริมทะเล มองเห็นผืนมหาสมุทรกว้าง ชายฝั่งโขดหิน พรรณไม้ริมทะเล เส้นขอบฟ้า และมิติภาพท่องเที่ยวที่ชัดเจน"},
+    "Quiet white-sand beach":{name:"ชายหาดทรายขาวอันเงียบสงบ",description:"ชายหาดทรายขาวที่เงียบสงบ มีคลื่นทะเลตื้น ๆ แนวชายฝั่งสะอาด พรรณไม้ริมทะเลเพียงเล็กน้อย เส้นขอบฟ้ามหาสมุทรกว้าง และพื้นที่ว่างสำหรับจัดองค์ประกอบ"},
+    "Seaside resort promenade":{name:"ทางเดินริมทะเลสไตล์รีสอร์ต",description:"ทางเดินริมทะเลสไตล์รีสอร์ตที่หรูและโปร่ง มีต้นปาล์ม ราวทางเดิน ผืนทะเลเปิด เส้นขอบฟ้า สถาปัตยกรรมรีสอร์ตที่พอดี และแสงเช้าที่สว่างนุ่ม"},
+    "Rocky coast morning":{name:"ชายฝั่งโขดหินยามเช้า",description:"ชายฝั่งธรรมชาติที่มีโขดหิน คลื่นทะเลซัดเบา ๆ ละอองทะเล หญ้าและพรรณไม้ริมชายฝั่ง เส้นขอบฟ้ามหาสมุทร และแสงเช้าแบบภาพยนตร์"},
+    "Island viewpoint above the sea":{name:"จุดชมวิวเกาะเหนือทะเล",description:"จุดชมวิวมุมสูงบนเกาะ มองเห็นเกาะหลายชั้น หน้าผาริมทะเล ผืนทะเลสีน้ำเงินกว้าง ท้องฟ้า และมิติอากาศที่ทอดไกลอย่างสวยงาม"},
+    "Golden sunset over the ocean":{name:"พระอาทิตย์ตกสีทองเหนือผืนทะเล",description:"วิวพระอาทิตย์ตกเหนือทะเลเปิดกว้าง มีเส้นขอบฟ้าเรืองแสง คลื่นเบา ๆ ชายฝั่งสะท้อนสีทอง ท้องฟ้าโทนส้มทอง และบรรยากาศชายทะเลแบบภาพยนตร์"},
+    "Fishing village by the sea":{name:"หมู่บ้านชาวประมงริมทะเล",description:"หมู่บ้านชาวประมงริมทะเลจริง มีเรือเล็ก ท่าไม้ บ้านริมชายฝั่ง ผืนน้ำทะเลและเส้นขอบฟ้า พร้อมแสงธรรมชาติอบอุ่นในบรรยากาศท่องเที่ยวเชิงวิถีชีวิต"},
+    "Blue-hour beach":{name:"ชายหาดช่วงฟ้าเข้มก่อนค่ำ",description:"ชายหาดในช่วงฟ้าเข้มก่อนค่ำ มีคลื่นทะเลสงบ หาดทรายสีอ่อน เส้นขอบฟ้ามหาสมุทร ท้องฟ้าไล่เฉดสีน้ำเงินนุ่ม และบรรยากาศสงบหรู"},
+
   };
 
   
@@ -6421,9 +6469,10 @@ const PAIR_LOOKS={
     rice_countryside:["rice_countryside"],
     garden_botanical:["garden_botanical","floral_stilllife"],
     urban_city:["urban_city","travel_viewpoint","cultural_market"],
-    waterfront:["waterfront","travel_viewpoint"],
+    waterfront:["waterfront","travel_viewpoint","sea_coastal"],
+    sea_coastal:["sea_coastal","waterfront","travel_viewpoint"],
     thai_architecture:["thai_architecture","travel_viewpoint"],
-    travel_viewpoint:["travel_viewpoint","urban_city","thai_architecture","waterfront","nature_mountain"],
+    travel_viewpoint:["travel_viewpoint","urban_city","thai_architecture","waterfront","sea_coastal","nature_mountain"],
     food_hero:["food_hero"],
     wealth_prosperity:["wealth_prosperity","minimal_abstract"],
     floral_stilllife:["floral_stilllife","garden_botanical"],
@@ -6465,6 +6514,15 @@ const PAIR_LOOKS={
       "WATERFRONT AUTHORITY:",
       "Keep the exact lakeside, riverside, or pier environment as the hero visual world.",
       "Use only water, reflections, shoreline vegetation, pier/railing materials when scene-appropriate, horizon, sky, mist/weather, and natural light.",
+      "Do not introduce unrelated tabletop still-life props, furniture clusters, decorative vessels, cups, books, or food."
+    ],
+    sea_coastal:[
+      "SEA / COASTAL AUTHORITY — TRUE OCEAN LOCK:",
+      "The selected SEA/OCEAN/BEACH/COAST location is the hero visual world.",
+      "Render unmistakable marine characteristics: open sea or ocean horizon, coastal shoreline, sea waves, marine color/depth, beach/coastal rock/island geography as specified by the Exact Scene.",
+      "Do NOT reinterpret the sea as a lake, reservoir, river, canal, pond, or generic calm inland water.",
+      "If the exact scene is a beach, visibly include sandy shoreline and ocean waves/horizon. If it is an island/coastal cliff scene, visibly include open sea and marine horizon.",
+      "Use only scene-native coastal vegetation, rocks, sand, sea spray, boats/promenade/resort architecture when explicitly appropriate.",
       "Do not introduce unrelated tabletop still-life props, furniture clusters, decorative vessels, cups, books, or food."
     ],
     thai_architecture:[
@@ -6782,6 +6840,117 @@ const PAIR_LOOKS={
     return setNo===1 ? personSource1 : personSource2;
   }
 
+  function exactCharacterState(setNo){
+    const charMode=document.getElementById(setNo===1?"characterMode1":"characterMode2")?.value || (setNo===1?characterMode1:characterMode2) || "none";
+    const gender=document.getElementById(setNo===1?"genderMode1":"genderMode2")?.value || (setNo===1?genderMode1:genderMode2) || "auto";
+    const age=document.getElementById(setNo===1?"ageMode1":"ageMode2")?.value || (setNo===1?ageMode1:ageMode2) || "auto";
+    const personSource=document.getElementById(setNo===1?"personSource1":"personSource2")?.value || sourceFor(setNo) || "generated";
+
+    const aType=document.getElementById("animalType")?.value || animalType || "auto";
+    const aLook=document.getElementById("animalLook")?.value || animalLook || "auto";
+    const aBehavior=document.getElementById("animalBehavior")?.value || animalBehavior || "auto";
+    const aStyle=document.getElementById("animalStyle")?.value || animalStyle || "follow";
+    const anthro=document.getElementById("anthroLevel")?.value || anthroLevel || "natural";
+
+    return {
+      setNo,charMode,gender,age,personSource,
+      people:charMode==="people"||charMode==="both",
+      animal:charMode==="animal"||charMode==="both",
+      animalType:aType,animalLook:aLook,animalBehavior:aBehavior,animalStyle:aStyle,anthro
+    };
+  }
+
+  function exactGenderAuthority(setNo){
+    const c=exactCharacterState(setNo);
+    if(!c.people)return [];
+    if(c.personSource==="multi_photo"){
+      return ["EXACT GENDER AUTHORITY: reference-role mapping / uploaded identities control gender; do not invent or swap gender."];
+    }
+    if(c.gender==="male")return [
+      "EXACT GENDER AUTHORITY — HARD LOCK: MALE ONLY.",
+      "Every intentionally generated human subject for this image must be male.",
+      "Do NOT generate a woman, girl, female-presenting substitute, or mixed-gender group.",
+      "Do not reinterpret MALE as a stylistic suggestion. It is a required character attribute."
+    ];
+    if(c.gender==="female")return [
+      "EXACT GENDER AUTHORITY — HARD LOCK: FEMALE ONLY.",
+      "Every intentionally generated human subject for this image must be female.",
+      "Do NOT generate a man, boy, male-presenting substitute, or mixed-gender group.",
+      "Do not reinterpret FEMALE as a stylistic suggestion. It is a required character attribute."
+    ];
+    if(c.gender==="mixed")return [
+      "EXACT GENDER AUTHORITY — HARD LOCK: BOTH FEMALE AND MALE SUBJECTS REQUIRED.",
+      "Include at least one female and at least one male human subject; do not collapse the group into one gender."
+    ];
+    return ["EXACT GENDER AUTHORITY: AUTO — gender may be selected only when the UI explicitly remains AUTO."];
+  }
+
+  function exactAgeAuthority(setNo){
+    const c=exactCharacterState(setNo);
+    if(!c.people)return [];
+    const map={
+      child:"CHILD ONLY",
+      adult:"ADULT ONLY",
+      elderly:"ELDERLY ONLY",
+      child_adult:"CHILD + ADULT",
+      adult_elderly:"ADULT + ELDERLY",
+      child_elderly:"CHILD + ELDERLY",
+      all:"CHILD + ADULT + ELDERLY"
+    };
+    if(c.age==="auto")return ["EXACT AGE AUTHORITY: AUTO — age may be selected according to scene because UI is AUTO."];
+    return [
+      `EXACT AGE AUTHORITY — HARD LOCK: ${map[c.age]||c.age}.`,
+      "Do not substitute another age group or silently reinterpret this selection."
+    ];
+  }
+
+  function animalTypeLabel(v){
+    return ({cat:"CAT / แมว",dog:"DOG / สุนัข",horse:"HORSE / ม้า",rabbit:"RABBIT / กระต่าย",bear:"BEAR / หมี",bird:"BIRD / นก",elephant:"ELEPHANT / ช้าง",deer:"DEER / กวาง",squirrel:"SQUIRREL / กระรอก",hamster:"HAMSTER / แฮมสเตอร์",duck:"DUCK / เป็ด",chicken:"CHICKEN / ไก่",goat:"GOAT / แพะ",sheep:"SHEEP / แกะ",cow:"COW / วัว",buffalo:"WATER BUFFALO / ควาย",pig:"PIG / หมู",fox:"FOX / สุนัขจิ้งจอก",panda:"PANDA / แพนด้า",monkey:"MONKEY / ลิง",turtle:"TURTLE / เต่า",fish:"FISH / ปลา",butterfly:"BUTTERFLY / ผีเสื้อ"})[v]||"AUTO";
+  }
+
+  function animalLookLabel(v){
+    const el=document.getElementById("animalLook");
+    return el?.selectedOptions?.[0]?.textContent?.trim() || v || "AUTO";
+  }
+
+  function exactAnimalAuthority(setNo,s){
+    const c=exactCharacterState(setNo);
+    if(!c.animal)return [
+      "EXACT ANIMAL AUTHORITY — HARD LOCK: NO ANIMAL.",
+      "Do not add a pet, bird, horse, cat, dog, wildlife, mascot, or background animal."
+    ];
+
+    const L=["EXACT ANIMAL AUTHORITY — HIGHEST ANIMAL PRIORITY:"];
+    if(c.animalType!=="auto"){
+      L.push(
+        `REQUIRED SPECIES: ${animalTypeLabel(c.animalType)}.`,
+        `The animal MUST be a ${c.animalType}. Do not substitute a different animal species.`
+      );
+    }else{
+      L.push("REQUIRED SPECIES: AUTO — species may be chosen only because the UI is explicitly AUTO.");
+    }
+
+    if(c.animalLook!=="auto"){
+      L.push(
+        `REQUIRED ANIMAL LOOK / BREED / COLOR: ${animalLookLabel(c.animalLook)} (${c.animalLook}).`,
+        "Preserve this selected look; do not randomly change breed, coat color, markings, or subtype."
+      );
+    }else{
+      L.push("ANIMAL LOOK: AUTO — appearance may vary only because the UI is explicitly AUTO.");
+    }
+
+    const behaviorMap={
+      natural:"NATURAL SPECIES-APPROPRIATE BEHAVIOR ONLY",
+      humanlike:"HUMAN-LIKE PLAYFUL ACTION REQUIRED",
+      auto:"AUTO"
+    };
+    L.push(`REQUIRED BEHAVIOR MODE: ${behaviorMap[c.animalBehavior]||c.animalBehavior}.`);
+    L.push(`REQUIRED ANTHROPOMORPHIC LEVEL: ${c.anthro}.`);
+    L.push("Random Prompt Engine must NOT change species, selected look/breed/color, behavior mode, or anthropomorphic level.");
+    return L;
+  }
+
+
   function sanitizeVisible(s){
     return String(s??"")
       .replaceAll("นะค่ะ","")
@@ -6820,7 +6989,8 @@ const PAIR_LOOKS={
     if(/gallery|museum|sculpture|studio/.test(x)) return "art_gallery";
     if(/mountain|cliff|forest|ภูเขา|ป่า/.test(x)) return "nature_mountain";
     if(/rice|field|farm|countryside|ชนบท|ทุ่ง/.test(x)) return "rice_countryside";
-    if(/lake|river|pier|waterfront|ริมน้ำ/.test(x)) return "waterfront";
+    if(/\bsea\b|\bocean\b|\bbeach\b|\bcoast\b|\bcoastal\b|\bisland\b|ทะเล|ชายหาด|ชายฝั่ง|เกาะ/.test(x)) return "sea_coastal";
+    if(/lake|river|pier|waterfront|ริมน้ำ|ทะเลสาบ|แม่น้ำ/.test(x)) return "waterfront";
     if(/pavilion|thai house|temple courtyard|สถาปัตยกรรมไทย/.test(x)) return "thai_architecture";
     if(/city|rooftop|urban|promenade|เมือง/.test(x)) return "urban_city";
     if(/garden|greenhouse|meadow|สวน/.test(x)) return "garden_botanical";
@@ -6868,18 +7038,29 @@ const PAIR_LOOKS={
     const subjectResolved=resolveBuddhistSubjectComposition(setNo,s);
     const manualFamily=selectedTemplateFamily(setNo);
     const manualExact=selectedTemplateExact(setNo);
+    const deityForImage=deitySubjectForImage(setNo);
 
     // Explicit Exact Template is the highest scene-selection priority.
     if(manualFamily!=="auto" && manualExact!=="auto"){
       const found=findTemplateByName(manualFamily,manualExact);
-      if(found) return {...found,avoid:"",templateLocked:true,templateMode:"exact-template"};
+      if(found){
+        if(deityForImage.companionNoDeity && isDeitySceneName(found.name)){
+          return nonDeityCompanionScene(manualFamily,seed);
+        }
+        return {...found,avoid:"",templateLocked:true,templateMode:"exact-template"};
+      }
     }
 
     // Explicit family + AUTO exact template: lock family, randomize only within that family.
     if(manualFamily!=="auto" && TEMPLATE_CATALOG[manualFamily]){
       const other=getPair(setNo===1?2:1);
       let rows=templateRowsForMode(manualFamily).filter(x=>x[0]!==other?.scene);
-      if(!rows.length)rows=templateRowsForMode(manualFamily);
+      if(deityForImage.companionNoDeity) rows=rows.filter(x=>!isDeitySceneName(x[0]));
+      if(!rows.length){
+        rows=templateRowsForMode(manualFamily);
+        if(deityForImage.companionNoDeity) rows=rows.filter(x=>!isDeitySceneName(x[0]));
+      }
+      if(!rows.length && deityForImage.companionNoDeity) return nonDeityCompanionScene(manualFamily,seed);
       const row=pick(rows,seed+1103);
       return {name:row[0],prompt:row[1],avoid:"",family:manualFamily,templateLocked:true,templateMode:"family-locked-auto-exact"};
     }
@@ -7092,10 +7273,166 @@ const PAIR_LOOKS={
     return {headline,greeting,quoteData};
   }
 
+  function portableDeityLabel(mode){
+    return ({
+      ganesha:"GANESHA / พระพิฆเนศ",
+      caishen:"CAISHEN / ไฉ่ซิงเอี๊ย",
+      guan_yu:"GUAN YU / กวนอู",
+      naga:"NAGA / พญานาคราช",
+      fu_lu_shou:"FU LU SHOU / ฮก–ลก–ซิ่ว",
+      auspicious_shrine:"AUSPICIOUS SHRINE / ศาลเทพมงคล",
+      auspicious_offerings:"AUSPICIOUS OFFERINGS / เครื่องสักการะและของมงคล",
+      reference:"REFERENCE DEITY / องค์เทพจากรูปอ้างอิง",
+      auto:"AUTO AUSPICIOUS SUBJECT"
+    })[mode]||String(mode||"AUTO");
+  }
+
+  function portableBuddhistSubjectLabel(mode){
+    return ({
+      auto:"AUTO BUDDHIST SUBJECT",
+      buddha_statue:"BUDDHA STATUE / พระพุทธรูป",
+      monk_generated:"ORIGINAL GENERIC BUDDHIST MONK / พระภิกษุที่สร้างใหม่",
+      monk_reference:"REFERENCE BUDDHIST MONK / พระภิกษุจากรูปอ้างอิง",
+      no_figure:"NO BUDDHA FIGURE / NO HUMAN",
+      buddha_reference:"REFERENCE BUDDHA IMAGE / พระพุทธรูปจากรูปอ้างอิง",
+      temple_reference:"REFERENCE TEMPLE / วัดจากรูปอ้างอิง"
+    })[mode]||String(mode||"AUTO");
+  }
+
+  function portablePromptContractLines(setNo,s,scene,texts,layout,stroke,blessing,pairLook,buddhistResolved,deityResolved){
+    const c=exactCharacterState(setNo);
+    const hf=resolvedTextFrame(s,"headline");
+    const bf=resolvedTextFrame(s,"blessing");
+    const render=masterRenderingState();
+    const sceneThai=(typeof TEMPLATE_UI_TH!=="undefined" && TEMPLATE_UI_TH[scene.name]?.name) ? TEMPLATE_UI_TH[scene.name].name : scene.name;
+    const subject=[];
+
+    if(deityResolved.heroActive){
+      const label=portableDeityLabel(deityResolved.deityMode);
+      if(deityResolved.deityMode==="fu_lu_shou"){
+        subject.push(
+          `MANDATORY HERO SUBJECT: ${label}.`,
+          "ALL THREE Fu-Lu-Shou figures are REQUIRED and must be clearly visible and identifiable together as the principal auspicious hero group.",
+          "Do not output only one or two figures. Do not replace the trio with ordinary people, Buddha, monks, another deity, generic Chinese elders, statues of unrelated figures, or a prosperity symbol alone."
+        );
+      }else if(deityResolved.deityMode==="auto"){
+        subject.push(
+          "MANDATORY HERO SUBJECT: one auspicious deity / prosperity sacred subject resolved by the current Deity AUTO setting.",
+          "Once selected for this generation, keep that auspicious subject visible as the principal hero; do not silently replace it with ordinary people or an unrelated scene."
+        );
+      }else{
+        subject.push(
+          `MANDATORY HERO SUBJECT: ${label}.`,
+          "This selected deity/auspicious subject MUST be clearly visible and identifiable as the principal hero.",
+          "Do not remove it, replace it, downgrade it to a tiny background detail, or substitute ordinary people, Buddha, monks, another deity, or scenery alone."
+        );
+      }
+    }else if(deityResolved.companionNoDeity){
+      subject.push(
+        "MANDATORY SUBJECT RULE FOR IMAGE 2: NO DEITY.",
+        "Image 2 is a companion artwork. Do not include Ganesha, Caishen, Guan Yu, Fu-Lu-Shou, Naga deity, any god/goddess, deity statue, sacred deity portrait, Buddha image, or Buddhist monk.",
+        c.people||c.animal
+          ? `Use ONLY the Image 2 character composition selected in the UI: ${charLabel(setNo)}.`
+          : "No living character is selected: use only the resolved scene/environment/objects."
+      );
+    }else if(buddhistResolved?.buddhistOn){
+      subject.push(
+        `MANDATORY BUDDHIST SUBJECT: ${portableBuddhistSubjectLabel(buddhistResolved.mode)}.`,
+        "Follow this Buddhist subject selection exactly; do not replace it with a deity from another tradition or a generic unrelated character."
+      );
+    }else{
+      subject.push(
+        `MANDATORY GENERAL SUBJECT COMPOSITION: ${charLabel(setNo)}.`,
+        c.people ? "Ordinary non-religious human subject(s) are allowed exactly as selected." : "No ordinary human subject is allowed.",
+        c.animal ? "The selected animal character is required exactly as selected." : "No animal character is allowed."
+      );
+    }
+
+    const character=[
+      `CHARACTER MODE: ${c.charMode}.`,
+      `GENDER: ${c.people?c.gender:"NOT APPLICABLE — NO PEOPLE"}.`,
+      `AGE: ${c.people?c.age:"NOT APPLICABLE — NO PEOPLE"}.`,
+      `ANIMAL TYPE: ${c.animal?c.animalType:"NONE"}.`,
+      `ANIMAL LOOK: ${c.animal?c.animalLook:"NONE"}.`,
+      `ANIMAL BEHAVIOR: ${c.animal?c.animalBehavior:"NONE"}.`
+    ];
+    if(c.people && c.gender==="male") character.push("MALE means MALE ONLY. Do not generate a woman or mixed-gender substitute.");
+    if(c.people && c.gender==="female") character.push("FEMALE means FEMALE ONLY. Do not generate a man or mixed-gender substitute.");
+    if(c.animal && c.animalType!=="auto") character.push(`The animal species MUST be ${animalTypeLabel(c.animalType)} and must not be substituted.`);
+
+    return [
+      "POKUN PORTABLE CLEAN-ROOM CONTRACT — READ THIS FIRST / HIGHEST PRIORITY:",
+      "This is a brand-new standalone image-generation task designed to behave consistently across different ChatGPT accounts, plans, devices, and chat histories.",
+      "IGNORE saved preferences, prior image styles, prior generated images, previous conversation aesthetics, remembered typography habits, familiar layouts, and any visual pattern not explicitly required by THIS prompt.",
+      "Do not continue a previous user's visual formula. Do not imitate an earlier result merely because it was generated before.",
+      "If any later instruction, remembered preference, or prior conversation conflicts with this Portable Contract, THIS PORTABLE CONTRACT WINS.",
+      "",
+      "PRIORITY 1 — MANDATORY SUBJECT CONTRACT:",
+      ...subject,
+      "",
+      "PRIORITY 2 — EXACT CHARACTER CONTRACT:",
+      ...character,
+      "Character settings are DATA, not suggestions. Do not reinterpret them for visual variety.",
+      "",
+      "PRIORITY 3 — EXACT SCENE CONTRACT:",
+      `SCENE FAMILY: ${scene.family}.`,
+      `EXACT SCENE: ${scene.name} / ${sceneThai}.`,
+      `SCENE DESCRIPTION: ${scene.prompt}`,
+      scene.templateLocked
+        ? "The user LOCKED this exact template. Preserve the scene identity; only composition/camera/detail variation may change."
+        : "This exact scene has already been resolved by the POKUN engine. Do not choose a different Scene Family or replace it with a remembered favorite scene.",
+      "",
+      "PRIORITY 4 — EXACT TEXT & TYPOGRAPHY CONTRACT:",
+      `WEEKDAY TEXT EXACTLY: ${s.day.dayThai}`,
+      `DATE TEXT EXACTLY: ${s.day.dateThai}`,
+      `HEADLINE TEXT EXACTLY: ${texts.headline}`,
+      `GREETING / BLESSING TEXT EXACTLY: ${texts.greeting}`,
+      "VISIBLE THAI TEXT IS DATA, NOT CREATIVE COPY. Copy the wording exactly; do not paraphrase, shorten, rewrite, translate, invent new wording, or reuse text from another image.",
+      `TYPOGRAPHY FAMILY REQUIRED: ${s.style?.name||"Selected Thai typography"}.`,
+      `HEADLINE TYPOGRAPHY TREATMENT: ${s.style?.headline||"Follow the selected Thai headline style exactly."}`,
+      `HEADLINE STROKE: ${stroke.headline}`,
+      `GREETING STROKE: ${blessing.stroke}`,
+      `HEADLINE FRAME: ${hf.label} (${hf.key}).`,
+      `GREETING FRAME: ${bf.label} (${bf.key}).`,
+      "Do not substitute a familiar font/look from earlier chats. Do not omit a selected frame.",
+      "",
+      "PRIORITY 5 — LAYOUT CONTRACT:",
+      `LAYOUT: ${layout.label}.`,
+      layout.text,
+      "Do not redesign the composition into another familiar layout. Protect clear negative space for all Thai text.",
+      "",
+      "PRIORITY 6 — RENDERING / PAIR LOOK CONTRACT:",
+      `MASTER RENDERING: ${render.label}.`,
+      `PAIR LOOK: ${pairLook.label} (${pairLook.key}).`,
+      "Rendering style, color language, and pair look may not override Subject, Character, Scene, Text, or Layout priorities above.",
+      "",
+      "PORTABLE OUTPUT ACCEPTANCE TEST — MUST PASS BEFORE FINALIZING:",
+      "A result is INVALID if the mandatory subject is missing/replaced, the selected gender is changed, the selected animal species is changed, the exact scene is replaced, any Thai wording/date is rewritten, or the selected layout/frame/typography family is ignored.",
+      "If any of those failures occur, correct the artwork before presenting the final image.",
+      ""
+    ];
+  }
+
   function renderWorkflow(setNo,s,resolved,L){
     const people=resolved?.humanRequired || boolPeople(setNo);
     const source=sourceFor(setNo);
-    const mode=resolved?.mode||"auto";
+    // v11.25: stale Buddhist dropdown values have ZERO authority outside Buddhist main mode.
+    const mode=resolved?.buddhistOn ? (resolved?.mode||"auto") : "auto";
+    const deityWorkflow=deitySubjectForImage(setNo);
+
+    if(deityWorkflow.heroActive && deityWorkflow.deityMode!=="auto"){
+      L.push(
+        `${ENGINE_LABEL} PORTABLE DEITY HERO GENERATION WORKFLOW`,
+        "Task type: NEW ORIGINAL TEXT-TO-IMAGE ARTWORK.",
+        `MANDATORY deity hero: ${portableDeityLabel(deityWorkflow.deityMode)}.`,
+        "The Character selector controls ordinary people/animals only; it does NOT remove or replace the mandatory deity hero.",
+        boolPeople(setNo) ? "Supplementary ordinary person(s) may appear only if selected in the Character controls." : "NO ordinary human people are requested in addition to the deity hero.",
+        boolAnimal(setNo) ? "The selected animal may appear as a supporting character." : "NO animal character is requested.",
+        "Do not fall back to a generic non-human scene or ordinary-person-only scene.",
+        ""
+      );
+      return;
+    }
 
     if(mode==="monk_reference"){
       L.push(
@@ -7268,6 +7605,13 @@ const PAIR_LOOKS={
       L.push("STRICT NO FIGURE: no Buddha statue/image and no human figure of any kind.");
     }
 
+    if(boolPeople(setNo) && !monkRef && !monkGenerated){
+      L.push(...exactGenderAuthority(setNo));
+      L.push(...exactAgeAuthority(setNo));
+    }
+
+    L.push(...exactAnimalAuthority(setNo,s));
+
     if(boolAnimal(setNo) && !monkRef && !monkGenerated){
       L.push("ANIMAL CHARACTER: include only the selected animal character according to the current UI settings.");
       if(typeof sharedAnimalCharacter==="function"){
@@ -7285,6 +7629,17 @@ const PAIR_LOOKS={
   function validatePrompt(prompt,ctx){
     const failures=[];
     const masterRender=masterRenderingState().mode;
+    if(!prompt.startsWith("POKUN PORTABLE CLEAN-ROOM CONTRACT — READ THIS FIRST / HIGHEST PRIORITY:")){
+      failures.push("Portable clean-room contract is not the first prompt block");
+    }
+    if(!/PRIORITY 1 — MANDATORY SUBJECT CONTRACT:/i.test(prompt))failures.push("Portable mandatory subject contract missing");
+    if(!/PRIORITY 2 — EXACT CHARACTER CONTRACT:/i.test(prompt))failures.push("Portable exact character contract missing");
+    if(!/PRIORITY 3 — EXACT SCENE CONTRACT:/i.test(prompt))failures.push("Portable exact scene contract missing");
+    if(!/PRIORITY 4 — EXACT TEXT & TYPOGRAPHY CONTRACT:/i.test(prompt))failures.push("Portable exact text contract missing");
+    if(!/PRIORITY 5 — LAYOUT CONTRACT:/i.test(prompt))failures.push("Portable layout contract missing");
+    if(!/PORTABLE OUTPUT ACCEPTANCE TEST — MUST PASS BEFORE FINALIZING:/i.test(prompt))failures.push("Portable acceptance test missing");
+    if(!/VISIBLE THAI TEXT IS DATA, NOT CREATIVE COPY/i.test(prompt))failures.push("Exact Thai text data lock missing");
+
     if(!/MASTER RENDERING STYLE — HIGHEST RENDERING AUTHORITY:/i.test(prompt)){
       failures.push("missing Master Rendering Style");
     }
@@ -7318,6 +7673,14 @@ const PAIR_LOOKS={
       failures.push("NO PEOPLE contains positive human cue");
     }
     const expectedDay=ctx?.s?.day?.dayThai;
+    const portableHead=prompt.slice(0,12000);
+    if(ctx?.s && expectedDay){
+      if(!portableHead.includes(`WEEKDAY TEXT EXACTLY: ${ctx.s.day.dayThai}`))failures.push("Portable weekday exact value missing near top");
+      if(!portableHead.includes(`DATE TEXT EXACTLY: ${ctx.s.day.dateThai}`))failures.push("Portable date exact value missing near top");
+      // Do not recompute random wording for equality here; check presence of the contract field itself.
+      if(!/HEADLINE TEXT EXACTLY:/i.test(portableHead))failures.push("Portable exact headline field missing near top");
+      if(!/GREETING \/ BLESSING TEXT EXACTLY:/i.test(portableHead))failures.push("Portable exact greeting field missing near top");
+    }
     if(expectedDay){
       const visibleHeadMatch=prompt.match(/Visible Thai headline:\s*\n([^\n]+)/i);
       const visibleGreetingMatch=prompt.match(/Visible Thai greeting \/ blessing:\s*\n([^\n]+)/i);
@@ -7329,6 +7692,12 @@ const PAIR_LOOKS={
 
     const currentMainMode=resolveMainArtworkMode();
     if(currentMainMode!=="buddhist"){
+      if(/PERSON SOURCE: Invent one new non-famous Buddhist monk specifically for this artwork/i.test(prompt)){
+        failures.push("CRITICAL: stale Buddhist monk workflow leaked outside Buddhist mode");
+      }
+      if(/BUDDHIST MONK REFERENCE/i.test(prompt)){
+        failures.push("CRITICAL: stale Buddhist monk reference workflow leaked outside Buddhist mode");
+      }
       if(/BUDDHIST MODE ACTIVE:/i.test(prompt))failures.push("Buddhist mode leaked outside Buddhist main mode");
       if(/COMBINED SACRED COMPOSITION:/i.test(prompt) || /Buddha statue \/ Buddha image: REQUIRED/i.test(prompt) || /Buddhist monk \/ bhikkhu human subject: REQUIRED/i.test(prompt)){
         failures.push("Buddhist subject authority leaked outside Buddhist main mode");
@@ -7345,9 +7714,35 @@ const PAIR_LOOKS={
         if(!/GENERAL CUTE CARTOON LOCK: ACTIVE/i.test(prompt))failures.push("General Cute Cartoon final lock missing");
       }
     }
-    if(currentMainMode==="deity"){
+    const exactSetNo=ctx?.setNo||0;
+    if(exactSetNo){
+      const ec=exactCharacterState(exactSetNo);
+      if(ec.people && !/EXACT GENDER AUTHORITY/i.test(prompt))failures.push("Exact gender authority missing");
+      if(ec.people && !/EXACT AGE AUTHORITY/i.test(prompt))failures.push("Exact age authority missing");
+      if(!/EXACT ANIMAL AUTHORITY/i.test(prompt))failures.push("Exact animal authority missing");
+      if(ec.gender==="male" && !/MALE ONLY/i.test(prompt))failures.push("Male selected but MALE ONLY lock missing");
+      if(ec.gender==="female" && !/FEMALE ONLY/i.test(prompt))failures.push("Female selected but FEMALE ONLY lock missing");
+      if(ec.animal && ec.animalType!=="auto" && !new RegExp(`REQUIRED SPECIES:.*${ec.animalType}`,"i").test(prompt)){
+        failures.push("Selected animal species exact lock missing");
+      }
+    }
+
+    const deityCheck=deitySubjectForImage(ctx?.s?.setNo||ctx?.setNo||0);
+    if(deityCheck.heroActive){
       const d=resolveDeitySubject();
-      if(d.deityMode==="ganesha" && !/GANESHA \/ พระพิฆเนศ/i.test(prompt))failures.push("Ganesha selected but deity authority missing");
+      if(!/MANDATORY HERO SUBJECT:/i.test(prompt))failures.push("Mandatory deity hero is not declared in portable contract");
+      if(d.deityMode==="ganesha" && !/MANDATORY HERO SUBJECT: GANESHA \/ พระพิฆเนศ/i.test(prompt))failures.push("Ganesha portable hero contract missing");
+      if(d.deityMode==="caishen" && !/MANDATORY HERO SUBJECT: CAISHEN \/ ไฉ่ซิงเอี๊ย/i.test(prompt))failures.push("Caishen portable hero contract missing");
+      if(d.deityMode==="guan_yu" && !/MANDATORY HERO SUBJECT: GUAN YU \/ กวนอู/i.test(prompt))failures.push("Guan Yu portable hero contract missing");
+      if(d.deityMode==="naga" && !/MANDATORY HERO SUBJECT: NAGA \/ พญานาคราช/i.test(prompt))failures.push("Naga portable hero contract missing");
+      if(d.deityMode==="fu_lu_shou"){
+        if(!/MANDATORY HERO SUBJECT: FU LU SHOU \/ ฮก–ลก–ซิ่ว/i.test(prompt))failures.push("Fu-Lu-Shou portable hero contract missing");
+        if(!/ALL THREE Fu-Lu-Shou figures are REQUIRED/i.test(prompt))failures.push("Fu-Lu-Shou all-three lock missing");
+      }
+    }
+    if(deityCheck.companionNoDeity){
+      if(!/IMAGE 2 COMPANION SUBJECT LOCK — HIGHEST SUBJECT AUTHORITY:/i.test(prompt))failures.push("Image 2 no-deity companion lock missing");
+      if(!/NO DEITY IN IMAGE 2/i.test(prompt))failures.push("Image 2 explicit no-deity rule missing");
     }
     if(ctx.people){
       if(/SUBJECT SOURCE: Invent all visible non-human subjects/i.test(prompt)){
@@ -7726,10 +8121,12 @@ const PAIR_LOOKS={
     const shadow=shadowSpec(s);
     const texts=resolveTexts(s,setNo,seed);
     const other=getPair(setNo===1?2:1);
+    const deityResolved=deitySubjectForImage(setNo);
 
     const L=[];
+    L.push(...portablePromptContractLines(setNo,s,scene,texts,layout,stroke,blessing,pairLook,buddhistSubjectResolved,deityResolved));
     renderWorkflow(setNo,s,buddhistSubjectResolved,L);
-    L.push(...mainModeIsolationLines());
+    L.push(...mainModeIsolationLines(setNo));
     L.push(
       "CURRENT ARTWORK SESSION — SELF-CONTAINED ABSOLUTE AUTHORITY:",
       `AUTHORITATIVE CALENDAR SOURCE: selected date ${s.day.isoDate} = ${s.day.dayThai}.`,
@@ -7745,8 +8142,7 @@ const PAIR_LOOKS={
     L.push(...masterRenderingLines());
     L.push(...pairMasterVisualLines(s));
     L.push(...buddhistSubjectAuthorityLines(setNo,s));
-    const deityResolved=resolveDeitySubject();
-    if(deityResolved.active && deityResolved.deityMode!=="auto"){
+    if(deityResolved.heroActive && deityResolved.deityMode!=="auto"){
       const deityMap={
         ganesha:["GANESHA / พระพิฆเนศ","elephant-headed Hindu deity Ganesha as the unmistakable central sacred subject","Do not replace with Buddha, monk, generic worshipper, or another deity."],
         caishen:["CAISHEN / ไฉ่ซิงเอี๊ย","Chinese God of Wealth Caishen as the unmistakable central auspicious subject","Do not replace with Buddha, monk, generic worshipper, or another deity."],
@@ -7760,10 +8156,33 @@ const PAIR_LOOKS={
       const d=deityMap[deityResolved.deityMode]||[deityResolved.deityMode,deityResolved.deityMode,"Do not substitute another sacred subject."];
       L.push("DEITY SUBJECT AUTHORITY — ABSOLUTE:",`Required subject: ${d[0]}.`,`Visual subject requirement: ${d[1]}.`,d[2],"The required deity/auspicious subject must remain visible and identifiable in the final artwork.","");
     }
+    if(deityResolved.companionNoDeity){
+      L.push(
+        "IMAGE 2 COMPANION SUBJECT LOCK — HIGHEST SUBJECT AUTHORITY:",
+        "NO DEITY IN IMAGE 2. The selected deity belongs to Image 1 only.",
+        `IMAGE 2 CHARACTER COMPOSITION: ${charLabel(2)}.`,
+        `IMAGE 2 EXACT GENDER UI: ${exactCharacterState(2).gender}.`,
+        `IMAGE 2 EXACT AGE UI: ${exactCharacterState(2).age}.`,
+        `IMAGE 2 EXACT ANIMAL TYPE UI: ${exactCharacterState(2).animalType}.`,
+        `IMAGE 2 EXACT ANIMAL LOOK UI: ${exactCharacterState(2).animalLook}.`,
+        boolPeople(2)
+          ? "PEOPLE: use ordinary non-religious human character(s) only, following the Image 2 EXACT gender and age locks below. Never transform them into a deity, monk, priest, worshipper, saint, sacred guardian, or divine figure."
+          : "NO PEOPLE: absolutely no human figure, face, body, hands, silhouette, crowd, worshipper, monk, priest, deity-like person, or distant person.",
+        boolAnimal(2)
+          ? "ANIMALS: include only the selected animal character(s), following Image 2 animal settings."
+          : "NO ANIMALS: no animal character.",
+        (!boolPeople(2) && !boolAnimal(2))
+          ? "SCENE ONLY: use environment, architecture, landscape, flowers, food, prosperity objects, or non-figurative auspicious details only. No living character and no sacred/deity figure."
+          : "The scene may retain the shared prosperity mood, palette and lighting, but subject identity must follow Image 2 Character Composition only.",
+        "FORBIDDEN IN IMAGE 2: Ganesha, Caishen, Guan Yu, Fu-Lu-Shou, Naga deity, gods, goddesses, deity statues, sacred deity portraits, divine avatars, deity shrines as focal subjects, Buddha images, Buddhist monks, and religious worship scenes.",
+        "Do not reuse the deity group, deity pose, deity silhouette, or sacred hero composition from Image 1.",
+        ""
+      );
+    }
     renderPeopleAnimal(setNo,s,L);
 
     L.push(
-      `${ENGINE_LABEL} RESOLVED STATE — AUTHORITATIVE:`,
+      `${ENGINE_LABEL} SECONDARY ENGINE DIAGNOSTICS — MUST NOT OVERRIDE PORTABLE CONTRACT:`,
       `Image: ${setNo}`,
       `Scene Family: ${family}`,
       `Exact Scene: ${scene.name}`,
@@ -7776,7 +8195,13 @@ const PAIR_LOOKS={
       `Mode Isolation: HARD`,
       `Buddhist mode active for this image: ${buddhistSubjectResolved.buddhistOn?"YES":"NO"}`,
       `Buddhist Subject Mode: ${buddhistSubjectResolved.buddhistOn?buddhistSubjectResolved.mode:"IGNORED OUTSIDE BUDDHIST MODE"}`,
-      `Deity Subject Mode: ${resolveDeitySubject().active?resolveDeitySubject().deityMode:"OFF"}`,
+      `Deity Subject Mode: ${deityResolved.heroActive?deityResolved.deityMode:(deityResolved.companionNoDeity?"OFF — IMAGE 2 COMPANION NO DEITY":"OFF")}`,
+      `Exact Character Mode: ${exactCharacterState(setNo).charMode}`,
+      `Exact Gender UI: ${exactCharacterState(setNo).gender}`,
+      `Exact Age UI: ${exactCharacterState(setNo).age}`,
+      `Exact Animal Type UI: ${exactCharacterState(setNo).animalType}`,
+      `Exact Animal Look UI: ${exactCharacterState(setNo).animalLook}`,
+      `Exact Animal Behavior UI: ${exactCharacterState(setNo).animalBehavior}`,
       `Buddhist Subject source: DIRECT UI STATE for Image ${setNo}`,
       `Master Rendering Style: ${masterRenderingState().label}`,
       `Master Rendering Scope: BOTH IMAGES / ENTIRE ARTWORK`,
@@ -8039,6 +8464,7 @@ const PAIR_LOOKS={
 
     L.push(
       "FINAL DESIGN COMPLIANCE CHECK — MUST PASS BEFORE RENDERING:",
+      "0. Re-check the POKUN PORTABLE CLEAN-ROOM CONTRACT at the very top. It has the highest priority over every lower block and over all prior chat history.",
       `1. WEEKDAY must read exactly: ${s.day.dayThai}`,
       `2. DATE must read exactly: ${s.day.dateThai}`,
       `3. HEADLINE text must remain exactly: ${texts.headline}`,
@@ -8051,9 +8477,18 @@ const PAIR_LOOKS={
       `10. MASTER RENDERING must follow: ${masterRenderingState().label}`,
       "11. Do not import typography, frames, weekday, layout, or design choices from previous artwork/chat history.",
       `12. MAIN MODE must remain: ${resolveMainArtworkMode().toUpperCase()} — do not import subject logic from another mode.`,
-      `13. DEITY SUBJECT must remain: ${resolveDeitySubject().active?resolveDeitySubject().deityMode:"OFF"}.`,
+      `13. DEITY SUBJECT must remain: ${deityResolved.heroActive?deityResolved.deityMode:(deityResolved.companionNoDeity?"OFF — IMAGE 2 MUST HAVE NO DEITY":"OFF")}.`,
+      deityResolved.heroActive
+        ? "13A. MANDATORY DEITY VISIBILITY: the selected deity must be clearly present and identifiable in the finished image; scenery, people, animals, symbols, typography, or prosperity objects may NEVER replace the deity hero."
+        : "13A. MANDATORY DEITY VISIBILITY: not applicable.",
       `14. GENERAL RELIGIOUS EXCLUSION: ${resolveMainArtworkMode()==="general" ? "ACTIVE — no monk, Buddha image/statue, Buddhist worshipper or merit-making ritual may appear." : "not applicable"}`,
       `15. GENERAL CUTE CARTOON LOCK: ${resolveMainArtworkMode()==="general" && masterRenderingState().mode==="cartoon" ? "ACTIVE — both images must be cute/friendly cartoon illustration, not solemn or semi-realistic religious artwork." : "not applicable"}`,
+      `16. CHARACTER MODE must remain exactly: ${exactCharacterState(setNo).charMode}.`,
+      `17. GENDER must remain exactly: ${exactCharacterState(setNo).gender}.`,
+      `18. AGE must remain exactly: ${exactCharacterState(setNo).age}.`,
+      `19. ANIMAL TYPE must remain exactly: ${exactCharacterState(setNo).animalType}.`,
+      `20. ANIMAL LOOK must remain exactly: ${exactCharacterState(setNo).animalLook}.`,
+      `21. ANIMAL BEHAVIOR must remain exactly: ${exactCharacterState(setNo).animalBehavior}.`,
       "If any item above is missing or conflicts with an earlier suggestion, correct it to THIS CURRENT PROMPT before finalizing the image.",
       ""
     );
@@ -8106,7 +8541,7 @@ const PAIR_LOOKS={
     };
 
     const prompt=L.filter(x=>x!==undefined && x!==null && String(x).trim()!=="").join("\n");
-    validatePrompt(prompt,{s,scene,variation,stroke,blessing,people:effectivePeopleAllowed,other,pairLook});
+    validatePrompt(prompt,{setNo,s,scene,variation,stroke,blessing,people:effectivePeopleAllowed,other,pairLook});
     setPair(setNo,signature);
     return prompt;
   }
@@ -8177,26 +8612,61 @@ function resolveDeitySubject(){
   const active=(primary==="deity") || (primary==="general" && wealthStyle);
   return {active,primary,deityMode,wealthStyle};
 }
-function mainModeIsolationLines(){
+function deitySubjectForImage(setNo){
+  const d=resolveDeitySubject();
+  return {
+    ...d,
+    heroActive:!!d.active && setNo===1,
+    companionNoDeity:!!d.active && setNo===2
+  };
+}
+function isDeitySceneName(name){
+  return /Ganesha|Caishen|Guan Yu|Naga prosperity|Fu Lu Shou|Auspicious deity shrine|Sacred prosperity reference/i.test(String(name||""));
+}
+function nonDeityCompanionScene(family,seed){
+  let rows=(TEMPLATE_CATALOG[family]||[]).filter(r=>!isDeitySceneName(r[0]));
+  if(!rows.length) rows=(TEMPLATE_CATALOG.wealth_prosperity||[]).filter(r=>!isDeitySceneName(r[0]));
+  const row=pick(rows,seed+11991);
+  return {name:row[0],prompt:row[1],avoid:"",family:family||"wealth_prosperity",templateLocked:false,templateMode:"image-2-companion-no-deity"};
+}
+function mainModeIsolationLines(setNo){
   const mode=resolveMainArtworkMode();
-  const deity=resolveDeitySubject();
+  const deity=deitySubjectForImage(setNo);
   const L=["MAIN MODE ISOLATION — HIGHEST SUBJECT AUTHORITY:",`Current Main Mode: ${mode.toUpperCase()}.`];
   if(mode==="buddhist"){
     L.push("BUDDHIST MODE ACTIVE: Buddhist Subject / Buddhist Scene / Buddhist Visual Style may be used.","Deity-only subject logic must remain OFF unless the user explicitly switches to Deity mode.");
   }else if(mode==="deity"){
-    L.push("DEITY MODE ACTIVE: auspicious deity subject logic is authoritative.","Buddhist auto-subject logic is OFF.","Do NOT introduce Buddha statues, Buddhist monks, Wan Phra offerings, sangkhathan, or Buddhist holy-day pair behavior unless explicitly selected in this current prompt.");
+    if(setNo===1){
+      L.push("DEITY MODE ACTIVE — IMAGE 1 HERO: auspicious deity subject logic is authoritative for Image 1.","Buddhist auto-subject logic is OFF.","Do NOT introduce Buddha statues, Buddhist monks, Wan Phra offerings, sangkhathan, or Buddhist holy-day pair behavior unless explicitly selected in this current prompt.");
+    }else{
+      L.push("DEITY MODE COMPANION — IMAGE 2: NO DEITY SUBJECT.","Image 2 is a companion scene, not a second deity poster.","Do NOT generate Ganesha, Caishen, Guan Yu, Fu-Lu-Shou, Naga deity, any god/goddess, sacred deity statue, deity portrait, deity shrine as hero, or deity-like human figure.","Buddhist auto-subject logic is also OFF.");
+    }
   }else{
-    L.push(
-      "GENERAL MODE ACTIVE: generic/general artwork logic is authoritative.",
-      "Buddhist auto-subject logic is OFF.",
-      "Do NOT import Buddha statues, Buddhist monks, Wan Phra pair behavior, merit-making offerings, or Buddhist sacred scene logic from previous settings, localStorage, or previous artwork.",
-      "Deity subject may appear only when explicitly selected through the current Deity/Wealth subject control.",
-      "GENERAL SUBJECT EXCLUSION — ABSOLUTE: do not generate a Buddhist monk, bhikkhu, novice monk, Buddha statue/image, layperson praying to Buddha, merit-making ritual, alms-giving scene, sangkhathan scene, or Buddhist devotional activity.",
-      "A temple-like or old Thai architectural location, if selected as a general scene, is architecture/background only and MUST NOT cause monks, Buddha images, worshippers, or Buddhist ritual content to appear.",
-      "If a generic Character is enabled in General mode, create an ordinary non-religious person appropriate to the scene — NEVER convert that person into a monk, priest, worshipper, or religious figure."
-    );
+    if(deity.heroActive){
+      L.push(
+        "GENERAL BASE MODE + EXPLICIT DEITY OVERRIDE — IMAGE 1:",
+        "The explicitly selected deity is the HIGHEST SUBJECT AUTHORITY for Image 1 and overrides generic General-subject defaults.",
+        "General scene/style logic may support the deity but MUST NOT replace, remove, minimize, or reinterpret the selected deity.",
+        "Buddhist auto-subject logic is OFF.",
+        "Do NOT import Buddha statues, Buddhist monks, Wan Phra pair behavior, merit-making offerings, or Buddhist sacred scene logic from previous settings, localStorage, or previous artwork.",
+        "GENERAL SUBJECT EXCLUSION — ABSOLUTE: do not generate a Buddhist monk, bhikkhu, novice monk, Buddha statue/image, layperson praying to Buddha, merit-making ritual, alms-giving scene, sangkhathan scene, or Buddhist devotional activity.",
+        "If a generic Character is enabled, that person is only a supplementary ordinary non-religious character and must NEVER replace the required deity hero."
+      );
+    }else{
+      L.push(
+        "GENERAL MODE ACTIVE: generic/general artwork logic is authoritative.",
+        "Buddhist auto-subject logic is OFF.",
+        "Do NOT import Buddha statues, Buddhist monks, Wan Phra pair behavior, merit-making offerings, or Buddhist sacred scene logic from previous settings, localStorage, or previous artwork.",
+        setNo===1
+          ? "Deity subject may appear only when explicitly selected through the current Deity/Wealth subject control, and only as Image 1 hero."
+          : "IMAGE 2 COMPANION RULE: even when Deity/Wealth is selected, Image 2 must NOT contain a deity; obey Image 2 Character Composition instead.",
+        "GENERAL SUBJECT EXCLUSION — ABSOLUTE: do not generate a Buddhist monk, bhikkhu, novice monk, Buddha statue/image, layperson praying to Buddha, merit-making ritual, alms-giving scene, sangkhathan scene, or Buddhist devotional activity.",
+        "A temple-like or old Thai architectural location, if selected as a general scene, is architecture/background only and MUST NOT cause monks, Buddha images, worshippers, or Buddhist ritual content to appear.",
+        "If a generic Character is enabled in General mode, create an ordinary non-religious person appropriate to the scene — NEVER convert that person into a monk, priest, worshipper, or religious figure."
+      );
+    }
   }
-  if(deity.active && deity.deityMode!=="auto"){
+  if(deity.heroActive && deity.deityMode!=="auto"){
     const labels={ganesha:"GANESHA / พระพิฆเนศ",caishen:"CAISHEN / ไฉ่ซิงเอี๊ย",guan_yu:"GUAN YU / กวนอู",naga:"NAGA / พญานาคราช",fu_lu_shou:"FU LU SHOU / ฮก–ลก–ซิ่ว",auspicious_shrine:"AUSPICIOUS SHRINE / ศาลเทพมงคล",auspicious_offerings:"AUSPICIOUS OFFERINGS / เครื่องสักการะและของมงคล",reference:"REFERENCE DEITY / องค์เทพจากรูปอ้างอิง"};
     const label=labels[deity.deityMode]||deity.deityMode;
     L.push(`SELECTED DEITY SUBJECT — REQUIRED: ${label}.`,"The selected deity/auspicious subject is the required focal subject for this artwork.","Do NOT substitute Buddha, Buddhist monk, generic worshipper, or another deity.","Do NOT remove the selected deity subject.","Scene and decorative details must support the selected deity subject, not replace it.");
