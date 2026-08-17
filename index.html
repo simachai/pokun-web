@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#111827">
-<title>POKUN Web v11.30</title>
+<title>POKUN Web v11.33</title>
 <style>
 :root{--bg:#f4f5f7;--card:#fff;--ink:#16181d;--muted:#6b7280;--line:#e5e7eb;--accent:#111827;--good:#087f5b;--warn:#b45309}
 *{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI","Noto Sans Thai",sans-serif;background:var(--bg);color:var(--ink)}
@@ -180,7 +180,7 @@ button{border:0;border-radius:12px;padding:12px 14px;font-weight:800;cursor:poin
 <body>
 <div class="wrap">
   <div class="hero">
-    <h1>POKUN Web <span class="small">v11.30</span></h1>
+    <h1>POKUN Web <span class="small">v11.33</span></h1>
     <p>Daily Greeting Prompt Generator — ใช้ได้บนมือถือและคอม</p>
   </div>
 
@@ -997,16 +997,7 @@ button{border:0;border-radius:12px;padding:12px 14px;font-weight:800;cursor:poin
 
     <section class="card full" id="sceneTemplatePairSection">
       <label>🧩 Scene Template / เลือกองค์ประกอบฉากแยกภาพ</label>
-      <div class="notice" style="margin-bottom:10px"><b>v11.30 Emotional Blessing Engine:</b> เพิ่มธีมคำอวยพรพร้อมคลัง Headline + Greeting + Supporting Line จำนวนมาก เพื่อให้ข้อความมีอารมณ์ชัดและหมุนใช้ได้ทุกวัน</div>
-      <div class="notice" style="margin-bottom:10px"><b>v11.29 Portable Prompt:</b> Prompt จะเริ่มด้วยสัญญาคำสั่งแบบ Clean-room ที่ล็อก Subject → Character → Scene → Text/Typography → Layout ก่อนรายละเอียดอื่น เพื่อลดผลจาก Memory/แชตเก่าและช่วยให้บัญชี Free/Plus ตีความใกล้กันมากขึ้น</div>
-      <div class="notice" style="margin-bottom:10px"><b>v11.28:</b> Template ย่อยของหมวดทะเลและช่อง “รายละเอียด” แสดงเป็นภาษาไทยทั้งหมดเพื่อให้อ่านง่าย ส่วนคำสั่งภาษาอังกฤษยังเก็บไว้ภายใน Engine สำหรับสร้าง Prompt</div>
-      <div class="notice" style="margin-bottom:10px"><b>v11.26:</b> เพิ่มหมวด <b>ทะเล / ชายหาด / ชายฝั่ง / เกาะ</b> แยกออกจาก “ริมน้ำ / ทะเลสาบ / แม่น้ำ” โดยมี True Ocean Lock ป้องกัน AI เปลี่ยนทะเลเป็นทะเลสาบ</div>
-      <div class="notice" style="margin-bottom:10px">
-        เลือก Template ของภาพที่ 1 และภาพที่ 2 แยกกันได้ เช่น <b>ภาพ 1 = วัด / พุทธศิลป์</b> และ <b>ภาพ 2 = ชนบท / ทุ่งนา</b>
-        หากเลือกเอง ระบบจะถือเป็น <b>ล็อกเทมเพลต</b> และจะไม่สุ่มเปลี่ยน Scene Family ที่เลือก แต่ยังสุ่มรายละเอียดภายในฉากได้อย่างเหมาะสม
-      </div>
-
-      <div class="grid" style="grid-template-columns:repeat(2,minmax(0,1fr));gap:10px">
+<div class="grid" style="grid-template-columns:repeat(2,minmax(0,1fr));gap:10px">
         <div class="stylebox">
           <strong>ภาพที่ 1 — Scene Template</strong>
           <label class="small" style="margin-top:8px">หมวดฉาก</label>
@@ -1947,6 +1938,58 @@ const SCENE_SPECIFIC_VARIATION_OVERRIDES={
     ]
   },
 
+  "Sunflower field morning":{
+    prop:[
+      "sunflowers only as the dominant floral subject, with broad green leaves and natural field grasses",
+      "dense rows of tall yellow sunflowers with no unrelated flower species",
+      "field-native sunflower leaves, stems, grasses, and open countryside only"
+    ],
+    cluster:[
+      "dense yellow sunflower rows, green foliage, natural field depth, open horizon, and clean sky",
+      "foreground sunflower heads, repeating rows into the distance, countryside horizon, and warm natural light",
+      "a continuous sunflower field with clear yellow flower identity and spacious sky"
+    ],
+    activity:[
+      "sunflower heads and leaves moving gently in a morning breeze",
+      "warm sunlight gradually revealing rows of sunflowers",
+      "subtle natural field movement with no decorative prop activity"
+    ]
+  },
+  "Lavender field sunrise":{
+    prop:[
+      "lavender plants only as the dominant floral subject, arranged in long natural field rows",
+      "purple lavender rows, low green foliage, and field-native grasses only",
+      "no unrelated flowers; preserve unmistakable lavender texture and row geometry"
+    ],
+    cluster:[
+      "long purple lavender rows, rolling field geometry, soft sunrise, distant countryside, and open sky",
+      "foreground lavender spikes, repeated purple rows, gentle terrain, and atmospheric distance",
+      "an expansive lavender field with clean rhythmic rows and no mixed-flower meadow"
+    ],
+    activity:[
+      "lavender stems moving softly in a light breeze",
+      "sunrise light spreading gradually across purple rows",
+      "subtle atmospheric movement while preserving the lavender field identity"
+    ]
+  },
+  "Siam tulip field morning":{
+    prop:[
+      "Dok Krachiao / Curcuma alismatifolia only as the dominant flower, with natural green meadow grasses",
+      "pink-to-purple Siam tulip blooms rising naturally among fresh field vegetation",
+      "no European tulips, lotus, lavender, or unrelated pink wildflowers"
+    ],
+    cluster:[
+      "Siam tulip blooms across a natural Thai meadow, green grasses, soft mist, and highland depth",
+      "foreground Dok Krachiao flowers, layered meadow vegetation, morning mist, and open natural background",
+      "a genuine Thai Siam tulip field with unmistakable Curcuma alismatifolia flower identity"
+    ],
+    activity:[
+      "Siam tulip blooms and grasses moving gently in the morning breeze",
+      "soft mist lifting gradually above the Dok Krachiao meadow",
+      "gentle morning light revealing pink-purple blooms and fresh green field texture"
+    ]
+  },
+
   "Minimal shadow wall":{
     prop:[
       "no separate supporting prop; rely on the architectural wall, one simple hero object, and geometric sunlight",
@@ -2363,7 +2406,10 @@ const SCENE_FAMILY_LIBRARY = {
  garden_botanical:{label:"สวน / พฤกษชาติ",scenes:[
   ["Botanical garden path","A landscaped botanical garden with layered greenery, curved path, selective signature-color flowers, and refined depth."],
   ["Flower meadow morning","A natural flower meadow with soft breeze, warm light, open sky, and no furniture."],
-  ["Greenhouse botanical walk","A premium greenhouse walkway with tropical plants, filtered daylight, glass reflections, and elegant botanical structure."]],ban:["coffee","breakfast","dining table","cushion"]},
+  ["Greenhouse botanical walk","A premium greenhouse walkway with tropical plants, filtered daylight, glass reflections, and elegant botanical structure."],
+  ["Sunflower field morning","A wide genuine sunflower field with dense rows of tall yellow sunflowers, open countryside horizon, and warm morning sunlight."],
+  ["Lavender field sunrise","A sweeping lavender field with long purple rows, soft sunrise light, rolling terrain, and open sky."],
+  ["Siam tulip field morning","A natural Thai Dok Krachiao / Curcuma alismatifolia field with pink-purple blooms, green grasses, and soft morning mist."]],ban:["coffee","breakfast","dining table","cushion"]},
  urban_city:{label:"เมือง / สถาปัตย์สมัยใหม่",scenes:[
   ["Modern city promenade","A clean modern city promenade with architecture, trees, long perspective lines, and morning sunlight."],
   ["Rooftop city morning","A bright rooftop with skyline, open sky, minimal urban details, and no decorative home props."],
@@ -2992,8 +3038,10 @@ function auspiciousDeityReferenceName(){
   return el?.files?.[0]?.name || "";
 }
 
-function auspiciousDeityLines(){
+function auspiciousDeityLines(setNo){
   if(lifestyleVisualStyle!=="wealth_prosperity")return [];
+  const deityState=(setNo===1||setNo===2) ? deitySubjectForImage(setNo) : null;
+  if(deityState?.companionNoDeity) return [];
   const key=auspiciousDeityMode();
   const d=AUSPICIOUS_DEITIES[key]||AUSPICIOUS_DEITIES.auto;
   const file=auspiciousDeityReferenceName();
@@ -6152,7 +6200,7 @@ function updateBlessingThemeDescription(){
 }
 
 const POKUN_V9 = (() => {
-  const VERSION="11.30";
+  const VERSION="11.33";
   const ENGINE_LABEL=`POKUN v${VERSION}`;
 
 
@@ -6239,7 +6287,10 @@ const POKUN_V9 = (() => {
       ["Rose garden path","An elegant rose garden path with restrained blooms, clipped greenery, natural depth, and clean negative space."],
       ["Tropical leaf garden","A lush tropical botanical garden emphasizing layered green leaves, filtered sunlight, and calm premium composition."],
       ["Minimal zen garden","A restrained garden scene with stones, selective plants, clean path geometry, soft natural light, and abundant negative space."],
-      ["Orchid garden shade","A shaded orchid garden with selective blooms, hanging roots/leaves, filtered daylight, and elegant botanical depth."]
+      ["Orchid garden shade","A shaded orchid garden with selective blooms, hanging roots/leaves, filtered daylight, and elegant botanical depth."],
+      ["Sunflower field morning","A wide genuine sunflower field filled with dense rows of tall yellow sunflowers, broad green leaves, open countryside horizon, warm morning sunlight, and clear natural sky. SUNFLOWER IDENTITY LOCK: use sunflowers as the dominant flower species; do not substitute daisies, marigolds, wildflowers, lavender, or mixed flower meadow."],
+      ["Lavender field sunrise","A sweeping lavender field with long rhythmic rows of purple lavender flowers, gentle rolling terrain, soft sunrise light, distant countryside depth, and airy open sky. LAVENDER IDENTITY LOCK: lavender must dominate the field; do not substitute generic purple flowers, lupines, salvia, tulips, or mixed flower meadow."],
+      ["Siam tulip field morning","A natural Thai Siam tulip field featuring Dok Krachiao / Curcuma alismatifolia as the unmistakable dominant flower, with pink-to-purple upright blooms among fresh green grasses, soft morning mist, gentle highland meadow depth, and natural Thai seasonal landscape atmosphere. SIAM TULIP IDENTITY LOCK: use Dok Krachiao / Curcuma alismatifolia, not European tulips, lotus, lavender, or generic pink wildflowers."]
     ],
     urban_city:[
       ["Modern city promenade","A clean modern city promenade with architecture, trees, long perspective lines, and morning sunlight."],
@@ -6515,6 +6566,11 @@ const POKUN_V9 = (() => {
     "Golden sunset over the ocean":{name:"พระอาทิตย์ตกสีทองเหนือผืนทะเล",description:"วิวพระอาทิตย์ตกเหนือทะเลเปิดกว้าง มีเส้นขอบฟ้าเรืองแสง คลื่นเบา ๆ ชายฝั่งสะท้อนสีทอง ท้องฟ้าโทนส้มทอง และบรรยากาศชายทะเลแบบภาพยนตร์"},
     "Fishing village by the sea":{name:"หมู่บ้านชาวประมงริมทะเล",description:"หมู่บ้านชาวประมงริมทะเลจริง มีเรือเล็ก ท่าไม้ บ้านริมชายฝั่ง ผืนน้ำทะเลและเส้นขอบฟ้า พร้อมแสงธรรมชาติอบอุ่นในบรรยากาศท่องเที่ยวเชิงวิถีชีวิต"},
     "Blue-hour beach":{name:"ชายหาดช่วงฟ้าเข้มก่อนค่ำ",description:"ชายหาดในช่วงฟ้าเข้มก่อนค่ำ มีคลื่นทะเลสงบ หาดทรายสีอ่อน เส้นขอบฟ้ามหาสมุทร ท้องฟ้าไล่เฉดสีน้ำเงินนุ่ม และบรรยากาศสงบหรู"},
+
+
+    "Sunflower field morning":{name:"ทุ่งดอกทานตะวันยามเช้า",description:"ทุ่งดอกทานตะวันสีเหลืองกว้าง มีดอกทานตะวันสูงเรียงแน่น ใบเขียวสด เส้นขอบฟ้าชนบทเปิด และแสงเช้าอบอุ่น โดยต้องให้ดอกทานตะวันเป็นดอกไม้หลักของทั้งฉาก ไม่เปลี่ยนเป็นดอกชนิดอื่น"},
+    "Lavender field sunrise":{name:"ทุ่งดอกลาเวนเดอร์ยามพระอาทิตย์ขึ้น",description:"ทุ่งลาเวนเดอร์สีม่วงทอดยาวเป็นแนวสวยบนพื้นที่ลาดอ่อน ๆ มีแสงพระอาทิตย์ขึ้นนุ่ม มิติชนบทไกล และท้องฟ้าโปร่ง โดยต้องให้ลาเวนเดอร์เป็นดอกไม้หลัก ไม่เปลี่ยนเป็นดอกสีม่วงชนิดอื่น"},
+    "Siam tulip field morning":{name:"ทุ่งดอกกระเจียวยามเช้า",description:"ทุ่งดอกกระเจียวไทย หรือ Curcuma alismatifolia ที่มีดอกสีชมพูถึงม่วงตั้งเด่นท่ามกลางหญ้าเขียว มีหมอกเช้าอ่อนและบรรยากาศทุ่งธรรมชาติบนพื้นที่สูง โดยต้องเป็นดอกกระเจียวจริง ไม่เปลี่ยนเป็นทิวลิปยุโรป ดอกบัว ลาเวนเดอร์ หรือดอกไม้สีชมพูทั่วไป"},
 
   };
 
@@ -8737,7 +8793,7 @@ const PAIR_LOOKS={
       );
     }
 
-    L.push(...auspiciousDeityLines());
+    L.push(...auspiciousDeityLines(setNo));
 
     L.push(
       `SCENE CONCEPT — EXACT: ${scene.name}`,
@@ -8761,7 +8817,7 @@ const PAIR_LOOKS={
 
     L.push(
       "AUTHORITY PRECEDENCE:",
-      "Selected Buddhist Subject / Reference Image Authority > Character Composition > Exact Scene Authority > Scene Concept > Scene Family Authority > generic visual/style suggestions.",
+      "Selected Buddhist Subject / ACTIVE REFERENCE WORKFLOW (only when explicitly selected) > Character Composition > Exact Scene Authority > Scene Concept > Scene Family Authority > generic visual/style suggestions.",
       "Exact Scene Authority > Scene Concept > Scene Family Authority > generic visual/style suggestions.",
       "A lower-priority rule must never suppress a material, object, environment, or visual feature explicitly required by the Exact Scene.",
       ""
@@ -9131,29 +9187,70 @@ function buildPrompt(setNo){
 }
 
 
+function activeReferenceWorkflowForSet(setNo){
+  const src=personSourceForSet(setNo);
+  const personReference=!!imageHasPeople(setNo) && ["user_photo","multi_photo"].includes(src);
+
+  const primary=resolveMainArtworkMode();
+  const buddhistEl=document.getElementById(setNo===1?"buddhistSubject1":"buddhistSubject2");
+  const buddhistMode=buddhistEl?.value || "auto";
+  const buddhistReference=primary==="buddhist" &&
+    ["buddha_reference","monk_reference","temple_reference"].includes(buddhistMode);
+
+  const deityState=(typeof deitySubjectForImage==="function") ? deitySubjectForImage(setNo) : null;
+  const deityReference=!!deityState?.heroActive && deityState.deityMode==="reference";
+
+  return {
+    active:personReference||buddhistReference||deityReference,
+    personReference,
+    buddhistReference,
+    deityReference,
+    personSource:src,
+    buddhistMode,
+    deityMode:deityState?.deityMode||"off"
+  };
+}
+
 function pokunSafeBuildPrompt(setNo){
   try{
     const prompt=buildPrompt(setNo);
-    const source=personSourceForSet(setNo);
-    if(!imageHasPeople(setNo) || source==="generated"){
+    const refState=activeReferenceWorkflowForSet(setNo);
+
+    // v11.32: Validate actual reference WORKFLOW markers, not harmless words such as
+    // "reference image" that may appear in precedence notes or explanatory safeguards.
+    if(!refState.active){
       const lower=prompt.toLowerCase();
-      const forbiddenWorkflowTokens=[
-        "user-provided person reference",
-        "multi-person user reference photos",
-        "reference image",
-        "reference photo",
-        "identity reference",
-        "editing target",
-        "image-editing task",
-        "uploaded photo",
-        "upload a photo",
-        "previous image"
+      const forbiddenWorkflowMarkers=[
+        "new artwork with user identity guidance",
+        "strict reference photo role mapping:",
+        "reference usage mode:",
+        "task type: new original artwork using a human identity reference",
+        "subject mode: user-provided monk / revered teacher reference.",
+        "subject mode: user-provided temple / sacred-object reference.",
+        "referenced buddha statue/image: required.",
+        "referenced monk / revered teacher human subject: required.",
+        "referenced temple / sacred object: required.",
+        "manual/chatgpt mode: attach the buddha reference image",
+        "manual/chatgpt mode: attach the monk / revered-teacher reference image",
+        "manual/chatgpt mode: attach the temple/sacred-object reference image",
+        "manual/chatgpt mode: attach the deity/statue/shrine reference image"
       ];
-      const leaked=forbiddenWorkflowTokens.find(token=>lower.includes(token));
+      const leaked=forbiddenWorkflowMarkers.find(marker=>lower.includes(marker));
       if(leaked){
-        throw new Error("Text-to-Image workflow contamination detected in Prompt Builder: "+leaked);
+        throw new Error("Text-to-Image workflow contamination detected: an ACTIVE reference workflow block leaked into a non-reference Prompt ("+leaked+").");
       }
     }
+
+    // Image 2 in Deity/Wealth mode is a no-deity companion and must not inherit
+    // deity-reference upload instructions from Image 1.
+    const deityState=(typeof deitySubjectForImage==="function") ? deitySubjectForImage(setNo) : null;
+    if(deityState?.companionNoDeity){
+      const lower=prompt.toLowerCase();
+      if(lower.includes("manual/chatgpt mode: attach the deity/statue/shrine reference image")){
+        throw new Error("Image 2 companion contamination detected: deity reference instruction leaked from Image 1.");
+      }
+    }
+
     return prompt;
   }catch(err){
     console.error("POKUN buildPrompt failed:",err);
