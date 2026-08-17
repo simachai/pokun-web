@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#111827">
-<title>POKUN Web v11.29</title>
+<title>POKUN Web v11.30</title>
 <style>
 :root{--bg:#f4f5f7;--card:#fff;--ink:#16181d;--muted:#6b7280;--line:#e5e7eb;--accent:#111827;--good:#087f5b;--warn:#b45309}
 *{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI","Noto Sans Thai",sans-serif;background:var(--bg);color:var(--ink)}
@@ -180,7 +180,7 @@ button{border:0;border-radius:12px;padding:12px 14px;font-weight:800;cursor:poin
 <body>
 <div class="wrap">
   <div class="hero">
-    <h1>POKUN Web <span class="small">v11.29</span></h1>
+    <h1>POKUN Web <span class="small">v11.30</span></h1>
     <p>Daily Greeting Prompt Generator — ใช้ได้บนมือถือและคอม</p>
   </div>
 
@@ -244,6 +244,24 @@ button{border:0;border-radius:12px;padding:12px 14px;font-weight:800;cursor:poin
       <label>วันที่</label>
       <input id="date" type="date">
       <div id="status" class="status"></div>
+    </section>
+    <section class="card" id="blessingThemeCard">
+      <label>💝 ธีมคำอวยพร</label>
+      <select id="blessingTheme">
+        <option value="auto">AUTO — ให้ระบบเลือกอารมณ์ให้เหมาะกับวัน</option>
+        <option value="work">การงาน / ความก้าวหน้า</option>
+        <option value="health">สุขภาพ / แข็งแรง</option>
+        <option value="happiness">ความสุข / สบายใจ</option>
+        <option value="wealth">มั่งคั่งร่ำรวย / การเงิน</option>
+        <option value="success">ความสำเร็จ / สมหวัง</option>
+        <option value="luck">โชคลาภ / สิริมงคล</option>
+        <option value="encouragement">กำลังใจ / เริ่มต้นใหม่</option>
+        <option value="all_round">ครบทุกเรื่อง — งาน เงิน สุขภาพ ความสุข</option>
+      </select>
+      <div id="blessingThemeDescription" class="notice" style="margin-top:8px"></div>
+      <div class="small" style="margin-top:6px">
+        ระบบจะสุ่ม <b>Headline + คำอวยพร + Supporting Line</b> จากธีมเดียวกัน เพื่อให้อารมณ์ของข้อความไปในทิศทางเดียวกัน
+      </div>
     </section>
 
     <section class="card">
@@ -979,6 +997,7 @@ button{border:0;border-radius:12px;padding:12px 14px;font-weight:800;cursor:poin
 
     <section class="card full" id="sceneTemplatePairSection">
       <label>🧩 Scene Template / เลือกองค์ประกอบฉากแยกภาพ</label>
+      <div class="notice" style="margin-bottom:10px"><b>v11.30 Emotional Blessing Engine:</b> เพิ่มธีมคำอวยพรพร้อมคลัง Headline + Greeting + Supporting Line จำนวนมาก เพื่อให้ข้อความมีอารมณ์ชัดและหมุนใช้ได้ทุกวัน</div>
       <div class="notice" style="margin-bottom:10px"><b>v11.29 Portable Prompt:</b> Prompt จะเริ่มด้วยสัญญาคำสั่งแบบ Clean-room ที่ล็อก Subject → Character → Scene → Text/Typography → Layout ก่อนรายละเอียดอื่น เพื่อลดผลจาก Memory/แชตเก่าและช่วยให้บัญชี Free/Plus ตีความใกล้กันมากขึ้น</div>
       <div class="notice" style="margin-bottom:10px"><b>v11.28:</b> Template ย่อยของหมวดทะเลและช่อง “รายละเอียด” แสดงเป็นภาษาไทยทั้งหมดเพื่อให้อ่านง่าย ส่วนคำสั่งภาษาอังกฤษยังเก็บไว้ภายใน Engine สำหรับสร้าง Prompt</div>
       <div class="notice" style="margin-bottom:10px"><b>v11.26:</b> เพิ่มหมวด <b>ทะเล / ชายหาด / ชายฝั่ง / เกาะ</b> แยกออกจาก “ริมน้ำ / ทะเลสาบ / แม่น้ำ” โดยมี True Ocean Lock ป้องกัน AI เปลี่ยนทะเลเป็นทะเลสาบ</div>
@@ -1266,6 +1285,7 @@ let selectedStyle = Number(localStorage.getItem("pokunStyleIndex") || 0);
 let forceBuddhist = localStorage.getItem("pokunBuddhistF6") === "1";
 let watermarkText = localStorage.getItem("pokunWatermark") || "POKUN ✨";
 let appMode = localStorage.getItem("pokunAppMode") || "greeting";
+let blessingTheme = localStorage.getItem("pokunBlessingTheme") || "auto";
 let aiPromptMode = localStorage.getItem("pokunAiPromptMode") || "off";
 let aiPromptScope = localStorage.getItem("pokunAiPromptScope") || "text_scene";
 let aiBackendUrl = localStorage.getItem("pokunAiBackendUrl") || "/api/pokun-ai";
@@ -4070,6 +4090,8 @@ function applyAppModeUI(){
  $("modeQuoteCard").classList.toggle("active",q);
  $("modeBirthdayCard").classList.toggle("active",b);
  $("modeStatus").textContent=q?"โหมดปัจจุบัน: คำคมประจำวัน":b?"โหมดปัจจุบัน: การ์ดวันเกิด":"โหมดปัจจุบัน: การ์ดสวัสดีประจำวัน";
+ if($("blessingThemeCard")) $("blessingThemeCard").style.display=g?"":"none";
+ updateBlessingThemeDescription();
  updateBirthdayWishFocusUI();
  applyBirthdayCharacterUI();
 }
@@ -5831,8 +5853,306 @@ function masterRenderingLines(){
   ];
 }
 
+
+const POKUN_BLESSING_LIBRARY={
+  work:{
+    label:"การงาน / ความก้าวหน้า",
+    desc:"เน้นงานราบรื่น ความก้าวหน้า โอกาสดี ผู้ใหญ่เมตตา และความสำเร็จ",
+    headlines:[
+      "ขอให้งานวันนี้ราบรื่น","วันนี้ขอให้ทุกอย่างเป็นใจ","ขอให้ก้าวหน้าในทุกหน้าที่","เริ่มวันนี้ด้วยความสำเร็จ",
+      "ขอให้งานดี มีแต่เรื่องดี ๆ","วันนี้ขอให้สิ่งที่ทำลงตัว","ขอให้ทุกงานสำเร็จดังหวัง","วันดี ๆ ของความก้าวหน้า",
+      "ขอให้วันนี้งานเดินหน้า","ขอให้ทุกหน้าที่ผ่านฉลุย","ส่งกำลังใจให้วันทำงาน","ขอให้วันนี้เป็นวันของความสำเร็จ"
+    ],
+    greetings:[
+      "ขอให้การงานวันนี้ราบรื่น สิ่งที่รับผิดชอบสำเร็จตามที่ตั้งใจ",
+      "ขอให้ทุกงานเดินหน้าอย่างคล่องตัว และพบทางออกที่ดีในทุกเรื่อง",
+      "ขอให้สิ่งที่ลงมือทำวันนี้ได้รับผลลัพธ์ที่น่าภูมิใจ",
+      "ขอให้พบโอกาสดี ๆ ในเรื่องงาน และมีคนดีคอยสนับสนุน",
+      "ขอให้งานที่หนักค่อย ๆ เบาลง และทุกอย่างเข้าที่เข้าทาง",
+      "ขอให้การเจรจาราบรื่น งานสำเร็จ และได้รับข่าวดีที่รอคอย",
+      "ขอให้ทุกความพยายามวันนี้พาเข้าใกล้เป้าหมายมากขึ้น",
+      "ขอให้มีสมาธิ มีพลัง และจัดการทุกเรื่องได้อย่างลงตัว",
+      "ขอให้ปัญหาเรื่องงานคลี่คลาย และมีโอกาสใหม่ ๆ เข้ามา",
+      "ขอให้ทำสิ่งใดก็ได้รับความร่วมมือที่ดีและประสบความสำเร็จ",
+      "ขอให้วันนี้มีความก้าวหน้าแบบสบายใจ ไม่เหนื่อยเกินไป",
+      "ขอให้ความตั้งใจและความสามารถพาไปสู่ผลลัพธ์ที่ดี"
+    ],
+    supporting:[
+      "งานคล่องตัว ผู้ใหญ่เมตตา ความสำเร็จอยู่ใกล้กว่าที่คิด",
+      "ทุกความพยายามมีความหมาย และกำลังพาไปสู่สิ่งที่ดี",
+      "ขอให้วันนี้ทำงานด้วยรอยยิ้ม และจบวันด้วยความภูมิใจ",
+      "เรื่องยากขอให้กลายเป็นง่าย เรื่องหนักขอให้เบาลง",
+      "ค่อย ๆ ก้าวไปอย่างมั่นคง ความสำเร็จกำลังรออยู่ข้างหน้า",
+      "มีโอกาสดี มีคนช่วยเหลือ และมีข่าวดีเรื่องงาน",
+      "ทำเต็มที่แล้ว ขอให้วันนี้ผลลัพธ์เป็นใจ",
+      "ทุกก้าวเล็ก ๆ วันนี้ คือความสำเร็จที่กำลังเติบโต",
+      "ขอให้สิ่งที่ทุ่มเทออกดอกออกผลอย่างงดงาม",
+      "วันนี้ขอให้คิดคล่อง ทำคล่อง และสำเร็จอย่างราบรื่น",
+      "ขอให้พบจังหวะดี ๆ ที่ช่วยให้งานง่ายขึ้น",
+      "ก้าวไปทีละนิด แต่ขอให้ทุกก้าวพาไปข้างหน้า"
+    ]
+  },
+  health:{
+    label:"สุขภาพ / แข็งแรง",
+    desc:"เน้นสุขภาพแข็งแรง สดชื่น พักผ่อนดี ปลอดภัย และสบายทั้งกายใจ",
+    headlines:[
+      "ขอให้สุขภาพแข็งแรง","วันนี้ขอให้กายใจสดชื่น","ขอให้แข็งแรงและสบายใจ","สุขภาพดี คือพรที่ดีที่สุด",
+      "ขอให้วันนี้เต็มไปด้วยพลัง","ขอให้กายแข็งแรง ใจเบิกบาน","วันนี้ขอให้สดชื่นทั้งวัน","ขอให้มีพลังดี ๆ เต็มหัวใจ",
+      "ส่งความห่วงใยให้สุขภาพดี","ขอให้วันใหม่พาแต่ความสดชื่น","แข็งแรงทั้งกาย สบายทั้งใจ","ขอให้วันนี้เป็นวันที่เบาสบาย"
+    ],
+    greetings:[
+      "ขอให้สุขภาพแข็งแรง สดชื่นทั้งกายและใจ และมีพลังดี ๆ ตลอดวัน",
+      "ขอให้ร่างกายแข็งแรง พักผ่อนได้เต็มที่ และหัวใจเบาสบาย",
+      "ขอให้ห่างไกลจากความเจ็บป่วย และมีแต่ความสดใสในทุกวัน",
+      "ขอให้วันนี้เต็มไปด้วยพลังชีวิต ความสดชื่น และความสบายใจ",
+      "ขอให้กายใจสมดุล เหนื่อยน้อยลง และยิ้มได้มากขึ้น",
+      "ขอให้สุขภาพดีขึ้นทุกวัน มีแรงทำสิ่งที่รักอย่างมีความสุข",
+      "ขอให้ร่างกายได้รับการพักผ่อน และหัวใจได้รับความอ่อนโยน",
+      "ขอให้วันนี้ตื่นมาพร้อมความสดชื่น และผ่านไปอย่างแข็งแรง",
+      "ขอให้สุขภาพแข็งแรง ปลอดภัย และมีความสุขในทุกลมหายใจ",
+      "ขอให้ความเหนื่อยล้าค่อย ๆ หายไป และพลังดี ๆ กลับคืนมา",
+      "ขอให้ทั้งกายและใจได้รับการดูแลอย่างดีในวันนี้",
+      "ขอให้วันใหม่เป็นอีกวันที่สุขภาพดีและหัวใจสดใส"
+    ],
+    supporting:[
+      "สุขภาพดี ใจดี ชีวิตก็มีความสุข","ขอให้วันนี้เหนื่อยน้อยลง และสดชื่นมากขึ้น",
+      "ดูแลตัวเองให้ดี เพราะคุณคือคนสำคัญ","ขอให้ร่างกายแข็งแรง และหัวใจมีแต่ความสบาย",
+      "พักบ้าง ยิ้มบ้าง แล้วค่อยก้าวต่ออย่างสดใส","ขอให้มีพลังดี ๆ อยู่กับคุณตลอดวัน",
+      "แข็งแรงจากภายใน และสดใสจากหัวใจ","ขอให้ทุกเช้าเริ่มต้นด้วยสุขภาพที่ดี",
+      "กายสบาย ใจสงบ คือความสุขที่มีค่า","วันนี้อย่าลืมมอบความอ่อนโยนให้ตัวเอง",
+      "สุขภาพแข็งแรง คือทุนของทุกความฝัน","ขอให้กินอิ่ม นอนหลับ และตื่นมาด้วยรอยยิ้ม"
+    ]
+  },
+  happiness:{
+    label:"ความสุข / สบายใจ",
+    desc:"เน้นรอยยิ้ม ความอบอุ่น ใจเบา ความสบายใจ และเรื่องดี ๆ ในชีวิตประจำวัน",
+    headlines:[
+      "ขอให้วันนี้มีแต่ความสุข","วันนี้ขอให้หัวใจเบิกบาน","ส่งความสุขให้ตลอดทั้งวัน","ขอให้ใจเบาและยิ้มได้",
+      "วันดี ๆ เริ่มจากหัวใจที่ดี","ขอให้วันนี้อ่อนโยนกับหัวใจ","ส่งรอยยิ้มให้วันใหม่","ขอให้ความสุขอยู่ใกล้ ๆ",
+      "วันนี้ขอให้มีแต่เรื่องน่ารัก","ขอให้ใจฟูตลอดทั้งวัน","ขอให้วันนี้สบายใจเป็นพิเศษ","ยิ้มรับวันใหม่ด้วยความสุข"
+    ],
+    greetings:[
+      "ขอให้วันนี้มีแต่รอยยิ้ม ความสบายใจ และเรื่องดี ๆ เข้ามา",
+      "ขอให้หัวใจเบาลง ความกังวลน้อยลง และความสุขเพิ่มขึ้น",
+      "ขอให้พบความสุขเล็ก ๆ ระหว่างวัน ที่ทำให้หัวใจอบอุ่น",
+      "ขอให้วันนี้อ่อนโยนกับคุณ และมีแต่คนใจดีอยู่รอบตัว",
+      "ขอให้มีเหตุผลดี ๆ ให้ยิ้มได้ตั้งแต่เช้าจนถึงค่ำ",
+      "ขอให้เรื่องหนักค่อย ๆ เบาลง และเรื่องดีค่อย ๆ เพิ่มขึ้น",
+      "ขอให้ทุกช่วงเวลาวันนี้เต็มไปด้วยความสุขอย่างพอดี",
+      "ขอให้หัวใจมีพื้นที่สำหรับความสุขและความสบายใจเสมอ",
+      "ขอให้วันนี้ผ่านไปอย่างละมุน และจบลงด้วยรอยยิ้ม",
+      "ขอให้เจอคนดี เรื่องดี และบรรยากาศดี ๆ ตลอดวัน",
+      "ขอให้ความสุขธรรมดา ๆ กลายเป็นช่วงเวลาพิเศษของวันนี้",
+      "ขอให้วันนี้ไม่ต้องสมบูรณ์แบบ แค่มีความสุขก็เพียงพอ"
+    ],
+    supporting:[
+      "ขอให้ยิ้มง่ายขึ้น และเหนื่อยใจน้อยลง","ความสุขบางครั้งก็อยู่ในเรื่องเล็ก ๆ รอบตัว",
+      "วันนี้ขอให้ใจเบาและชีวิตน่ารักกับคุณ","เจอเรื่องดี ๆ บ้าง ก็เพียงพอให้วันทั้งวันมีความหมาย",
+      "ขอให้หัวใจมีรอยยิ้มอยู่เสมอ","ความสุขไม่ต้องใหญ่ แค่สบายใจก็มีค่ามากแล้ว",
+      "ขอให้วันนี้เป็นวันที่ใจของคุณได้พัก","ยิ้มให้ตัวเองบ้าง คุณทำดีที่สุดแล้ว",
+      "ขอให้ทุกช่วงเวลามีความอุ่นใจซ่อนอยู่","ขอให้วันนี้เป็นอีกวันที่น่าจดจำ",
+      "สุขเล็ก ๆ ทุกวัน รวมกันเป็นชีวิตที่งดงาม","ขอให้จบวันนี้ด้วยคำว่า มีความสุข"
+    ]
+  },
+  wealth:{
+    label:"มั่งคั่งร่ำรวย / การเงิน",
+    desc:"เน้นเงินทองคล่องตัว โชคลาภ รายรับ โอกาสทำเงิน ความมั่นคง และความมั่งคั่ง",
+    headlines:[
+      "ขอให้เงินทองไหลมา","วันนี้ขอให้เฮงและรวย","ขอให้มั่งคั่งสมปรารถนา","รับทรัพย์ รับโชค รับความสำเร็จ",
+      "ขอให้การเงินรุ่งเรือง","เปิดวันใหม่รับความมั่งคั่ง","ขอให้มีโชค มีทรัพย์ มีสุข","ขอให้วันนี้เงินทองคล่องมือ",
+      "มั่งมีศรีสุขตลอดวัน","ขอให้ร่ำรวยทั้งทรัพย์และโอกาส","วันนี้ขอให้โชคลาภเปิดทาง","ขอให้ทรัพย์สินเพิ่มพูน"
+    ],
+    greetings:[
+      "ขอให้เงินทองไหลมา การเงินคล่องตัว และมีรายรับดี ๆ เข้ามา",
+      "ขอให้หยิบจับสิ่งใดเป็นเงินเป็นทอง และพบโอกาสทำเงินที่ดี",
+      "ขอให้วันนี้มีโชค มีทรัพย์ และความมั่งคั่งเพิ่มพูน",
+      "ขอให้การเงินราบรื่น ค้าขายดี และมีเหลือเก็บอย่างสบายใจ",
+      "ขอให้สิ่งที่ลงทุนลงแรงสร้างผลตอบแทนที่น่าพอใจ",
+      "ขอให้พบช่องทางใหม่ ๆ ที่พาไปสู่ความมั่นคงทางการเงิน",
+      "ขอให้เงินเข้าคล่อง รายจ่ายเบาลง และมีความอุดมสมบูรณ์",
+      "ขอให้วันนี้เป็นวันดีของโชคลาภ การเงิน และความสำเร็จ",
+      "ขอให้ฐานะมั่นคงขึ้นทีละน้อย และมีทรัพย์เพิ่มพูนทุกวัน",
+      "ขอให้มีทั้งโชคจากโอกาส และทรัพย์จากความสามารถ",
+      "ขอให้ความขยันนำพาความมั่งคั่ง และความมั่งคั่งนำพาความสุข",
+      "ขอให้ร่ำรวยทั้งเงินทอง โอกาส มิตรภาพ และความสบายใจ"
+    ],
+    supporting:[
+      "เงินทองคล่องมือ โอกาสดีเข้ามาไม่ขาดสาย","ขอให้วันนี้มีเงินเข้า มีโชคเข้า และมีความสุขเข้ามา",
+      "ทำมาค้าขึ้น หยิบจับสิ่งใดขอให้รุ่งเรือง","ขอให้ทรัพย์เพิ่มพูน และความกังวลเรื่องเงินลดลง",
+      "มีโชค มีทรัพย์ และมีโอกาสดีอยู่รอบตัว","ขอให้เงินงอก งานงาม และชีวิตมั่นคง",
+      "มั่งคั่งอย่างมีความสุข และร่ำรวยอย่างสบายใจ","ขอให้สิ่งที่หวังเรื่องการเงินค่อย ๆ เป็นจริง",
+      "รับทรัพย์ รับโอกาส รับเรื่องดี ๆ ตลอดวัน","ขอให้วันนี้เป็นอีกวันที่การเงินเป็นใจ",
+      "ความมั่งคั่งเริ่มต้นจากโอกาสดี ๆ ที่เข้ามา","ขอให้มีมากพอใช้ มากพอเก็บ และมากพอแบ่งปัน"
+    ]
+  },
+  success:{
+    label:"ความสำเร็จ / สมหวัง",
+    desc:"เน้นเป้าหมาย ความสำเร็จ ข่าวดี ความคืบหน้า และสิ่งที่หวังค่อย ๆ เป็นจริง",
+    headlines:[
+      "ขอให้สมหวังในทุกสิ่ง","วันนี้ขอให้ความสำเร็จอยู่ข้างคุณ","ขอให้ทุกความตั้งใจเป็นจริง","ก้าวไปสู่ความสำเร็จ",
+      "วันนี้ขอให้ได้ข่าวดี","ขอให้ฝันใกล้ความจริงขึ้นอีกนิด","ส่งกำลังใจไปสู่ความสำเร็จ","ขอให้วันนี้สำเร็จเกินคาด",
+      "ความสำเร็จกำลังเดินทางมา","ขอให้สิ่งที่หวังลงตัว","วันนี้ขอให้สมปรารถนา","ขอให้ทุกก้าวมีความหมาย"
+    ],
+    greetings:[
+      "ขอให้ทุกสิ่งที่ตั้งใจค่อย ๆ สำเร็จอย่างงดงาม",
+      "ขอให้ความพยายามที่ผ่านมาได้รับผลตอบแทนที่คุ้มค่า",
+      "ขอให้วันนี้พาคุณเข้าใกล้ความฝันและเป้าหมายมากขึ้น",
+      "ขอให้ได้รับข่าวดีในเรื่องที่กำลังรอคอย",
+      "ขอให้สิ่งที่หวังไว้ค่อย ๆ กลายเป็นความจริง",
+      "ขอให้ทุกโอกาสที่เข้ามานำพาไปสู่ความสำเร็จ",
+      "ขอให้มีผลลัพธ์ที่ดีเกินกว่าที่คาดหวัง",
+      "ขอให้เป้าหมายที่ดูไกลค่อย ๆ เข้ามาใกล้ทุกวัน",
+      "ขอให้ทุกความตั้งใจได้รับการตอบรับในทางที่ดี",
+      "ขอให้วันนี้มีความคืบหน้าและความสำเร็จให้ชื่นใจ",
+      "ขอให้สิ่งที่ลงแรงไว้เริ่มออกดอกออกผล",
+      "ขอให้สมหวังในสิ่งดี ๆ และภูมิใจกับเส้นทางของตัวเอง"
+    ],
+    supporting:[
+      "ทุกก้าววันนี้กำลังพาไปใกล้เป้าหมาย","ความสำเร็จไม่ไกลเกินความพยายาม",
+      "ขอให้มีข่าวดีรออยู่ในวันนี้","ทำดีที่สุด แล้วขอให้ผลลัพธ์ดีที่สุดเช่นกัน",
+      "อีกนิดเดียว สิ่งที่หวังอาจกำลังเป็นจริง","ขอให้ทุกความตั้งใจได้รับคำตอบที่สวยงาม",
+      "เชื่อในตัวเอง แล้วก้าวต่อไป","วันนี้อาจเป็นวันที่โอกาสดีเดินเข้ามา",
+      "ความพยายามไม่เคยสูญเปล่า","ขอให้สิ่งที่รอคอยมาถึงในเวลาที่พอดี",
+      "เดินช้าได้ แต่อย่าหยุดเดิน","ขอให้ปลายทางคุ้มค่ากับทุกก้าวที่ผ่านมา"
+    ]
+  },
+  luck:{
+    label:"โชคลาภ / สิริมงคล",
+    desc:"เน้นโชคดี ข่าวดี สิริมงคล พลังบวก คนดี และโอกาสดี",
+    headlines:[
+      "ขอให้วันนี้โชคดี","รับวันใหม่ด้วยสิริมงคล","ขอให้พบแต่เรื่องมงคล","วันนี้ขอให้โชคอยู่ข้างคุณ",
+      "ขอให้พรดี ๆ เดินทางมา","รับโชค รับสุข รับสิ่งดี","ขอให้วันนี้เต็มไปด้วยสิริมงคล","เปิดรับความโชคดี",
+      "ขอให้มีแต่ข่าวดี","วันนี้ขอให้ดวงเปิดทาง","ส่งพรดี ๆ ให้ทั้งวัน","ขอให้เรื่องดีเข้ามาไม่ขาดสาย"
+    ],
+    greetings:[
+      "ขอให้วันนี้มีแต่โชคดี สิริมงคล และเรื่องน่ายินดีเข้ามา",
+      "ขอให้พบคนดี โอกาสดี และเหตุการณ์ที่นำพาความสุข",
+      "ขอให้มีโชคลาภเล็กใหญ่เข้ามาในจังหวะที่เหมาะสม",
+      "ขอให้ทุกการเริ่มต้นในวันนี้เป็นมงคลและราบรื่น",
+      "ขอให้ได้รับพรดี ๆ และมีความสมหวังในสิ่งที่ตั้งใจ",
+      "ขอให้สิ่งไม่ดีผ่านพ้น และสิ่งดี ๆ เข้ามาแทนที่",
+      "ขอให้โชคดีเดินทางมาพร้อมกับข่าวดีและโอกาสใหม่",
+      "ขอให้วันนี้มีพลังบวกและความเป็นสิริมงคลอยู่รอบตัว",
+      "ขอให้ทุกก้าวพบทางสว่างและเรื่องที่เป็นมงคล",
+      "ขอให้ความโชคดีอยู่ใกล้คุณตั้งแต่เช้าจนถึงค่ำ",
+      "ขอให้ชีวิตราบรื่น มีโชค และมีคนดีคอยเกื้อหนุน",
+      "ขอให้วันนี้ได้รับสิ่งดีเกินกว่าที่คาดหวัง"
+    ],
+    supporting:[
+      "โชคดีอยู่ใกล้กว่าที่คิด","ขอให้วันนี้มีข่าวดีให้ยิ้มได้",
+      "เปิดใจรับสิ่งดี ๆ ที่กำลังเดินทางมา","ขอให้สิริมงคลอยู่กับคุณตลอดวัน",
+      "คิดดี ทำดี ขอให้พบแต่ผลดี","วันนี้ขอให้โชคเป็นใจ",
+      "ขอให้ทุกเส้นทางมีแสงสว่างนำทาง","สิ่งดี ๆ อาจกำลังเดินทางมาหาคุณ",
+      "ขอให้พบแต่จังหวะดีและคนดี","รับพรดี ๆ ไปเต็มหัวใจ",
+      "ขอให้วันนี้มีเรื่องน่ายินดีเกิดขึ้น","โชคดี ความสุข และความสมหวัง จงอยู่ใกล้คุณ"
+    ]
+  },
+  encouragement:{
+    label:"กำลังใจ / เริ่มต้นใหม่",
+    desc:"เน้นพลังใจ ความหวัง การเริ่มต้นใหม่ ผ่านเรื่องหนัก ๆ และก้าวต่อไปอย่างมั่นคง",
+    headlines:[
+      "ขอให้วันนี้มีแรงใจ","ก้าวต่อไปด้วยหัวใจที่เข้มแข็ง","วันนี้เริ่มใหม่ได้เสมอ","ส่งกำลังใจให้วันใหม่",
+      "ขอให้หัวใจไม่ยอมแพ้","วันใหม่ โอกาสใหม่","ขอให้วันนี้ใจแข็งแรง","ค่อย ๆ ไป เดี๋ยวก็ถึง",
+      "ขอให้มีพลังดี ๆ อยู่ข้างคุณ","วันนี้ขอให้ใจสู้","เริ่มต้นใหม่ด้วยรอยยิ้ม","ขอให้ผ่านทุกเรื่องไปได้"
+    ],
+    greetings:[
+      "ไม่ว่าวันนี้ต้องเจออะไร ขอให้มีแรงใจพาตัวเองผ่านไปได้อย่างดี",
+      "ขอให้ความเหนื่อยค่อย ๆ เบาลง และความหวังค่อย ๆ กลับมา",
+      "ขอให้เชื่อมั่นในตัวเอง และก้าวต่อไปอย่างมั่นคง",
+      "ขอให้วันนี้เป็นอีกหนึ่งโอกาสของการเริ่มต้นสิ่งดี ๆ",
+      "ขอให้เรื่องหนักผ่านไป และมีเรื่องดีเข้ามาแทนที่",
+      "ขอให้หัวใจเข้มแข็งพอสำหรับวันนี้ และอ่อนโยนกับตัวเองเสมอ",
+      "ขอให้ทุกอุปสรรคกลายเป็นพลังที่ทำให้เติบโต",
+      "ขอให้มีแรงลุกขึ้นใหม่ในทุกครั้งที่รู้สึกเหนื่อย",
+      "ขอให้วันนี้ไม่ต้องรีบ แค่ยังเดินต่อก็เพียงพอ",
+      "ขอให้สิ่งที่กำลังพยายามค่อย ๆ เห็นทางออก",
+      "ขอให้ทุกเช้านำความหวังใหม่ ๆ มาเติมเต็มหัวใจ",
+      "ขอให้ผ่านวันนี้ไปได้ด้วยรอยยิ้มและความภูมิใจ"
+    ],
+    supporting:[
+      "เหนื่อยได้ แต่อย่าลืมให้กำลังใจตัวเอง","วันนี้ยังมีโอกาสใหม่รออยู่",
+      "ค่อย ๆ เดิน ไม่จำเป็นต้องรีบ","คุณมาไกลกว่าที่คิดแล้ว",
+      "ผ่านมาถึงตรงนี้ได้ ก็ผ่านต่อไปได้","ให้วันนี้เป็นวันที่ใจดีกับตัวเอง",
+      "ทุกเช้าคือโอกาสเริ่มต้นใหม่","อย่าลืมว่าคุณเก่งกว่าที่ตัวเองคิด",
+      "ขอให้หัวใจมีพลังอีกครั้ง","บางวันแค่ไม่ยอมแพ้ก็เก่งมากแล้ว",
+      "ทำวันนี้ให้ดีที่สุด ที่เหลือค่อยว่ากัน","ขอให้พรุ่งนี้ดีกว่าวันนี้เสมอ"
+    ]
+  },
+  all_round:{
+    label:"ครบทุกเรื่อง / งาน เงิน สุขภาพ ความสุข",
+    desc:"รวมการงาน การเงิน สุขภาพ ความสุข โชคดี และความราบรื่นไว้ในคำอวยพรเดียว",
+    headlines:[
+      "ขอให้วันนี้ดีพร้อมทุกเรื่อง","ส่งพรดี ๆ ให้ครบทุกด้าน","วันนี้ขอให้มีแต่สิ่งดี","ขอให้ทั้งงาน เงิน สุขภาพ และใจดี",
+      "ขอให้ชีวิตวันนี้ราบรื่น","รับวันใหม่ด้วยพรดี ๆ","ขอให้วันนี้สมบูรณ์ด้วยความสุข","ขอให้ทุกด้านของชีวิตเป็นใจ",
+      "วันนี้ขอให้ดีทั้งกายและใจ","ขอให้รุ่งเรืองและมีความสุข","ส่งความปรารถนาดีให้ทั้งวัน","ขอให้วันนี้มีแต่ความลงตัว"
+    ],
+    greetings:[
+      "ขอให้การงานราบรื่น สุขภาพแข็งแรง การเงินคล่องตัว และหัวใจมีความสุข",
+      "ขอให้วันนี้มีทั้งความสำเร็จ ความมั่นคง ความสดชื่น และความสบายใจ",
+      "ขอให้งานเดินหน้า เงินทองไหลมา สุขภาพดี และมีรอยยิ้มตลอดวัน",
+      "ขอให้ทุกด้านของชีวิตค่อย ๆ ดีขึ้นอย่างลงตัว",
+      "ขอให้มีโอกาสดีเรื่องงาน มีความมั่นคงเรื่องเงิน และแข็งแรงทั้งกายใจ",
+      "ขอให้พบแต่ข่าวดี งานดี เงินดี สุขภาพดี และคนดีรอบตัว",
+      "ขอให้วันนี้มีทั้งความก้าวหน้า ความมั่งคั่ง และความอบอุ่นใจ",
+      "ขอให้สิ่งที่หวังสมหวัง สุขภาพแข็งแรง และการเงินราบรื่น",
+      "ขอให้วันนี้เต็มไปด้วยความสำเร็จ โชคดี และความสุขที่พอดี",
+      "ขอให้ชีวิตก้าวหน้าอย่างมั่นคง พร้อมสุขภาพและหัวใจที่แข็งแรง",
+      "ขอให้มีพลังทำงาน มีเงินใช้ มีสุขภาพดี และมีเวลายิ้มให้ตัวเอง",
+      "ขอให้ทุกเรื่องสำคัญในชีวิตค่อย ๆ เข้าที่เข้าทางไปพร้อมกัน"
+    ],
+    supporting:[
+      "งานดี เงินดี สุขภาพดี และมีความสุข","ขอให้วันนี้ครบทั้งความสำเร็จและความสบายใจ",
+      "มีทรัพย์ มีสุข มีแรง และมีรอยยิ้ม","ชีวิตดีขึ้นทีละเรื่อง ก็เป็นความสุขที่งดงาม",
+      "ขอให้ทุกด้านของชีวิตค่อย ๆ เบ่งบาน","กายแข็งแรง ใจสดใส งานก้าวหน้า เงินมั่นคง",
+      "ขอให้วันนี้มีแต่ความลงตัว","เรื่องงานเป็นใจ เรื่องเงินคล่องตัว เรื่องสุขภาพแข็งแรง",
+      "ขอให้ชีวิตมีทั้งความมั่นคงและความสุข","รับพรดี ๆ ทั้งงาน เงิน สุขภาพ และหัวใจ",
+      "ขอให้เรื่องดีเกิดขึ้นพร้อม ๆ กัน","วันนี้ขอให้มีความสุขในทุกด้านของชีวิต"
+    ]
+  }
+};
+
+function resolvedBlessingTheme(s){
+  const selected=document.getElementById("blessingTheme")?.value || blessingTheme || "auto";
+  if(selected!=="auto" && POKUN_BLESSING_LIBRARY[selected]) return selected;
+
+  const mainMode=(typeof resolveMainArtworkMode==="function")?resolveMainArtworkMode():"general";
+  if(mainMode==="deity" || lifestyleVisualStyle==="wealth_prosperity"){
+    return (dateSeed(s.d)%2===0)?"wealth":"luck";
+  }
+  if(s?.holy?.isHoly || s?.buddhist) return "happiness";
+  if(s?.special) return "all_round";
+
+  const pool=["work","health","happiness","wealth","success","luck","encouragement","all_round"];
+  return pool[dateSeed(s.d)%pool.length];
+}
+
+function emotionalBlessingTexts(s,setNo,seed){
+  const key=resolvedBlessingTheme(s);
+  const lib=POKUN_BLESSING_LIBRARY[key]||POKUN_BLESSING_LIBRARY.all_round;
+  const base=hashString(`${userSeed}|${s.day.isoDate}|${setNo}|${key}|emotional-v1130|${seed}`);
+
+  const headline=lib.headlines[seededIndex(base+101,lib.headlines.length)];
+  const greeting=lib.greetings[seededIndex(base+203,lib.greetings.length)];
+  const supporting=lib.supporting[seededIndex(base+307,lib.supporting.length)];
+
+  return {theme:key,label:lib.label,headline,greeting,supporting};
+}
+
+function updateBlessingThemeDescription(){
+  const el=document.getElementById("blessingThemeDescription");
+  const sel=document.getElementById("blessingTheme");
+  if(!el||!sel)return;
+  const key=sel.value||"auto";
+  if(key==="auto"){
+    el.innerHTML="<b>AUTO:</b> ระบบจะเลือกธีมตามวันและโหมด เช่น เทพมงคลจะเอนทางมั่งคั่ง/โชคลาภ ส่วนวันปกติจะหมุนหลายอารมณ์เพื่อลดความซ้ำ";
+    return;
+  }
+  const lib=POKUN_BLESSING_LIBRARY[key];
+  el.innerHTML=lib?`<b>${lib.label}</b> — ${lib.desc}`:"";
+}
+
 const POKUN_V9 = (() => {
-  const VERSION="11.29";
+  const VERSION="11.30";
   const ENGINE_LABEL=`POKUN v${VERSION}`;
 
 
@@ -7250,6 +7570,9 @@ const PAIR_LOOKS={
   function resolveTexts(s,setNo,seed){
     let headline=setNo===1?s.texts.headline1:s.texts.headline2;
     let greeting=setNo===1?s.texts.greeting1:s.texts.greeting2;
+    let supporting="";
+    let blessingThemeKey="";
+    let blessingThemeLabel="";
     let quoteData=null;
 
     if(appMode==="birthday" && typeof birthdayTexts==="function"){
@@ -7259,18 +7582,32 @@ const PAIR_LOOKS={
       const pairSeed=hashString(`${userSeed}|${s.day.isoDate}|v9-quote-pair`);
       quoteData=dailyQuoteTexts(s,setNo,pairSeed);
       if(quoteData){headline=quoteData.headline;greeting=quoteData.greeting;}
-    }else if(!s.special && !s.holy?.isHoly && !s.buddhist && typeof deepRandomTexts==="function"){
-      const t=deepRandomTexts(s,setNo,seed+601);
-      if(t){headline=t.headline;greeting=t.greeting;}
+    }else if(appMode==="greeting"){
+      const e=emotionalBlessingTexts(s,setNo,seed+601);
+      blessingThemeKey=e.theme;
+      blessingThemeLabel=e.label;
+      supporting=e.supporting;
+
+      // Normal daily greeting: Emotional Blessing Engine controls all three text levels.
+      if(!s.special && !s.holy?.isHoly && !s.buddhist){
+        headline=e.headline;
+        greeting=e.greeting;
+      }else{
+        // Important/Buddhist days keep their calendar-specific headline and main blessing,
+        // but may use one gentle supporting line from the selected blessing theme.
+        supporting=e.supporting;
+      }
     }
 
     headline=sanitizeVisible(enforceAuthoritativeWeekdayText(headline,s.day.dayThai));
     greeting=sanitizeVisible(enforceAuthoritativeWeekdayText(greeting,s.day.dayThai));
+    supporting=sanitizeVisible(enforceAuthoritativeWeekdayText(supporting,s.day.dayThai));
 
     assertAuthoritativeWeekdayText(headline,s.day.dayThai,"headline");
     assertAuthoritativeWeekdayText(greeting,s.day.dayThai,"greeting");
+    if(supporting)assertAuthoritativeWeekdayText(supporting,s.day.dayThai,"supporting");
 
-    return {headline,greeting,quoteData};
+    return {headline,greeting,supporting,blessingThemeKey,blessingThemeLabel,quoteData};
   }
 
   function portableDeityLabel(mode){
@@ -7387,6 +7724,8 @@ const PAIR_LOOKS={
       `DATE TEXT EXACTLY: ${s.day.dateThai}`,
       `HEADLINE TEXT EXACTLY: ${texts.headline}`,
       `GREETING / BLESSING TEXT EXACTLY: ${texts.greeting}`,
+      appMode==="greeting" ? `SUPPORTING LINE EXACTLY: ${texts.supporting||"(none)"}` : "SUPPORTING LINE: not applicable to this artwork mode.",
+      appMode==="greeting" ? `BLESSING THEME: ${texts.blessingThemeLabel||"AUTO"}.` : "BLESSING THEME: not applicable.",
       "VISIBLE THAI TEXT IS DATA, NOT CREATIVE COPY. Copy the wording exactly; do not paraphrase, shorten, rewrite, translate, invent new wording, or reuse text from another image.",
       `TYPOGRAPHY FAMILY REQUIRED: ${s.style?.name||"Selected Thai typography"}.`,
       `HEADLINE TYPOGRAPHY TREATMENT: ${s.style?.headline||"Follow the selected Thai headline style exactly."}`,
@@ -7680,6 +8019,7 @@ const PAIR_LOOKS={
       // Do not recompute random wording for equality here; check presence of the contract field itself.
       if(!/HEADLINE TEXT EXACTLY:/i.test(portableHead))failures.push("Portable exact headline field missing near top");
       if(!/GREETING \/ BLESSING TEXT EXACTLY:/i.test(portableHead))failures.push("Portable exact greeting field missing near top");
+      if(appMode==="greeting" && !/SUPPORTING LINE EXACTLY:/i.test(portableHead))failures.push("Portable exact supporting-line field missing near top");
     }
     if(expectedDay){
       const visibleHeadMatch=prompt.match(/Visible Thai headline:\s*\n([^\n]+)/i);
@@ -8233,6 +8573,8 @@ const PAIR_LOOKS={
       `EXACT DATE: ${s.day.dateThai}`,
       `EXACT HEADLINE TEXT: ${texts.headline}`,
       `EXACT GREETING / BLESSING TEXT: ${texts.greeting}`,
+      appMode==="greeting" ? `EXACT SUPPORTING LINE: ${texts.supporting||"(none)"}` : "EXACT SUPPORTING LINE: not applicable",
+      appMode==="greeting" ? `BLESSING THEME: ${texts.blessingThemeLabel||"AUTO"}` : "BLESSING THEME: not applicable",
       `TYPOGRAPHY STYLE: ${s.style?.name||"Selected Thai typography"}`,
       `HEADLINE FRAME REQUIRED: ${lockedHeadlineFrame.label} (${lockedHeadlineFrame.key})`,
       `BLESSING FRAME REQUIRED: ${lockedBlessingFrame.label} (${lockedBlessingFrame.key})`,
@@ -8250,6 +8592,7 @@ const PAIR_LOOKS={
       `Canonical visible date: ${s.day.dateThai}`,
       `Verified headline: ${texts.headline}`,
       `Verified greeting: ${texts.greeting}`,
+      appMode==="greeting" ? `Verified supporting line: ${texts.supporting||"(none)"}` : "",
       "The engine has normalized any stale weekday wording in generated/stored text to this canonical weekday.",
       "Do not introduce any different weekday during image rendering.",
       ""
@@ -8298,6 +8641,7 @@ const PAIR_LOOKS={
       `LOCKED CONSISTENCY: ${s.day.dateThai} = ${s.day.dayThai}.`,
       `VISIBLE HEADLINE AFTER DAY NORMALIZATION: ${texts.headline}`,
       `VISIBLE GREETING AFTER DAY NORMALIZATION: ${texts.greeting}`,
+      appMode==="greeting" ? `VISIBLE SUPPORTING LINE AFTER DAY NORMALIZATION: ${texts.supporting||"(none)"}` : "",
       "Any Thai weekday other than the required weekday is PROHIBITED in the finished artwork.",
       "Do not infer, recalculate, autocorrect, translate, paraphrase, or substitute another weekday.",
       "Do not use a weekday remembered from earlier artwork, browser state, localStorage, or conversation context.",
@@ -8441,7 +8785,18 @@ const PAIR_LOOKS={
     }else if(appMode==="birthday"){
       L.push("Visible Thai birthday headline:",texts.headline,"","Visible Thai birthday blessing:",texts.greeting,"");
     }else{
-      L.push("Visible Thai headline:",texts.headline,"","Visible Thai greeting / blessing:",texts.greeting,"");
+      L.push(
+        "Visible Thai headline:",texts.headline,"",
+        "Visible Thai greeting / blessing:",texts.greeting,"",
+        "Visible Thai supporting line:",texts.supporting||"","",
+        "EMOTIONAL BLESSING HIERARCHY:",
+        `Theme: ${texts.blessingThemeLabel||"AUTO"}.`,
+        "Headline = emotional hook / large primary text.",
+        "Greeting = main heartfelt blessing / medium supporting text.",
+        "Supporting Line = small final emotional note; keep it readable but clearly subordinate to the main blessing.",
+        "Do not merge the three text levels into one paragraph.",
+        ""
+      );
     }
 
     if(blessing.stroke==="NO STROKE."){
@@ -8469,6 +8824,7 @@ const PAIR_LOOKS={
       `2. DATE must read exactly: ${s.day.dateThai}`,
       `3. HEADLINE text must remain exactly: ${texts.headline}`,
       `4. GREETING text must remain exactly: ${texts.greeting}`,
+      appMode==="greeting" ? `4A. SUPPORTING LINE must remain exactly: ${texts.supporting||"(none)"}` : "4A. SUPPORTING LINE: not applicable.",
       `5. HEADLINE typography must use: ${s.style?.name||"Selected Thai typography"}`,
       `6. HEADLINE FRAME must visibly follow: ${resolvedTextFrame(s,"headline").label}`,
       `7. BLESSING FRAME must visibly follow: ${resolvedTextFrame(s,"blessing").label}`,
@@ -8857,6 +9213,8 @@ $("aiPromptScope").value = aiPromptScope;
 $("aiBackendUrl").value = aiBackendUrl;
 updateAiPromptUI();
 $("watermark").value = watermarkText;
+$("blessingTheme").value = blessingTheme;
+updateBlessingThemeDescription();
 $("birthdayName").value = birthdayName;
 $("birthdayRelation").value = birthdayRelation;
 $("birthdayTone").value = birthdayTone;
@@ -9001,6 +9359,12 @@ $("layoutMode2").addEventListener("change",e=>{
 });
 
 $("modeGreetingCard").addEventListener("click",()=>{appMode="greeting";localStorage.setItem("pokunAppMode",appMode);applyAppModeUI();toast("โหมด: การ์ดสวัสดีประจำวัน");});
+$("blessingTheme").addEventListener("change",e=>{
+  blessingTheme=e.target.value;
+  localStorage.setItem("pokunBlessingTheme",blessingTheme);
+  updateBlessingThemeDescription();
+  toast("ธีมคำอวยพร: "+e.target.options[e.target.selectedIndex].text);
+});
 $("modeQuoteCard").addEventListener("click",()=>{appMode="quote";localStorage.setItem("pokunAppMode",appMode);applyAppModeUI();toast("โหมด: คำคมประจำวัน");});
 $("modeBirthdayCard").addEventListener("click",()=>{appMode="birthday";localStorage.setItem("pokunAppMode",appMode);applyAppModeUI();toast("โหมด: การ์ดวันเกิด");});
 $("birthdayName").addEventListener("input",e=>{birthdayName=e.target.value;localStorage.setItem("pokunBirthdayName",birthdayName);});
@@ -9388,6 +9752,7 @@ window.addEventListener("load",()=>{
     // Capture existing cards before moving them.
     const mode=cardById("modeLauncherCard");
     const date=cardByContainedId("date");
+    const blessingThemeCard=cardById("blessingThemeCard");
     const special=cardById("specialDayBox");
     // v10.5: Buddhist Quick Access stays at the very top; do NOT capture/move it into workflow group 1.
     const birthday=cardById("birthdaySettings");
@@ -9409,7 +9774,7 @@ window.addEventListener("load",()=>{
     const generalVisualStyle=cardById("generalVisualStyleCard");
 
     const g1=makeGroup("workflowBasic","1","ประเภทงาน / วันที่ / โหมดพิเศษ","หลังเลือกรูปแบบภาพหลักด้านบนแล้ว ค่อยเลือกโหมดทั่วไป / พุทธศิลป์ / เทพมงคล และกฎหลักของงาน");
-    move(g1,mode,date,special,birthday,quote);
+    move(g1,mode,date,blessingThemeCard,special,birthday,quote);
 
     const g2=makeGroup("workflowScene","2","Scene Template — ภาพที่ 1 และภาพที่ 2","เลือกโลกของภาพทั้งคู่ในจุดเดียว");
     move(g2,scene);
