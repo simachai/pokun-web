@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#111827">
-<title>POKUN Web v11.36</title>
+<title>POKUN Web v11.40</title>
 <style>
 :root{--bg:#f4f5f7;--card:#fff;--ink:#16181d;--muted:#6b7280;--line:#e5e7eb;--accent:#111827;--good:#087f5b;--warn:#b45309}
 *{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI","Noto Sans Thai",sans-serif;background:var(--bg);color:var(--ink)}
@@ -180,7 +180,7 @@ button{border:0;border-radius:12px;padding:12px 14px;font-weight:800;cursor:poin
 <body>
 <div class="wrap">
   <div class="hero">
-    <h1>POKUN Web <span class="small">v11.36</span></h1>
+    <h1>POKUN Web <span class="small">v11.38</span></h1>
     <p>Daily Greeting Prompt Generator — ใช้ได้บนมือถือและคอม</p>
   </div>
 
@@ -250,17 +250,23 @@ button{border:0;border-radius:12px;padding:12px 14px;font-weight:800;cursor:poin
       <select id="blessingTheme">
         <option value="auto">AUTO — ให้ระบบเลือกอารมณ์ให้เหมาะกับวัน</option>
         <option value="work">การงาน / ความก้าวหน้า</option>
+        <option value="business_sales">ค้าขาย / ลูกค้า / ยอดขาย</option>
+        <option value="money">การเงิน / เงินทองคล่องตัว</option>
         <option value="health">สุขภาพ / แข็งแรง</option>
+        <option value="senior_health">สุขภาพผู้ใหญ่ / ผู้สูงอายุ</option>
         <option value="happiness">ความสุข / สบายใจ</option>
-        <option value="wealth">มั่งคั่งร่ำรวย / การเงิน</option>
+        <option value="wealth">มั่งคั่งร่ำรวย / ทรัพย์เพิ่มพูน</option>
+        <option value="auspicious_wealth">มั่งคั่งมงคล / เทพมงคล / รับทรัพย์</option>
         <option value="success">ความสำเร็จ / สมหวัง</option>
         <option value="luck">โชคลาภ / สิริมงคล</option>
         <option value="encouragement">กำลังใจ / เริ่มต้นใหม่</option>
+        <option value="short_power">สั้น กระชับ เพิ่มพลัง</option>
         <option value="all_round">ครบทุกเรื่อง — งาน เงิน สุขภาพ ความสุข</option>
       </select>
       <div id="blessingThemeDescription" class="notice" style="margin-top:8px"></div>
+      <button id="rerollBlessingTheme" class="secondary" type="button" style="margin-top:8px;width:100%">🎲 สุ่มคำอวยพรใหม่ในหมวดนี้</button>
       <div class="small" style="margin-top:6px">
-        ระบบจะสุ่ม <b>Headline + คำอวยพร + Supporting Line</b> จากธีมเดียวกัน เพื่อให้อารมณ์ของข้อความไปในทิศทางเดียวกัน
+        ปุ่มนี้จะสุ่มเฉพาะ <b>Headline + คำอวยพร + Supporting Line</b> ในธีมเดิม โดยไม่เปลี่ยน Scene / คน / สัตว์ / Layout
       </div>
     </section>
 
@@ -1323,6 +1329,7 @@ let frameMode1 = localStorage.getItem("pokunFrameMode1") || "auto";
 let frameMode2 = localStorage.getItem("pokunFrameMode2") || "auto";
 let rerollSeed1 = Number(localStorage.getItem("pokunRerollSeed1") || "0");
 let rerollSeed2 = Number(localStorage.getItem("pokunRerollSeed2") || "0");
+let blessingRerollSeed = Number(localStorage.getItem("pokunBlessingRerollSeed") || "0");
 let userSeed = localStorage.getItem("pokunUserSeed");
 if(!userSeed){
   userSeed = String(Date.now()) + "-" + String(Math.random()).slice(2) + "-" + String(performance.now());
@@ -5909,7 +5916,7 @@ const POKUN_BLESSING_LIBRARY={
     headlines:[
       "ขอให้งานวันนี้ราบรื่น","วันนี้ขอให้ทุกอย่างเป็นใจ","ขอให้ก้าวหน้าในทุกหน้าที่","เริ่มวันนี้ด้วยความสำเร็จ",
       "ขอให้งานดี มีแต่เรื่องดี ๆ","วันนี้ขอให้สิ่งที่ทำลงตัว","ขอให้ทุกงานสำเร็จดังหวัง","วันดี ๆ ของความก้าวหน้า",
-      "ขอให้วันนี้งานเดินหน้า","ขอให้ทุกหน้าที่ผ่านฉลุย","ส่งกำลังใจให้วันทำงาน","ขอให้วันนี้เป็นวันของความสำเร็จ"
+      "ขอให้วันนี้งานเดินหน้า","ขอให้ทุกหน้าที่ผ่านฉลุย","ส่งกำลังใจให้วันทำงาน","ขอให้วันนี้เป็นวันของความสำเร็จ","งานเด่น ก้าวหน้าเด่น","วันทำงานที่ลงตัว","วันนี้โอกาสเปิดทาง"
     ],
     greetings:[
       "ขอให้การงานวันนี้ราบรื่น สิ่งที่รับผิดชอบสำเร็จตามที่ตั้งใจ",
@@ -5940,13 +5947,90 @@ const POKUN_BLESSING_LIBRARY={
       "ก้าวไปทีละนิด แต่ขอให้ทุกก้าวพาไปข้างหน้า"
     ]
   },
+  business_sales:{
+    label:"ค้าขาย / ลูกค้า / ยอดขาย",
+    desc:"เน้นลูกค้าเข้า ยอดขายดี ค้าขายคล่อง เจรจาสำเร็จ ออเดอร์ต่อเนื่อง และธุรกิจเดินหน้า",
+    headlines:[
+      "วันนี้ค้าขายคล่อง","ลูกค้าเข้าไม่ขาดสาย","ยอดขายเดินดี","เปิดร้านรับความปัง",
+      "ออเดอร์เข้า งานไหลลื่น","ธุรกิจเดินหน้า","ขายดีทั้งวัน","วันนี้ยอดพุ่ง",
+      "ลูกค้าดี งานดี เงินดี","เปิดวันรับออเดอร์","การค้าราบรื่น","วันนี้ขายดีเป็นพิเศษ",
+      "ยอดดี ลูกค้าดี ใจดี","รับวันด้วยยอดขายดี","งานขายเป็นใจ","โอกาสการค้าเปิดทาง"
+    ],
+    greetings:[
+      "ลูกค้าเข้าต่อเนื่อง ยอดขายดี และการค้าราบรื่นตลอดวัน",
+      "ออเดอร์เข้าคล่อง เจรจาสำเร็จ และมีลูกค้าดี ๆ เข้ามา",
+      "ค้าขายราบรื่น ลูกค้าไว้วางใจ และยอดขายเติบโตอย่างสวยงาม",
+      "มีลูกค้าใหม่ มีลูกค้าเก่ากลับมา และมีโอกาสปิดการขายดี ๆ",
+      "ธุรกิจเดินหน้า ทีมทำงานคล่อง และทุกการเจรจาเป็นผลดี",
+      "ยอดขายเป็นใจ ออเดอร์ต่อเนื่อง และเงินหมุนคล่องตัว",
+      "ลูกค้าเห็นคุณค่า สินค้าขายดี และงานบริการได้รับคำชม",
+      "งานขายราบรื่น มีจังหวะดี ๆ และมีข่าวดีเรื่องยอดเข้ามา",
+      "การค้าคล่องตัว ลูกค้าตัดสินใจง่าย และมีออเดอร์เข้าตลอดวัน",
+      "มีโอกาสดีทางธุรกิจ พบลูกค้าที่ใช่ และปิดงานได้อย่างราบรื่น",
+      "ยอดเติบโตอย่างมั่นคง ลูกค้าประทับใจ และงานเดินหน้าอย่างดี",
+      "วันนี้เต็มไปด้วยลูกค้าดี ๆ ยอดขายดี และพลังดีในการทำงาน",
+      "มีคนสนใจมากขึ้น มีคำสั่งซื้อเพิ่มขึ้น และการค้าสดใส",
+      "ธุรกิจเป็นที่รักของลูกค้า และสร้างผลลัพธ์ที่น่าภูมิใจ"
+    ],
+    supporting:[
+      "ลูกค้าเข้า ยอดเดิน เงินคล่อง",
+      "ขายดี มีออเดอร์ มีรอยยิ้ม",
+      "ปิดงานง่าย ลูกค้าประทับใจ",
+      "ยอดขายดีทั้งวัน",
+      "ลูกค้าดี โอกาสดี รายรับดี",
+      "งานขายคล่องแบบสบายใจ",
+      "ออเดอร์มาอย่างต่อเนื่อง",
+      "การค้าราบรื่นทุกจังหวะ",
+      "ลูกค้าไว้วางใจ ธุรกิจเติบโต",
+      "ยอดดี งานดี เงินดี",
+      "เปิดร้านรับพลังดี",
+      "ค้าขึ้น งานขึ้น เงินขึ้น"
+    ]
+  },
+  money:{
+    label:"การเงิน / เงินทองคล่องตัว",
+    desc:"เน้นเงินเข้า เงินหมุนคล่อง รายรับดี มีเหลือเก็บ จัดการรายจ่ายได้สบายขึ้น และการเงินเป็นใจ",
+    headlines:[
+      "เงินคล่องทั้งวัน","การเงินเป็นใจ","วันนี้เงินเข้าไม่ขาด","เงินทองไหลลื่น",
+      "รับวันด้วยการเงินที่ดี","รายรับดี มีเหลือเก็บ","เงินมา งานเดิน","คล่องตัวเรื่องเงิน",
+      "วันนี้เรื่องเงินลงตัว","การเงินสดใส","เงินเข้าแบบสบายใจ","จังหวะการเงินดี"
+    ],
+    greetings:[
+      "การเงินคล่องตัว รายรับดี และมีเหลือเก็บอย่างสบายใจ",
+      "เงินเข้าอย่างต่อเนื่อง รายจ่ายลงตัว และวางแผนได้อย่างมั่นใจ",
+      "หยิบจับเรื่องเงินราบรื่น มีโอกาสรับทรัพย์และจัดการทุกอย่างได้ดี",
+      "รายรับเปิดทาง รายจ่ายไม่กดดัน และมีความสบายใจเรื่องการเงิน",
+      "มีช่องทางดี ๆ ให้เงินไหลเข้า และมีวินัยที่พาไปสู่ความมั่นคง",
+      "การเงินเป็นใจ มีโอกาสดี และมีพลังใจใช้ชีวิตแบบไม่กังวล",
+      "เงินหมุนคล่อง การค้าราบรื่น และทุกการตัดสินใจเรื่องเงินลงตัว",
+      "มีรายได้ดีขึ้น เก็บเงินได้มากขึ้น และใช้จ่ายอย่างมั่นคง",
+      "เรื่องเงินราบรื่น มีความคล่องตัว และมีความสบายใจในทุกการใช้จ่าย",
+      "เงินทองไหลลื่น งานส่งผลดี และมีข่าวดีเรื่องรายรับเข้ามา",
+      "มีรายรับ มีเหลือเก็บ และมีโอกาสดีทางการเงินเข้ามาเรื่อย ๆ",
+      "จัดการเรื่องเงินได้ง่ายขึ้น เบาใจขึ้น และมั่นใจมากขึ้น"
+    ],
+    supporting:[
+      "เงินเข้าเป็นจังหวะดี รายจ่ายอยู่ในมือ",
+      "รายรับดี มีเก็บ และสบายใจ",
+      "คล่องมือ คล่องใจ คล่องเรื่องเงิน",
+      "การเงินลงตัว ใช้จ่ายอย่างมั่นใจ",
+      "เงินหมุนดี ชีวิตก็เบาสบาย",
+      "วันนี้เรื่องเงินเป็นใจ",
+      "รายได้งอกงาม เก็บเงินได้มากขึ้น",
+      "มีมากพอใช้ และพอเก็บ",
+      "เงินดี งานดี ใจดี",
+      "เบาใจเรื่องเงินมากขึ้นทุกวัน",
+      "รับทรัพย์แบบสบาย ๆ",
+      "การเงินมั่นคงทีละก้าว"
+    ]
+  },
   health:{
     label:"สุขภาพ / แข็งแรง",
     desc:"เน้นสุขภาพแข็งแรง สดชื่น พักผ่อนดี ปลอดภัย และสบายทั้งกายใจ",
     headlines:[
       "ขอให้สุขภาพแข็งแรง","วันนี้ขอให้กายใจสดชื่น","ขอให้แข็งแรงและสบายใจ","สุขภาพดี คือพรที่ดีที่สุด",
       "ขอให้วันนี้เต็มไปด้วยพลัง","ขอให้กายแข็งแรง ใจเบิกบาน","วันนี้ขอให้สดชื่นทั้งวัน","ขอให้มีพลังดี ๆ เต็มหัวใจ",
-      "ส่งความห่วงใยให้สุขภาพดี","ขอให้วันใหม่พาแต่ความสดชื่น","แข็งแรงทั้งกาย สบายทั้งใจ","ขอให้วันนี้เป็นวันที่เบาสบาย"
+      "ส่งความห่วงใยให้สุขภาพดี","ขอให้วันใหม่พาแต่ความสดชื่น","แข็งแรงทั้งกาย สบายทั้งใจ","ขอให้วันนี้เป็นวันที่เบาสบาย","สดชื่น แข็งแรง พร้อมลุย","กายดี ใจดี ทั้งวัน"
     ],
     greetings:[
       "ขอให้สุขภาพแข็งแรง สดชื่นทั้งกายและใจ และมีพลังดี ๆ ตลอดวัน",
@@ -5971,13 +6055,48 @@ const POKUN_BLESSING_LIBRARY={
       "สุขภาพแข็งแรง คือทุนของทุกความฝัน","ขอให้กินอิ่ม นอนหลับ และตื่นมาด้วยรอยยิ้ม"
     ]
   },
+  senior_health:{
+    label:"สุขภาพผู้ใหญ่ / ผู้สูงอายุ",
+    desc:"เน้นแข็งแรง เดินเหินคล่อง กินอิ่ม นอนหลับดี สดชื่น ปลอดภัย และมีความสุขในทุกวัน",
+    headlines:[
+      "แข็งแรง สดชื่น ทุกวัน","กายแข็งแรง ใจสดใส","สุขภาพดี มีความสุข","วันนี้สดชื่นเป็นพิเศษ",
+      "แข็งแรง เดินคล่อง ใจดี","วันดีของสุขภาพ","อยู่ดีมีสุขทุกวัน","สดใสทั้งกายและใจ",
+      "สุขภาพดี คือความสุข","แข็งแรงและเบิกบาน","วันนี้กายใจเป็นสุข","มีแรง มีสุข มีรอยยิ้ม"
+    ],
+    greetings:[
+      "สุขภาพแข็งแรง เดินเหินคล่อง สดชื่น และมีความสุขตลอดวัน",
+      "กินอิ่ม นอนหลับดี ร่างกายแข็งแรง และหัวใจเบิกบาน",
+      "กายแข็งแรง ใจสดใส ใช้ชีวิตคล่องตัว และมีรอยยิ้มทุกวัน",
+      "สุขภาพดี มีแรงทำสิ่งที่ชอบ และมีความสุขกับคนรอบตัว",
+      "สดชื่นทั้งวัน พักผ่อนได้เต็มที่ และใช้ชีวิตอย่างสบายใจ",
+      "แข็งแรง ปลอดภัย อารมณ์ดี และมีความสุขในทุกช่วงเวลา",
+      "สุขภาพสมบูรณ์ เดินทางสะดวก และพบแต่เรื่องน่ายินดี",
+      "มีแรงกายดี มีแรงใจดี และใช้ชีวิตประจำวันอย่างราบรื่น",
+      "นอนหลับสบาย ตื่นมาสดชื่น และมีพลังดีในทุกเช้า",
+      "ร่างกายแข็งแรง อารมณ์แจ่มใส และมีคนที่รักอยู่ใกล้ ๆ",
+      "ใช้ชีวิตได้อย่างคล่องตัว สุขภาพดี และมีความสุขแบบสบาย ๆ",
+      "แข็งแรงทุกวัน สดใสทุกเช้า และอุ่นใจในทุกช่วงเวลา"
+    ],
+    supporting:[
+      "กินอิ่ม นอนหลับ เดินคล่อง",
+      "แข็งแรง สดชื่น และสบายใจ",
+      "สุขภาพดี มีรอยยิ้ม",
+      "กายดี ใจดี ทุกวัน",
+      "มีแรง มีสุข มีความอบอุ่น",
+      "สดใส ปลอดภัย แข็งแรง",
+      "อยู่ดีมีสุขทั้งวัน",
+      "สุขภาพดี ชีวิตก็ดี",
+      "นอนดี กินดี ใจดี",
+      "แข็งแรงและเบิกบาน"
+    ]
+  },
   happiness:{
     label:"ความสุข / สบายใจ",
     desc:"เน้นรอยยิ้ม ความอบอุ่น ใจเบา ความสบายใจ และเรื่องดี ๆ ในชีวิตประจำวัน",
     headlines:[
       "ขอให้วันนี้มีแต่ความสุข","วันนี้ขอให้หัวใจเบิกบาน","ส่งความสุขให้ตลอดทั้งวัน","ขอให้ใจเบาและยิ้มได้",
       "วันดี ๆ เริ่มจากหัวใจที่ดี","ขอให้วันนี้อ่อนโยนกับหัวใจ","ส่งรอยยิ้มให้วันใหม่","ขอให้ความสุขอยู่ใกล้ ๆ",
-      "วันนี้ขอให้มีแต่เรื่องน่ารัก","ขอให้ใจฟูตลอดทั้งวัน","ขอให้วันนี้สบายใจเป็นพิเศษ","ยิ้มรับวันใหม่ด้วยความสุข"
+      "วันนี้ขอให้มีแต่เรื่องน่ารัก","ขอให้ใจฟูตลอดทั้งวัน","ขอให้วันนี้สบายใจเป็นพิเศษ","ยิ้มรับวันใหม่ด้วยความสุข","สุขง่าย ๆ ในทุกวัน","ใจเบาและอบอุ่น"
     ],
     greetings:[
       "ขอให้วันนี้มีแต่รอยยิ้ม ความสบายใจ และเรื่องดี ๆ เข้ามา",
@@ -6003,12 +6122,12 @@ const POKUN_BLESSING_LIBRARY={
     ]
   },
   wealth:{
-    label:"มั่งคั่งร่ำรวย / การเงิน",
-    desc:"เน้นเงินทองคล่องตัว โชคลาภ รายรับ โอกาสทำเงิน ความมั่นคง และความมั่งคั่ง",
+    label:"มั่งคั่งร่ำรวย / ทรัพย์เพิ่มพูน",
+    desc:"เน้นความอุดมสมบูรณ์ ทรัพย์เพิ่มพูน โชคลาภ ความรุ่งเรือง ฐานะมั่นคง และความมั่งคั่งในภาพรวม",
     headlines:[
       "ขอให้เงินทองไหลมา","วันนี้ขอให้เฮงและรวย","ขอให้มั่งคั่งสมปรารถนา","รับทรัพย์ รับโชค รับความสำเร็จ",
       "ขอให้การเงินรุ่งเรือง","เปิดวันใหม่รับความมั่งคั่ง","ขอให้มีโชค มีทรัพย์ มีสุข","ขอให้วันนี้เงินทองคล่องมือ",
-      "มั่งมีศรีสุขตลอดวัน","ขอให้ร่ำรวยทั้งทรัพย์และโอกาส","วันนี้ขอให้โชคลาภเปิดทาง","ขอให้ทรัพย์สินเพิ่มพูน"
+      "มั่งมีศรีสุขตลอดวัน","ขอให้ร่ำรวยทั้งทรัพย์และโอกาส","วันนี้ขอให้โชคลาภเปิดทาง","ขอให้ทรัพย์สินเพิ่มพูน","ทรัพย์งอกงาม โชคเปิดทาง","มั่งคั่งอย่างงดงาม"
     ],
     greetings:[
       "ขอให้เงินทองไหลมา การเงินคล่องตัว และมีรายรับดี ๆ เข้ามา",
@@ -6031,6 +6150,44 @@ const POKUN_BLESSING_LIBRARY={
       "มั่งคั่งอย่างมีความสุข และร่ำรวยอย่างสบายใจ","ขอให้สิ่งที่หวังเรื่องการเงินค่อย ๆ เป็นจริง",
       "รับทรัพย์ รับโอกาส รับเรื่องดี ๆ ตลอดวัน","ขอให้วันนี้เป็นอีกวันที่การเงินเป็นใจ",
       "ความมั่งคั่งเริ่มต้นจากโอกาสดี ๆ ที่เข้ามา","ขอให้มีมากพอใช้ มากพอเก็บ และมากพอแบ่งปัน"
+    ]
+  },
+  auspicious_wealth:{
+    label:"มั่งคั่งมงคล / เทพมงคล / รับทรัพย์",
+    desc:"เหมาะกับภาพเทพมงคล ฮก–ลก–ซิ่ว ไฉ่ซิงเอี๊ย พระพิฆเนศ และงานรับทรัพย์ เน้นเฮง รุ่งเรือง มั่งคั่ง โชคลาภ และสิริมงคล",
+    headlines:[
+      "รับทรัพย์ รับโชค รับความเฮง","วันนี้เฮงเป็นพิเศษ","มั่งคั่ง รุ่งเรือง สมหวัง","เปิดทางรับทรัพย์",
+      "เฮงดี เงินดี โชคดี","โชคลาภเปิดทาง","รับวันแห่งความมั่งคั่ง","ทรัพย์มา โชคมา",
+      "วันนี้รุ่งเรืองทุกด้าน","เงินทองกองมา","เปิดรับความเฮง","มั่งมีศรีสุข",
+      "โชคดีทวีคูณ","วันมงคลแห่งความสำเร็จ","รับพลังแห่งความมั่งคั่ง","เฮง ปัง รุ่งเรือง"
+    ],
+    greetings:[
+      "รับทรัพย์ รับโชค การงานรุ่งเรือง และเงินทองคล่องมือ",
+      "โชคลาภเปิดทาง ความสำเร็จเข้ามา และทรัพย์สินเพิ่มพูน",
+      "มั่งคั่ง รุ่งเรือง มีคนอุปถัมภ์ และพบแต่โอกาสดี ๆ",
+      "หยิบจับสิ่งใดเป็นเงินเป็นทอง งานดี เงินดี และสมหวัง",
+      "มีโชค มีทรัพย์ มีความสำเร็จ และมีความสุขตลอดวัน",
+      "การเงินรุ่งเรือง การค้าราบรื่น และมีสิริมงคลในทุกก้าว",
+      "ทรัพย์เพิ่มพูน โอกาสเปิดกว้าง และมีข่าวดีเข้ามาอย่างต่อเนื่อง",
+      "รับพลังดีแห่งความมั่งคั่ง พร้อมความสำเร็จและความสบายใจ",
+      "มีความอุดมสมบูรณ์ เงินทองงอกงาม และชีวิตรุ่งเรือง",
+      "เฮงทั้งงาน ปังทั้งเงิน และเต็มไปด้วยความโชคดี",
+      "โชคดีทวีคูณ มีทรัพย์ มีสุข และมีความก้าวหน้า",
+      "วันนี้เป็นวันแห่งความรุ่งเรือง ความมั่งคั่ง และข่าวดี"
+    ],
+    supporting:[
+      "เฮง ปัง รวย รุ่งเรือง",
+      "รับทรัพย์ รับโชค รับข่าวดี",
+      "มีโชค มีทรัพย์ มีสุข",
+      "เงินมา งานรุ่ง โชคเปิด",
+      "มั่งมีศรีสุขทั้งวัน",
+      "ทรัพย์งอก โชคงาม งานดี",
+      "รุ่งเรืองทุกด้าน",
+      "รับพลังแห่งความเฮง",
+      "โชคดีทวีคูณ",
+      "มั่งคั่งอย่างสบายใจ",
+      "งานรุ่ง เงินคล่อง โชคดี",
+      "รับทรัพย์แบบปัง ๆ"
     ]
   },
   success:{
@@ -6126,13 +6283,55 @@ const POKUN_BLESSING_LIBRARY={
       "ทำวันนี้ให้ดีที่สุด ที่เหลือค่อยว่ากัน","ขอให้พรุ่งนี้ดีกว่าวันนี้เสมอ"
     ]
   },
+  short_power:{
+    label:"สั้น กระชับ เพิ่มพลัง",
+    desc:"คำอวยพรสั้น อ่านง่าย จำง่าย ให้พลังบวกชัดเจน เหมาะกับงานประจำวันและภาพที่ต้องการข้อความกระชับ",
+    headlines:[
+      "วันนี้พลังดี","รับวันด้วยพลังบวก","วันดีเริ่มแล้ว","จังหวะดีมาแล้ว",
+      "เฮง ปัง พร้อมลุย","สดใสและเป็นใจ","ดีขึ้นทุกด้าน","ยิ้มรับวันใหม่",
+      "พลังดีอยู่ข้างคุณ","วันนี้ต้องปัง","ก้าวไปให้สุด","ใจดี งานดี",
+      "มั่นใจแล้วไปต่อ","แสงดี ใจดี","วันใหม่ โอกาสใหม่","สำเร็จได้อีก"
+    ],
+    greetings:[
+      "งานปัง เงินคล่อง สุขภาพดี มีความสุข",
+      "คิดดี เจอสิ่งดี ทำอะไรก็ราบรื่น",
+      "โชคดีมีมา ความสุขมีอยู่ พลังใจเต็มร้อย",
+      "การงานก้าวหน้า การเงินเป็นใจ สุขภาพแข็งแรง",
+      "วันนี้สดใส ทุกเรื่องลงตัว มีแต่ข่าวดี",
+      "ใจมั่น งานเดิน เงินมา สุขภาพดี",
+      "เดินหน้าราบรื่น มีแรง มีโชค และมีรอยยิ้ม",
+      "สมหวังในเรื่องสำคัญ และสบายใจตลอดวัน",
+      "สำเร็จง่ายขึ้น ราบรื่นมากขึ้น และสุขใจมากขึ้น",
+      "มีพลัง มีโอกาส และมีความสุขกับทุกก้าว",
+      "รุ่งเรื่องงาน คล่องเรื่องเงิน และอิ่มใจทั้งวัน",
+      "สิ่งดีเข้ามา เรื่องหนักเบาลง และใจสดใส"
+    ],
+    supporting:[
+      "งานดี เงินดี ใจดี",
+      "สุขภาพดี มีพลัง",
+      "เฮง ปัง สมหวัง",
+      "มีแรง มีโชค มีสุข",
+      "คิดสิ่งใดราบรื่น",
+      "วันนี้เป็นวันดี",
+      "ยิ้มได้ทั้งวัน",
+      "สำเร็จได้อีกขั้น",
+      "พลังบวกเต็มหัวใจ",
+      "คล่องตัวทุกเรื่อง",
+      "สดใสและมั่นคง",
+      "ก้าวหน้าอย่างสวยงาม",
+      "มีความสุขแบบง่าย ๆ",
+      "เรื่องดีเข้ามาเรื่อย ๆ",
+      "มั่งคั่งและสบายใจ",
+      "ใจฟู งานไหลลื่น"
+    ]
+  },
   all_round:{
     label:"ครบทุกเรื่อง / งาน เงิน สุขภาพ ความสุข",
     desc:"รวมการงาน การเงิน สุขภาพ ความสุข โชคดี และความราบรื่นไว้ในคำอวยพรเดียว",
     headlines:[
       "ขอให้วันนี้ดีพร้อมทุกเรื่อง","ส่งพรดี ๆ ให้ครบทุกด้าน","วันนี้ขอให้มีแต่สิ่งดี","ขอให้ทั้งงาน เงิน สุขภาพ และใจดี",
       "ขอให้ชีวิตวันนี้ราบรื่น","รับวันใหม่ด้วยพรดี ๆ","ขอให้วันนี้สมบูรณ์ด้วยความสุข","ขอให้ทุกด้านของชีวิตเป็นใจ",
-      "วันนี้ขอให้ดีทั้งกายและใจ","ขอให้รุ่งเรืองและมีความสุข","ส่งความปรารถนาดีให้ทั้งวัน","ขอให้วันนี้มีแต่ความลงตัว"
+      "วันนี้ขอให้ดีทั้งกายและใจ","ขอให้รุ่งเรืองและมีความสุข","ส่งความปรารถนาดีให้ทั้งวัน","ขอให้วันนี้มีแต่ความลงตัว","ครบดีครบสุขทั้งวัน","วันดีครบทุกด้าน"
     ],
     greetings:[
       "ขอให้การงานราบรื่น สุขภาพแข็งแรง การเงินคล่องตัว และหัวใจมีความสุข",
@@ -6165,19 +6364,33 @@ const POKUN_BLESSING_LIBRARY={
   }
 };
 
-function resolvedBlessingTheme(s){
+function pairedThemeChoice(pool,pairBase,setNo){
+  const source=(pool||[]).filter(Boolean);
+  if(!source.length)return "all_round";
+  if(source.length===1)return source[0];
+  const firstIndex=seededIndex(pairBase+401,source.length);
+  if(setNo===1)return source[firstIndex];
+  const jump=1+seededIndex(pairBase+1401,source.length-1);
+  return source[(firstIndex+jump)%source.length];
+}
+
+function resolvedBlessingTheme(s,setNo=1){
   const selected=document.getElementById("blessingTheme")?.value || blessingTheme || "auto";
   if(selected!=="auto" && POKUN_BLESSING_LIBRARY[selected]) return selected;
 
   const mainMode=(typeof resolveMainArtworkMode==="function")?resolveMainArtworkMode():"general";
+  let pool=[];
   if(mainMode==="deity" || lifestyleVisualStyle==="wealth_prosperity"){
-    return (dateSeed(s.d)%2===0)?"wealth":"luck";
+    pool=["auspicious_wealth","wealth","money","business_sales","luck","success","all_round","short_power"];
+  }else if(s?.holy?.isHoly || s?.buddhist){
+    pool=["happiness","health","senior_health","all_round","short_power","encouragement"];
+  }else if(s?.special){
+    pool=["all_round","success","health","senior_health","money","wealth","short_power"];
+  }else{
+    pool=["work","business_sales","money","health","senior_health","happiness","wealth","auspicious_wealth","success","luck","encouragement","short_power","all_round"];
   }
-  if(s?.holy?.isHoly || s?.buddhist) return "happiness";
-  if(s?.special) return "all_round";
-
-  const pool=["work","health","happiness","wealth","success","luck","encouragement","all_round"];
-  return pool[dateSeed(s.d)%pool.length];
+  const pairBase=hashString(`${userSeed}|${s.day.isoDate}|${mainMode}|auto-theme-pair-v1140|${rerollSeed1}|${rerollSeed2}|${blessingRerollSeed}`);
+  return pairedThemeChoice(pool,pairBase,setNo);
 }
 
 const POSITIVE_BLESSING_FORBIDDEN_GENERAL=[
@@ -6203,35 +6416,79 @@ function positiveBlessingPool(pool,theme){
   return safe.length?safe:(pool||[]);
 }
 
+function blessingSemanticSignature(text){
+  return String(text||"")
+    .replace(/^\s*ขอให้\s*/u,"")
+    .replace(/[“”"'`.,!?()\-–—:;]+/g," ")
+    .replace(/\s+/g," ")
+    .trim()
+    .split(" ")
+    .map(x=>x.trim())
+    .filter(Boolean)
+    .filter(x=>!["วันนี้","และ","กับ","ใน","อย่าง","มาก","ขึ้น","มี","ให้","ของ","ทุก","ตลอดวัน","เสมอ","เรื่อง","แบบ"].includes(x));
+}
+
+function blessingSimilarityScore(a,b){
+  const A=blessingSemanticSignature(a), B=blessingSemanticSignature(b);
+  if(!A.length || !B.length)return 0;
+  const setB=new Set(B);
+  let overlap=0;
+  for(const token of new Set(A)) if(setB.has(token)) overlap++;
+  return overlap/Math.max(1,Math.min(new Set(A).size,new Set(B).size));
+}
+
 function pairedBlessingValue(pool,theme,pairBase,setNo,channelOffset){
   const source=positiveBlessingPool(pool,theme);
   if(!source.length)return "";
   if(source.length===1)return source[0];
 
-  // Resolve Image 1 first, then derive Image 2 from a guaranteed non-zero offset.
-  // This makes the pair deterministic and guarantees Image 1 != Image 2.
   const firstIndex=seededIndex(pairBase+channelOffset,source.length);
   if(setNo===1)return source[firstIndex];
 
-  const jump=1+seededIndex(pairBase+channelOffset+7919,source.length-1);
-  const secondIndex=(firstIndex+jump)%source.length;
-  return source[secondIndex];
+  const firstValue=source[firstIndex];
+  const candidateOrder=[];
+  for(let step=1; step<source.length; step++){
+    const idx=(firstIndex+step+seededIndex(pairBase+channelOffset+7919,source.length))%source.length;
+    if(!candidateOrder.includes(idx)) candidateOrder.push(idx);
+  }
+  for(const idx of candidateOrder){
+    const candidate=source[idx];
+    if(candidate!==firstValue && blessingSimilarityScore(firstValue,candidate)<0.45){
+      return candidate;
+    }
+  }
+  for(const idx of candidateOrder){
+    if(source[idx]!==firstValue) return source[idx];
+  }
+  return source[(firstIndex+1)%source.length];
+}
+
+function stripRepeatedWishPrefix(text){
+  return String(text||"")
+    .replace(/^\s*ขอให้\s*/u,"")
+    .trim();
 }
 
 function emotionalBlessingTexts(s,setNo,seed){
-  const key=resolvedBlessingTheme(s);
+  const key=resolvedBlessingTheme(s,setNo);
   const lib=POKUN_BLESSING_LIBRARY[key]||POKUN_BLESSING_LIBRARY.all_round;
 
   // v11.35: Text is resolved as a PAIR, not as two unrelated random draws.
   // Deliberately exclude Date.now()/Math.random() seed so Image 1 and Image 2
   // see the same pair-base even when their Prompt buttons are pressed separately.
   const pairBase=hashString(
-    `${userSeed}|${s.day.isoDate}|${key}|emotional-pair-v1135|${rerollSeed1}|${rerollSeed2}`
+    `${userSeed}|${s.day.isoDate}|${key}|emotional-pair-v1140|${rerollSeed1}|${rerollSeed2}|${blessingRerollSeed}`
   );
 
-  const headline=pairedBlessingValue(lib.headlines,key,pairBase,setNo,101);
-  const greeting=pairedBlessingValue(lib.greetings,key,pairBase,setNo,203);
-  const supporting=pairedBlessingValue(lib.supporting,key,pairBase,setNo,307);
+  const headline=stripRepeatedWishPrefix(
+    pairedBlessingValue(lib.headlines,key,pairBase,setNo,101)
+  );
+  const greeting=stripRepeatedWishPrefix(
+    pairedBlessingValue(lib.greetings,key,pairBase,setNo,203)
+  );
+  const supporting=stripRepeatedWishPrefix(
+    pairedBlessingValue(lib.supporting,key,pairBase,setNo,307)
+  );
 
   return {theme:key,label:lib.label,headline,greeting,supporting,pairBase};
 }
@@ -6242,7 +6499,7 @@ function updateBlessingThemeDescription(){
   if(!el||!sel)return;
   const key=sel.value||"auto";
   if(key==="auto"){
-    el.innerHTML="<b>AUTO:</b> ระบบจะเลือกธีมตามวันและโหมด เช่น เทพมงคลจะเอนทางมั่งคั่ง/โชคลาภ ส่วนวันปกติจะหมุนหลายอารมณ์เพื่อลดความซ้ำ";
+    el.innerHTML="<b>AUTO:</b> ระบบจะเลือกธีมให้เหมาะกับวันและโหมด โดยหมุนใช้หมวดละเอียด เช่น งาน / เงิน / สุขภาพ / ความสุข / มั่งคั่ง พร้อมพยายามแยกแนวคำอวยพรของภาพที่ 1 และภาพที่ 2 ให้ต่างกันมากขึ้นเพื่อลดความซ้ำ";
     return;
   }
   const lib=POKUN_BLESSING_LIBRARY[key];
@@ -6250,7 +6507,7 @@ function updateBlessingThemeDescription(){
 }
 
 const POKUN_V9 = (() => {
-  const VERSION="11.36";
+  const VERSION="11.40";
   const ENGINE_LABEL=`POKUN v${VERSION}`;
 
 
@@ -7735,8 +7992,20 @@ const PAIR_LOOKS={
     if(a.greeting===b.greeting)duplicate.push("Greeting");
     if(a.supporting===b.supporting)duplicate.push("Supporting Line");
 
+    const tooSimilar=[];
+    if(blessingSimilarityScore(a.headline,b.headline)>=0.45)tooSimilar.push("Headline");
+    if(blessingSimilarityScore(a.greeting,b.greeting)>=0.45)tooSimilar.push("Greeting");
+    if(blessingSimilarityScore(a.supporting,b.supporting)>=0.45)tooSimilar.push("Supporting Line");
+
     if(duplicate.length){
       throw new Error(`${ENGINE_LABEL} Pair Blessing Lock failed: duplicate ${duplicate.join(", ")} between Image 1 and Image 2.`);
+    }
+    const selected=document.getElementById("blessingTheme")?.value || blessingTheme || "auto";
+    if(selected==="auto" && a.theme===b.theme){
+      throw new Error(`${ENGINE_LABEL} Pair Blessing Lock failed: AUTO theme selected but Image 1 and Image 2 resolved to the same blessing theme.`);
+    }
+    if(tooSimilar.length){
+      throw new Error(`${ENGINE_LABEL} Pair Blessing Lock failed: overly similar ${tooSimilar.join(", ")} between Image 1 and Image 2.`);
     }
     return true;
   }
@@ -7858,8 +8127,11 @@ const PAIR_LOOKS={
       `GREETING / BLESSING TEXT EXACTLY: ${texts.greeting}`,
       appMode==="greeting" ? `SUPPORTING LINE EXACTLY: ${texts.supporting||"(none)"}` : "SUPPORTING LINE: not applicable to this artwork mode.",
       appMode==="greeting" ? `BLESSING THEME: ${texts.blessingThemeLabel||"AUTO"}.` : "BLESSING THEME: not applicable.",
+      appMode==="greeting" ? "SPECIALIZED BLESSING LIBRARY: use the exact POKUN-selected wording appropriate to this category; do not generalize it into a generic prayer." : "",
       appMode==="greeting" ? `PAIR TEXT IDENTITY: IMAGE ${setNo} uses its own POKUN-resolved blessing variant.` : "",
       appMode==="greeting" ? "PAIR BLESSING LOCK: Image 1 and Image 2 MUST use different Headline, different Greeting/Blessing, and different Supporting Line. Never copy the companion image's wording." : "",
+      appMode==="greeting" ? "PAIR BLESSING VARIETY: Avoid the same wording style, semantic direction, and emotional rhythm across the pair; make Image 1 and Image 2 clearly feel like different blessing messages." : "",
+      appMode==="greeting" ? "REPEATED-WISH WORDING LOCK: Headline, Greeting/Blessing, and Supporting Line MUST NOT begin with ‘ขอให้’. The POKUN engine has already removed that repeated prefix from all visible Thai text." : "",
       "VISIBLE THAI TEXT IS DATA, NOT CREATIVE COPY. Copy the wording exactly; do not paraphrase, shorten, rewrite, translate, invent new wording, or reuse text from another image.",
       appMode==="greeting" ? "POSITIVE BLESSING VOICE: This is a friendly daily blessing, NOT a prayer, plea, lament, consolation, or problem-focused affirmation. Use clear immediately-positive language that gives energy when read." : "",
       appMode==="greeting" && texts.blessingThemeKey!=="encouragement"
@@ -8159,6 +8431,14 @@ const PAIR_LOOKS={
       if(!/HEADLINE TEXT EXACTLY:/i.test(portableHead))failures.push("Portable exact headline field missing near top");
       if(!/GREETING \/ BLESSING TEXT EXACTLY:/i.test(portableHead))failures.push("Portable exact greeting field missing near top");
       if(appMode==="greeting" && !/SUPPORTING LINE EXACTLY:/i.test(portableHead))failures.push("Portable exact supporting-line field missing near top");
+      if(appMode==="greeting"){
+        const hm=portableHead.match(/HEADLINE TEXT EXACTLY:\s*([^\n]+)/i);
+        const gm=portableHead.match(/GREETING \/ BLESSING TEXT EXACTLY:\s*([^\n]+)/i);
+        const sm=portableHead.match(/SUPPORTING LINE EXACTLY:\s*([^\n]+)/i);
+        if(hm && /^ขอให้\s*/u.test((hm[1]||"").trim()))failures.push("Headline still begins with repeated ขอให้");
+        if(gm && /^ขอให้\s*/u.test((gm[1]||"").trim()))failures.push("Greeting still begins with repeated ขอให้");
+        if(sm && /^ขอให้\s*/u.test((sm[1]||"").trim()))failures.push("Supporting Line still begins with repeated ขอให้");
+      }
     }
     if(expectedDay){
       const visibleHeadMatch=prompt.match(/Visible Thai headline:\s*\n([^\n]+)/i);
@@ -8976,6 +9256,8 @@ const PAIR_LOOKS={
       `4. GREETING text must remain exactly: ${texts.greeting}`,
       appMode==="greeting" ? `4A. SUPPORTING LINE must remain exactly: ${texts.supporting||"(none)"}` : "4A. SUPPORTING LINE: not applicable.",
       appMode==="greeting" ? "4B. PAIR TEXT UNIQUENESS: do not reuse the companion image's Headline, Greeting, or Supporting Line." : "4B. PAIR TEXT UNIQUENESS: not applicable.",
+      appMode==="greeting" ? "4B-2. PAIR TEXT VARIETY: do not use the same message pattern or near-duplicate semantic direction across the pair." : "4B-2. PAIR TEXT VARIETY: not applicable.",
+      appMode==="greeting" ? "4C. WORDING RHYTHM: Headline, Greeting, and Supporting Line must not begin with ‘ขอให้’; preserve the exact normalized text from POKUN." : "4C. WORDING RHYTHM: not applicable.",
       `5. HEADLINE typography must use: ${s.style?.name||"Selected Thai typography"}`,
       `6. HEADLINE FRAME must visibly follow: ${resolvedTextFrame(s,"headline").label}`,
       `7. BLESSING FRAME must visibly follow: ${resolvedTextFrame(s,"blessing").label}`,
@@ -9556,6 +9838,29 @@ $("blessingTheme").addEventListener("change",e=>{
   localStorage.setItem("pokunBlessingTheme",blessingTheme);
   updateBlessingThemeDescription();
   toast("ธีมคำอวยพร: "+e.target.options[e.target.selectedIndex].text);
+});
+$("rerollBlessingTheme").addEventListener("click",()=>{
+  blessingRerollSeed++;
+  localStorage.setItem("pokunBlessingRerollSeed",blessingRerollSeed);
+
+  let rebuilt=0;
+  try{
+    if($("output1").value.trim()){
+      $("output1").value=pokunSafeBuildPrompt(1);
+      rebuilt++;
+    }
+    if($("output2").value.trim()){
+      $("output2").value=pokunSafeBuildPrompt(2);
+      rebuilt++;
+    }
+  }catch(err){
+    console.error("Blessing-only reroll failed:",err);
+  }
+
+  const selected=$("blessingTheme").selectedOptions?.[0]?.textContent?.trim()||"AUTO";
+  toast(rebuilt
+    ? `🎲 สุ่มคำอวยพรใหม่ในหมวด ${selected} แล้ว — Scene/Layout เดิม`
+    : `🎲 เตรียมคำอวยพรชุดใหม่ในหมวด ${selected} แล้ว`);
 });
 $("modeQuoteCard").addEventListener("click",()=>{appMode="quote";localStorage.setItem("pokunAppMode",appMode);applyAppModeUI();toast("โหมด: คำคมประจำวัน");});
 $("modeBirthdayCard").addEventListener("click",()=>{appMode="birthday";localStorage.setItem("pokunAppMode",appMode);applyAppModeUI();toast("โหมด: การ์ดวันเกิด");});
