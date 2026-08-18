@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#111827">
-<title>POKUN Web v11.35</title>
+<title>POKUN Web v11.36</title>
 <style>
 :root{--bg:#f4f5f7;--card:#fff;--ink:#16181d;--muted:#6b7280;--line:#e5e7eb;--accent:#111827;--good:#087f5b;--warn:#b45309}
 *{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI","Noto Sans Thai",sans-serif;background:var(--bg);color:var(--ink)}
@@ -180,7 +180,7 @@ button{border:0;border-radius:12px;padding:12px 14px;font-weight:800;cursor:poin
 <body>
 <div class="wrap">
   <div class="hero">
-    <h1>POKUN Web <span class="small">v11.35</span></h1>
+    <h1>POKUN Web <span class="small">v11.36</span></h1>
     <p>Daily Greeting Prompt Generator — ใช้ได้บนมือถือและคอม</p>
   </div>
 
@@ -6250,7 +6250,7 @@ function updateBlessingThemeDescription(){
 }
 
 const POKUN_V9 = (() => {
-  const VERSION="11.35";
+  const VERSION="11.36";
   const ENGINE_LABEL=`POKUN v${VERSION}`;
 
 
@@ -7286,8 +7286,17 @@ const PAIR_LOOKS={
     };
   }
 
-  function exactGenderAuthority(setNo){
-    const c=exactCharacterState(setNo);
+  function genderContractFromState(c){
+    if(!c?.people)return "NOT APPLICABLE — NO PEOPLE";
+    if(c.personSource==="multi_photo")return "REFERENCE ROLE MAPPING";
+    if(c.gender==="male")return "MALE ONLY";
+    if(c.gender==="female")return "FEMALE ONLY";
+    if(c.gender==="mixed")return "BOTH FEMALE AND MALE REQUIRED";
+    return "AUTO";
+  }
+
+  function exactGenderAuthority(setNo,capturedState){
+    const c=capturedState||exactCharacterState(setNo);
     if(!c.people)return [];
     if(c.personSource==="multi_photo"){
       return ["EXACT GENDER AUTHORITY: reference-role mapping / uploaded identities control gender; do not invent or swap gender."];
@@ -7311,8 +7320,8 @@ const PAIR_LOOKS={
     return ["EXACT GENDER AUTHORITY: AUTO — gender may be selected only when the UI explicitly remains AUTO."];
   }
 
-  function exactAgeAuthority(setNo){
-    const c=exactCharacterState(setNo);
+  function exactAgeAuthority(setNo,capturedState){
+    const c=capturedState||exactCharacterState(setNo);
     if(!c.people)return [];
     const map={
       child:"CHILD ONLY",
@@ -7758,8 +7767,8 @@ const PAIR_LOOKS={
     })[mode]||String(mode||"AUTO");
   }
 
-  function portablePromptContractLines(setNo,s,scene,texts,layout,stroke,blessing,pairLook,buddhistResolved,deityResolved){
-    const c=exactCharacterState(setNo);
+  function portablePromptContractLines(setNo,s,scene,texts,layout,stroke,blessing,pairLook,buddhistResolved,deityResolved,characterStateSnapshot){
+    const c=characterStateSnapshot||exactCharacterState(setNo);
     const hf=resolvedTextFrame(s,"headline");
     const bf=resolvedTextFrame(s,"blessing");
     const render=masterRenderingState();
@@ -7810,6 +7819,7 @@ const PAIR_LOOKS={
     const character=[
       `CHARACTER MODE: ${c.charMode}.`,
       `GENDER: ${c.people?c.gender:"NOT APPLICABLE — NO PEOPLE"}.`,
+      `GENDER CONTRACT: ${genderContractFromState(c)}.`,
       `AGE: ${c.people?c.age:"NOT APPLICABLE — NO PEOPLE"}.`,
       `ANIMAL TYPE: ${c.animal?c.animalType:"NONE"}.`,
       `ANIMAL LOOK: ${c.animal?c.animalLook:"NONE"}.`,
@@ -8024,7 +8034,7 @@ const PAIR_LOOKS={
     return lines;
   }
 
-  function renderPeopleAnimal(setNo,s,L){
+  function renderPeopleAnimal(setNo,s,L,characterStateSnapshot){
     const resolvedCombo=resolveBuddhistSubjectComposition(setNo,s);
     const currentMainMode=resolveMainArtworkMode();
     if(currentMainMode==="general"){
@@ -8072,9 +8082,10 @@ const PAIR_LOOKS={
       L.push("STRICT NO FIGURE: no Buddha statue/image and no human figure of any kind.");
     }
 
-    if(boolPeople(setNo) && !monkRef && !monkGenerated){
-      L.push(...exactGenderAuthority(setNo));
-      L.push(...exactAgeAuthority(setNo));
+    const capturedCharacter=characterStateSnapshot||exactCharacterState(setNo);
+    if(capturedCharacter.people && !monkRef && !monkGenerated){
+      L.push(...exactGenderAuthority(setNo,capturedCharacter));
+      L.push(...exactAgeAuthority(setNo,capturedCharacter));
     }
 
     L.push(...exactAnimalAuthority(setNo,s));
@@ -8184,12 +8195,16 @@ const PAIR_LOOKS={
     }
     const exactSetNo=ctx?.setNo||0;
     if(exactSetNo){
-      const ec=exactCharacterState(exactSetNo);
-      if(ec.people && !/EXACT GENDER AUTHORITY/i.test(prompt))failures.push("Exact gender authority missing");
+      const ec=ctx.characterState||exactCharacterState(exactSetNo);
+      const genderContract=genderContractFromState(ec);
+      if(ec.people && !/GENDER CONTRACT:/i.test(prompt))failures.push("Structured gender contract missing");
+      if(ec.people && ec.personSource!=="multi_photo" && !/EXACT GENDER AUTHORITY/i.test(prompt))failures.push("Exact gender authority missing");
       if(ec.people && !/EXACT AGE AUTHORITY/i.test(prompt))failures.push("Exact age authority missing");
       if(!/EXACT ANIMAL AUTHORITY/i.test(prompt))failures.push("Exact animal authority missing");
-      if(ec.gender==="male" && !/MALE ONLY/i.test(prompt))failures.push("Male selected but MALE ONLY lock missing");
-      if(ec.gender==="female" && !/FEMALE ONLY/i.test(prompt))failures.push("Female selected but FEMALE ONLY lock missing");
+      if(genderContract==="MALE ONLY" && !/GENDER CONTRACT:\s*MALE ONLY/i.test(prompt))failures.push("Male selected but structured MALE ONLY contract missing");
+      if(genderContract==="FEMALE ONLY" && !/GENDER CONTRACT:\s*FEMALE ONLY/i.test(prompt))failures.push("Female selected but structured FEMALE ONLY contract missing");
+      if(genderContract==="BOTH FEMALE AND MALE REQUIRED" && !/GENDER CONTRACT:\s*BOTH FEMALE AND MALE REQUIRED/i.test(prompt))failures.push("Mixed gender selected but structured mixed-gender contract missing");
+      if(genderContract==="REFERENCE ROLE MAPPING" && !/GENDER CONTRACT:\s*REFERENCE ROLE MAPPING/i.test(prompt))failures.push("Multi-photo reference role gender contract missing");
       if(ec.animal && ec.animalType!=="auto" && !new RegExp(`REQUIRED SPECIES:.*${ec.animalType}`,"i").test(prompt)){
         failures.push("Selected animal species exact lock missing");
       }
@@ -8572,6 +8587,9 @@ const PAIR_LOOKS={
     mustFn("effectiveState",effectiveState);
 
     const s=effectiveState(setNo);
+    // v11.36: one immutable Character snapshot for the whole Prompt build + validation cycle.
+    // Prevents late UI/derived-state changes from making Validator disagree with the Prompt.
+    const characterStateSnapshot=Object.freeze({...exactCharacterState(setNo)});
     const buddhistSubjectResolved=resolveBuddhistSubjectComposition(setNo,s);
     const effectivePeopleAllowed=buddhistSubjectResolved.humanRequired || buddhistSubjectPeopleAllowed(setNo,s);
     const seed=(typeof variationSeed==="function")?variationSeed(s,setNo):(Date.now()+setNo*997);
@@ -8593,7 +8611,7 @@ const PAIR_LOOKS={
     const deityResolved=deitySubjectForImage(setNo);
 
     const L=[];
-    L.push(...portablePromptContractLines(setNo,s,scene,texts,layout,stroke,blessing,pairLook,buddhistSubjectResolved,deityResolved));
+    L.push(...portablePromptContractLines(setNo,s,scene,texts,layout,stroke,blessing,pairLook,buddhistSubjectResolved,deityResolved,characterStateSnapshot));
     renderWorkflow(setNo,s,buddhistSubjectResolved,L);
     L.push(...mainModeIsolationLines(setNo));
     L.push(
@@ -8648,7 +8666,7 @@ const PAIR_LOOKS={
         ""
       );
     }
-    renderPeopleAnimal(setNo,s,L);
+    renderPeopleAnimal(setNo,s,L,characterStateSnapshot);
 
     L.push(
       `${ENGINE_LABEL} SECONDARY ENGINE DIAGNOSTICS — MUST NOT OVERRIDE PORTABLE CONTRACT:`,
@@ -8665,12 +8683,12 @@ const PAIR_LOOKS={
       `Buddhist mode active for this image: ${buddhistSubjectResolved.buddhistOn?"YES":"NO"}`,
       `Buddhist Subject Mode: ${buddhistSubjectResolved.buddhistOn?buddhistSubjectResolved.mode:"IGNORED OUTSIDE BUDDHIST MODE"}`,
       `Deity Subject Mode: ${deityResolved.heroActive?deityResolved.deityMode:(deityResolved.companionNoDeity?"OFF — IMAGE 2 COMPANION NO DEITY":"OFF")}`,
-      `Exact Character Mode: ${exactCharacterState(setNo).charMode}`,
-      `Exact Gender UI: ${exactCharacterState(setNo).gender}`,
-      `Exact Age UI: ${exactCharacterState(setNo).age}`,
-      `Exact Animal Type UI: ${exactCharacterState(setNo).animalType}`,
-      `Exact Animal Look UI: ${exactCharacterState(setNo).animalLook}`,
-      `Exact Animal Behavior UI: ${exactCharacterState(setNo).animalBehavior}`,
+      `Exact Character Mode: ${characterStateSnapshot.charMode}`,
+      `Exact Gender UI: ${characterStateSnapshot.gender}`,
+      `Exact Age UI: ${characterStateSnapshot.age}`,
+      `Exact Animal Type UI: ${characterStateSnapshot.animalType}`,
+      `Exact Animal Look UI: ${characterStateSnapshot.animalLook}`,
+      `Exact Animal Behavior UI: ${characterStateSnapshot.animalBehavior}`,
       `Buddhist Subject source: DIRECT UI STATE for Image ${setNo}`,
       `Master Rendering Style: ${masterRenderingState().label}`,
       `Master Rendering Scope: BOTH IMAGES / ENTIRE ARTWORK`,
@@ -9030,7 +9048,7 @@ const PAIR_LOOKS={
     };
 
     const prompt=L.filter(x=>x!==undefined && x!==null && String(x).trim()!=="").join("\n");
-    validatePrompt(prompt,{setNo,s,scene,variation,stroke,blessing,people:effectivePeopleAllowed,other,pairLook});
+    validatePrompt(prompt,{setNo,s,scene,variation,stroke,blessing,people:effectivePeopleAllowed,other,pairLook,characterState:characterStateSnapshot});
     setPair(setNo,signature);
     return prompt;
   }
