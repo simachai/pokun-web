@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#111827">
-<title>POKUN Web v11.34</title>
+<title>POKUN Web v11.35</title>
 <style>
 :root{--bg:#f4f5f7;--card:#fff;--ink:#16181d;--muted:#6b7280;--line:#e5e7eb;--accent:#111827;--good:#087f5b;--warn:#b45309}
 *{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI","Noto Sans Thai",sans-serif;background:var(--bg);color:var(--ink)}
@@ -180,7 +180,7 @@ button{border:0;border-radius:12px;padding:12px 14px;font-weight:800;cursor:poin
 <body>
 <div class="wrap">
   <div class="hero">
-    <h1>POKUN Web <span class="small">v11.34</span></h1>
+    <h1>POKUN Web <span class="small">v11.35</span></h1>
     <p>Daily Greeting Prompt Generator — ใช้ได้บนมือถือและคอม</p>
   </div>
 
@@ -6198,16 +6198,42 @@ function pickPositiveBlessing(pool,base,theme){
   return source[seededIndex(base,source.length)];
 }
 
+function positiveBlessingPool(pool,theme){
+  const safe=(pool||[]).filter(x=>isPositiveBlessingVoice(x,theme));
+  return safe.length?safe:(pool||[]);
+}
+
+function pairedBlessingValue(pool,theme,pairBase,setNo,channelOffset){
+  const source=positiveBlessingPool(pool,theme);
+  if(!source.length)return "";
+  if(source.length===1)return source[0];
+
+  // Resolve Image 1 first, then derive Image 2 from a guaranteed non-zero offset.
+  // This makes the pair deterministic and guarantees Image 1 != Image 2.
+  const firstIndex=seededIndex(pairBase+channelOffset,source.length);
+  if(setNo===1)return source[firstIndex];
+
+  const jump=1+seededIndex(pairBase+channelOffset+7919,source.length-1);
+  const secondIndex=(firstIndex+jump)%source.length;
+  return source[secondIndex];
+}
+
 function emotionalBlessingTexts(s,setNo,seed){
   const key=resolvedBlessingTheme(s);
   const lib=POKUN_BLESSING_LIBRARY[key]||POKUN_BLESSING_LIBRARY.all_round;
-  const base=hashString(`${userSeed}|${s.day.isoDate}|${setNo}|${key}|emotional-v1130|${seed}`);
 
-  const headline=pickPositiveBlessing(lib.headlines,base+101,key);
-  const greeting=pickPositiveBlessing(lib.greetings,base+203,key);
-  const supporting=pickPositiveBlessing(lib.supporting,base+307,key);
+  // v11.35: Text is resolved as a PAIR, not as two unrelated random draws.
+  // Deliberately exclude Date.now()/Math.random() seed so Image 1 and Image 2
+  // see the same pair-base even when their Prompt buttons are pressed separately.
+  const pairBase=hashString(
+    `${userSeed}|${s.day.isoDate}|${key}|emotional-pair-v1135|${rerollSeed1}|${rerollSeed2}`
+  );
 
-  return {theme:key,label:lib.label,headline,greeting,supporting};
+  const headline=pairedBlessingValue(lib.headlines,key,pairBase,setNo,101);
+  const greeting=pairedBlessingValue(lib.greetings,key,pairBase,setNo,203);
+  const supporting=pairedBlessingValue(lib.supporting,key,pairBase,setNo,307);
+
+  return {theme:key,label:lib.label,headline,greeting,supporting,pairBase};
 }
 
 function updateBlessingThemeDescription(){
@@ -6224,7 +6250,7 @@ function updateBlessingThemeDescription(){
 }
 
 const POKUN_V9 = (() => {
-  const VERSION="11.34";
+  const VERSION="11.35";
   const ENGINE_LABEL=`POKUN v${VERSION}`;
 
 
@@ -7690,6 +7716,22 @@ const PAIR_LOOKS={
     return {headline,greeting,supporting,blessingThemeKey,blessingThemeLabel,quoteData};
   }
 
+  function assertGreetingPairUniqueness(s,seed){
+    if(appMode!=="greeting" || s.special || s.holy?.isHoly || s.buddhist)return true;
+    const a=emotionalBlessingTexts(s,1,seed);
+    const b=emotionalBlessingTexts(s,2,seed);
+
+    const duplicate=[];
+    if(a.headline===b.headline)duplicate.push("Headline");
+    if(a.greeting===b.greeting)duplicate.push("Greeting");
+    if(a.supporting===b.supporting)duplicate.push("Supporting Line");
+
+    if(duplicate.length){
+      throw new Error(`${ENGINE_LABEL} Pair Blessing Lock failed: duplicate ${duplicate.join(", ")} between Image 1 and Image 2.`);
+    }
+    return true;
+  }
+
   function portableDeityLabel(mode){
     return ({
       ganesha:"GANESHA / พระพิฆเนศ",
@@ -7806,6 +7848,8 @@ const PAIR_LOOKS={
       `GREETING / BLESSING TEXT EXACTLY: ${texts.greeting}`,
       appMode==="greeting" ? `SUPPORTING LINE EXACTLY: ${texts.supporting||"(none)"}` : "SUPPORTING LINE: not applicable to this artwork mode.",
       appMode==="greeting" ? `BLESSING THEME: ${texts.blessingThemeLabel||"AUTO"}.` : "BLESSING THEME: not applicable.",
+      appMode==="greeting" ? `PAIR TEXT IDENTITY: IMAGE ${setNo} uses its own POKUN-resolved blessing variant.` : "",
+      appMode==="greeting" ? "PAIR BLESSING LOCK: Image 1 and Image 2 MUST use different Headline, different Greeting/Blessing, and different Supporting Line. Never copy the companion image's wording." : "",
       "VISIBLE THAI TEXT IS DATA, NOT CREATIVE COPY. Copy the wording exactly; do not paraphrase, shorten, rewrite, translate, invent new wording, or reuse text from another image.",
       appMode==="greeting" ? "POSITIVE BLESSING VOICE: This is a friendly daily blessing, NOT a prayer, plea, lament, consolation, or problem-focused affirmation. Use clear immediately-positive language that gives energy when read." : "",
       appMode==="greeting" && texts.blessingThemeKey!=="encouragement"
@@ -8544,6 +8588,7 @@ const PAIR_LOOKS={
     const layout=layoutSpec(setNo);
     const shadow=shadowSpec(s);
     const texts=resolveTexts(s,setNo,seed);
+    assertGreetingPairUniqueness(s,seed);
     const other=getPair(setNo===1?2:1);
     const deityResolved=deitySubjectForImage(setNo);
 
@@ -8912,6 +8957,7 @@ const PAIR_LOOKS={
       `3. HEADLINE text must remain exactly: ${texts.headline}`,
       `4. GREETING text must remain exactly: ${texts.greeting}`,
       appMode==="greeting" ? `4A. SUPPORTING LINE must remain exactly: ${texts.supporting||"(none)"}` : "4A. SUPPORTING LINE: not applicable.",
+      appMode==="greeting" ? "4B. PAIR TEXT UNIQUENESS: do not reuse the companion image's Headline, Greeting, or Supporting Line." : "4B. PAIR TEXT UNIQUENESS: not applicable.",
       `5. HEADLINE typography must use: ${s.style?.name||"Selected Thai typography"}`,
       `6. HEADLINE FRAME must visibly follow: ${resolvedTextFrame(s,"headline").label}`,
       `7. BLESSING FRAME must visibly follow: ${resolvedTextFrame(s,"blessing").label}`,
