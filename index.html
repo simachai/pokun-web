@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#111827">
-<title>POKUN Web v11.47</title>
+<title>POKUN Web v11.54</title>
 <style>
 :root{--bg:#f4f5f7;--card:#fff;--ink:#16181d;--muted:#6b7280;--line:#e5e7eb;--accent:#111827;--good:#087f5b;--warn:#b45309}
 *{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI","Noto Sans Thai",sans-serif;background:var(--bg);color:var(--ink)}
@@ -180,7 +180,7 @@ button{border:0;border-radius:12px;padding:12px 14px;font-weight:800;cursor:poin
 <body>
 <div class="wrap">
   <div class="hero">
-    <h1>POKUN Web <span class="small">v11.47</span></h1>
+    <h1>POKUN Web <span class="small">v11.54</span></h1>
     <p>Daily Greeting Prompt Generator — ใช้ได้บนมือถือและคอม</p>
   </div>
 
@@ -248,25 +248,22 @@ button{border:0;border-radius:12px;padding:12px 14px;font-weight:800;cursor:poin
     <section class="card" id="blessingThemeCard">
       <label>💝 ธีมคำอวยพร</label>
       <select id="blessingTheme">
-        <option value="auto">AUTO — ให้ระบบเลือกอารมณ์ให้เหมาะกับวัน</option>
-        <option value="work">การงาน / ความก้าวหน้า</option>
-        <option value="business_sales">ค้าขาย / ลูกค้า / ยอดขาย</option>
-        <option value="money">การเงิน / เงินทองคล่องตัว</option>
+        <option value="auto">AUTO — ใช้เฉพาะคำที่สกัดจากภาพอ้างอิง</option>
+        <option value="happiness">ความสุข / สดใส</option>
         <option value="health">สุขภาพ / แข็งแรง</option>
-        <option value="senior_health">สุขภาพผู้ใหญ่ / ผู้สูงอายุ</option>
-        <option value="happiness">ความสุข / สบายใจ</option>
-        <option value="wealth">มั่งคั่งร่ำรวย / ทรัพย์เพิ่มพูน</option>
-        <option value="auspicious_wealth">มั่งคั่งมงคล / เทพมงคล / รับทรัพย์</option>
+        <option value="work">การงาน / ความก้าวหน้า</option>
+        <option value="money">การเงิน / เงินทอง</option>
+        <option value="wealth">มั่งคั่ง / ร่ำรวย</option>
         <option value="success">ความสำเร็จ / สมหวัง</option>
-        <option value="luck">โชคลาภ / สิริมงคล</option>
-        <option value="encouragement">กำลังใจ / เริ่มต้นใหม่</option>
-        <option value="short_power">สั้น กระชับ เพิ่มพลัง</option>
-        <option value="all_round">ครบทุกเรื่อง — งาน เงิน สุขภาพ ความสุข</option>
+        <option value="luck">โชคดี / โชคลาภ</option>
+        <option value="encouragement">วันใหม่ / กำลังใจ</option>
+        <option value="short_power">สั้น กระชับ</option>
+        <option value="all_round">รวมคำอวยพรจากภาพ</option>
       </select>
       <div id="blessingThemeDescription" class="notice" style="margin-top:8px"></div>
       <button id="rerollBlessingTheme" class="secondary" type="button" style="margin-top:8px;width:100%">🎲 สุ่มคำอวยพรใหม่ในหมวดนี้</button>
       <div class="small" style="margin-top:6px">
-        สุ่มเฉพาะ <b>Headline + คำอวยพร</b> ในธีมเดิม โดยใช้คลังคำไทยที่นิยมและไม่เปลี่ยน Scene / คน / สัตว์ / Layout
+        สุ่มเฉพาะ <b>Headline + คำอวยพร</b> ในธีมเดิม โดยใช้ <b>เฉพาะคำที่สกัดจากภาพอ้างอิงของคุณ</b> และไม่เปลี่ยน Scene / คน / สัตว์ / Layout
       </div>
     </section>
 
@@ -680,37 +677,143 @@ button{border:0;border-radius:12px;padding:12px 14px;font-weight:800;cursor:poin
           <div>
             <label class="small">Headline Highlight</label>
             <select id="headlineHighlight">
-              <option value="none">ไม่มี</option>
-              <option value="auto" selected>AUTO — สีตามวัน</option>
-              <option value="brush">Brush Swash — ปาดพู่กัน</option>
-              <option value="marker">Marker — ปากกาไฮไลต์</option>
-              <option value="rounded">Rounded Paint — แถบมน</option>
+              <optgroup label="พื้นฐาน / ใช้ได้กว้าง">
+                <option value="none">ไม่มี</option>
+                <option value="auto" selected>AUTO — สีตามวัน + สุ่มรูปแบบ</option>
+                <option value="brush">Brush Swash — ปาดพู่กัน</option>
+                <option value="marker">Marker Highlight — ปากกาไฮไลต์</option>
+                <option value="rounded">Rounded Paint — แถบมน</option>
+                <option value="soft_rect">Soft Rectangle — กล่องสีมุมโค้ง</option>
+                <option value="minimal_block">Minimal Block — บล็อกสีมินิมอล</option>
+                <option value="thin_bar">Thin Underline Bar — แถบเส้นใต้บาง</option>
+              </optgroup>
+              <optgroup label="น่ารัก / Cute / Pastel">
+                <option value="cute_sticker">Cute Sticker — สติ๊กเกอร์น่ารัก</option>
+                <option value="bubble">Bubble Label — ป้ายฟองนุ่ม</option>
+                <option value="washi">Washi Tape — เทปกระดาษ</option>
+                <option value="pastel_blob">Pastel Blob — ก้อนสีพาสเทล</option>
+              </optgroup>
+              <optgroup label="ธรรมชาติ / งานศิลป์">
+                <option value="watercolor">Watercolor Wash — ปื้นสีน้ำ</option>
+                <option value="soft_glow">Soft Glow Patch — แสงนุ่มหลังข้อความ</option>
+              </optgroup>
+              <optgroup label="โปสเตอร์ / เด่น">
+                <option value="torn_paper">Torn Paper — กระดาษฉีก</option>
+                <option value="diagonal">Diagonal Bar — แถบเฉียง</option>
+                <option value="ribbon">Ribbon Banner — ริบบิ้น</option>
+              </optgroup>
+              <optgroup label="หรู / พรีเมียม / ไทย">
+                <option value="gold_plate">Gold Plate — ป้ายทอง</option>
+                <option value="glass">Glass Label — ป้ายกระจกใส</option>
+                <option value="kanok_panel">Kanok Panel — แผงกนกไทย</option>
+              </optgroup>
             </select>
           </div>
           <div>
             <label class="small">Date Highlight / แถบหลังวันที่</label>
             <select id="dateHighlight">
-              <option value="none">ไม่มี</option>
-              <option value="auto" selected>AUTO — สีตามวัน</option>
-              <option value="brush">Brush Swash — ปาดพู่กัน</option>
-              <option value="marker">Marker — ปากกาไฮไลต์</option>
-              <option value="rounded">Rounded Paint — แถบมน</option>
+              <optgroup label="พื้นฐาน / ใช้ได้กว้าง">
+                <option value="none">ไม่มี</option>
+                <option value="auto" selected>AUTO — สีตามวัน + สุ่มรูปแบบ</option>
+                <option value="brush">Brush Swash — ปาดพู่กัน</option>
+                <option value="marker">Marker Highlight — ปากกาไฮไลต์</option>
+                <option value="rounded">Rounded Paint — แถบมน</option>
+                <option value="soft_rect">Soft Rectangle — กล่องสีมุมโค้ง</option>
+                <option value="minimal_block">Minimal Block — บล็อกสีมินิมอล</option>
+                <option value="thin_bar">Thin Underline Bar — แถบเส้นใต้บาง</option>
+              </optgroup>
+              <optgroup label="น่ารัก / Cute / Pastel">
+                <option value="cute_sticker">Cute Sticker — สติ๊กเกอร์น่ารัก</option>
+                <option value="bubble">Bubble Label — ป้ายฟองนุ่ม</option>
+                <option value="washi">Washi Tape — เทปกระดาษ</option>
+                <option value="pastel_blob">Pastel Blob — ก้อนสีพาสเทล</option>
+              </optgroup>
+              <optgroup label="ธรรมชาติ / งานศิลป์">
+                <option value="watercolor">Watercolor Wash — ปื้นสีน้ำ</option>
+                <option value="soft_glow">Soft Glow Patch — แสงนุ่มหลังข้อความ</option>
+              </optgroup>
+              <optgroup label="โปสเตอร์ / เด่น">
+                <option value="torn_paper">Torn Paper — กระดาษฉีก</option>
+                <option value="diagonal">Diagonal Bar — แถบเฉียง</option>
+                <option value="ribbon">Ribbon Banner — ริบบิ้น</option>
+              </optgroup>
+              <optgroup label="หรู / พรีเมียม / ไทย">
+                <option value="gold_plate">Gold Plate — ป้ายทอง</option>
+                <option value="glass">Glass Label — ป้ายกระจกใส</option>
+                <option value="kanok_panel">Kanok Panel — แผงกนกไทย</option>
+              </optgroup>
             </select>
           </div>
         </div>
-        <div class="small" style="margin-top:6px">AUTO ใช้ Signature Color ของวันโดยอัตโนมัติ และ Headline / วันที่เปิด-ปิดแยกกันได้ โดยไม่กระทบ Stroke หรือ Shadow / 3D</div>
+        <div class="small" style="margin-top:6px">มี 20 ตัวเลือก • AUTO ใช้ Signature Color ของวันและสุ่มจากแบบที่ใช้ได้กว้าง ส่วน Gold Plate / Glass Label / Kanok Panel เลือกเองเมื่ออยากได้ธีมเฉพาะ • Headline / วันที่ตั้งแยกกันได้ และไม่กระทบ Stroke หรือ Shadow / 3D</div>
       </div>
 
       <div class="stylebox" id="generalVisualStyleCard" style="margin-bottom:10px">
         <strong>✨ Visual Style / สไตล์ภาพทั่วไป</strong>
-        <div class="small" style="margin-top:5px">กำหนดภาษาภาพและอารมณ์เพิ่มเติม ภายใต้ Master Rendering Style ที่เลือกไว้ด้านบน</div>
+        <div class="small" style="margin-top:5px">48 สไตล์ + AUTO • ทุกสไตล์ทำงานภายใต้ Master Rendering Style ด้านบน จึงไม่สลับภาพสมจริงเป็นการ์ตูนหรือกลับกัน • AUTO จะเลือกจาก Scene Family ของภาพคู่</div>
         <label class="small" style="display:block;margin-top:10px">Visual Style / สไตล์ภาพ</label>
         <select id="lifestyleVisualStyle" style="margin-top:5px">
-          <option value="auto">AUTO — ใช้สไตล์ภาพเดิมของ POKUN</option>
-          <option value="cute_lifestyle">Cute Thai Lifestyle Greeting — หวาน สดใส เป็นกันเอง</option>
-          <option value="positive_energy">Positive Energy Lifestyle Poster — พลังบวก สดใส โปสเตอร์ไลฟ์สไตล์</option>
-          <option value="wealth_prosperity">มั่งคั่งร่ำรวย — Wealth & Prosperity / ทองอร่าม ความรุ่งเรือง โชคลาภ</option>
-          <option value="cute_playful_prop">Cute Playful Prop Greeting — สดใส ขี้เล่น คนเล่นกับพร็อพ</option>
+          <option value="auto">AUTO — เลือกตาม Scene + Master Rendering Style</option>
+          <optgroup label="ภาพถ่าย / Lifestyle">
+            <option value="cute_lifestyle">Cute Thai Lifestyle Greeting — ไลฟ์สไตล์ไทยหวานสดใส</option>
+            <option value="positive_energy">Positive Energy Lifestyle Poster — โปสเตอร์พลังบวก</option>
+            <option value="cinematic_lifestyle">Cinematic Lifestyle — ไลฟ์สไตล์แบบภาพยนตร์</option>
+            <option value="clean_commercial">Clean Commercial — โฆษณาสะอาดพรีเมียม</option>
+            <option value="travel_editorial">Travel Editorial — ท่องเที่ยวแบบนิตยสาร</option>
+            <option value="food_editorial">Food Editorial — อาหารแบบนิตยสาร</option>
+            <option value="botanical_photography">Botanical Photography — พฤกษศาสตร์สดชื่น</option>
+            <option value="luxury_product">Luxury Product Photography — สินค้าหรูพรีเมียม</option>
+          </optgroup>
+          <optgroup label="น่ารัก / Cute / Playful">
+            <option value="cute_playful_prop">Cute Playful Prop — ขี้เล่นกับพร็อพ</option>
+            <option value="kawaii_pastel">Kawaii Pastel — คาวาอี้พาสเทล</option>
+            <option value="storybook_cute">Storybook Cute — นิทานภาพน่ารัก</option>
+            <option value="soft_3d_cute">Soft 3D Cute — นุ่มนูนมีมิติ</option>
+            <option value="chibi_greeting">Chibi Greeting — จิบิการ์ดสวัสดี</option>
+            <option value="paper_cut_cute">Paper Cut Cute — กระดาษตัดซ้อนชั้น</option>
+            <option value="sticker_illustration">Sticker Illustration — สติ๊กเกอร์ภาพประกอบ</option>
+            <option value="korean_pastel">Korean Pastel Editorial — เกาหลีพาสเทล</option>
+          </optgroup>
+          <optgroup label="วาดมือ / Artistic">
+            <option value="watercolor_dream">Watercolor Dream — สีน้ำละมุน</option>
+            <option value="gouache_poster">Gouache Poster — กวอชโปสเตอร์</option>
+            <option value="colored_pencil">Colored Pencil — ดินสอสี</option>
+            <option value="soft_pastel_art">Soft Pastel Art — พาสเทลชอล์กนุ่ม</option>
+            <option value="oil_painterly">Oil Painterly — จิตรกรรมสีน้ำมัน</option>
+            <option value="acrylic_bold">Acrylic Bold — อะคริลิกสีสด</option>
+            <option value="ink_wash">Ink & Wash — หมึกและสีน้ำ</option>
+            <option value="thai_handpainted">Thai Hand-painted Illustration — วาดมือกลิ่นอายไทย</option>
+          </optgroup>
+          <optgroup label="Editorial / Modern">
+            <option value="magazine_editorial">Magazine Editorial — นิตยสารพรีเมียม</option>
+            <option value="minimal_luxury">Minimal Luxury — มินิมอลหรู</option>
+            <option value="contemporary_poster">Contemporary Poster — โปสเตอร์ร่วมสมัย</option>
+            <option value="scandinavian_minimal">Scandinavian Minimal — สแกนดิเนเวียนเรียบอบอุ่น</option>
+            <option value="modern_graphic">Modern Graphic — กราฟิกร่วมสมัย</option>
+            <option value="swiss_editorial">Swiss Editorial — กริดสวิส</option>
+            <option value="boutique_editorial">Boutique Editorial — บูทีคละมุนหรู</option>
+            <option value="high_fashion_greeting">High-fashion Greeting — แฟชั่นการ์ดพรีเมียม</option>
+          </optgroup>
+          <optgroup label="Vintage / Nature">
+            <option value="thai_retro_poster">Thai Retro Poster — โปสเตอร์ไทยย้อนยุค</option>
+            <option value="vintage_greeting_card">Vintage Greeting Card — การ์ดสวัสดีวินเทจ</option>
+            <option value="retro_70s">70s Retro — เรโทรยุค 70</option>
+            <option value="retro_80s_pop">80s Pop — เรโทรป๊อปยุค 80</option>
+            <option value="old_print_illustration">Old Print Illustration — ภาพพิมพ์เก่า</option>
+            <option value="vintage_botanical">Vintage Botanical — พฤกษศาสตร์วินเทจ</option>
+            <option value="floral_dreamy">Floral Dreamy — ดอกไม้ชวนฝัน</option>
+            <option value="romantic_garden">Romantic Garden — สวนโรแมนติก</option>
+          </optgroup>
+          <optgroup label="Premium / Material / Fantasy">
+            <option value="wealth_prosperity">Wealth & Prosperity — มั่งคั่งร่ำรวย</option>
+            <option value="luxury_gold">Luxury Gold — ทองหรูร่วมสมัย</option>
+            <option value="glassmorphism_luxury">Glassmorphism Luxury — กระจกใสโมเดิร์น</option>
+            <option value="layered_paper_art">Layered Paper Art — ศิลปะกระดาษซ้อนชั้น</option>
+            <option value="embroidery_craft">Embroidery Craft — งานปักและผ้า</option>
+            <option value="ceramic_art">Ceramic Art — เซรามิกละมุน</option>
+            <option value="dreamy_fantasy">Dreamy Fantasy — แฟนตาซีชวนฝัน</option>
+            <option value="ethereal_glow">Ethereal Glow — แสงเรืองละมุน</option>
+          </optgroup>
         </select>
         <div id="lifestyleVisualDescription" class="notice" style="margin-top:6px"></div>
         <div id="auspiciousDeityBox" class="stylebox" style="margin-top:10px;display:none">
@@ -3048,83 +3151,97 @@ function auspiciousDeityLines(setNo){
   ];
 }
 
-function lifestyleVisualDirection(setNo){
-  const hasPeople=(setNo===1||setNo===2) ? imageHasPeople(setNo) : false;
-  if(lifestyleVisualStyle==="cute_lifestyle"){
-    return hasPeople ? {
-      name:"CUTE THAI LIFESTYLE GREETING",
-      direction:"bright premium Thai lifestyle greeting photography with a friendly feminine or family-safe mood, soft clean daylight, fresh pastel accents, simple real-world setting, airy negative space reserved for large Thai typography, and small hand-drawn heart/sparkle doodles",
-      material:"natural realistic skin, hair, casual fabric, simple lifestyle props, and clean contemporary environmental textures",
-      lighting:"bright soft natural daylight with flattering skin tones, gentle highlights, and fresh social-media greeting-card clarity"
-    } : {
-      name:"CUTE THAI LIFESTYLE GREETING",
-      direction:"bright premium Thai lifestyle greeting photography using cheerful objects, flowers, food, architecture, nature, or decorative props only, with pastel accents, airy negative space, and small hand-drawn doodles; no people",
-      material:"realistic non-human objects, flowers, food, fabric, stationery, decor, architecture, and clean environmental textures",
-      lighting:"bright soft natural daylight with gentle highlights and fresh social-media greeting-card clarity"
-    };
-  }
-  if(lifestyleVisualStyle==="cute_playful_prop" && hasPeople){
-    return {
-      name:"CUTE PLAYFUL PROP GREETING",
-      direction:"bright playful Thai social-media greeting photography with a cheerful non-famous human subject actively interacting with one simple everyday prop; use expressive gesture, clean city/window/sky background, airy negative space, cute doodle accents, and a friendly youthful editorial composition",
-      material:"natural realistic skin and hair, casual contemporary clothing, believable edible or everyday handheld props, clean glass/urban textures, and hand-drawn graphic accents",
-      lighting:"bright clean natural daylight with soft flattering skin tones, fresh blue-sky or window ambience, gentle commercial clarity, and upbeat highlights"
-    };
-  }
 
-  if(lifestyleVisualStyle==="wealth_prosperity"){
-    const wealthSeed=hashString(`${userSeed}|wealth-prosperity|${setNo}|${Date.now()}|${Math.random()}`);
+const GENERAL_VISUAL_STYLES_V1152={"cute_lifestyle":{"cat":"ภาพถ่าย / Lifestyle","label":"Cute Thai Lifestyle Greeting — ไลฟ์สไตล์ไทยหวานสดใส","desc":"ภาพทักทายสดใส เป็นกันเอง พาสเทลนุ่ม พร็อพเรียบง่าย และพื้นที่ว่างสำหรับข้อความ","photo":"bright premium Thai lifestyle photography, friendly and family-safe, soft pastel accents, simple real-world setting, airy negative space, restrained hand-drawn heart or sparkle accents","cartoon":"cute Thai lifestyle illustration with friendly character language, soft pastel accents, simple everyday setting, airy negative space, and restrained heart or sparkle doodles","material":"clean lifestyle textures, natural fabric, flowers, stationery, simple everyday props, and contemporary environmental details","lighting":"bright soft natural daylight, gentle highlights, fresh clean color, and cheerful social-card clarity"},"positive_energy":{"cat":"ภาพถ่าย / Lifestyle","label":"Positive Energy Lifestyle Poster — โปสเตอร์พลังบวก","desc":"ภาพสดใส มีพลัง ฉากโล่ง ท้องฟ้า/สถาปัตย์สะอาด เหมาะกับ Headline ใหญ่","photo":"upbeat premium lifestyle poster photography with open sky or clean architecture, confident visual energy, one restrained accent prop when useful, and strong negative space for oversized Thai typography","cartoon":"upbeat illustrated lifestyle poster with open sky or clean architecture, energetic posing or hero objects, bold but clean negative space, and lively editorial rhythm","material":"clean urban surfaces, contemporary clothing or objects, simple props, sky, glass, concrete, and polished graphic accents","lighting":"clear optimistic daylight, crisp natural contrast, lively highlights, and polished commercial finish"},"cinematic_lifestyle":{"cat":"ภาพถ่าย / Lifestyle","label":"Cinematic Lifestyle — ไลฟ์สไตล์แบบภาพยนตร์","desc":"ลึก มีมิติ แสงสวยแบบหนัง แต่ยังอบอุ่นและเหมาะกับการ์ดทักทาย","photo":"cinematic lifestyle photography with controlled depth, natural storytelling, refined lens-like separation, elegant atmosphere, and premium filmic composition without becoming dark or moody","cartoon":"cinematic illustration with layered depth, expressive but tasteful staging, refined atmospheric perspective, and film-inspired composition while remaining clearly illustrated","material":"real-world environmental textures, subtle atmospheric depth, natural fabric or object surfaces, and restrained cinematic detail","lighting":"soft cinematic key light with believable direction, gentle rim separation, controlled contrast, and warm uplifting grade"},"clean_commercial":{"cat":"ภาพถ่าย / Lifestyle","label":"Clean Commercial — โฆษณาสะอาดพรีเมียม","desc":"สะอาด สว่าง คมชัด ดูมืออาชีพ ใช้ได้กว้างกับคน อาหาร ดอกไม้ และสถานที่","photo":"clean premium commercial photography with uncluttered styling, precise subject separation, generous whitespace, natural proportions, and polished advertising-grade clarity","cartoon":"clean commercial illustration with precise edges, uncluttered styling, balanced spacing, simplified premium forms, and strong readability","material":"clean realistic or illustrated scene-native materials, controlled reflections, restrained props, and premium surface finish","lighting":"bright controlled softbox-like daylight, even subject readability, clean highlights, and balanced contrast"},"travel_editorial":{"cat":"ภาพถ่าย / Lifestyle","label":"Travel Editorial — ท่องเที่ยวแบบนิตยสาร","desc":"วิวและสถานที่เด่นแบบนิตยสารท่องเที่ยว มีมิติและพื้นที่ข้อความสวย","photo":"premium travel editorial photography with destination-first storytelling, layered scenic depth, strong leading lines, airy horizon or architecture, and sophisticated magazine framing","cartoon":"travel editorial illustration with destination-first storytelling, layered scenic depth, strong leading lines, elegant simplified architecture or landscape, and magazine-style framing","material":"destination-native architecture, landscape, vegetation, water, stone, timber, paving, and travel-environment textures","lighting":"fresh destination daylight or golden-hour light with atmospheric depth and clean travel-magazine color"},"food_editorial":{"cat":"ภาพถ่าย / Lifestyle","label":"Food Editorial — อาหารแบบนิตยสาร","desc":"อาหาร/ขนมเป็น Hero ดูน่ากิน พรีเมียม จัดวางสะอาด และไม่รก","photo":"premium food editorial photography with appetizing hero food, natural ingredient texture, restrained props, clean table styling, and generous typography-safe space","cartoon":"premium illustrated food editorial with appetizing stylized food, clear ingredient identity, restrained props, clean table styling, and polished magazine composition","material":"food-native textures, ceramic, glass only when scene-native, wood or fabric surfaces, garnish, fruit, pastry, and realistic edible detail","lighting":"soft directional food light, appetizing highlights, natural shadow falloff, and warm clean editorial grade"},"botanical_photography":{"cat":"ภาพถ่าย / Lifestyle","label":"Botanical Photography — พฤกษศาสตร์สดชื่น","desc":"ดอกไม้ ใบไม้ และสวนดูสดจริง รายละเอียดพืชชัด แสงธรรมชาติสวย","photo":"premium botanical photography with accurate flower and leaf identity, fresh natural texture, graceful depth, airy composition, and clean space for Thai text","cartoon":"botanical illustration with clear flower and leaf identity, graceful natural forms, delicate depth, fresh greens, and airy greeting-card composition","material":"petals, stems, leaves, dew, natural soil or stone, ceramic or basket only when scene-native, and realistic botanical detail","lighting":"fresh morning or soft window light with translucent petals, gentle highlights, and luminous greens"},"luxury_product":{"cat":"ภาพถ่าย / Lifestyle","label":"Luxury Product Photography — สินค้าหรูพรีเมียม","desc":"Hero object ดูแพง เนี้ยบ มีแสงสะท้อนและพื้นที่ว่างแบบโฆษณาหรู","photo":"luxury product-style photography applied to the selected hero subject or object, with sculpted spacing, premium surface control, restrained reflections, and elegant negative space","cartoon":"luxury product-inspired illustration with sculpted spacing, polished simplified forms, refined reflections or highlights, and elegant premium negative space","material":"premium scene-native materials, polished metal or glass only when appropriate, fine fabric, ceramic, stone, paper, or natural textures","lighting":"controlled premium key light, elegant specular highlights, dimensional soft shadows, and refined luxury contrast"},"cute_playful_prop":{"cat":"น่ารัก / Cute / Playful","label":"Cute Playful Prop — ขี้เล่นกับพร็อพ","desc":"คน/ตัวละครมี Interaction กับพร็อพเล็ก ๆ ดูสนุก สดใส และไม่ซ้ำท่าเดิม","photo":"bright playful Thai greeting photography with cheerful interaction around one simple scene-appropriate prop, expressive but natural gesture, clean background, airy typography space, and restrained cute doodles","cartoon":"bright playful greeting illustration with expressive character interaction around one simple prop, lively gesture, cute accents, clean background, and roomy typography area","material":"casual fabric, flowers, food, books, ribbons, sunglasses, stationery, or other simple safe props with clean scene-native textures","lighting":"bright clean daylight with upbeat highlights, soft flattering or object-friendly shadows, and cheerful clarity"},"kawaii_pastel":{"cat":"น่ารัก / Cute / Playful","label":"Kawaii Pastel — คาวาอี้พาสเทล","desc":"นุ่ม หวาน น่ารัก สีพาสเทล รูปทรงโค้งมน เหมาะกับสัตว์ ดอกไม้ และงานอบอุ่น","photo":"photorealistic greeting scene with kawaii-inspired pastel styling, rounded props, soft decorative shapes, cute spacing, and restrained playful accents while keeping real subjects realistic","cartoon":"kawaii pastel illustration with rounded shapes, charming expressions, soft pastel palette, tiny decorative accents, and clean spacious composition","material":"soft pastel props, rounded forms, paper or fabric accents, flowers, simple cute objects, and clean friendly textures","lighting":"soft diffused bright light, low harshness, creamy highlights, and gentle pastel color separation"},"storybook_cute":{"cat":"น่ารัก / Cute / Playful","label":"Storybook Cute — นิทานภาพน่ารัก","desc":"อบอุ่นเหมือนหนังสือนิทาน มีเรื่องราวเล็ก ๆ ฉากนุ่ม และตัวละครเป็นมิตร","photo":"photorealistic scene with storybook-inspired staging, warm narrative props, gentle whimsical composition, and a cozy handcrafted mood without turning real people into illustrations","cartoon":"warm storybook illustration with gentle character storytelling, soft hand-painted edges, cozy environment, charming props, and page-like narrative composition","material":"wood, paper, fabric, foliage, small handcrafted props, cozy domestic or garden textures, and gentle illustrative detail","lighting":"warm soft storybook light, gentle window or morning glow, smooth shadows, and cozy tonal harmony"},"soft_3d_cute":{"cat":"น่ารัก / Cute / Playful","label":"Soft 3D Cute — นุ่มนูนมีมิติ","desc":"รูปทรงนุ่ม นูน มีมิติแบบของเล่น แต่คุมให้สะอาดและไม่เป็น CGI แข็ง ๆ","photo":"photorealistic scene with soft rounded set design, toy-like prop geometry, plush dimensional accents, and gentle depth while keeping people, animals, food, and real objects naturally photographed","cartoon":"soft dimensional cute illustration with rounded volumes, plush-like shapes, smooth stylized shading, and toy-inspired depth; clearly illustrated, not hyperreal CGI","material":"soft matte surfaces, plush or foam-like decorative forms, rounded props, fabric, ceramic, flowers, and simplified dimensional textures","lighting":"large soft diffuse light, gentle dimensional shading, soft highlights, and friendly low-contrast depth"},"chibi_greeting":{"cat":"น่ารัก / Cute / Playful","label":"Chibi Greeting — จิบิการ์ดสวัสดี","desc":"ตัวละครสัดส่วนน่ารัก เน้นสีหน้าและท่าทาง เหมาะกับโหมดการ์ตูน","photo":"photorealistic scene with chibi-inspired graphic accents and compact playful composition only; keep all real people and animals anatomically realistic under the master realism lock","cartoon":"chibi greeting illustration with compact cute proportions, expressive faces, simplified friendly anatomy, energetic gestures, and generous safe space for Thai text","material":"clean illustrated fabric, props, flowers, food, simple environment shapes, and cute graphic accents","lighting":"bright friendly illustrated light with soft shadows, clear faces or hero objects, and cheerful color"},"paper_cut_cute":{"cat":"น่ารัก / Cute / Playful","label":"Paper Cut Cute — กระดาษตัดซ้อนชั้น","desc":"เลเยอร์กระดาษซ้อน ดูน่ารัก มีเงาบาง ๆ เหมาะกับภูเขา ดอกไม้ สัตว์ และโปสเตอร์","photo":"photorealistic scene enriched with tasteful paper-cut inspired layered framing and graphic shapes while preserving real subjects and scene materials","cartoon":"layered paper-cut illustration with stacked cut-paper shapes, soft cast shadows, simplified silhouettes, and tactile handcrafted depth","material":"matte paper textures, layered cut edges, restrained paper fibers, plus scene-native materials for any realistic core subject","lighting":"soft directional light creating delicate paper-layer shadows and clear dimensional separation"},"sticker_illustration":{"cat":"น่ารัก / Cute / Playful","label":"Sticker Illustration — สติ๊กเกอร์ภาพประกอบ","desc":"องค์ประกอบเหมือนสติ๊กเกอร์ไดคัต ขอบสะอาด เหมาะกับงานสดใสและ Social Card","photo":"photorealistic scene with restrained die-cut sticker graphic accents around the composition, keeping the core photo natural and uncluttered","cartoon":"clean sticker-style illustration with die-cut contours, bold readable silhouettes, playful spacing, subtle edge separation, and social-card energy","material":"paper-sticker edges, matte or lightly glossy accents, simple graphic shapes, and clean scene-native textures","lighting":"bright even light with crisp subject separation and subtle sticker-edge shadow"},"korean_pastel":{"cat":"น่ารัก / Cute / Playful","label":"Korean Pastel Editorial — เกาหลีพาสเทล","desc":"สะอาด ละมุน โทนเกาหลี พร็อพน้อย สีอ่อน และพื้นที่ว่างเยอะ","photo":"Korean-inspired pastel lifestyle photography with uncluttered styling, gentle cream and pastel accents, simple props, airy negative space, and understated contemporary elegance","cartoon":"Korean pastel editorial illustration with clean shapes, soft cream backgrounds, delicate accents, minimal props, and calm contemporary spacing","material":"light wood, cream fabric, ceramic, glass only when appropriate, flowers, stationery, and clean pastel environmental surfaces","lighting":"soft high-key window light, gentle shadows, creamy whites, and calm pastel color grade"},"watercolor_dream":{"cat":"วาดมือ / Artistic","label":"Watercolor Dream — สีน้ำละมุน","desc":"สีไหลนุ่ม โปร่ง ละมุน เหมาะกับดอกไม้ วิว ธรรมชาติ และคำอวยพรอ่อนโยน","photo":"photorealistic scene with restrained watercolor-inspired color-wash overlays, soft pigment-like transitions, and airy artistic edges while keeping the core subject realistic","cartoon":"dreamy watercolor illustration with translucent pigment, soft wet-on-wet transitions, delicate edges, airy paper-like texture, and luminous color","material":"watercolor paper impression, translucent pigment accents, natural botanical or scene-native textures, and soft hand-painted detail","lighting":"luminous soft light with gentle color blooms, low harshness, and airy tonal transitions"},"gouache_poster":{"cat":"วาดมือ / Artistic","label":"Gouache Poster — กวอชโปสเตอร์","desc":"สีแน่นนุ่ม พื้นผิววาดมือ ดูร่วมสมัย เหมาะกับโปสเตอร์ทักทาย","photo":"photorealistic scene with gouache-inspired matte color blocking and hand-painted graphic accents while retaining realistic subjects","cartoon":"gouache poster illustration with opaque matte paint, simplified bold shapes, hand-painted edge variation, and rich but controlled color","material":"matte painted surfaces, paper texture, simplified scene-native forms, and handcrafted brush character","lighting":"soft directional light translated into broad matte value shapes and warm painted depth"},"colored_pencil":{"cat":"วาดมือ / Artistic","label":"Colored Pencil — ดินสอสี","desc":"เส้นละเอียด อ่อนโยน มีพื้นผิวดินสอ เหมาะกับงานน่ารักและธรรมชาติ","photo":"photorealistic scene with subtle colored-pencil sketch accents and delicate line texture in decorative areas, keeping primary subjects realistic","cartoon":"colored-pencil illustration with visible fine strokes, soft layered shading, gentle outlines, and intimate hand-drawn texture","material":"paper grain, layered pencil strokes, lightly textured shading, and simplified scene-native surfaces","lighting":"soft natural light expressed through delicate pencil shading and gentle tonal layering"},"soft_pastel_art":{"cat":"วาดมือ / Artistic","label":"Soft Pastel Art — พาสเทลชอล์กนุ่ม","desc":"ฟุ้งนุ่ม สีผสมละมุน เหมาะกับท้องฟ้า ดอกไม้ และภาพอบอุ่น","photo":"photorealistic scene with soft pastel-inspired atmospheric color haze and velvety accents while maintaining realistic subject detail","cartoon":"soft pastel illustration with velvety blended color, powdery transitions, gentle contours, and dreamy atmospheric softness","material":"pastel-paper grain, powdery color texture, soft botanical or landscape forms, and gentle handcrafted detail","lighting":"diffused glowing light with soft tonal blending, subtle haze, and low edge harshness"},"oil_painterly":{"cat":"วาดมือ / Artistic","label":"Oil Painterly — จิตรกรรมสีน้ำมัน","desc":"หนักแน่น มีแปรงและมิติสี เหมาะกับงาน Fine Art แต่ยังอ่านง่าย","photo":"photorealistic scene with restrained oil-paint-inspired color richness and painterly background texture while keeping faces, food, animals, and hero objects realistic","cartoon":"oil-painterly illustration with visible brushwork, rich color layering, dimensional painted light, and refined fine-art composition","material":"canvas-like texture, layered brush marks, rich painted surfaces, and scene-native forms","lighting":"rich directional painterly light with dimensional highlights, deep but controlled shadows, and refined color depth"},"acrylic_bold":{"cat":"วาดมือ / Artistic","label":"Acrylic Bold — อะคริลิกสีสด","desc":"สีชัด แปรงแข็งแรง ดูร่วมสมัย เหมาะกับงานที่ต้องการพลัง","photo":"photorealistic scene with bold acrylic-inspired graphic brush accents and saturated controlled color blocks while retaining realistic core subjects","cartoon":"bold acrylic illustration with confident brush marks, opaque color, lively shape design, and contemporary energetic composition","material":"matte acrylic paint texture, broad brush marks, paper or canvas impression, and simplified scene-native surfaces","lighting":"clear directional light with confident value separation and vivid but controlled color"},"ink_wash":{"cat":"วาดมือ / Artistic","label":"Ink & Wash — หมึกและสีน้ำ","desc":"หมึกเบา เส้นสงบ พื้นที่ว่างเยอะ เหมาะกับธรรมชาติและงานเรียบหรู","photo":"photorealistic scene with restrained ink-wash inspired monochrome accents, elegant negative space, and soft tonal wash in secondary areas","cartoon":"ink-and-wash illustration with expressive brush lines, diluted tonal washes, graceful negative space, and calm poetic composition","material":"rice-paper or watercolor-paper impression, ink strokes, diluted washes, and simplified natural textures","lighting":"soft atmospheric light with gentle tonal gradients, restrained contrast, and calm spacious mood"},"thai_handpainted":{"cat":"วาดมือ / Artistic","label":"Thai Hand-painted Illustration — วาดมือกลิ่นอายไทย","desc":"ภาพวาดร่วมสมัยที่มีกลิ่นอายไทย ใช้ลาย/สีไทยแบบพอดี ไม่กลายเป็นพุทธศิลป์อัตโนมัติ","photo":"photorealistic Thai scene enriched with restrained hand-painted Thai decorative accents, local color sensibility, and handcrafted editorial touches without introducing sacred imagery","cartoon":"contemporary Thai hand-painted illustration with graceful local motifs, warm handcrafted brushwork, Thai color sensibility, and modern readable composition without automatic religious content","material":"Thai craft-inspired paper, textile, wood, floral or architectural accents combined with scene-native materials","lighting":"warm tropical or soft morning light with handcrafted color harmony and dignified Thai atmosphere"},"magazine_editorial":{"cat":"Editorial / Modern","label":"Magazine Editorial — นิตยสารพรีเมียม","desc":"Grid ชัด ระยะหายใจดี ครอปแบบมืออาชีพ เหมาะกับภาพทักทายพรีเมียม","photo":"premium magazine editorial photography with sophisticated grid thinking, deliberate crop, confident scale contrast, refined negative space, and contemporary art-direction","cartoon":"premium editorial illustration with sophisticated grid thinking, deliberate crop, confident scale contrast, refined negative space, and contemporary art-direction","material":"clean scene-native materials with restrained styling, editorial surfaces, paper or architecture only when appropriate","lighting":"refined editorial lighting with controlled contrast, natural subject separation, and polished tonal balance"},"minimal_luxury":{"cat":"Editorial / Modern","label":"Minimal Luxury — มินิมอลหรู","desc":"เรียบมาก แต่ดูแพง ใช้พื้นที่ว่างเยอะ วัตถุ/Subject ชัดเพียงจุดหลัก","photo":"minimal luxury photography with one confident focal subject, abundant negative space, premium restraint, precise alignment, and no unnecessary decoration","cartoon":"minimal luxury illustration with one refined focal subject, abundant negative space, restrained premium shapes, and precise elegant composition","material":"high-quality restrained surfaces, fine fabric, stone, ceramic, wood, metal accents only when scene-native, and minimal decorative detail","lighting":"soft sculptural light, clean highlights, delicate shadows, and calm premium tonal range"},"contemporary_poster":{"cat":"Editorial / Modern","label":"Contemporary Poster — โปสเตอร์ร่วมสมัย","desc":"องค์ประกอบเด่นทันสมัย มีรูปทรงกราฟิกและพื้นที่ข้อความชัด","photo":"contemporary poster-style photography with bold spatial organization, modern graphic framing, large clean text zones, and controlled visual punch","cartoon":"contemporary poster illustration with bold spatial organization, modern shapes, clear text zones, strong scale contrast, and controlled visual punch","material":"clean graphic surfaces, scene-native textures, matte or glossy accents used sparingly, and contemporary props","lighting":"clear modern light with crisp separation, controlled contrast, and confident highlight placement"},"scandinavian_minimal":{"cat":"Editorial / Modern","label":"Scandinavian Minimal — สแกนดิเนเวียนเรียบอบอุ่น","desc":"ขาว ครีม ไม้อ่อน พร็อพน้อย สงบและอบอุ่น","photo":"Scandinavian-inspired minimal photography with pale neutrals, light wood, uncluttered styling, soft natural texture, and calm functional elegance","cartoon":"Scandinavian minimal illustration with pale neutrals, simple clean geometry, light-wood cues, soft warmth, and uncluttered functional composition","material":"light wood, cream textile, matte ceramic, simple greenery, clean wall surfaces, and restrained natural textures","lighting":"soft Nordic-style window light, gentle shadows, neutral whites, and warm calm balance"},"modern_graphic":{"cat":"Editorial / Modern","label":"Modern Graphic — กราฟิกร่วมสมัย","desc":"รูปทรง สี และเส้นกราฟิกช่วยเสริมภาพ เหมาะกับโปสเตอร์สดใส","photo":"photorealistic scene integrated with restrained modern graphic shapes, clean color fields, geometric accents, and disciplined editorial spacing","cartoon":"modern graphic illustration with crisp geometric shapes, clean color fields, bold but balanced composition, and high readability","material":"flat graphic accents combined with scene-native textures, clean paper-like or architectural surfaces, and modern decorative forms","lighting":"clean high-clarity light with crisp shape separation and balanced graphic contrast"},"swiss_editorial":{"cat":"Editorial / Modern","label":"Swiss Editorial — กริดสวิส","desc":"เป็นระบบ Grid เนี้ยบ ใช้เส้นและพื้นที่ว่างอย่างมีวินัย ดูทันสมัยมาก","photo":"Swiss-inspired editorial photography with rigorous grid, asymmetric balance, disciplined whitespace, precise alignment, and restrained modern typography zones","cartoon":"Swiss-inspired editorial illustration with rigorous grid, asymmetric balance, disciplined whitespace, precise geometry, and clean modern hierarchy","material":"minimal neutral surfaces, clean paper or architecture cues, scene-native textures, and restrained geometric accents","lighting":"neutral controlled light, crisp readability, balanced contrast, and minimal atmospheric effects"},"boutique_editorial":{"cat":"Editorial / Modern","label":"Boutique Editorial — บูทีคละมุนหรู","desc":"งานร้านบูทีค สวยละเอียด หวานพอดี มี Texture และองค์ประกอบดูคัดสรร","photo":"boutique editorial photography with curated details, soft premium color, tactile materials, elegant floral or lifestyle accents, and refined intimate composition","cartoon":"boutique editorial illustration with curated delicate details, soft premium color, tactile hand-crafted cues, and elegant intimate composition","material":"fine fabric, paper, ceramic, flowers, wood, glass only when appropriate, and curated small decorative details","lighting":"soft flattering boutique light with warm highlights, gentle shadows, and refined cozy depth"},"high_fashion_greeting":{"cat":"Editorial / Modern","label":"High-fashion Greeting — แฟชั่นการ์ดพรีเมียม","desc":"ภาพดูแฟชั่นและมีท่าทีชัด แต่ยังสุภาพ เป็นการ์ดทักทาย ไม่ใช่โฆษณาแฟชั่นจัด","photo":"high-fashion-inspired greeting photography with confident pose or hero-object styling, sculptural composition, premium negative space, and tasteful editorial drama","cartoon":"high-fashion-inspired greeting illustration with sculptural posing or hero-object styling, elongated elegant rhythm, premium negative space, and tasteful editorial drama","material":"premium fabric, polished accessories, clean architecture or studio surfaces, flowers or objects used sparingly","lighting":"sculpted editorial light with refined highlights, controlled shadow drama, and premium fashion-grade finish"},"thai_retro_poster":{"cat":"Vintage / Nature","label":"Thai Retro Poster — โปสเตอร์ไทยย้อนยุค","desc":"กลิ่นอายโปสเตอร์ไทยเก่า สีอุ่น เส้นพิมพ์และองค์ประกอบสนุก แต่ยังอ่านง่าย","photo":"photorealistic Thai scene with restrained retro-poster color treatment, vintage print-inspired borders or accents, warm nostalgic palette, and period-style composition without aging faces unnaturally","cartoon":"Thai retro poster illustration with vintage print texture, warm nostalgic color, bold hand-drawn forms, classic local poster rhythm, and playful readability","material":"aged paper accents, ink texture, vintage print grain, Thai scene-native wood, fabric, flowers, or objects","lighting":"warm nostalgic light with gentle print-like contrast and sun-faded but lively color"},"vintage_greeting_card":{"cat":"Vintage / Nature","label":"Vintage Greeting Card — การ์ดสวัสดีวินเทจ","desc":"อบอุ่นคลาสสิกเหมือนการ์ดเก่า ดอกไม้/วิว/กรอบสวยแบบย้อนยุค","photo":"photorealistic greeting scene with classic vintage-card styling, gentle nostalgic color, refined floral or scenic framing, and tasteful paper-like accents","cartoon":"classic vintage greeting-card illustration with gentle nostalgic color, soft painted detail, decorative framing, and warm sentimental charm","material":"paper texture, floral print accents, vintage ceramic or wood when scene-native, and soft nostalgic surfaces","lighting":"warm diffused light with soft faded highlights and nostalgic tonal harmony"},"retro_70s":{"cat":"Vintage / Nature","label":"70s Retro — เรโทรยุค 70","desc":"โทนอบอุ่น น้ำตาล ส้ม ครีม ลายเรขาคณิตอ่อน ๆ และอารมณ์ย้อนยุค","photo":"photorealistic scene with tasteful 1970s-inspired warm palette, rounded geometry accents, earthy orange-brown-cream balance, and retro editorial styling","cartoon":"1970s-inspired illustration with earthy warm palette, rounded geometry, bold simple forms, and cheerful retro poster energy","material":"warm wood, woven fabric, matte paper, retro ceramic, natural textures, and restrained geometric accents","lighting":"warm amber daylight with gentle film-like contrast and earthy tonal depth"},"retro_80s_pop":{"cat":"Vintage / Nature","label":"80s Pop — เรโทรป๊อปยุค 80","desc":"สดใสขึ้น มีรูปทรงกราฟิกสนุก สีป๊อป แต่คุมให้เหมาะกับการ์ดสวัสดี","photo":"photorealistic scene with restrained 1980s pop graphic accents, energetic geometry, bright controlled color, and clean nostalgic styling","cartoon":"1980s pop illustration with energetic geometric shapes, playful bright color, crisp graphic rhythm, and cheerful retro energy","material":"clean graphic shapes, glossy or matte accents, simple retro props, scene-native surfaces, and controlled pattern use","lighting":"bright pop lighting with crisp highlights, clean contrast, and lively but controlled saturation"},"old_print_illustration":{"cat":"Vintage / Nature","label":"Old Print Illustration — ภาพพิมพ์เก่า","desc":"Texture งานพิมพ์ หมึก และกระดาษ ดูคลาสสิก เหมาะกับวิวและวัตถุ","photo":"photorealistic scene with restrained old-print texture, fine halftone or engraved-style accents in secondary areas, classic paper tone, and vintage editorial framing","cartoon":"old-print illustration with fine engraved or lithographic texture, limited vintage color, paper grain, and classic composition","material":"aged paper, ink grain, engraved line texture, wood or botanical forms, and restrained print artifacts","lighting":"soft classic tonal light with print-friendly contrast and subdued vintage highlights"},"vintage_botanical":{"cat":"Vintage / Nature","label":"Vintage Botanical — พฤกษศาสตร์วินเทจ","desc":"ดอกไม้/พืชละเอียดแบบภาพพฤกษศาสตร์เก่า ดูสุภาพและคลาสสิก","photo":"photorealistic botanical scene with vintage botanical-book framing, precise plant identity, restrained cream-paper accents, and elegant natural history styling","cartoon":"vintage botanical illustration with precise plant identity, delicate labeled-plate feel without extra text, fine linework, muted natural color, and elegant paper composition","material":"botanical paper texture, fine ink line, natural stems and petals, cream background accents, and restrained antique surface cues","lighting":"soft diffuse natural light with delicate botanical detail and calm muted color"},"floral_dreamy":{"cat":"Vintage / Nature","label":"Floral Dreamy — ดอกไม้ชวนฝัน","desc":"ดอกไม้ฟุ้งละมุน แสงย้อนสวย โบเก้และบรรยากาศโรแมนติก","photo":"dreamy photorealistic floral scene with clear flower identity, soft backlight, gentle bokeh, airy haze, and romantic but readable composition","cartoon":"dreamy floral illustration with luminous petals, soft atmospheric depth, graceful flower identity, gentle haze, and romantic airy composition","material":"fresh petals, stems, dew, soft fabric or basket only when scene-native, and subtle atmospheric texture","lighting":"soft sunrise or backlight glowing through petals, gentle haze, luminous highlights, and low harshness"},"romantic_garden":{"cat":"Vintage / Nature","label":"Romantic Garden — สวนโรแมนติก","desc":"สวนดอกไม้ ทางเดิน ซุ้มและแสงอ่อน ดูหวานแต่ไม่เลี่ยน","photo":"romantic garden photography with elegant path or floral framing, natural flowers, soft depth, restrained decorative detail, and graceful open space","cartoon":"romantic garden illustration with elegant paths, floral framing, soft hand-painted greenery, graceful depth, and restrained storybook charm","material":"flowers, leaves, garden path, stone, wood, trellis, basket or bench only when appropriate, and natural botanical textures","lighting":"soft morning or golden-hour garden light with gentle glow and romantic tonal balance"},"wealth_prosperity":{"cat":"Premium / Material / Fantasy","label":"Wealth & Prosperity — มั่งคั่งร่ำรวย","desc":"ทองอร่าม พรีเมียม สื่อความรุ่งเรือง โอกาส เงินทอง และเชื่อมกับตัวเลือกเทพมงคล","photo":"premium auspicious wealth-and-prosperity greeting photography or realistic artwork with elegant gold symbolism, sophisticated negative space, and refined abundance cues","cartoon":"premium illustrated wealth-and-prosperity greeting with elegant gold symbolism, refined auspicious motifs, dimensional painted glow, and sophisticated abundance cues","material":"polished gold, refined red/cream/black or signature-color accents, premium surfaces, restrained botanical motifs, and luminous particles","lighting":"rich warm golden editorial light, controlled glow, crisp premium highlights, and dimensional shadows"},"luxury_gold":{"cat":"Premium / Material / Fantasy","label":"Luxury Gold — ทองหรูร่วมสมัย","desc":"ทอง ครีม ดำ หรือสีประจำวันแบบหรู ใช้ความเงาอย่างพอดี ไม่กลายเป็นงานเทพอัตโนมัติ","photo":"contemporary luxury photography with restrained gold accents, elegant cream or dark neutrals, premium surface control, and sophisticated negative space without automatic religious symbolism","cartoon":"contemporary luxury illustration with refined gold accents, elegant neutrals, polished decorative detail, and sophisticated negative space without automatic sacred imagery","material":"brushed or polished gold accents, stone, glass only when appropriate, premium paper, fabric, ceramic, and scene-native textures","lighting":"warm controlled luxury light with subtle gold reflections, refined highlights, and deep but clean tonal separation"},"glassmorphism_luxury":{"cat":"Premium / Material / Fantasy","label":"Glassmorphism Luxury — กระจกใสโมเดิร์น","desc":"เลเยอร์ใส ฝ้า เงาสะท้อนนุ่ม ดูเทคโนโลยีและพรีเมียม","photo":"photorealistic premium scene with restrained glassmorphism-inspired translucent panels, soft frosted layers, elegant depth, and clean modern spacing without obscuring the hero subject","cartoon":"modern illustration with translucent glass-like layers, frosted panels, soft refraction cues, clean depth, and premium minimal spacing","material":"frosted glass, translucent acrylic-like accents, clean matte surfaces, scene-native materials, and subtle reflective edges","lighting":"soft luminous edge light, clean reflections, gentle glow, and cool-to-neutral modern depth"},"layered_paper_art":{"cat":"Premium / Material / Fantasy","label":"Layered Paper Art — ศิลปะกระดาษซ้อนชั้น","desc":"กระดาษหลายชั้นแบบพรีเมียม มีมิติและเงาสวย เหมาะกับวิว ดอกไม้ และโปสเตอร์","photo":"photorealistic scene framed by premium layered-paper art accents, precise cut shapes, tactile depth, and elegant shadow play while keeping core subjects realistic","cartoon":"premium layered-paper illustration with multiple cut-paper planes, elegant depth, tactile edges, sculpted shadows, and refined handcrafted composition","material":"high-quality matte paper, layered cut edges, subtle paper fibers, plus scene-native textures where needed","lighting":"soft side light creating refined layered shadows, clear depth separation, and premium handcrafted feel"},"embroidery_craft":{"cat":"Premium / Material / Fantasy","label":"Embroidery Craft — งานปักและผ้า","desc":"ใช้ลายด้ายและผ้าเป็น Texture ตกแต่ง ดูอบอุ่นงานคราฟต์ โดยไม่ทำให้คนสมจริงกลายเป็นตุ๊กตา","photo":"photorealistic scene with tasteful embroidery-inspired borders, stitched floral or geometric accents, textile details, and handcrafted warmth while keeping real people and objects realistic","cartoon":"embroidered-craft illustration with visible stitched lines, textile texture, fabric layers, handcrafted motifs, and cozy dimensional detail","material":"thread, woven fabric, linen, felt-like accents, stitched patterns, and scene-native materials","lighting":"soft warm craft-table light with gentle textile shadows and tactile surface definition"},"ceramic_art":{"cat":"Premium / Material / Fantasy","label":"Ceramic Art — เซรามิกละมุน","desc":"ผิวเซรามิกด้าน/เงานุ่ม รูปทรงสงบ เหมาะกับดอกไม้ อาหาร วัตถุ และ Minimal","photo":"photorealistic scene with refined ceramic-art styling, sculptural simple forms, tactile glaze, restrained objects, and calm gallery-like balance","cartoon":"ceramic-inspired illustration with rounded sculptural forms, gentle glaze-like highlights, calm simple shapes, and refined tactile character","material":"matte or lightly glazed ceramic, stone, wood, flowers, food or scene-native materials, and restrained sculptural surfaces","lighting":"soft gallery or window light with delicate ceramic highlights, calm shadows, and refined tonal balance"},"dreamy_fantasy":{"cat":"Premium / Material / Fantasy","label":"Dreamy Fantasy — แฟนตาซีชวนฝัน","desc":"เหนือจริงเล็กน้อย มีแสง ฝุ่นประกาย หมอก และความมหัศจรรย์ แต่ยังคง Subject/Scene ตามที่เลือก","photo":"photorealistic scene with restrained dreamy fantasy atmosphere, subtle luminous particles, mist, poetic depth, and magical light while preserving exact real-world subject identity","cartoon":"dreamy fantasy illustration with magical atmospheric depth, subtle luminous particles, poetic clouds or mist, elegant fantasy color, and clear subject identity","material":"scene-native materials enhanced by subtle mist, luminous particles, soft botanical or atmospheric detail, and restrained fantasy accents","lighting":"ethereal directional glow, soft volumetric light, gentle highlights, and magical but readable contrast"},"ethereal_glow":{"cat":"Premium / Material / Fantasy","label":"Ethereal Glow — แสงเรืองละมุน","desc":"เน้นแสงนุ่ม เรืองบาง ๆ ฟ้า/ทอง/สีประจำวัน เหมาะกับวิว ดอกไม้ และงานสงบ","photo":"photorealistic scene with elegant ethereal glow, luminous atmosphere, soft haze, restrained halo-like light around natural edges, and premium calm spacing","cartoon":"elegant illustrated scene with ethereal luminous glow, soft atmospheric haze, graceful light transitions, and premium calm composition","material":"clean scene-native textures with subtle luminous haze, natural flowers, water, sky, fabric, architecture, or objects as selected","lighting":"soft luminous ambient glow with gentle directional highlights, subtle atmospheric haze, and refined low-harshness contrast"}};
+
+const AUTO_GENERAL_VISUAL_STYLE_POOLS_V1152={
+  default_realistic:["clean_commercial","magazine_editorial","minimal_luxury","positive_energy","cinematic_lifestyle","boutique_editorial"],
+  default_cartoon:["storybook_cute","kawaii_pastel","gouache_poster","watercolor_dream","magazine_editorial","paper_cut_cute"],
+  floral_realistic:["botanical_photography","floral_dreamy","romantic_garden","korean_pastel","boutique_editorial","vintage_botanical"],
+  floral_cartoon:["watercolor_dream","storybook_cute","colored_pencil","floral_dreamy","paper_cut_cute","vintage_botanical"],
+  nature_realistic:["travel_editorial","cinematic_lifestyle","ethereal_glow","magazine_editorial","clean_commercial","vintage_greeting_card"],
+  nature_cartoon:["watercolor_dream","gouache_poster","storybook_cute","ink_wash","dreamy_fantasy","layered_paper_art"],
+  food_realistic:["food_editorial","clean_commercial","luxury_product","minimal_luxury","magazine_editorial","boutique_editorial"],
+  food_cartoon:["gouache_poster","storybook_cute","kawaii_pastel","paper_cut_cute","colored_pencil","magazine_editorial"],
+  urban_realistic:["positive_energy","magazine_editorial","contemporary_poster","swiss_editorial","high_fashion_greeting","clean_commercial"],
+  urban_cartoon:["modern_graphic","contemporary_poster","gouache_poster","sticker_illustration","retro_80s_pop","magazine_editorial"],
+  thai_realistic:["thai_handpainted","magazine_editorial","vintage_greeting_card","minimal_luxury","thai_retro_poster","boutique_editorial"],
+  thai_cartoon:["thai_handpainted","thai_retro_poster","gouache_poster","storybook_cute","old_print_illustration","colored_pencil"],
+  craft_realistic:["boutique_editorial","luxury_product","minimal_luxury","ceramic_art","embroidery_craft","layered_paper_art"],
+  craft_cartoon:["paper_cut_cute","layered_paper_art","embroidery_craft","ceramic_art","storybook_cute","colored_pencil"]
+};
+
+function pairSceneFamiliesForVisualStyle(c){
+  const f1=document.getElementById("sceneTemplateFamily1")?.value||"";
+  const f2=document.getElementById("sceneTemplateFamily2")?.value||"";
+  return [...new Set([f1,f2,sceneFamilyKey(c)].filter(Boolean))];
+}
+
+function autoGeneralVisualStyleKey(s,c){
+  const families=pairSceneFamiliesForVisualStyle(c);
+  const mode=humanStyle==="cartoon"?"cartoon":"realistic";
+  const hasAny=(arr)=>families.some(f=>arr.includes(f));
+  let bucket="default_"+mode;
+  if(hasAny(["garden_botanical","floral_stilllife"])) bucket="floral_"+mode;
+  else if(hasAny(["nature_mountain","rice_countryside","waterfront","sea_coastal","travel_viewpoint"])) bucket="nature_"+mode;
+  else if(hasAny(["food_hero"])) bucket="food_"+mode;
+  else if(hasAny(["urban_city","art_gallery","minimal_abstract"])) bucket="urban_"+mode;
+  else if(hasAny(["thai_architecture","cultural_market"])) bucket="thai_"+mode;
+  else if(hasAny(["floral_stilllife"])) bucket="craft_"+mode;
+  const pool=AUTO_GENERAL_VISUAL_STYLE_POOLS_V1152[bucket]||AUTO_GENERAL_VISUAL_STYLE_POOLS_V1152["default_"+mode];
+  const pairSignature=families.slice().sort().join("|")||"general";
+  const seed=hashString(`${userSeed}|${s?.day?.isoDate||""}|auto-general-visual-v1152|${pairSignature}|${mode}`);
+  return pool[seededIndex(seed,pool.length)];
+}
+
+function resolvedGeneralVisualStyleKey(s,c){
+  if(lifestyleVisualStyle && lifestyleVisualStyle!=="auto" && GENERAL_VISUAL_STYLES_V1152[lifestyleVisualStyle]) return lifestyleVisualStyle;
+  return autoGeneralVisualStyleKey(s,c);
+}
+
+function lifestyleVisualDirection(setNo,s,c){
+  const hasPeople=(setNo===1||setNo===2) ? imageHasPeople(setNo) : false;
+  const key=resolvedGeneralVisualStyleKey(s,c);
+  const st=GENERAL_VISUAL_STYLES_V1152[key]||GENERAL_VISUAL_STYLES_V1152.clean_commercial;
+
+  if(key==="wealth_prosperity"){
+    const wealthSeed=hashString(`${userSeed}|wealth-prosperity|${setNo}|${s?.day?.isoDate||""}`);
     const motifs=[
       "a refined cascade of gold coins and elegant gold ingots with luminous depth",
       "an auspicious prosperity tree with golden leaves or coin-like accents, elegant rather than cartoonish",
-      "a premium red-and-gold prosperity composition with gold coins, restrained sparkles, and layered ceremonial depth",
+      "a premium red-and-gold prosperity composition with restrained sparkles and layered ceremonial depth",
       "a luxurious golden pathway or flowing light motif symbolizing growing fortune and opportunity",
       "an elegant treasure arrangement using gold ingots, coins, polished metallic forms, and premium negative space",
-      "a modern luxury prosperity scene with warm gold architecture/light, subtle wealth symbols, and sophisticated editorial depth",
-      "a Thai-inspired prosperity arrangement using gold, auspicious floral/leaf accents, refined trays or ornamental details without religious symbolism",
+      "a modern luxury prosperity scene with warm gold architecture or light, subtle wealth symbols, and sophisticated editorial depth",
+      "a Thai-inspired prosperity arrangement using gold, auspicious floral or leaf accents, and refined ornamental details without automatically adding Buddhist imagery",
       "a clean contemporary wealth composition with one strong golden hero symbol, luminous particles, and spacious premium background"
     ];
     const motif=motifs[seededIndex(wealthSeed,motifs.length)];
-    return hasPeople ? {
-      name:"WEALTH & PROSPERITY — มั่งคั่งร่ำรวย",
-      direction:`premium auspicious wealth-and-prosperity greeting artwork with a confident, positive non-famous human subject integrated naturally into ${motif}; communicate abundance, success, financial growth, opportunity, and good fortune without looking like gambling advertising or cheap clip-art`,
-      material:"polished gold metal, refined red/cream/black or signature-color accents, premium fabric/architecture when scene-native, realistic skin and clothing, subtle luminous particles, and sophisticated reflective surfaces",
-      lighting:"rich warm golden editorial light with controlled glow, crisp premium highlights, dimensional shadows, and luxurious cinematic depth"
-    } : {
-      name:"WEALTH & PROSPERITY — มั่งคั่งร่ำรวย",
-      direction:`premium auspicious wealth-and-prosperity greeting artwork built around ${motif}; communicate abundance, success, financial growth, opportunity, and good fortune with elegant premium composition, strong negative space for Thai typography, and no human subject`,
-      material:"polished gold metal, refined red/cream/black or signature-color accents, premium reflective surfaces, restrained auspicious botanical details, luminous particles, and scene-native luxury textures",
-      lighting:"rich warm golden editorial light with controlled glow, crisp premium highlights, dimensional shadows, and luxurious cinematic depth"
+    return {
+      key,label:st.label,name:"WEALTH & PROSPERITY — มั่งคั่งร่ำรวย",
+      direction:(humanStyle==="cartoon"?st.cartoon:st.photo)+` Build the scene around ${motif}.`+
+        (hasPeople?" Integrate the selected ordinary human subject naturally without replacing any explicitly selected deity hero.":" Keep the artwork entirely free of ordinary people unless Character Composition explicitly requires them."),
+      material:st.material,lighting:st.lighting
     };
   }
 
-  if(lifestyleVisualStyle==="positive_energy"){
-    return hasPeople ? {
-      name:"POSITIVE ENERGY LIFESTYLE POSTER",
-      direction:"bright upbeat premium lifestyle poster photography with open sky or clean architectural negative space, confident relaxed subject posing, one playful accent prop when appropriate, and strong empty space for oversized Thai hero typography",
-      material:"natural realistic skin and hair, contemporary casual clothing, clean urban or rooftop textures, and restrained playful props",
-      lighting:"clear optimistic daylight with crisp but natural contrast, lively highlights, and polished commercial lifestyle finish"
-    } : {
-      name:"POSITIVE ENERGY LIFESTYLE POSTER",
-      direction:"bright upbeat premium lifestyle poster photography with open sky, clean architecture, playful non-human hero objects, and strong negative space for oversized Thai hero typography; no human subject",
-      material:"clean urban or rooftop textures, natural objects, flowers, food, stationery, decorative props, and restrained playful accents",
-      lighting:"clear optimistic daylight with crisp but natural contrast, lively highlights, and polished commercial lifestyle finish"
-    };
-  }
-  return null;
+  return {
+    key,label:st.label,name:st.label,
+    direction:humanStyle==="cartoon"?st.cartoon:st.photo,
+    material:st.material,
+    lighting:st.lighting
+  };
 }
 
 function updateLifestyleVisualUI(){
   const d=$("lifestyleVisualDescription");
   if(!d) return;
-  const map={
-    auto:"ใช้ Visual Direction เดิมของ POKUN และสุ่มฉากตามระบบปัจจุบัน",
-    cute_lifestyle:"ภาพสมจริง/ไลฟ์สไตล์หวานสดใส มีพื้นที่ว่างสำหรับข้อความ ใช้พร็อพเรียบง่ายและ doodle เล็ก ๆ — เข้าคู่กับ Thai Sweet Kawaii Handwritten Stroke",
-    positive_energy:"โปสเตอร์ไลฟ์สไตล์พลังบวก ฉากโล่ง/ท้องฟ้า/สถาปัตย์ มีพื้นที่สำหรับคำใหญ่และ Hero Number — เข้าคู่กับ Thai Positive Energy Bold Stroke",
-    wealth_prosperity:"มั่งคั่งร่ำรวย / Wealth & Prosperity — โทนทองอร่าม พรีเมียม สื่อถึงความเจริญรุ่งเรือง เงินทอง โชคลาภ และโอกาส พร้อมเลือกสายเทพมงคลได้ เช่น พระพิฆเนศ ไฉ่ซิงเอี๊ย กวนอู พญานาคราช และฮก–ลก–ซิ่ว หรือใช้สัญลักษณ์ทองแบบไม่ใส่เทพก็ได้",
-    cute_playful_prop:"ภาพทักทายไลฟ์สไตล์สดใสแบบขี้เล่น ให้คนมี Interaction กับพร็อพ เช่น โดนัท แว่น ดอกไม้ หนังสือ หรือของชิ้นเล็ก ๆ พร้อมฉากเมือง/หน้าต่าง/ท้องฟ้าและ doodle น่ารัก"
-  };
-  d.textContent=map[lifestyleVisualStyle]||map.auto;
+  if(lifestyleVisualStyle==="auto"){
+    d.textContent="AUTO จะอ่าน Scene Family ของภาพที่ 1–2 แล้วเลือกสไตล์ที่เหมาะกับทั้งคู่ โดยยังยึด Master Rendering Style ด้านบนเป็นกฎสูงสุด และจะไม่สุ่ม Wealth & Prosperity เพื่อป้องกันโหมดเทพมงคลทำงานโดยไม่ตั้งใจ";
+    return;
+  }
+  const st=GENERAL_VISUAL_STYLES_V1152[lifestyleVisualStyle];
+  d.textContent=st ? `${st.label} — ${st.desc}` : "เลือก Visual Style เพื่อกำหนดภาษาภาพเพิ่มเติม";
 }
 
 
@@ -3148,46 +3265,54 @@ function familyVisualMaterialDirection(c){
 
   return map[family] || "realistic materials and environmental textures native to the resolved Scene Family and exact Scene Concept";
 }
-function artworkPresentationDirection(s,setNo){
+function artworkPresentationDirection(s,setNo,c){
   const hasPeople=imageHasPeople(setNo);
+  const visual=lifestyleVisualDirection(setNo,s,c);
+
   if(humanStyle==="cartoon"){
     return {
-      mode:"CARTOON / ILLUSTRATION",
-      direction:sharedCartoonStyle(s),
-      material:"illustrated materials and textures with convincing dimensional detail",
-      lighting:"cinematic illustrated lighting with coherent highlights and shadows"
+      mode:"CARTOON / ILLUSTRATION / "+visual.name,
+      styleKey:visual.key,
+      styleLabel:visual.label,
+      direction:[
+        sharedCartoonStyle(s),
+        "SELECTED GENERAL VISUAL STYLE TRANSLATION:",
+        visual.direction,
+        "The selected Visual Style may change palette character, texture language, edge treatment, graphic accents, composition mood and material impression, but it MUST remain clearly CARTOON / ILLUSTRATION under the Master Rendering Style lock.",
+        "Do not turn this style into photography, photorealistic skin, hyperreal CGI, or ray-traced 3D."
+      ].join(" "),
+      material:visual.material+" Render all materials as coherent illustrated / painted / handcrafted visual language rather than photorealistic surfaces.",
+      lighting:visual.lighting
     };
   }
-  const lifestyle=lifestyleVisualDirection(setNo);
-  if(lifestyle){
-    if(!hasPeople){
-      return {
-        mode:"PHOTOREALISTIC / "+lifestyle.name+" / NO PEOPLE",
-        direction:"Use the selected lifestyle visual language only for color, energy, doodles, negative space, props, architecture, nature, food, flowers, or objects. Do not include, request, imply, or describe any human subject, face, body, hands, silhouette, crowd, or person.",
-        material:"realistic non-human objects, architecture, nature, food, flowers, props, and environmental textures appropriate to the selected scene",
-        lighting:hasPeople ? lifestyle.lighting : String(lifestyle.lighting).replace(/soft flattering skin tones,?\s*/gi,"").replace(/skin tones,?\s*/gi,"")
-      };
-    }
-    return {
-      mode:"PHOTOREALISTIC / "+lifestyle.name,
-      direction:lifestyle.direction,
-      material:lifestyle.material,
-      lighting:lifestyle.lighting
-    };
-  }
+
   if(!hasPeople){
     return {
-      mode:"PHOTOREALISTIC / NO PEOPLE",
-      direction:"photorealistic premium commercial photography focused entirely on the selected non-human scene or hero object; absolutely no person, face, body, hands, silhouette, or crowd",
-      material:"realistic non-human materials, architecture, nature, food, flowers, objects, and environmental textures",
-      lighting:"natural believable photographic lighting"
+      mode:"PHOTOREALISTIC / "+visual.name+" / NO PEOPLE",
+      styleKey:visual.key,
+      styleLabel:visual.label,
+      direction:[
+        visual.direction,
+        "Apply the selected Visual Style to the exact non-human scene, hero object, architecture, nature, food, flowers, or props.",
+        "Absolutely no person, face, body, hands, silhouette, crowd, or implied human figure.",
+        "The Master Rendering Style remains PHOTOREALISTIC: artistic/craft/retro influences may appear as styling, palette, framing, texture accents, set design, or physically plausible materials, but must not convert the core scene into a painted or cartoon image."
+      ].join(" "),
+      material:visual.material+" Keep core scene materials physically believable and photorealistic.",
+      lighting:visual.lighting
     };
   }
+
   return {
-    mode:"PHOTOREALISTIC",
-    direction:"photorealistic premium commercial photography with natural believable human appearance",
-    material:"realistic materials, skin, fabric, hair, objects, and environmental textures",
-    lighting:"natural believable photographic lighting"
+    mode:"PHOTOREALISTIC / "+visual.name,
+    styleKey:visual.key,
+    styleLabel:visual.label,
+    direction:[
+      visual.direction,
+      "The Master Rendering Style remains PHOTOREALISTIC. Preserve natural believable anatomy, skin, hair, food, animals, architecture and objects.",
+      "If the selected style is normally an illustration/craft language, translate it into art direction, palette, set styling, surface accents, framing or physically plausible decorative materials instead of converting the person or scene into a cartoon."
+    ].join(" "),
+    material:visual.material,
+    lighting:visual.lighting
   };
 }
 
@@ -5157,23 +5282,102 @@ async function testAiBackendConnection(){
 
 
 
+const TEXT_HIGHLIGHT_STYLES_V1151={
+  brush:{
+    label:"Brush Swash — ปาดพู่กัน",
+    direction:"BRUSH SWASH — organic hand-painted brush stroke with slightly imperfect dry-brush edges, natural paint variation, and a handmade editorial feel"
+  },
+  marker:{
+    label:"Marker Highlight — ปากกาไฮไลต์",
+    direction:"MARKER HIGHLIGHT — casual horizontal marker stroke with hand-drawn uneven edges, slightly translucent ink character, and clean readable coverage"
+  },
+  rounded:{
+    label:"Rounded Paint — แถบมน",
+    direction:"ROUNDED PAINT — clean rounded painted ribbon / pill-like patch with soft corners and compact modern proportions"
+  },
+  soft_rect:{
+    label:"Soft Rectangle — กล่องสีมุมโค้ง",
+    direction:"SOFT RECTANGLE — simple filled rectangular color patch with gently rounded corners, even padding, and clean modern spacing"
+  },
+  minimal_block:{
+    label:"Minimal Block — บล็อกสีมินิมอล",
+    direction:"MINIMAL BLOCK — restrained flat color block with sharp editorial alignment, generous inner spacing, and no ornamental clutter"
+  },
+  thin_bar:{
+    label:"Thin Underline Bar — แถบเส้นใต้บาง",
+    direction:"THIN UNDERLINE BAR — a slim horizontal color bar placed directly behind the lower portion of the text or just beneath it; minimal, crisp, and highly readable"
+  },
+  cute_sticker:{
+    label:"Cute Sticker — สติ๊กเกอร์น่ารัก",
+    direction:"CUTE STICKER — soft die-cut sticker-like backing with rounded irregular contour, cheerful proportions, and subtle white or light rim separation"
+  },
+  bubble:{
+    label:"Bubble Label — ป้ายฟองนุ่ม",
+    direction:"BUBBLE LABEL — plump rounded cloud-like color patch with smooth bubbly contour, soft friendly volume, and kawaii greeting-card character"
+  },
+  washi:{
+    label:"Washi Tape — เทปกระดาษ",
+    direction:"WASHI TAPE — semi-translucent paper tape strip with subtly torn or fibrous ends, gentle paper texture, and casual handmade stationery character"
+  },
+  pastel_blob:{
+    label:"Pastel Blob — ก้อนสีพาสเทล",
+    direction:"PASTEL BLOB — organic freeform pastel color blob with soft asymmetry, smooth edges, and playful contemporary social-card styling"
+  },
+  watercolor:{
+    label:"Watercolor Wash — ปื้นสีน้ำ",
+    direction:"WATERCOLOR WASH — translucent watercolor wash with soft feathered edges, visible pigment variation, light paper-like texture, and airy artistic character"
+  },
+  soft_glow:{
+    label:"Soft Glow Patch — แสงนุ่มหลังข้อความ",
+    direction:"SOFT GLOW PATCH — diffused luminous color haze behind the text with no hard edge, soft radial falloff, and restrained atmospheric glow"
+  },
+  torn_paper:{
+    label:"Torn Paper — กระดาษฉีก",
+    direction:"TORN PAPER — layered paper-strip backing with natural torn fiber edges, slight shadow separation, tactile editorial collage character, and clear text-safe center"
+  },
+  diagonal:{
+    label:"Diagonal Bar — แถบเฉียง",
+    direction:"DIAGONAL BAR — bold clean color band crossing behind the text at a slight diagonal angle, energetic poster rhythm, controlled thickness, and strong contrast"
+  },
+  ribbon:{
+    label:"Ribbon Banner — ริบบิ้น",
+    direction:"RIBBON BANNER — elegant flat-to-softly dimensional ribbon banner with restrained folded ends, balanced padding, and premium celebratory character"
+  },
+  gold_plate:{
+    label:"Gold Plate — ป้ายทอง",
+    direction:"GOLD PLATE — refined metallic-gold plaque or slim plate with polished highlights, gentle bevel, subtle depth, and premium auspicious elegance; keep today's Signature Color as a coordinated accent rather than forcing the full plate to be flat daily-color paint"
+  },
+  glass:{
+    label:"Glass Label — ป้ายกระจกใส",
+    direction:"GLASS LABEL — translucent frosted-glass or glassmorphism backing with soft blur impression, fine light edge, restrained highlight, and today's Signature Color used as a tint/accent"
+  },
+  kanok_panel:{
+    label:"Kanok Panel — แผงกนกไทย",
+    direction:"KANOK PANEL — compact Thai ornamental highlight panel with restrained original kanok-inspired edge flourishes, clean central text-safe area, and today's Signature Color coordinated with ivory or gold; do not imitate a specific logo or font"
+  }
+};
+
+const AUTO_TEXT_HIGHLIGHT_POOL_V1151=[
+  "brush","marker","rounded","soft_rect","minimal_block","thin_bar",
+  "cute_sticker","bubble","washi","pastel_blob","watercolor","soft_glow",
+  "torn_paper","diagonal","ribbon"
+];
+
 function highlightStyleDirection(value,seed){
   if(value==="none") return null;
-  if(value==="brush") return "BRUSH SWASH — organic hand-painted brush stroke with slightly imperfect edges";
-  if(value==="marker") return "MARKER HIGHLIGHT — casual horizontal marker stroke with hand-drawn uneven edges";
-  if(value==="rounded") return "ROUNDED PAINT — clean rounded painted ribbon / pill-like patch";
-  return pick([
-    "BRUSH SWASH — organic hand-painted brush stroke with slightly imperfect edges",
-    "MARKER HIGHLIGHT — casual horizontal marker stroke with hand-drawn uneven edges",
-    "ROUNDED PAINT — clean rounded painted ribbon / pill-like patch"
-  ],seed+7331);
+  if(value==="auto"){
+    const chosen=pick(AUTO_TEXT_HIGHLIGHT_POOL_V1151,seed+7331);
+    return TEXT_HIGHLIGHT_STYLES_V1151[chosen]?.direction||TEXT_HIGHLIGHT_STYLES_V1151.rounded.direction;
+  }
+  return TEXT_HIGHLIGHT_STYLES_V1151[value]?.direction
+    || TEXT_HIGHLIGHT_STYLES_V1151.rounded.direction;
 }
 function textHighlightDirection(s,variation){
   const color=`${s.day.colorThai} / ${s.day.colorEnglish} / ${s.day.hex}`;
   const hStyle=highlightStyleDirection(headlineHighlight,variation.seed+11);
   const dStyle=highlightStyleDirection(dateHighlight,variation.seed+29);
   const out=["TEXT HIGHLIGHT / แถบสีคาดหลังข้อความ:"];
-  out.push(`Highlight color: use today's Signature Color exactly as the recognizable base accent: ${color}.`);
+  out.push(`Highlight color authority: today's Signature Color must remain clearly recognizable in the highlight treatment: ${color}. For material styles such as Gold Plate, Glass Label, or Kanok Panel, use the daily color as a visible coordinated accent/tint while preserving the selected material identity.`);
   if(hStyle) out.push(`Headline Highlight: ${hStyle}. Put the colored highlight BEHIND selected headline line(s), with Thai letters clearly above it.`);
   else out.push("Headline Highlight: NONE.");
   if(dStyle) out.push(`Date Highlight: ${dStyle}. Put one coordinated colored highlight BEHIND the complete visible Thai date line (${s.day.dateThai}), keeping the entire date readable.`);
@@ -5401,7 +5605,7 @@ function buildPromptLegacyV87(setNo){
   }
   // Global artwork style is shared by Image 1 and Image 2.
   c=adaptConceptToArtworkStyle(c);
-  const presentation=artworkPresentationDirection(s,setNo);
+  const presentation=artworkPresentationDirection(s,setNo,c);
 
   const L=[];
   const compositionLabel={
@@ -5699,6 +5903,7 @@ function buildPromptLegacyV87(setNo){
     "",
     "Visual direction:",
     `- Artwork mode: ${presentation.mode}`,
+    `- Selected Visual Style: ${presentation.styleLabel} (${presentation.styleKey})`,
     `- ${presentation.direction}`,
     "- high-end editorial quality",
     `- Resolved scene-native materials: ${familyVisualMaterialDirection(c)}`,
@@ -5891,769 +6096,209 @@ function masterRenderingLines(){
 }
 
 
-const POKUN_BLESSING_LIBRARY={
-  work:{
-    label:"การงาน / ความก้าวหน้า",
-    desc:"เน้นงานราบรื่น ความก้าวหน้า โอกาสดี ผู้ใหญ่เมตตา และความสำเร็จ",
+// v11.53 — STRICT REFERENCE-IMAGE BLESSING LIBRARY
+// SOURCE-ONLY POLICY:
+// - Every visible blessing phrase in this library comes from wording previously
+//   extracted from the user's uploaded Thai greeting reference images.
+// - Do NOT add model-written expansions, paraphrases, sentence completions, or
+//   "more natural" rewrites.
+// - Categorization below only groups the extracted phrases; it does not rewrite them.
+// - Supporting Line remains disabled: visible greeting text = Headline + Greeting only.
+const REFERENCE_IMAGE_BLESSING_LIBRARY_V1153={
+  happiness:{
+    label:"ความสุข / สดใส — จากภาพอ้างอิง",
+    desc:"ใช้เฉพาะถ้อยคำที่สกัดจากภาพในแนวสดใส เบิกบาน และมีความสุข",
     headlines:[
-      "ขอให้งานวันนี้ราบรื่น","วันนี้ขอให้ทุกอย่างเป็นใจ","ขอให้ก้าวหน้าในทุกหน้าที่","เริ่มวันนี้ด้วยความสำเร็จ",
-      "ขอให้งานดี มีแต่เรื่องดี ๆ","วันนี้ขอให้สิ่งที่ทำลงตัว","ขอให้ทุกงานสำเร็จดังหวัง","วันดี ๆ ของความก้าวหน้า",
-      "ขอให้วันนี้งานเดินหน้า","ขอให้ทุกหน้าที่ผ่านฉลุย","ส่งกำลังใจให้วันทำงาน","ขอให้วันนี้เป็นวันของความสำเร็จ","งานเด่น ก้าวหน้าเด่น","วันทำงานที่ลงตัว","วันนี้โอกาสเปิดทาง"
+      "วันใหม่สดใส",
+      "จิตใจเบิกบาน",
+      "สดใสรับวันใหม่",
+      "ยิ้มรับวันใหม่",
+      "วันดีมีรอยยิ้ม"
     ],
     greetings:[
-      "ขอให้การงานวันนี้ราบรื่น สิ่งที่รับผิดชอบสำเร็จตามที่ตั้งใจ",
-      "ขอให้ทุกงานเดินหน้าอย่างคล่องตัว และพบทางออกที่ดีในทุกเรื่อง",
-      "ขอให้สิ่งที่ลงมือทำวันนี้ได้รับผลลัพธ์ที่น่าภูมิใจ",
-      "ขอให้พบโอกาสดี ๆ ในเรื่องงาน และมีคนดีคอยสนับสนุน",
-      "ขอให้งานวันนี้คล่องตัว ทุกอย่างลงตัว และสำเร็จอย่างราบรื่น",
-      "ขอให้การเจรจาราบรื่น งานสำเร็จ และได้รับข่าวดีที่รอคอย",
-      "ขอให้ทุกความพยายามวันนี้พาเข้าใกล้เป้าหมายมากขึ้น",
-      "ขอให้มีสมาธิ มีพลัง และจัดการทุกเรื่องได้อย่างลงตัว",
-      "ขอให้งานทุกเรื่องราบรื่น และมีโอกาสใหม่ ๆ เข้ามาอย่างต่อเนื่อง",
-      "ขอให้ทำสิ่งใดก็ได้รับความร่วมมือที่ดีและประสบความสำเร็จ",
-      "ขอให้วันนี้มีความก้าวหน้า ราบรื่น และเต็มไปด้วยพลังดี ๆ",
-      "ขอให้ความตั้งใจและความสามารถพาไปสู่ผลลัพธ์ที่ดี"
-    ],
-    supporting:[
-      "งานคล่องตัว ผู้ใหญ่เมตตา ความสำเร็จอยู่ใกล้กว่าที่คิด",
-      "ทุกความพยายามมีความหมาย และกำลังพาไปสู่สิ่งที่ดี",
-      "ขอให้วันนี้ทำงานด้วยรอยยิ้ม และจบวันด้วยความภูมิใจ",
-      "ขอให้ทุกเรื่องราบรื่น คล่องตัว และสำเร็จอย่างสวยงาม",
-      "ขอให้ทุกก้าวมั่นคง และพาไปพบความสำเร็จที่งดงาม",
-      "มีโอกาสดี มีคนช่วยเหลือ และมีข่าวดีเรื่องงาน",
-      "ทำเต็มที่แล้ว ขอให้วันนี้ผลลัพธ์เป็นใจ",
-      "ทุกก้าวเล็ก ๆ วันนี้ คือความสำเร็จที่กำลังเติบโต",
-      "ขอให้สิ่งที่ทุ่มเทออกดอกออกผลอย่างงดงาม",
-      "วันนี้ขอให้คิดคล่อง ทำคล่อง และสำเร็จอย่างราบรื่น",
-      "ขอให้พบจังหวะดี ๆ ที่ช่วยให้งานง่ายขึ้น",
-      "ก้าวไปทีละนิด แต่ขอให้ทุกก้าวพาไปข้างหน้า"
-    ]
-  },
-  business_sales:{
-    label:"ค้าขาย / ลูกค้า / ยอดขาย",
-    desc:"เน้นลูกค้าเข้า ยอดขายดี ค้าขายคล่อง เจรจาสำเร็จ ออเดอร์ต่อเนื่อง และธุรกิจเดินหน้า",
-    headlines:[
-      "วันนี้ค้าขายคล่อง","ลูกค้าเข้าไม่ขาดสาย","ยอดขายเดินดี","เปิดร้านรับความปัง",
-      "ออเดอร์เข้า งานไหลลื่น","ธุรกิจเดินหน้า","ขายดีทั้งวัน","วันนี้ยอดพุ่ง",
-      "ลูกค้าดี งานดี เงินดี","เปิดวันรับออเดอร์","การค้าราบรื่น","วันนี้ขายดีเป็นพิเศษ",
-      "ยอดดี ลูกค้าดี ใจดี","รับวันด้วยยอดขายดี","งานขายเป็นใจ","โอกาสการค้าเปิดทาง"
-    ],
-    greetings:[
-      "ลูกค้าเข้าต่อเนื่อง ยอดขายดี และการค้าราบรื่นตลอดวัน",
-      "ออเดอร์เข้าคล่อง เจรจาสำเร็จ และมีลูกค้าดี ๆ เข้ามา",
-      "ค้าขายราบรื่น ลูกค้าไว้วางใจ และยอดขายเติบโตอย่างสวยงาม",
-      "มีลูกค้าใหม่ มีลูกค้าเก่ากลับมา และมีโอกาสปิดการขายดี ๆ",
-      "ธุรกิจเดินหน้า ทีมทำงานคล่อง และทุกการเจรจาเป็นผลดี",
-      "ยอดขายเป็นใจ ออเดอร์ต่อเนื่อง และเงินหมุนคล่องตัว",
-      "ลูกค้าเห็นคุณค่า สินค้าขายดี และงานบริการได้รับคำชม",
-      "งานขายราบรื่น มีจังหวะดี ๆ และมีข่าวดีเรื่องยอดเข้ามา",
-      "การค้าคล่องตัว ลูกค้าตัดสินใจง่าย และมีออเดอร์เข้าตลอดวัน",
-      "มีโอกาสดีทางธุรกิจ พบลูกค้าที่ใช่ และปิดงานได้อย่างราบรื่น",
-      "ยอดเติบโตอย่างมั่นคง ลูกค้าประทับใจ และงานเดินหน้าอย่างดี",
-      "วันนี้เต็มไปด้วยลูกค้าดี ๆ ยอดขายดี และพลังดีในการทำงาน",
-      "มีคนสนใจมากขึ้น มีคำสั่งซื้อเพิ่มขึ้น และการค้าสดใส",
-      "ธุรกิจเป็นที่รักของลูกค้า และสร้างผลลัพธ์ที่น่าภูมิใจ"
-    ],
-    supporting:[
-      "ลูกค้าเข้า ยอดเดิน เงินคล่อง",
-      "ขายดี มีออเดอร์ มีรอยยิ้ม",
-      "ปิดงานง่าย ลูกค้าประทับใจ",
-      "ยอดขายดีทั้งวัน",
-      "ลูกค้าดี โอกาสดี รายรับดี",
-      "งานขายคล่องแบบสบายใจ",
-      "ออเดอร์มาอย่างต่อเนื่อง",
-      "การค้าราบรื่นทุกจังหวะ",
-      "ลูกค้าไว้วางใจ ธุรกิจเติบโต",
-      "ยอดดี งานดี เงินดี",
-      "เปิดร้านรับพลังดี",
-      "ค้าขึ้น งานขึ้น เงินขึ้น"
-    ]
-  },
-  money:{
-    label:"การเงิน / เงินทองคล่องตัว",
-    desc:"เน้นเงินเข้า เงินหมุนคล่อง รายรับดี มีเหลือเก็บ จัดการรายจ่ายได้สบายขึ้น และการเงินเป็นใจ",
-    headlines:[
-      "เงินคล่องทั้งวัน","การเงินเป็นใจ","วันนี้เงินเข้าไม่ขาด","เงินทองไหลลื่น",
-      "รับวันด้วยการเงินที่ดี","รายรับดี มีเหลือเก็บ","เงินมา งานเดิน","คล่องตัวเรื่องเงิน",
-      "วันนี้เรื่องเงินลงตัว","การเงินสดใส","เงินเข้าแบบสบายใจ","จังหวะการเงินดี"
-    ],
-    greetings:[
-      "การเงินคล่องตัว รายรับดี และมีเหลือเก็บอย่างสบายใจ",
-      "เงินเข้าอย่างต่อเนื่อง รายจ่ายลงตัว และวางแผนได้อย่างมั่นใจ",
-      "หยิบจับเรื่องเงินราบรื่น มีโอกาสรับทรัพย์และจัดการทุกอย่างได้ดี",
-      "รายรับเปิดทาง รายจ่ายไม่กดดัน และมีความสบายใจเรื่องการเงิน",
-      "มีช่องทางดี ๆ ให้เงินไหลเข้า และมีวินัยที่พาไปสู่ความมั่นคง",
-      "การเงินเป็นใจ มีโอกาสดี และมีพลังใจใช้ชีวิตแบบไม่กังวล",
-      "เงินหมุนคล่อง การค้าราบรื่น และทุกการตัดสินใจเรื่องเงินลงตัว",
-      "มีรายได้ดีขึ้น เก็บเงินได้มากขึ้น และใช้จ่ายอย่างมั่นคง",
-      "เรื่องเงินราบรื่น มีความคล่องตัว และมีความสบายใจในทุกการใช้จ่าย",
-      "เงินทองไหลลื่น งานส่งผลดี และมีข่าวดีเรื่องรายรับเข้ามา",
-      "มีรายรับ มีเหลือเก็บ และมีโอกาสดีทางการเงินเข้ามาเรื่อย ๆ",
-      "จัดการเรื่องเงินได้ง่ายขึ้น เบาใจขึ้น และมั่นใจมากขึ้น"
-    ],
-    supporting:[
-      "เงินเข้าเป็นจังหวะดี รายจ่ายอยู่ในมือ",
-      "รายรับดี มีเก็บ และสบายใจ",
-      "คล่องมือ คล่องใจ คล่องเรื่องเงิน",
-      "การเงินลงตัว ใช้จ่ายอย่างมั่นใจ",
-      "เงินหมุนดี ชีวิตก็เบาสบาย",
-      "วันนี้เรื่องเงินเป็นใจ",
-      "รายได้งอกงาม เก็บเงินได้มากขึ้น",
-      "มีมากพอใช้ และพอเก็บ",
-      "เงินดี งานดี ใจดี",
-      "เบาใจเรื่องเงินมากขึ้นทุกวัน",
-      "รับทรัพย์แบบสบาย ๆ",
-      "การเงินมั่นคงทีละก้าว"
+      "สุขกาย สุขใจ",
+      "มีความสุขตลอดวัน",
+      "สดชื่น แจ่มใส",
+      "พบแต่สิ่งดี ๆ",
+      "โชคดี มีสุข"
     ]
   },
   health:{
-    label:"สุขภาพ / แข็งแรง",
-    desc:"เน้นสุขภาพแข็งแรง สดชื่น พักผ่อนดี ปลอดภัย และสบายทั้งกายใจ",
+    label:"สุขภาพ / แข็งแรง — จากภาพอ้างอิง",
+    desc:"ใช้เฉพาะถ้อยคำสุขภาพที่สกัดจากภาพ",
     headlines:[
-      "ขอให้สุขภาพแข็งแรง","วันนี้ขอให้กายใจสดชื่น","ขอให้แข็งแรงและสบายใจ","สุขภาพดี คือพรที่ดีที่สุด",
-      "ขอให้วันนี้เต็มไปด้วยพลัง","ขอให้กายแข็งแรง ใจเบิกบาน","วันนี้ขอให้สดชื่นทั้งวัน","ขอให้มีพลังดี ๆ เต็มหัวใจ",
-      "ส่งความห่วงใยให้สุขภาพดี","ขอให้วันใหม่พาแต่ความสดชื่น","แข็งแรงทั้งกาย สบายทั้งใจ","ขอให้วันนี้เป็นวันที่เบาสบาย","สดชื่น แข็งแรง พร้อมลุย","กายดี ใจดี ทั้งวัน"
+      "สุขภาพแข็งแรง",
+      "สุขกาย สุขใจ",
+      "สดชื่น แจ่มใส"
     ],
     greetings:[
-      "ขอให้สุขภาพแข็งแรง สดชื่นทั้งกายและใจ และมีพลังดี ๆ ตลอดวัน",
-      "ขอให้ร่างกายแข็งแรง พักผ่อนได้เต็มที่ และหัวใจเบาสบาย",
-      "ขอให้ห่างไกลจากความเจ็บป่วย และมีแต่ความสดใสในทุกวัน",
-      "ขอให้วันนี้เต็มไปด้วยพลังชีวิต ความสดชื่น และความสบายใจ",
-      "ขอให้กายใจสมดุล สดชื่น แข็งแรง และยิ้มได้ตลอดวัน",
-      "ขอให้สุขภาพดีขึ้นทุกวัน มีแรงทำสิ่งที่รักอย่างมีความสุข",
-      "ขอให้ร่างกายได้รับการพักผ่อน และหัวใจได้รับความอ่อนโยน",
-      "ขอให้วันนี้ตื่นมาพร้อมความสดชื่น และผ่านไปอย่างแข็งแรง",
-      "ขอให้สุขภาพแข็งแรง ปลอดภัย และมีความสุขในทุกลมหายใจ",
-      "ขอให้วันนี้เต็มไปด้วยความสดชื่น พลังดี ๆ และสุขภาพแข็งแรง",
-      "ขอให้ทั้งกายและใจได้รับการดูแลอย่างดีในวันนี้",
-      "ขอให้วันใหม่เป็นอีกวันที่สุขภาพดีและหัวใจสดใส"
-    ],
-    supporting:[
-      "สุขภาพดี ใจดี ชีวิตก็มีความสุข","ขอให้วันนี้สดชื่น แข็งแรง และมีพลังดี ๆ ตลอดวัน",
-      "ดูแลตัวเองให้ดี เพราะคุณคือคนสำคัญ","ขอให้ร่างกายแข็งแรง และหัวใจมีแต่ความสบาย",
-      "ขอให้วันนี้สดใส ยิ้มได้ง่าย และมีพลังดี ๆ อยู่เสมอ","ขอให้มีพลังดี ๆ อยู่กับคุณตลอดวัน",
-      "แข็งแรงจากภายใน และสดใสจากหัวใจ","ขอให้ทุกเช้าเริ่มต้นด้วยสุขภาพที่ดี",
-      "กายสบาย ใจสงบ คือความสุขที่มีค่า","ขอให้วันนี้เต็มไปด้วยความอ่อนโยน ความสดชื่น และความสบายใจ",
-      "สุขภาพแข็งแรง คือทุนของทุกความฝัน","ขอให้กินอิ่ม นอนหลับ และตื่นมาด้วยรอยยิ้ม"
+      "สุขภาพแข็งแรง",
+      "สุขกาย สุขใจ",
+      "จิตใจเบิกบาน",
+      "มีความสุขตลอดวัน"
     ]
   },
-  senior_health:{
-    label:"สุขภาพผู้ใหญ่ / ผู้สูงอายุ",
-    desc:"เน้นแข็งแรง เดินเหินคล่อง กินอิ่ม นอนหลับดี สดชื่น ปลอดภัย และมีความสุขในทุกวัน",
+  work:{
+    label:"การงาน / ความก้าวหน้า — จากภาพอ้างอิง",
+    desc:"ใช้เฉพาะถ้อยคำเรื่องงานและความก้าวหน้าที่สกัดจากภาพ",
     headlines:[
-      "แข็งแรง สดชื่น ทุกวัน","กายแข็งแรง ใจสดใส","สุขภาพดี มีความสุข","วันนี้สดชื่นเป็นพิเศษ",
-      "แข็งแรง เดินคล่อง ใจดี","วันดีของสุขภาพ","อยู่ดีมีสุขทุกวัน","สดใสทั้งกายและใจ",
-      "สุขภาพดี คือความสุข","แข็งแรงและเบิกบาน","วันนี้กายใจเป็นสุข","มีแรง มีสุข มีรอยยิ้ม"
+      "การงานก้าวหน้า",
+      "เจริญรุ่งเรือง"
     ],
     greetings:[
-      "สุขภาพแข็งแรง เดินเหินคล่อง สดชื่น และมีความสุขตลอดวัน",
-      "กินอิ่ม นอนหลับดี ร่างกายแข็งแรง และหัวใจเบิกบาน",
-      "กายแข็งแรง ใจสดใส ใช้ชีวิตคล่องตัว และมีรอยยิ้มทุกวัน",
-      "สุขภาพดี มีแรงทำสิ่งที่ชอบ และมีความสุขกับคนรอบตัว",
-      "สดชื่นทั้งวัน พักผ่อนได้เต็มที่ และใช้ชีวิตอย่างสบายใจ",
-      "แข็งแรง ปลอดภัย อารมณ์ดี และมีความสุขในทุกช่วงเวลา",
-      "สุขภาพสมบูรณ์ เดินทางสะดวก และพบแต่เรื่องน่ายินดี",
-      "มีแรงกายดี มีแรงใจดี และใช้ชีวิตประจำวันอย่างราบรื่น",
-      "นอนหลับสบาย ตื่นมาสดชื่น และมีพลังดีในทุกเช้า",
-      "ร่างกายแข็งแรง อารมณ์แจ่มใส และมีคนที่รักอยู่ใกล้ ๆ",
-      "ใช้ชีวิตได้อย่างคล่องตัว สุขภาพดี และมีความสุขแบบสบาย ๆ",
-      "แข็งแรงทุกวัน สดใสทุกเช้า และอุ่นใจในทุกช่วงเวลา"
-    ],
-    supporting:[
-      "กินอิ่ม นอนหลับ เดินคล่อง",
-      "แข็งแรง สดชื่น และสบายใจ",
-      "สุขภาพดี มีรอยยิ้ม",
-      "กายดี ใจดี ทุกวัน",
-      "มีแรง มีสุข มีความอบอุ่น",
-      "สดใส ปลอดภัย แข็งแรง",
-      "อยู่ดีมีสุขทั้งวัน",
-      "สุขภาพดี ชีวิตก็ดี",
-      "นอนดี กินดี ใจดี",
-      "แข็งแรงและเบิกบาน"
+      "การงานก้าวหน้า",
+      "เจริญรุ่งเรือง",
+      "สมหวังดังใจ",
+      "คิดสิ่งใดสมปรารถนา"
     ]
   },
-  happiness:{
-    label:"ความสุข / สบายใจ",
-    desc:"เน้นรอยยิ้ม ความอบอุ่น ใจเบา ความสบายใจ และเรื่องดี ๆ ในชีวิตประจำวัน",
+  money:{
+    label:"การเงิน / เงินทอง — จากภาพอ้างอิง",
+    desc:"ใช้เฉพาะถ้อยคำเรื่องเงินทองที่สกัดจากภาพ",
     headlines:[
-      "ขอให้วันนี้มีแต่ความสุข","วันนี้ขอให้หัวใจเบิกบาน","ส่งความสุขให้ตลอดทั้งวัน","ขอให้ใจเบาและยิ้มได้",
-      "วันดี ๆ เริ่มจากหัวใจที่ดี","ขอให้วันนี้อ่อนโยนกับหัวใจ","ส่งรอยยิ้มให้วันใหม่","ขอให้ความสุขอยู่ใกล้ ๆ",
-      "วันนี้ขอให้มีแต่เรื่องน่ารัก","ขอให้ใจฟูตลอดทั้งวัน","ขอให้วันนี้สบายใจเป็นพิเศษ","ยิ้มรับวันใหม่ด้วยความสุข","สุขง่าย ๆ ในทุกวัน","ใจเบาและอบอุ่น"
+      "เงินทองคล่องมือ",
+      "ร่ำรวยเงินทอง",
+      "มั่งมีศรีสุข"
     ],
     greetings:[
-      "ขอให้วันนี้มีแต่รอยยิ้ม ความสบายใจ และเรื่องดี ๆ เข้ามา",
-      "ขอให้หัวใจเบิกบาน สบายใจ และเต็มไปด้วยความสุข",
-      "ขอให้พบความสุขเล็ก ๆ ระหว่างวัน ที่ทำให้หัวใจอบอุ่น",
-      "ขอให้วันนี้อ่อนโยนกับคุณ และมีแต่คนใจดีอยู่รอบตัว",
-      "ขอให้มีเหตุผลดี ๆ ให้ยิ้มได้ตั้งแต่เช้าจนถึงค่ำ",
-      "ขอให้วันนี้มีแต่เรื่องดี ๆ ความสุข และความสบายใจ",
-      "ขอให้ทุกช่วงเวลาวันนี้เต็มไปด้วยความสุขอย่างพอดี",
-      "ขอให้หัวใจมีพื้นที่สำหรับความสุขและความสบายใจเสมอ",
-      "ขอให้วันนี้ผ่านไปอย่างละมุน และจบลงด้วยรอยยิ้ม",
-      "ขอให้เจอคนดี เรื่องดี และบรรยากาศดี ๆ ตลอดวัน",
-      "ขอให้ความสุขธรรมดา ๆ กลายเป็นช่วงเวลาพิเศษของวันนี้",
-      "ขอให้วันนี้เต็มไปด้วยความสุข ความสบายใจ และรอยยิ้ม"
-    ],
-    supporting:[
-      "ขอให้ยิ้มได้ง่าย หัวใจสดใส และมีความสุขตลอดวัน","ความสุขบางครั้งก็อยู่ในเรื่องเล็ก ๆ รอบตัว",
-      "วันนี้ขอให้ใจเบาและชีวิตน่ารักกับคุณ","เจอเรื่องดี ๆ บ้าง ก็เพียงพอให้วันทั้งวันมีความหมาย",
-      "ขอให้หัวใจมีรอยยิ้มอยู่เสมอ","ความสุขไม่ต้องใหญ่ แค่สบายใจก็มีค่ามากแล้ว",
-      "ขอให้วันนี้เป็นวันที่หัวใจสดใสและสบายใจ","ขอให้วันนี้มีรอยยิ้มดี ๆ และความสุขอยู่กับคุณ",
-      "ขอให้ทุกช่วงเวลามีความอุ่นใจซ่อนอยู่","ขอให้วันนี้เป็นอีกวันที่น่าจดจำ",
-      "สุขเล็ก ๆ ทุกวัน รวมกันเป็นชีวิตที่งดงาม","ขอให้จบวันนี้ด้วยคำว่า มีความสุข"
+      "เงินทองคล่องมือ",
+      "ร่ำรวยเงินทอง",
+      "มั่งมีศรีสุข",
+      "มีโชค มีลาภ"
     ]
   },
   wealth:{
-    label:"มั่งคั่งร่ำรวย / ทรัพย์เพิ่มพูน",
-    desc:"เน้นความอุดมสมบูรณ์ ทรัพย์เพิ่มพูน โชคลาภ ความรุ่งเรือง ฐานะมั่นคง และความมั่งคั่งในภาพรวม",
+    label:"มั่งคั่ง / ร่ำรวย — จากภาพอ้างอิง",
+    desc:"ใช้เฉพาะถ้อยคำความมั่งคั่งและความเจริญที่สกัดจากภาพ",
     headlines:[
-      "ขอให้เงินทองไหลมา","วันนี้ขอให้เฮงและรวย","ขอให้มั่งคั่งสมปรารถนา","รับทรัพย์ รับโชค รับความสำเร็จ",
-      "ขอให้การเงินรุ่งเรือง","เปิดวันใหม่รับความมั่งคั่ง","ขอให้มีโชค มีทรัพย์ มีสุข","ขอให้วันนี้เงินทองคล่องมือ",
-      "มั่งมีศรีสุขตลอดวัน","ขอให้ร่ำรวยทั้งทรัพย์และโอกาส","วันนี้ขอให้โชคลาภเปิดทาง","ขอให้ทรัพย์สินเพิ่มพูน","ทรัพย์งอกงาม โชคเปิดทาง","มั่งคั่งอย่างงดงาม"
+      "มั่งมีศรีสุข",
+      "ร่ำรวยเงินทอง",
+      "เจริญรุ่งเรือง"
     ],
     greetings:[
-      "ขอให้เงินทองไหลมา การเงินคล่องตัว และมีรายรับดี ๆ เข้ามา",
-      "ขอให้หยิบจับสิ่งใดเป็นเงินเป็นทอง และพบโอกาสทำเงินที่ดี",
-      "ขอให้วันนี้มีโชค มีทรัพย์ และความมั่งคั่งเพิ่มพูน",
-      "ขอให้การเงินราบรื่น ค้าขายดี และมีเหลือเก็บอย่างสบายใจ",
-      "ขอให้สิ่งที่ลงทุนลงแรงสร้างผลตอบแทนที่น่าพอใจ",
-      "ขอให้พบช่องทางใหม่ ๆ ที่พาไปสู่ความมั่นคงทางการเงิน",
-      "ขอให้เงินเข้าคล่อง รายจ่ายเบาลง และมีความอุดมสมบูรณ์",
-      "ขอให้วันนี้เป็นวันดีของโชคลาภ การเงิน และความสำเร็จ",
-      "ขอให้ฐานะมั่นคง ทรัพย์สินเพิ่มพูน และการเงินรุ่งเรือง",
-      "ขอให้มีทั้งโชคจากโอกาส และทรัพย์จากความสามารถ",
-      "ขอให้ความขยันนำพาความมั่งคั่ง และความมั่งคั่งนำพาความสุข",
-      "ขอให้ร่ำรวยทั้งเงินทอง โอกาส มิตรภาพ และความสบายใจ"
-    ],
-    supporting:[
-      "เงินทองคล่องมือ โอกาสดีเข้ามาไม่ขาดสาย","ขอให้วันนี้มีเงินเข้า มีโชคเข้า และมีความสุขเข้ามา",
-      "ทำมาค้าขึ้น หยิบจับสิ่งใดขอให้รุ่งเรือง","ขอให้ทรัพย์เพิ่มพูน เงินทองคล่องตัว และการเงินมั่นคง",
-      "มีโชค มีทรัพย์ และมีโอกาสดีอยู่รอบตัว","ขอให้เงินงอก งานงาม และชีวิตมั่นคง",
-      "มั่งคั่งอย่างมีความสุข และร่ำรวยอย่างสบายใจ","ขอให้สิ่งที่หวังเรื่องการเงินค่อย ๆ เป็นจริง",
-      "รับทรัพย์ รับโอกาส รับเรื่องดี ๆ ตลอดวัน","ขอให้วันนี้เป็นอีกวันที่การเงินเป็นใจ",
-      "ความมั่งคั่งเริ่มต้นจากโอกาสดี ๆ ที่เข้ามา","ขอให้มีมากพอใช้ มากพอเก็บ และมากพอแบ่งปัน"
-    ]
-  },
-  auspicious_wealth:{
-    label:"มั่งคั่งมงคล / เทพมงคล / รับทรัพย์",
-    desc:"เหมาะกับภาพเทพมงคล ฮก–ลก–ซิ่ว ไฉ่ซิงเอี๊ย พระพิฆเนศ และงานรับทรัพย์ เน้นเฮง รุ่งเรือง มั่งคั่ง โชคลาภ และสิริมงคล",
-    headlines:[
-      "รับทรัพย์ รับโชค รับความเฮง","วันนี้เฮงเป็นพิเศษ","มั่งคั่ง รุ่งเรือง สมหวัง","เปิดทางรับทรัพย์",
-      "เฮงดี เงินดี โชคดี","โชคลาภเปิดทาง","รับวันแห่งความมั่งคั่ง","ทรัพย์มา โชคมา",
-      "วันนี้รุ่งเรืองทุกด้าน","เงินทองกองมา","เปิดรับความเฮง","มั่งมีศรีสุข",
-      "โชคดีทวีคูณ","วันมงคลแห่งความสำเร็จ","รับพลังแห่งความมั่งคั่ง","เฮง ปัง รุ่งเรือง"
-    ],
-    greetings:[
-      "รับทรัพย์ รับโชค การงานรุ่งเรือง และเงินทองคล่องมือ",
-      "โชคลาภเปิดทาง ความสำเร็จเข้ามา และทรัพย์สินเพิ่มพูน",
-      "มั่งคั่ง รุ่งเรือง มีคนอุปถัมภ์ และพบแต่โอกาสดี ๆ",
-      "หยิบจับสิ่งใดเป็นเงินเป็นทอง งานดี เงินดี และสมหวัง",
-      "มีโชค มีทรัพย์ มีความสำเร็จ และมีความสุขตลอดวัน",
-      "การเงินรุ่งเรือง การค้าราบรื่น และมีสิริมงคลในทุกก้าว",
-      "ทรัพย์เพิ่มพูน โอกาสเปิดกว้าง และมีข่าวดีเข้ามาอย่างต่อเนื่อง",
-      "รับพลังดีแห่งความมั่งคั่ง พร้อมความสำเร็จและความสบายใจ",
-      "มีความอุดมสมบูรณ์ เงินทองงอกงาม และชีวิตรุ่งเรือง",
-      "เฮงทั้งงาน ปังทั้งเงิน และเต็มไปด้วยความโชคดี",
-      "โชคดีทวีคูณ มีทรัพย์ มีสุข และมีความก้าวหน้า",
-      "วันนี้เป็นวันแห่งความรุ่งเรือง ความมั่งคั่ง และข่าวดี"
-    ],
-    supporting:[
-      "เฮง ปัง รวย รุ่งเรือง",
-      "รับทรัพย์ รับโชค รับข่าวดี",
-      "มีโชค มีทรัพย์ มีสุข",
-      "เงินมา งานรุ่ง โชคเปิด",
-      "มั่งมีศรีสุขทั้งวัน",
-      "ทรัพย์งอก โชคงาม งานดี",
-      "รุ่งเรืองทุกด้าน",
-      "รับพลังแห่งความเฮง",
-      "โชคดีทวีคูณ",
-      "มั่งคั่งอย่างสบายใจ",
-      "งานรุ่ง เงินคล่อง โชคดี",
-      "รับทรัพย์แบบปัง ๆ"
+      "มั่งมีศรีสุข",
+      "ร่ำรวยเงินทอง",
+      "เงินทองคล่องมือ",
+      "มีโชค มีลาภ",
+      "เจริญรุ่งเรือง"
     ]
   },
   success:{
-    label:"ความสำเร็จ / สมหวัง",
-    desc:"เน้นเป้าหมาย ความสำเร็จ ข่าวดี ความคืบหน้า และสิ่งที่หวังค่อย ๆ เป็นจริง",
+    label:"ความสำเร็จ / สมหวัง — จากภาพอ้างอิง",
+    desc:"ใช้เฉพาะถ้อยคำความสำเร็จและสมหวังที่สกัดจากภาพ",
     headlines:[
-      "ขอให้สมหวังในทุกสิ่ง","วันนี้ขอให้ความสำเร็จอยู่ข้างคุณ","ขอให้ทุกความตั้งใจเป็นจริง","ก้าวไปสู่ความสำเร็จ",
-      "วันนี้ขอให้ได้ข่าวดี","ขอให้ฝันใกล้ความจริงขึ้นอีกนิด","ส่งกำลังใจไปสู่ความสำเร็จ","ขอให้วันนี้สำเร็จเกินคาด",
-      "ความสำเร็จกำลังเดินทางมา","ขอให้สิ่งที่หวังลงตัว","วันนี้ขอให้สมปรารถนา","ขอให้ทุกก้าวมีความหมาย"
+      "สมหวังดังใจ",
+      "คิดสิ่งใดสมปรารถนา",
+      "เจริญรุ่งเรือง"
     ],
     greetings:[
-      "ขอให้ทุกสิ่งที่ตั้งใจค่อย ๆ สำเร็จอย่างงดงาม",
-      "ขอให้ความพยายามที่ผ่านมาได้รับผลตอบแทนที่คุ้มค่า",
-      "ขอให้วันนี้พาคุณเข้าใกล้ความฝันและเป้าหมายมากขึ้น",
-      "ขอให้ได้รับข่าวดีในเรื่องที่กำลังรอคอย",
-      "ขอให้สิ่งที่หวังไว้สมหวังและสำเร็จดั่งใจ",
-      "ขอให้ทุกโอกาสที่เข้ามานำพาไปสู่ความสำเร็จ",
-      "ขอให้มีผลลัพธ์ที่ดีเกินกว่าที่คาดหวัง",
-      "ขอให้ทุกเป้าหมายสำเร็จและก้าวหน้าอย่างมั่นคง",
-      "ขอให้ทุกความตั้งใจได้รับการตอบรับในทางที่ดี",
-      "ขอให้วันนี้มีความคืบหน้าและความสำเร็จให้ชื่นใจ",
-      "ขอให้สิ่งที่ลงแรงไว้ประสบความสำเร็จและออกดอกออกผลอย่างงดงาม",
-      "ขอให้สมหวังในสิ่งดี ๆ และภูมิใจกับเส้นทางของตัวเอง"
-    ],
-    supporting:[
-      "ทุกก้าววันนี้กำลังพาไปใกล้เป้าหมาย","ความสำเร็จไม่ไกลเกินความพยายาม",
-      "ขอให้มีข่าวดีรออยู่ในวันนี้","ทำดีที่สุด แล้วขอให้ผลลัพธ์ดีที่สุดเช่นกัน",
-      "ขอให้สิ่งที่หวังสมหวัง และมีข่าวดีเข้ามาในวันนี้","ขอให้ทุกความตั้งใจได้รับคำตอบที่สวยงาม",
-      "เชื่อในตัวเอง แล้วก้าวต่อไป","วันนี้อาจเป็นวันที่โอกาสดีเดินเข้ามา",
-      "ความพยายามไม่เคยสูญเปล่า","ขอให้สิ่งที่รอคอยมาถึงในเวลาที่พอดี",
-      "ขอให้ทุกก้าวพาไปสู่ความสำเร็จอย่างมั่นคง","ขอให้ปลายทางคุ้มค่ากับทุกก้าวที่ผ่านมา"
+      "สมหวังดังใจ",
+      "คิดสิ่งใดสมปรารถนา",
+      "เจริญรุ่งเรือง",
+      "โชคดี มีชัย"
     ]
   },
   luck:{
-    label:"โชคลาภ / สิริมงคล",
-    desc:"เน้นโชคดี ข่าวดี สิริมงคล พลังบวก คนดี และโอกาสดี",
+    label:"โชคดี / โชคลาภ — จากภาพอ้างอิง",
+    desc:"ใช้เฉพาะถ้อยคำโชคดีและโชคลาภที่สกัดจากภาพ",
     headlines:[
-      "ขอให้วันนี้โชคดี","รับวันใหม่ด้วยสิริมงคล","ขอให้พบแต่เรื่องมงคล","วันนี้ขอให้โชคอยู่ข้างคุณ",
-      "ขอให้พรดี ๆ เดินทางมา","รับโชค รับสุข รับสิ่งดี","ขอให้วันนี้เต็มไปด้วยสิริมงคล","เปิดรับความโชคดี",
-      "ขอให้มีแต่ข่าวดี","วันนี้ขอให้ดวงเปิดทาง","ส่งพรดี ๆ ให้ทั้งวัน","ขอให้เรื่องดีเข้ามาไม่ขาดสาย"
+      "โชคดีตลอดวัน",
+      "โชคดี มีสุข",
+      "โชคดี มีชัย",
+      "มีโชค มีลาภ"
     ],
     greetings:[
-      "ขอให้วันนี้มีแต่โชคดี สิริมงคล และเรื่องน่ายินดีเข้ามา",
-      "ขอให้พบคนดี โอกาสดี และเหตุการณ์ที่นำพาความสุข",
-      "ขอให้มีโชคลาภเล็กใหญ่เข้ามาในจังหวะที่เหมาะสม",
-      "ขอให้ทุกการเริ่มต้นในวันนี้เป็นมงคลและราบรื่น",
-      "ขอให้ได้รับพรดี ๆ และมีความสมหวังในสิ่งที่ตั้งใจ",
-      "ขอให้วันนี้มีแต่สิ่งดี ๆ โชคดี และความเป็นสิริมงคล",
-      "ขอให้โชคดีเดินทางมาพร้อมกับข่าวดีและโอกาสใหม่",
-      "ขอให้วันนี้มีพลังบวกและความเป็นสิริมงคลอยู่รอบตัว",
-      "ขอให้ทุกก้าวพบทางสว่างและเรื่องที่เป็นมงคล",
-      "ขอให้ความโชคดีอยู่ใกล้คุณตั้งแต่เช้าจนถึงค่ำ",
-      "ขอให้ชีวิตราบรื่น มีโชค และมีคนดีคอยเกื้อหนุน",
-      "ขอให้วันนี้ได้รับสิ่งดีเกินกว่าที่คาดหวัง"
-    ],
-    supporting:[
-      "โชคดีอยู่ใกล้กว่าที่คิด","ขอให้วันนี้มีข่าวดีให้ยิ้มได้",
-      "เปิดใจรับสิ่งดี ๆ ที่กำลังเดินทางมา","ขอให้สิริมงคลอยู่กับคุณตลอดวัน",
-      "คิดดี ทำดี ขอให้พบแต่ผลดี","วันนี้ขอให้โชคเป็นใจ",
-      "ขอให้ทุกเส้นทางมีแสงสว่างนำทาง","สิ่งดี ๆ อาจกำลังเดินทางมาหาคุณ",
-      "ขอให้พบแต่จังหวะดีและคนดี","รับพรดี ๆ ไปเต็มหัวใจ",
-      "ขอให้วันนี้มีเรื่องน่ายินดีเกิดขึ้น","โชคดี ความสุข และความสมหวัง จงอยู่ใกล้คุณ"
+      "โชคดี มีสุข",
+      "โชคดี มีชัย",
+      "มีโชค มีลาภ",
+      "พบแต่สิ่งดี ๆ",
+      "โชคดีตลอดวัน"
     ]
   },
   encouragement:{
-    label:"กำลังใจ / เริ่มต้นใหม่",
-    desc:"เน้นพลังใจ ความหวัง การเริ่มต้นใหม่ ผ่านเรื่องหนัก ๆ และก้าวต่อไปอย่างมั่นคง",
+    label:"วันใหม่ / กำลังใจ — จากภาพอ้างอิง",
+    desc:"ใช้เฉพาะถ้อยคำรับวันใหม่และความสดใสที่สกัดจากภาพ",
     headlines:[
-      "ขอให้วันนี้มีแรงใจ","ก้าวต่อไปด้วยหัวใจที่เข้มแข็ง","วันนี้เริ่มใหม่ได้เสมอ","ส่งกำลังใจให้วันใหม่",
-      "ขอให้หัวใจไม่ยอมแพ้","วันใหม่ โอกาสใหม่","ขอให้วันนี้ใจแข็งแรง","ค่อย ๆ ไป เดี๋ยวก็ถึง",
-      "ขอให้มีพลังดี ๆ อยู่ข้างคุณ","วันนี้ขอให้ใจสู้","เริ่มต้นใหม่ด้วยรอยยิ้ม","ขอให้ผ่านทุกเรื่องไปได้"
+      "ยิ้มรับวันใหม่",
+      "สดใสรับวันใหม่",
+      "วันใหม่สดใส",
+      "จิตใจเบิกบาน"
     ],
     greetings:[
-      "ไม่ว่าวันนี้ต้องเจออะไร ขอให้มีแรงใจพาตัวเองผ่านไปได้อย่างดี",
-      "ขอให้ความเหนื่อยค่อย ๆ เบาลง และความหวังค่อย ๆ กลับมา",
-      "ขอให้เชื่อมั่นในตัวเอง และก้าวต่อไปอย่างมั่นคง",
-      "ขอให้วันนี้เป็นอีกหนึ่งโอกาสของการเริ่มต้นสิ่งดี ๆ",
-      "ขอให้เรื่องหนักผ่านไป และมีเรื่องดีเข้ามาแทนที่",
-      "ขอให้หัวใจเข้มแข็งพอสำหรับวันนี้ และอ่อนโยนกับตัวเองเสมอ",
-      "ขอให้ทุกอุปสรรคกลายเป็นพลังที่ทำให้เติบโต",
-      "ขอให้มีแรงลุกขึ้นใหม่ในทุกครั้งที่รู้สึกเหนื่อย",
-      "ขอให้วันนี้ไม่ต้องรีบ แค่ยังเดินต่อก็เพียงพอ",
-      "ขอให้สิ่งที่กำลังพยายามค่อย ๆ เห็นทางออก",
-      "ขอให้ทุกเช้านำความหวังใหม่ ๆ มาเติมเต็มหัวใจ",
-      "ขอให้ผ่านวันนี้ไปได้ด้วยรอยยิ้มและความภูมิใจ"
-    ],
-    supporting:[
-      "เหนื่อยได้ แต่อย่าลืมให้กำลังใจตัวเอง","วันนี้ยังมีโอกาสใหม่รออยู่",
-      "ค่อย ๆ เดิน ไม่จำเป็นต้องรีบ","คุณมาไกลกว่าที่คิดแล้ว",
-      "ผ่านมาถึงตรงนี้ได้ ก็ผ่านต่อไปได้","ให้วันนี้เป็นวันที่ใจดีกับตัวเอง",
-      "ทุกเช้าคือโอกาสเริ่มต้นใหม่","อย่าลืมว่าคุณเก่งกว่าที่ตัวเองคิด",
-      "ขอให้หัวใจมีพลังอีกครั้ง","บางวันแค่ไม่ยอมแพ้ก็เก่งมากแล้ว",
-      "ทำวันนี้ให้ดีที่สุด ที่เหลือค่อยว่ากัน","ขอให้พรุ่งนี้ดีกว่าวันนี้เสมอ"
+      "สดชื่น แจ่มใส",
+      "จิตใจเบิกบาน",
+      "พบแต่สิ่งดี ๆ",
+      "มีความสุขตลอดวัน"
     ]
   },
   short_power:{
-    label:"สั้น กระชับ เพิ่มพลัง",
-    desc:"คำอวยพรสั้น อ่านง่าย จำง่าย ให้พลังบวกชัดเจน เหมาะกับงานประจำวันและภาพที่ต้องการข้อความกระชับ",
+    label:"สั้น กระชับ — จากภาพอ้างอิง",
+    desc:"ใช้เฉพาะถ้อยคำสั้น ๆ ที่สกัดจากภาพ",
     headlines:[
-      "วันนี้พลังดี","รับวันด้วยพลังบวก","วันดีเริ่มแล้ว","จังหวะดีมาแล้ว",
-      "เฮง ปัง พร้อมลุย","สดใสและเป็นใจ","ดีขึ้นทุกด้าน","ยิ้มรับวันใหม่",
-      "พลังดีอยู่ข้างคุณ","วันนี้ต้องปัง","ก้าวไปให้สุด","ใจดี งานดี",
-      "มั่นใจแล้วไปต่อ","แสงดี ใจดี","วันใหม่ โอกาสใหม่","สำเร็จได้อีก"
+      "สุขกาย สุขใจ",
+      "สดชื่น แจ่มใส",
+      "โชคดี มีสุข",
+      "โชคดี มีชัย",
+      "มีโชค มีลาภ",
+      "สมหวังดังใจ"
     ],
     greetings:[
-      "งานปัง เงินคล่อง สุขภาพดี มีความสุข",
-      "คิดดี เจอสิ่งดี ทำอะไรก็ราบรื่น",
-      "โชคดีมีมา ความสุขมีอยู่ พลังใจเต็มร้อย",
-      "การงานก้าวหน้า การเงินเป็นใจ สุขภาพแข็งแรง",
-      "วันนี้สดใส ทุกเรื่องลงตัว มีแต่ข่าวดี",
-      "ใจมั่น งานเดิน เงินมา สุขภาพดี",
-      "เดินหน้าราบรื่น มีแรง มีโชค และมีรอยยิ้ม",
-      "สมหวังในเรื่องสำคัญ และสบายใจตลอดวัน",
-      "สำเร็จง่ายขึ้น ราบรื่นมากขึ้น และสุขใจมากขึ้น",
-      "มีพลัง มีโอกาส และมีความสุขกับทุกก้าว",
-      "รุ่งเรื่องงาน คล่องเรื่องเงิน และอิ่มใจทั้งวัน",
-      "สิ่งดีเข้ามา เรื่องหนักเบาลง และใจสดใส"
-    ],
-    supporting:[
-      "งานดี เงินดี ใจดี",
-      "สุขภาพดี มีพลัง",
-      "เฮง ปัง สมหวัง",
-      "มีแรง มีโชค มีสุข",
-      "คิดสิ่งใดราบรื่น",
-      "วันนี้เป็นวันดี",
-      "ยิ้มได้ทั้งวัน",
-      "สำเร็จได้อีกขั้น",
-      "พลังบวกเต็มหัวใจ",
-      "คล่องตัวทุกเรื่อง",
-      "สดใสและมั่นคง",
-      "ก้าวหน้าอย่างสวยงาม",
-      "มีความสุขแบบง่าย ๆ",
-      "เรื่องดีเข้ามาเรื่อย ๆ",
-      "มั่งคั่งและสบายใจ",
-      "ใจฟู งานไหลลื่น"
+      "สุขกาย สุขใจ",
+      "สดชื่น แจ่มใส",
+      "พบแต่สิ่งดี ๆ",
+      "มั่งมีศรีสุข",
+      "โชคดี มีสุข",
+      "สมหวังดังใจ"
     ]
   },
   all_round:{
-    label:"ครบทุกเรื่อง / งาน เงิน สุขภาพ ความสุข",
-    desc:"รวมการงาน การเงิน สุขภาพ ความสุข โชคดี และความราบรื่นไว้ในคำอวยพรเดียว",
+    label:"รวมคำอวยพรจากภาพอ้างอิง",
+    desc:"รวมเฉพาะถ้อยคำที่สกัดจากภาพ โดยไม่แต่งหรือขยายประโยคใหม่",
     headlines:[
-      "ขอให้วันนี้ดีพร้อมทุกเรื่อง","ส่งพรดี ๆ ให้ครบทุกด้าน","วันนี้ขอให้มีแต่สิ่งดี","ขอให้ทั้งงาน เงิน สุขภาพ และใจดี",
-      "ขอให้ชีวิตวันนี้ราบรื่น","รับวันใหม่ด้วยพรดี ๆ","ขอให้วันนี้สมบูรณ์ด้วยความสุข","ขอให้ทุกด้านของชีวิตเป็นใจ",
-      "วันนี้ขอให้ดีทั้งกายและใจ","ขอให้รุ่งเรืองและมีความสุข","ส่งความปรารถนาดีให้ทั้งวัน","ขอให้วันนี้มีแต่ความลงตัว","ครบดีครบสุขทั้งวัน","วันดีครบทุกด้าน"
+      "วันใหม่สดใส",
+      "สุขกาย สุขใจ",
+      "โชคดี มีสุข",
+      "พบแต่สิ่งดี ๆ",
+      "มั่งมีศรีสุข",
+      "เจริญรุ่งเรือง"
     ],
     greetings:[
-      "ขอให้การงานราบรื่น สุขภาพแข็งแรง การเงินคล่องตัว และหัวใจมีความสุข",
-      "ขอให้วันนี้เต็มไปด้วยความสำเร็จ ความมั่นคง สุขภาพดี และความสบายใจ",
-      "ขอให้งานก้าวหน้า เงินทองไหลมา สุขภาพแข็งแรง และมีรอยยิ้มตลอดวัน",
-      "ขอให้ทุกด้านของชีวิตราบรื่น ลงตัว และเต็มไปด้วยเรื่องดี ๆ",
-      "ขอให้มีโอกาสดีเรื่องงาน การเงินมั่นคง สุขภาพแข็งแรง และมีความสุข",
-      "ขอให้พบแต่ข่าวดี งานดี เงินดี สุขภาพดี และคนดีรอบตัว",
-      "ขอให้วันนี้มีทั้งความก้าวหน้า ความมั่งคั่ง สุขภาพแข็งแรง และความอบอุ่นใจ",
-      "ขอให้สมหวังในสิ่งที่ตั้งใจ การเงินราบรื่น สุขภาพดี และมีความสุข",
-      "ขอให้วันนี้เต็มไปด้วยความสำเร็จ โชคดี ความมั่งคั่ง และความสุข",
-      "ขอให้ชีวิตก้าวหน้าอย่างมั่นคง สุขภาพแข็งแรง และมีความสุขในทุกวัน",
-      "ขอให้การงานรุ่งเรือง เงินทองคล่องมือ สุขภาพดี และมีรอยยิ้มเสมอ",
-      "ขอให้วันนี้เป็นวันที่ดีในทุกด้าน งานสำเร็จ เงินคล่อง สุขภาพแข็งแรง และใจเบิกบาน"
+      "สุขภาพแข็งแรง",
+      "การงานก้าวหน้า",
+      "เงินทองคล่องมือ",
+      "สมหวังดังใจ",
+      "คิดสิ่งใดสมปรารถนา",
+      "มีโชค มีลาภ",
+      "เจริญรุ่งเรือง"
+    ]
+  },
+  buddhist:{
+    label:"พุทธ / ธรรมะ — จากภาพอ้างอิง",
+    desc:"ใช้เฉพาะถ้อยคำพุทธ/ธรรมะที่เก็บจากชุดภาพอ้างอิงเดิม และใช้เฉพาะโหมดพุทธ/วันพระ",
+    headlines:[
+      "บุญรักษา ธรรมคุ้มครอง",
+      "อิ่มบุญ อิ่มใจ",
+      "สุขสงบ เป็นสิริมงคล",
+      "บุญหนุนนำ",
+      "ธรรมะนำทาง",
+      "ใจสงบ พบความสุข"
     ],
-    supporting:[
-      "งานดี เงินดี สุขภาพดี และมีความสุข",
-      "ขอให้วันนี้ครบทั้งความสำเร็จ ความมั่งคั่ง และความสบายใจ",
-      "มีทรัพย์ มีสุข มีแรง และมีรอยยิ้ม",
-      "กายแข็งแรง ใจสดใส งานก้าวหน้า เงินมั่นคง",
-      "ขอให้ทุกด้านของชีวิตราบรื่นและลงตัว",
-      "งานรุ่ง เงินคล่อง สุขภาพดี และมีความสุข",
-      "มีโชค มีทรัพย์ มีสุข และสมหวังตลอดวัน",
-      "เรื่องงานเป็นใจ เรื่องเงินคล่องตัว เรื่องสุขภาพแข็งแรง",
-      "ขอให้ชีวิตมีทั้งความมั่นคง ความสำเร็จ และความสุข",
-      "รับพรดี ๆ ทั้งงาน เงิน สุขภาพ และหัวใจ",
-      "ขอให้วันนี้พบแต่ความสำเร็จและเรื่องน่ายินดี",
-      "ขอให้มีความสุข ความมั่งคั่ง และสุขภาพดีในทุกวัน"
+    greetings:[
+      "บุญรักษา ธรรมคุ้มครอง",
+      "อิ่มบุญ อิ่มใจ",
+      "สุขสงบ เป็นสิริมงคล",
+      "บุญหนุนนำ",
+      "ธรรมะนำทาง",
+      "ใจสงบ พบความสุข"
     ]
   }
 };
 
-// v11.41 — Curated Popular Thai Daily Blessing Phrase Bank
-// These are familiar positive blessing patterns commonly seen in Thai daily-greeting artwork.
-// Keep them short, clear, uplifting, and NEVER begin the visible text with “ขอให้”.
-const POPULAR_BLESSING_PHRASE_BANK={
-  work:{
-    headlines:["งานรุ่ง ก้าวหน้า","วันนี้งานเป็นใจ","ก้าวหน้าในทุกหน้าที่","สำเร็จอย่างราบรื่น"],
-    greetings:[
-      "การงานราบรื่น ผู้ใหญ่เมตตา และมีโอกาสดีเข้ามา",
-      "งานก้าวหน้า สิ่งที่ตั้งใจสำเร็จ และได้รับความร่วมมือที่ดี",
-      "คิดงานคล่อง ทำงานคล่อง และเห็นผลลัพธ์ที่น่าภูมิใจ",
-      "หน้าที่การงานมั่นคง ก้าวหน้า และมีข่าวดีเข้ามา"
-    ],
-    supporting:["งานรุ่ง ก้าวหน้า","ผู้ใหญ่เมตตา งานราบรื่น","คิดคล่อง ทำคล่อง สำเร็จ","ก้าวหน้าอย่างมั่นคง"]
-  },
-  business_sales:{
-    headlines:["ค้าขายดี มีลูกค้า","ยอดดีทั้งวัน","ออเดอร์เข้าไม่ขาด","ขายดี เงินดี"],
-    greetings:[
-      "ค้าขายดี ลูกค้าเข้า เงินทองไหลมา และยอดขายเติบโต",
-      "ลูกค้าไว้วางใจ ออเดอร์ต่อเนื่อง และปิดการขายได้อย่างราบรื่น",
-      "การค้าคล่องตัว ลูกค้าอุดหนุนดี และมีรายรับเข้าตลอดวัน",
-      "ธุรกิจรุ่งเรือง ยอดขายดี และมีลูกค้าดี ๆ เข้ามาเสมอ"
-    ],
-    supporting:["ขายดี มีลูกค้า มีเงินเข้า","ค้าขึ้น งานขึ้น เงินขึ้น","ยอดดี ออเดอร์ดี","ลูกค้าเข้าไม่ขาดสาย"]
-  },
-  money:{
-    headlines:["เงินทองคล่องมือ","การเงินเป็นใจ","เงินเข้า มีเหลือเก็บ","วันนี้เรื่องเงินดี"],
-    greetings:[
-      "เงินทองคล่องมือ รายรับดี มีเหลือใช้และมีเหลือเก็บ",
-      "การเงินราบรื่น เงินหมุนคล่อง และจัดการทุกอย่างได้อย่างสบายใจ",
-      "มีรายรับดี เงินเก็บเพิ่ม และความมั่นคงทางการเงินเติบโต",
-      "เงินเข้าเป็นจังหวะดี ใช้จ่ายลงตัว และมีความสบายใจเรื่องการเงิน"
-    ],
-    supporting:["เงินคล่อง มีใช้ มีเก็บ","เงินดี ใจดี ชีวิตดี","รายรับดี มีเหลือเก็บ","การเงินมั่นคง"]
-  },
-  health:{
-    headlines:["สุขภาพแข็งแรง","กายดี ใจดี","สดชื่น แข็งแรง","สุขกาย สบายใจ"],
-    greetings:[
-      "สุขภาพแข็งแรง สดชื่นทั้งกายและใจ และมีพลังดีตลอดวัน",
-      "สุขกาย สบายใจ พักผ่อนเต็มที่ และมีรอยยิ้มในทุกวัน",
-      "กายแข็งแรง ใจเบิกบาน และใช้ชีวิตอย่างสดใส",
-      "สุขภาพดี ปลอดภัย และมีพลังทำสิ่งที่รักอย่างมีความสุข"
-    ],
-    supporting:["สุขกาย สุขใจ","สุขภาพดี มีพลัง","กายแข็งแรง ใจสดใส","สดชื่นตลอดวัน"]
-  },
-  senior_health:{
-    headlines:["แข็งแรง อายุยืน","อยู่ดี มีสุข","สุขภาพดีทุกวัน","กายแข็งแรง ใจเบิกบาน"],
-    greetings:[
-      "สุขภาพแข็งแรง อายุยืนยาว กินอิ่ม นอนหลับ และมีความสุขทุกวัน",
-      "อยู่ดีมีสุข เดินเหินคล่อง สดชื่น และอารมณ์แจ่มใส",
-      "กายแข็งแรง ใจสบาย มีลูกหลานและคนที่รักอยู่ใกล้ชิด",
-      "กินดี นอนดี สุขภาพดี และใช้ชีวิตอย่างมีความสุข"
-    ],
-    supporting:["แข็งแรง อายุยืน มีความสุข","อยู่ดี มีสุข ทุกวัน","กินอิ่ม นอนหลับ สุขภาพดี","กายดี ใจดี"]
-  },
-  happiness:{
-    headlines:["สุขกาย สุขใจ","วันนี้มีแต่ความสุข","ใจเบิกบานทั้งวัน","ยิ้มรับสิ่งดี ๆ"],
-    greetings:[
-      "สุขกาย สุขใจ มีรอยยิ้ม และพบแต่เรื่องดี ๆ ตลอดวัน",
-      "หัวใจเบิกบาน มีความสุข และมีคนดี ๆ อยู่รอบตัว",
-      "วันนี้เต็มไปด้วยความสบายใจ ความอบอุ่น และรอยยิ้ม",
-      "พบแต่สิ่งดี ๆ มีความสุขง่าย ๆ และสบายใจในทุกช่วงเวลา"
-    ],
-    supporting:["โชคดี มีสุข","สุขใจทั้งวัน","ยิ้มได้ทุกเวลา","พบแต่เรื่องดี ๆ"]
-  },
-  wealth:{
-    headlines:["มั่งมีศรีสุข","ร่ำรวยเงินทอง","ทรัพย์เพิ่มพูน","มั่งคั่ง รุ่งเรือง"],
-    greetings:[
-      "มั่งมีศรีสุข ร่ำรวยเงินทอง และมีความอุดมสมบูรณ์ในทุกด้าน",
-      "ทรัพย์สินเพิ่มพูน ความมั่งคั่งเติบโต และชีวิตรุ่งเรือง",
-      "เงินทองงอกงาม โอกาสดีเข้ามา และฐานะมั่นคง",
-      "มั่งคั่ง รุ่งเรือง มีทรัพย์ มีสุข และมีความสบายใจ"
-    ],
-    supporting:["มั่งมีศรีสุข","ร่ำรวยเงินทอง","ทรัพย์เพิ่มพูน","มั่งคั่ง รุ่งเรือง"]
-  },
-  auspicious_wealth:{
-    headlines:["เฮง เฮง รวย รวย","รับทรัพย์ รับโชค","เฮง ปัง รุ่งเรือง","โชคลาภเปิดทาง"],
-    greetings:[
-      "เฮง เฮง รวย รวย รับทรัพย์ รับโชค และมีสิริมงคลตลอดวัน",
-      "โชคลาภเปิดทาง งานรุ่ง เงินคล่อง และความสำเร็จเข้ามา",
-      "มีโชค มีลาภ มีทรัพย์ และความรุ่งเรืองเพิ่มพูน",
-      "รับพลังมงคล ความมั่งคั่ง ความสำเร็จ และข่าวดีเข้ามา"
-    ],
-    supporting:["เฮง เฮง รวย รวย","รับทรัพย์ รับโชค","มีโชค มีลาภ มีทรัพย์","รุ่งเรืองทั้งวัน"]
-  },
-  success:{
-    headlines:["สมหวังดังใจ","สำเร็จทุกเป้าหมาย","วันนี้มีข่าวดี","ความสำเร็จอยู่ข้างคุณ"],
-    greetings:[
-      "คิดสิ่งใดสมปรารถนา ทุกเป้าหมายสำเร็จ และมีข่าวดีเข้ามา",
-      "สิ่งที่ตั้งใจสำเร็จดังหวัง และได้รับผลลัพธ์ที่น่าภูมิใจ",
-      "ความพยายามออกดอกออกผล และทุกก้าวพาไปสู่ความสำเร็จ",
-      "สมหวังในสิ่งดี ๆ และก้าวหน้าอย่างมั่นคง"
-    ],
-    supporting:["คิดสิ่งใดสมปรารถนา","สมหวังดังใจ","สำเร็จทุกเป้าหมาย","มีข่าวดีเข้ามา"]
-  },
-  luck:{
-    headlines:["โชคดี มีชัย","โชคดี มีสุข","วันนี้โชคเป็นใจ","รับโชค รับสิ่งดี"],
-    greetings:[
-      "โชคดี มีชัย มีสิริมงคล และพบแต่สิ่งดี ๆ ตลอดวัน",
-      "มีโชค มีลาภ มีคนดีคอยเกื้อหนุน และมีข่าวดีเข้ามา",
-      "โชคดีอยู่ข้างคุณ ทุกการเริ่มต้นราบรื่นและเป็นมงคล",
-      "พบแต่จังหวะดี โอกาสดี และเรื่องน่ายินดี"
-    ],
-    supporting:["โชคดี มีชัย","โชคดี มีสุข","มีโชค มีลาภ","พบแต่สิ่งดี ๆ"]
-  },
-  short_power:{
-    headlines:["สุข เฮง ปัง","วันดี พลังดี","ใจดี งานดี","โชคดีทั้งวัน"],
-    greetings:[
-      "งานรุ่ง เงินคล่อง สุขภาพดี มีความสุข",
-      "โชคดี มีสุข งานดี เงินดี",
-      "คิดดี ทำดี พบสิ่งดี ๆ",
-      "สุขกาย สุขใจ สมหวังดังใจ"
-    ],
-    supporting:["สุข เฮง ปัง","งานดี เงินดี","สุขกาย สุขใจ","โชคดี มีสุข"]
-  },
-  all_round:{
-    headlines:["สุข เฮง รวย ปัง","ดีพร้อมทุกด้าน","โชคดี มีสุข มีทรัพย์","วันนี้ครบทุกความสุข"],
-    greetings:[
-      "สุขภาพแข็งแรง การงานก้าวหน้า เงินทองคล่องมือ และมีความสุข",
-      "โชคดี มีชัย มั่งมีศรีสุข และคิดสิ่งใดสมปรารถนา",
-      "งานดี เงินดี สุขภาพดี และพบแต่สิ่งดี ๆ ตลอดวัน",
-      "มีโชค มีลาภ มีทรัพย์ มีสุข และเจริญรุ่งเรือง"
-    ],
-    supporting:["สุข เฮง รวย ปัง","งานดี เงินดี สุขภาพดี","มีโชค มีทรัพย์ มีสุข","เจริญรุ่งเรือง"]
-  }
+const REFERENCE_IMAGE_THEME_ALIAS_V1153={
+  business_sales:"work",
+  senior_health:"health",
+  auspicious_wealth:"wealth"
 };
-
-
-// v11.43 — Expanded popular Thai blessing patterns collected from additional
-// daily-greeting artwork examples. Keep wording familiar, clear, positive,
-// and natural for Thai social greeting cards.
-const POPULAR_BLESSING_EXPANSION_V1142={
-  work:{
-    headlines:["งานราบรื่น สมหวัง","หน้าที่ก้าวหน้า","งานสำเร็จทุกอย่าง","วันนี้งานดี"],
-    greetings:[
-      "การงานราบรื่น ก้าวหน้า และได้รับการสนับสนุนจากคนรอบข้าง",
-      "หน้าที่การงานมั่นคง ความสามารถโดดเด่น และมีโอกาสดีเข้ามา",
-      "ทำงานอย่างราบรื่น ได้รับความไว้วางใจ และสำเร็จตามเป้าหมาย",
-      "งานเดินหน้าอย่างสวยงาม มีคนช่วยเหลือ และพบข่าวดีเรื่องงาน",
-      "การเจรจาเป็นผลดี งานสำเร็จ และทุกหน้าที่เป็นไปอย่างราบรื่น",
-      "คิดสิ่งใดเรื่องงานคล่องตัว ลงมือแล้วเห็นผล และก้าวหน้าอย่างมั่นคง"
-    ],
-    supporting:["งานดี คนเมตตา โอกาสเปิด","ก้าวหน้า สมหวัง สำเร็จ","งานราบรื่นทุกหน้าที่","วันนี้งานเป็นใจ"]
-  },
-  business_sales:{
-    headlines:["ค้าขายรุ่งเรือง","ลูกค้าอุดหนุนดี","ยอดขายปังทั้งวัน","เปิดร้านรับทรัพย์"],
-    greetings:[
-      "ค้าขายรุ่งเรือง ลูกค้าอุดหนุนดี และมีรายรับเข้ามาอย่างต่อเนื่อง",
-      "ลูกค้าเข้าไม่ขาด ออเดอร์ไหลลื่น และยอดขายเป็นที่น่าพอใจ",
-      "เปิดร้านเจอลูกค้าดี ปิดการขายคล่อง และมีเงินเข้าตลอดวัน",
-      "สินค้าขายดี งานบริการเป็นที่ประทับใจ และธุรกิจเติบโตอย่างมั่นคง"
-    ],
-    supporting:["ลูกค้าแน่น ยอดขายดี","ค้าขึ้น เงินเข้า","ขายคล่อง ออเดอร์ต่อเนื่อง","ธุรกิจรุ่งเรือง"]
-  },
-  money:{
-    headlines:["เงินดี มีเก็บ","เงินทองคล่องตัว","รับเงิน รับความมั่นคง","รายรับสดใส"],
-    greetings:[
-      "เงินทองคล่องตัว มีใช้ มีเก็บ และมีความมั่นคงมากขึ้น",
-      "รายรับดี เงินเก็บงอกงาม และจัดการทุกเรื่องได้อย่างลงตัว",
-      "เงินเข้าอย่างราบรื่น มีเหลือเก็บ และมีโอกาสดีทางการเงิน",
-      "การเงินเป็นใจ มีรายรับต่อเนื่อง และใช้จ่ายอย่างสบายใจ",
-      "มีเงินหมุน มีเงินเก็บ และมีความมั่นคงในทุกวัน"
-    ],
-    supporting:["มีใช้ มีเก็บ มีสุข","เงินเข้า เงินเก็บ งอกงาม","คล่องตัวเรื่องเงิน","การเงินเป็นใจ"]
-  },
-  health:{
-    headlines:["สุขกาย สบายใจ","แข็งแรง สดใส","สุขภาพดีทุกวัน","กายใจเป็นสุข"],
-    greetings:[
-      "สุขภาพแข็งแรง สดชื่น ปลอดภัย และมีความสุขในทุกวัน",
-      "กายแข็งแรง ใจสบาย นอนหลับดี และตื่นมาพร้อมความสดชื่น",
-      "สุขกาย สุขใจ มีพลัง และใช้ชีวิตอย่างเบิกบาน",
-      "สุขภาพดี อารมณ์ดี และมีแรงทำสิ่งที่รักอย่างเต็มที่",
-      "แข็งแรงทั้งกาย สดใสทั้งใจ และปลอดภัยตลอดวัน"
-    ],
-    supporting:["แข็งแรง สดชื่น ปลอดภัย","สุขภาพดี มีความสุข","กายดี ใจเบิกบาน","สดใสทุกวัน"]
-  },
-  senior_health:{
-    headlines:["อายุยืน สุขภาพดี","แข็งแรง อยู่ดีมีสุข","สดชื่นทุกวัน","สุขภาพดี ใจดี"],
-    greetings:[
-      "สุขภาพแข็งแรง อายุยืนยาว กินอิ่ม นอนหลับ และมีความสุข",
-      "อยู่ดีมีสุข เดินเหินสะดวก อารมณ์แจ่มใส และปลอดภัยทุกวัน",
-      "กายแข็งแรง ใจเบิกบาน มีลูกหลานรักใคร่และอบอุ่นใจ",
-      "กินดี นอนดี สุขภาพดี และมีรอยยิ้มในทุกเช้า"
-    ],
-    supporting:["อายุยืน แข็งแรง มีสุข","กินดี นอนดี สุขภาพดี","อยู่ดี มีสุข","กายแข็งแรง ใจสดใส"]
-  },
-  happiness:{
-    headlines:["สุข สดใส เบิกบาน","สุขใจทั้งวัน","พบแต่ความสุข","วันนี้ใจเป็นสุข"],
-    greetings:[
-      "พบแต่ความสุข ความสบายใจ และเรื่องน่ายินดีตลอดวัน",
-      "มีรอยยิ้ม มีความอบอุ่น และมีคนดี ๆ อยู่รอบตัว",
-      "สุขกาย สุขใจ ชีวิตสดใส และมีความสุขกับทุกช่วงเวลา",
-      "ทุกวันเต็มไปด้วยรอยยิ้ม ความเบิกบาน และความสบายใจ",
-      "ใจเป็นสุข พบแต่สิ่งดีงาม และมีความอบอุ่นอยู่เสมอ"
-    ],
-    supporting:["สุข สดใส สบายใจ","มีความสุขทุกวัน","ใจเบิกบาน มีรอยยิ้ม","พบแต่สิ่งดีงาม"]
-  },
-  wealth:{
-    headlines:["มั่งมีศรีสุข เจริญรุ่งเรือง","ทรัพย์งอกงาม","ร่ำรวย มั่นคง","ความมั่งคั่งเพิ่มพูน"],
-    greetings:[
-      "มั่งมีศรีสุข ทรัพย์สินเพิ่มพูน และชีวิตเจริญรุ่งเรือง",
-      "เงินทองงอกงาม ฐานะมั่นคง และมีความอุดมสมบูรณ์",
-      "ร่ำรวยเงินทอง ร่ำรวยโอกาส และมีความสุขกับความสำเร็จ",
-      "ทรัพย์เพิ่มพูน งานรุ่งเรือง และมีความมั่นคงในทุกด้าน",
-      "มั่งคั่งอย่างมั่นคง มีทรัพย์ มีสุข และเจริญรุ่งเรือง"
-    ],
-    supporting:["มั่งมีศรีสุข เจริญรุ่งเรือง","ทรัพย์งอกงาม เงินทองเพิ่มพูน","ร่ำรวย มั่นคง มีสุข","มั่งคั่งทุกด้าน"]
-  },
-  auspicious_wealth:{
-    headlines:["เฮง รวย ปัง","โชคลาภ เงินทอง ความสำเร็จ","รับทรัพย์รับโชค","สิริมงคลหนุนนำ"],
-    greetings:[
-      "มีโชค มีลาภ มีทรัพย์ และความสำเร็จเข้ามาอย่างต่อเนื่อง",
-      "เฮง รวย ปัง งานรุ่ง เงินคล่อง และพบแต่ข่าวดี",
-      "โชคลาภหนุนนำ ทรัพย์สินเพิ่มพูน และชีวิตเจริญรุ่งเรือง",
-      "รับทรัพย์ รับโชค รับความสำเร็จ และมีสิริมงคลตลอดวัน",
-      "เงินทองไหลมา โอกาสเปิดทาง และความมั่งคั่งเพิ่มพูน"
-    ],
-    supporting:["เฮง รวย ปัง","มีโชค มีลาภ มีทรัพย์","รับทรัพย์ รับความสำเร็จ","สิริมงคลหนุนนำ"]
-  },
-  success:{
-    headlines:["สมหวัง สมปรารถนา","สำเร็จดั่งใจ","ข่าวดีอยู่ข้างหน้า","ทุกเป้าหมายเป็นจริง"],
-    greetings:[
-      "คิดสิ่งใดสมปรารถนา สิ่งที่ตั้งใจสำเร็จ และมีข่าวดีเข้ามา",
-      "สมหวังดังใจ ทุกเป้าหมายก้าวหน้า และเห็นผลลัพธ์ที่น่าภูมิใจ",
-      "ความตั้งใจออกดอกออกผล และความสำเร็จเกิดขึ้นอย่างงดงาม",
-      "ประสบความสำเร็จในสิ่งที่ทำ และมีความภูมิใจกับทุกก้าว",
-      "ทุกความหวังเป็นจริง ทุกความตั้งใจได้รับผลดี"
-    ],
-    supporting:["สมหวังดังปรารถนา","สำเร็จดั่งใจ","มีข่าวดี มีความสำเร็จ","สมหวังทุกเป้าหมาย"]
-  },
-  luck:{
-    headlines:["โชคดี มีชัย มีลาภ","โชคดีตลอดวัน","สิ่งดี ๆ เข้ามา","โชคลาภเป็นใจ"],
-    greetings:[
-      "โชคดี มีชัย มีลาภ และพบแต่เรื่องดี ๆ ตลอดวัน",
-      "มีโชค มีคนเมตตา และมีข่าวดีเข้ามาอย่างต่อเนื่อง",
-      "พบแต่สิ่งดีงาม ทุกการเริ่มต้นราบรื่น และมีสิริมงคล",
-      "โชคลาภเป็นใจ โอกาสดีเปิดทาง และสมหวังในสิ่งที่ตั้งใจ",
-      "มีแต่โชคดี ความสุข และคนดีคอยเกื้อหนุน"
-    ],
-    supporting:["โชคดี มีชัย มีลาภ","โชคลาภเป็นใจ","พบแต่สิ่งดีงาม","มีแต่ข่าวดี"]
-  },
-  encouragement:{
-    headlines:["พลังใจเต็มร้อย","เริ่มใหม่อย่างสดใส","ใจเข้มแข็ง","วันนี้ไปต่อได้"],
-    greetings:[
-      "หัวใจเข้มแข็ง มีพลังดี และพร้อมเริ่มต้นสิ่งใหม่อย่างสดใส",
-      "มีกำลังใจ มีความหวัง และเห็นโอกาสดีในทุกวัน",
-      "เชื่อมั่นในตัวเอง เดินหน้าด้วยรอยยิ้ม และพบทางที่ดี",
-      "วันนี้เต็มไปด้วยพลังใหม่ ความมั่นใจ และความหวัง"
-    ],
-    supporting:["พลังใจเต็มร้อย","ใจสู้และสดใส","เริ่มใหม่ด้วยพลังดี","มั่นใจแล้วก้าวต่อ"]
-  },
-  short_power:{
-    headlines:["สุข เฮง ปัง รวย","ดี เฮง สดใส","วันดี โชคดี","สดใส ราบรื่น"],
-    greetings:[
-      "สุขกาย สุขใจ โชคดี มีทรัพย์",
-      "งานดี เงินดี สุขภาพดี ใจดี",
-      "โชคดี มีชัย สมหวังดังใจ",
-      "สดใส ราบรื่น มีแต่เรื่องดี",
-      "สุข เฮง รวย ปัง ตลอดวัน"
-    ],
-    supporting:["สุข เฮง รวย ปัง","โชคดี มีชัย","สมหวังดังใจ","สดใสทั้งวัน"]
-  },
-  all_round:{
-    headlines:["สุขกาย สุขใจ โชคดี","ดีทุกด้าน สุขทุกวัน","สุข เฮง รวย ปัง","วันดีครบทุกเรื่อง"],
-    greetings:[
-      "สุขภาพแข็งแรง การงานก้าวหน้า เงินทองคล่องมือ และพบแต่สิ่งดี ๆ",
-      "โชคดี มีชัย มีทรัพย์ มีสุข และคิดสิ่งใดสมปรารถนา",
-      "มั่งมีศรีสุข เจริญรุ่งเรือง สุขกายสบายใจ และมีความสำเร็จ",
-      "งานรุ่ง เงินคล่อง สุขภาพดี โชคลาภดี และมีความสุขทุกวัน",
-      "มีคนรัก มีคนเมตตา มีโชค มีทรัพย์ และมีแต่ข่าวดี"
-    ],
-    supporting:["สุขกาย สุขใจ โชคดี","มั่งมีศรีสุข","งานรุ่ง เงินคล่อง สุขภาพดี","มีแต่สิ่งดี ๆ"]
-  }
-};
-
-// Popular Buddhist-only phrases seen frequently in Thai sacred/daily greeting artwork.
-// These must NEVER be merged into ordinary General mode.
-const POPULAR_BUDDHIST_BLESSING_V1142={
-  headlines:[
-    "บุญรักษา ธรรมคุ้มครอง","อิ่มบุญ อิ่มใจ","สุขสงบ เป็นสิริมงคล",
-    "บุญหนุนนำ","ธรรมะนำทาง","ใจสงบ พบความสุข"
-  ],
-  greetings:[
-    "บุญรักษา ธรรมคุ้มครอง สุขกายสบายใจ และพบแต่สิ่งดีงาม",
-    "อิ่มบุญ อิ่มใจ มีความสุข ความสงบ และสิริมงคลในชีวิต",
-    "บุญหนุนนำ ธรรมะนำทาง ชีวิตราบรื่น และใจเป็นสุข",
-    "มีสติ มีความสงบ มีความสุข และพบความเจริญในสิ่งที่ดี",
-    "บุญกุศลหนุนนำ ให้ชีวิตพบความร่มเย็นและสิริมงคล"
-  ],
-  supporting:[
-    "บุญรักษา ธรรมคุ้มครอง","อิ่มบุญ อิ่มใจ","สุขสงบ เป็นสิริมงคล",
-    "ธรรมะนำทาง ใจเป็นสุข","บุญหนุนนำ ชีวิตร่มเย็น"
-  ]
-};
-
-function mergeBlessingLibrary(base,...extras){
-  const merge=(field)=>[
-    ...new Set([
-      ...(base?.[field]||[]),
-      ...extras.flatMap(x=>x?.[field]||[])
-    ])
-  ];
-  return {
-    ...base,
-    headlines:merge("headlines"),
-    greetings:merge("greetings"),
-    supporting:merge("supporting")
-  };
-}
 
 function pairedThemeChoice(pool,pairBase,setNo){
   const source=(pool||[]).filter(Boolean);
@@ -6666,21 +6311,24 @@ function pairedThemeChoice(pool,pairBase,setNo){
 }
 
 function resolvedBlessingTheme(s,setNo=1){
-  const selected=document.getElementById("blessingTheme")?.value || blessingTheme || "auto";
-  if(selected!=="auto" && POKUN_BLESSING_LIBRARY[selected]) return selected;
+  const rawSelected=document.getElementById("blessingTheme")?.value || blessingTheme || "auto";
+  const selected=REFERENCE_IMAGE_THEME_ALIAS_V1153[rawSelected]||rawSelected;
+
+  if(selected!=="auto" && REFERENCE_IMAGE_BLESSING_LIBRARY_V1153[selected]) return selected;
 
   const mainMode=(typeof resolveMainArtworkMode==="function")?resolveMainArtworkMode():"general";
+  if(mainMode==="buddhist" || s?.holy?.isHoly || s?.buddhist) return "buddhist";
+
   let pool=[];
   if(mainMode==="deity" || lifestyleVisualStyle==="wealth_prosperity"){
-    pool=["auspicious_wealth","wealth","money","business_sales","luck","success","all_round","short_power"];
-  }else if(s?.holy?.isHoly || s?.buddhist){
-    pool=["happiness","health","senior_health","all_round","short_power","encouragement"];
+    pool=["wealth","money","luck","success","all_round"];
   }else if(s?.special){
-    pool=["all_round","success","health","senior_health","money","wealth","short_power"];
+    pool=["all_round","success","health","happiness","luck"];
   }else{
-    pool=["work","business_sales","money","health","senior_health","happiness","wealth","auspicious_wealth","success","luck","encouragement","short_power","all_round"];
+    pool=["happiness","health","work","money","wealth","success","luck","encouragement","short_power","all_round"];
   }
-  const pairBase=hashString(`${userSeed}|${s.day.isoDate}|${mainMode}|auto-theme-pair-v1142|${rerollSeed1}|${rerollSeed2}|${blessingRerollSeed}`);
+
+  const pairBase=hashString(`${userSeed}|${s.day.isoDate}|${mainMode}|reference-image-only-theme-v1153|${rerollSeed1}|${rerollSeed2}|${blessingRerollSeed}`);
   return pairedThemeChoice(pool,pairBase,setNo);
 }
 
@@ -6762,22 +6410,13 @@ function stripRepeatedWishPrefix(text){
 
 function emotionalBlessingTexts(s,setNo,seed){
   const key=resolvedBlessingTheme(s,setNo);
-  const baseLib=POKUN_BLESSING_LIBRARY[key]||POKUN_BLESSING_LIBRARY.all_round;
-  const buddhistPopular=((typeof resolveMainArtworkMode==="function" && resolveMainArtworkMode()==="buddhist") || s?.holy?.isHoly || s?.buddhist)
-    ? POPULAR_BUDDHIST_BLESSING_V1142
-    : {};
-  const lib=mergeBlessingLibrary(
-    baseLib,
-    POPULAR_BLESSING_PHRASE_BANK[key]||{},
-    POPULAR_BLESSING_EXPANSION_V1142[key]||{},
-    buddhistPopular
-  );
+  const lib=REFERENCE_IMAGE_BLESSING_LIBRARY_V1153[key]||REFERENCE_IMAGE_BLESSING_LIBRARY_V1153.all_round;
 
-  // v11.35: Text is resolved as a PAIR, not as two unrelated random draws.
-  // Deliberately exclude Date.now()/Math.random() seed so Image 1 and Image 2
-  // see the same pair-base even when their Prompt buttons are pressed separately.
+  // v11.53 SOURCE-ONLY: Image 1 and Image 2 draw ONLY from phrases extracted
+  // from the user's uploaded reference images. No model-written blessing bank
+  // is merged here, and no new sentence is composed from fragments.
   const pairBase=hashString(
-    `${userSeed}|${s.day.isoDate}|${key}|emotional-pair-v1142|${rerollSeed1}|${rerollSeed2}|${blessingRerollSeed}`
+    `${userSeed}|${s.day.isoDate}|${key}|reference-image-only-pair-v1153|${rerollSeed1}|${rerollSeed2}|${blessingRerollSeed}`
   );
 
   const headline=stripRepeatedWishPrefix(
@@ -6786,9 +6425,8 @@ function emotionalBlessingTexts(s,setNo,seed){
   const greeting=stripRepeatedWishPrefix(
     pairedBlessingValue(lib.greetings,key,pairBase,setNo,203)
   );
-  // v11.47: Daily greeting artwork uses only two visible text levels:
-  // Headline + main Greeting/Blessing. Supporting Line is intentionally disabled
-  // because it often repeats the same meaning and makes greeting cards text-heavy.
+
+  // Two visible text levels only: Headline + Greeting/Blessing.
   return {theme:key,label:lib.label,headline,greeting,supporting:"",pairBase};
 }
 
@@ -6796,17 +6434,18 @@ function updateBlessingThemeDescription(){
   const el=document.getElementById("blessingThemeDescription");
   const sel=document.getElementById("blessingTheme");
   if(!el||!sel)return;
-  const key=sel.value||"auto";
-  if(key==="auto"){
-    el.innerHTML="<b>AUTO:</b> ระบบจะเลือกธีมให้เหมาะกับวันและโหมด โดยหมุนใช้หมวดละเอียด เช่น งาน / เงิน / สุขภาพ / ความสุข / มั่งคั่ง พร้อมพยายามแยกแนวคำอวยพรของภาพที่ 1 และภาพที่ 2 ให้ต่างกันมากขึ้นเพื่อลดความซ้ำ";
+  const raw=sel.value||"auto";
+  if(raw==="auto"){
+    el.innerHTML="<b>AUTO — Reference Image Only:</b> ระบบสุ่มเฉพาะคำที่สกัดจากภาพอ้างอิงของคุณเท่านั้น ไม่ผสมคลังคำที่โมเดลเคยแต่ง ไม่ขยายประโยค และไม่เขียนคำอวยพรใหม่";
     return;
   }
-  const lib=POKUN_BLESSING_LIBRARY[key];
+  const key=REFERENCE_IMAGE_THEME_ALIAS_V1153[raw]||raw;
+  const lib=REFERENCE_IMAGE_BLESSING_LIBRARY_V1153[key];
   el.innerHTML=lib?`<b>${lib.label}</b> — ${lib.desc}`:"";
 }
 
 const POKUN_V9 = (() => {
-  const VERSION="11.47";
+  const VERSION="11.54";
   const ENGINE_LABEL=`POKUN v${VERSION}`;
 
 
@@ -6851,7 +6490,15 @@ const POKUN_V9 = (() => {
       ["Country village edge","A peaceful Thai countryside village edge with fields, a narrow lane, modest rural houses in the distance, and natural morning light."],
       ["Orchard countryside morning","A fresh rural orchard with rows of fruit trees, grassy path, filtered morning sunlight, and spacious natural composition."],
       ["Rice terrace after rain","Fresh layered rice fields after light rain with reflective water patches, green textures, soft clouds, and calm rural depth."],
-      ["Farm path with distant hills","A narrow agricultural path through fields with distant hills, grasses, natural sky, and gentle atmospheric depth."]
+      ["Farm path with distant hills","A narrow agricultural path through fields with distant hills, grasses, natural sky, and gentle atmospheric depth."],
+      ["Rice terrace valley sunrise","Layered green rice terraces flowing through a broad valley at sunrise, soft golden light, distant mountain ridges, reflective irrigation lines, and spacious sky."],
+      ["Palm-lined rural road","A quiet countryside lane lined with tall tropical palms, green rice fields on both sides, distant hills, bright blue sky, and airy Thai rural atmosphere."],
+      ["Green field with lone tree","A wide emerald field with one mature shade tree as the visual anchor, distant hills, open sky, soft morning light, and abundant clean negative space."],
+      ["Rural house beside rice fields","A small warm countryside house beside vivid green rice fields, narrow field paths, distant mountains, soft clouds, and peaceful village atmosphere."],
+      ["Flower-lined farm path","A winding farm path bordered by restrained seasonal flowers and green crops, open rural sky, distant hills, and cheerful morning light."],
+      ["Golden field sunset","A broad golden agricultural field under warm sunset light, long glowing grasses or grain, distant tree line, layered sky, and calm cinematic depth."],
+      ["Countryside pond and fields","A small natural farm pond beside green fields with grasses, simple rural path, scattered trees, distant hills, and soft reflections."],
+      ["Misty village farmland","A peaceful rural village nestled among green fields and low hills with morning mist, small houses in the distance, winding paths, and quiet atmospheric depth."]
     ],
     nature_mountain:[
       ["Mountain sunrise viewpoint","A dramatic mountain viewpoint at sunrise with layered ridgelines, morning mist, wild grasses, sparse native wildflowers, expansive open sky."],
@@ -6861,7 +6508,15 @@ const POKUN_V9 = (() => {
       ["Pine ridge morning","A quiet pine-covered ridge with filtered sunrise light, atmospheric haze, clean sky, and natural forest textures."],
       ["Waterfall forest clearing","A natural waterfall in a forest clearing with rocks, mist, lush foliage, and soft diffused daylight."],
       ["Highland grass slope","An open highland grass slope with layered mountains, soft clouds, natural wind movement, and expansive sky."],
-      ["Rocky mountain stream","A clear mountain stream flowing through rocks and forest vegetation with cool natural light and layered depth."]
+      ["Rocky mountain stream","A clear mountain stream flowing through rocks and forest vegetation with cool natural light and layered depth."],
+      ["Blue mountain lake valley","A vivid blue mountain lake surrounded by layered green mountains, clean sky, reflective water, natural shoreline, and uplifting travel-poster depth."],
+      ["Sunray forest waterfall","A lush forest waterfall with warm sun rays filtering through tall trees, misty spray, mossy rocks, rich green foliage, and luminous natural atmosphere."],
+      ["Mountain meadow with daisies","An open mountain meadow with restrained white daisies and native grasses, deep green hills, bright blue sky, soft clouds, and fresh morning light."],
+      ["Valley road through hills","A narrow scenic road winding through a green mountain valley, layered ridges, open sky, roadside grasses, and strong leading-line composition."],
+      ["Sunrise mountain river","A clear river winding through a mountain valley at sunrise, warm light touching the water, layered green hills, soft mist, and expansive sky."],
+      ["Misty hillside village","A small hillside village surrounded by misty mountains and lush greenery, scattered rooftops, winding paths, soft cloud layers, and gentle morning atmosphere."],
+      ["Highland flower valley","A broad highland valley with colorful but restrained seasonal flowers in the foreground, layered mountains, soft mist, clean sky, and scenic depth."],
+      ["Mountain pass with great tree","A dramatic mountain pass or open valley anchored by one large mature tree, rolling green slopes, distant ridges, and luminous sky."]
     ],
     waterfront:[
       ["Lakeside morning","A calm lakeside scene with gentle water reflections, shoreline grasses, distant hills, and soft morning light."],
@@ -6871,7 +6526,15 @@ const POKUN_V9 = (() => {
       ["Reservoir overlook","A wide reservoir overlook with calm water, distant hills, natural shoreline, and spacious sky."],
       ["Canal bend with trees","A quiet canal bend framed by natural trees and grasses with soft reflections and rural calm."],
       ["Minimal lakeshore reeds","A minimal lakeshore view with reeds, calm water, distant horizon, soft sky, and strong negative space."],
-      ["River bridge distance","A broad river scene with a modest bridge in the distance, reflections, shoreline vegetation, and clean atmospheric depth."]
+      ["River bridge distance","A broad river scene with a modest bridge in the distance, reflections, shoreline vegetation, and clean atmospheric depth."],
+      ["Lakeside pavilion garden","A calm lake bordered by a landscaped garden and a small pavilion or gazebo, soft reflections, mature trees, distant hills, and peaceful morning light."],
+      ["Mountain lake blue sky","A clear blue lake beneath dramatic green mountains and bright blue sky, gentle reflections, natural shoreline plants, and expansive clean composition."],
+      ["Tree-lined pond morning","A tranquil pond framed by mature trees and soft grasses, dappled morning light, subtle reflections, and a quiet garden-like atmosphere."],
+      ["River bend flower bank","A gentle river bend with a restrained bank of seasonal flowers, green trees, reflective water, distant hills, and fresh daylight."],
+      ["Lotus lake with distant mountains","A natural lotus lake with selective lotus blooms, broad reflective water, distant mountains, soft morning mist, and calm open sky."],
+      ["Forest waterfall pool","A clear natural pool beneath a forest waterfall, mossy rocks, lush foliage, soft mist, filtered daylight, and serene green depth."],
+      ["Quiet canal through green fields","A narrow calm canal winding through bright green countryside fields, grasses on both banks, distant trees, soft reflections, and open sky."],
+      ["Lakeside house reflection","A modest house or pavilion beside calm water with natural reflections, surrounding greenery, distant hills, soft morning light, and uncluttered composition."]
     ],
     sea_coastal:[
       ["Tropical beach sunrise","A true tropical sea beach at sunrise with open ocean horizon, gentle waves, pale sand, coastal sky, and soft warm morning light. This is SEA/OCEAN, not a lake or river."],
@@ -6896,7 +6559,29 @@ const POKUN_V9 = (() => {
       ["Orchid garden shade","A shaded orchid garden with selective blooms, hanging roots/leaves, filtered daylight, and elegant botanical depth."],
       ["Sunflower field morning","A wide genuine sunflower field filled with dense rows of tall yellow sunflowers, broad green leaves, open countryside horizon, warm morning sunlight, and clear natural sky. SUNFLOWER IDENTITY LOCK: use sunflowers as the dominant flower species; do not substitute daisies, marigolds, wildflowers, lavender, or mixed flower meadow."],
       ["Lavender field sunrise","A sweeping lavender field with long rhythmic rows of purple lavender flowers, gentle rolling terrain, soft sunrise light, distant countryside depth, and airy open sky. LAVENDER IDENTITY LOCK: lavender must dominate the field; do not substitute generic purple flowers, lupines, salvia, tulips, or mixed flower meadow."],
-      ["Siam tulip field morning","A natural Thai Siam tulip field featuring Dok Krachiao / Curcuma alismatifolia as the unmistakable dominant flower, with pink-to-purple upright blooms among fresh green grasses, soft morning mist, gentle highland meadow depth, and natural Thai seasonal landscape atmosphere. SIAM TULIP IDENTITY LOCK: use Dok Krachiao / Curcuma alismatifolia, not European tulips, lotus, lavender, or generic pink wildflowers."]
+      ["Siam tulip field morning","A natural Thai Siam tulip field featuring Dok Krachiao / Curcuma alismatifolia as the unmistakable dominant flower, with pink-to-purple upright blooms among fresh green grasses, soft morning mist, gentle highland meadow depth, and natural Thai seasonal landscape atmosphere. SIAM TULIP IDENTITY LOCK: use Dok Krachiao / Curcuma alismatifolia, not European tulips, lotus, lavender, or generic pink wildflowers."],
+      ["Daisy field blue sky","A cheerful field dominated by white daisies with yellow centers, fresh green stems, bright blue sky, soft white clouds, and clean uplifting morning light. DAISY IDENTITY LOCK: use true daisy-like white petals with yellow centers as the dominant flower."],
+      ["Marigold field sunrise","A wide field dominated by vivid orange and golden marigolds under warm sunrise light, natural green foliage, distant countryside depth, and open sky. MARIGOLD IDENTITY LOCK: use marigolds as the dominant flower species."],
+      ["Rose garden sunrise","A refined garden dominated by natural rose bushes and blooms in a restrained palette, warm sunrise highlights, layered greenery, clean paths, and elegant depth."],
+      ["Hydrangea mountain garden","A lush hydrangea garden with clustered blue or purple hydrangea blooms, mountain or highland background, fresh green leaves, soft mist, and bright natural light."],
+      ["Wildflower path morning","A gentle garden or countryside path edged by restrained mixed wildflowers, fresh grasses, distant trees, warm morning light, and ample clear sky."],
+      ["Yellow cosmos field","A broad field dominated by yellow cosmos-like flowers with fine stems and airy foliage, distant hills or trees, bright morning light, and cheerful open-sky atmosphere."],
+      ["Hibiscus tropical garden","A tropical garden featuring vivid hibiscus blooms as the main flower accent, lush green leaves, warm humid daylight, and a refined natural composition."],
+      ["White flower meadow","A fresh meadow dominated by small white flowers and green grasses, soft breeze, bright sky, distant landscape depth, and clean gentle mood."],
+      ["Purple verbena field sunrise","A broad field dominated by purple verbena-like flower clusters under soft sunrise light, green stems, distant hills, airy sky, and calm romantic depth. PURPLE FLOWER LOCK: use purple verbena-like clustered flowers, not lavender spikes or generic purple haze."],
+      ["Pink cosmos mountain field","A cheerful field dominated by pink cosmos blossoms with fine stems and airy foliage, green hills or mountains behind, soft blue sky, and bright natural morning light. COSMOS IDENTITY LOCK: use true cosmos-like petals and fine branching stems."],
+      ["White daisy sunrise meadow","A meadow dominated by white daisies with warm sunrise backlight, low golden haze, green grass, shallow foreground sparkle, and open sky. DAISY IDENTITY LOCK: white petals with yellow centers must be clearly visible."],
+      ["Sunflower hill sunrise","A rolling hillside covered with sunflowers as the dominant flower, warm sunrise, distant valley depth, blue-to-gold sky, and uplifting scenic atmosphere. SUNFLOWER IDENTITY LOCK: large yellow sunflower heads with dark centers."],
+      ["Lavender path golden hour","A narrow walking path through lavender rows at golden hour, purple flower bands, warm side light, distant hills, and strong leading-line composition. LAVENDER IDENTITY LOCK: slender purple lavender spikes in planted rows."],
+      ["Flower garden archway","A garden path passing beneath a natural floral arch or flowering trellis, mixed but harmonious blossoms, green foliage, soft daylight, and elegant depth."],
+      ["Flower garden bicycle path","A gentle garden or countryside path with a simple bicycle placed naturally beside blooming flowers, green landscape, open sky, and warm cheerful morning mood."],
+      ["Flower meadow under dramatic sky","A colorful but controlled flower meadow beneath expressive blue-and-white clouds, distant hills, clean horizon, and strong negative space for Thai headline text."],
+      ["Morning dew flower meadow","A close-to-mid view across a fresh flower meadow with visible morning dew, soft backlight, green stems, pastel blooms, subtle bokeh, and clean dreamy depth."],
+      ["Wildflower valley sunset","A natural wildflower valley at sunset with warm orange-pink light, rolling hills, restrained mixed blossoms, atmospheric distance, and cinematic calm."],
+      ["Blue flower field mountain view","A field dominated by small blue flowers with green stems, layered mountains behind, soft morning light, open blue sky, and fresh cool-toned atmosphere."],
+      ["Red flower field countryside","A field dominated by vivid red flowers with green foliage, countryside or distant hills, clean sky, and energetic but tasteful morning light."],
+      ["White cosmos valley morning","A valley meadow dominated by white cosmos-like flowers with fine stems, distant green mountains, gentle breeze, soft haze, and airy morning light."],
+      ["Orange cosmos hill field","A broad hillside field dominated by orange cosmos-like blooms, warm sunlight, distant rolling hills, and bright seasonal landscape depth."]
     ],
     urban_city:[
       ["Modern city promenade","A clean modern city promenade with architecture, trees, long perspective lines, and morning sunlight."],
@@ -6924,7 +6609,15 @@ const POKUN_V9 = (() => {
       ["Coastal cliff viewpoint","A dramatic coastal overlook with cliffs and expansive open ocean, visible marine horizon, native vegetation, sky, and strong travel-editorial depth. This is a true sea/coastal view, not a lake."],
       ["Mountain town overlook","A scenic town nestled among mountains viewed from an elevated overlook with rooftops, ridges, and atmospheric distance."],
       ["Heritage riverside promenade","A heritage riverside promenade with old facades, railings, reflections, and calm morning light."],
-      ["Countryside travel overlook","A scenic elevated travel overlook across farmland or valley with railings only when natural to the location, sky, and layered distance."]
+      ["Countryside travel overlook","A scenic elevated travel overlook across farmland or valley with railings only when natural to the location, sky, and layered distance."],
+      ["Scenic rice terrace overlook","An elevated viewpoint across layered rice terraces, winding field lines, distant mountain ridges, soft haze, and broad travel-poster sky."],
+      ["Palm valley sunrise viewpoint","A tropical valley viewpoint with tall palms, green fields, distant hills, sunrise glow, and wide clean sky."],
+      ["Country road mountain viewpoint","A scenic overlook featuring a winding rural road leading toward layered green mountains, open sky, and strong depth."],
+      ["Mountain lake overlook","An elevated viewpoint over a blue mountain lake with layered ridges, natural foreground grasses, bright sky, and expansive scenic depth."],
+      ["Flower valley viewpoint","A high scenic view across a green valley with restrained seasonal flowers in the foreground, distant mountains, soft haze, and luminous sky."],
+      ["Countryside village panorama","A broad panoramic view over a peaceful countryside village, green fields, scattered houses, winding lanes, distant mountains, and airy daylight."],
+      ["Great tree field overlook","A scenic open field or hilltop anchored by one grand mature tree, wide countryside horizon, layered clouds, and generous negative space."],
+      ["Rainbow valley viewpoint","A fresh green valley under clearing rain clouds with a natural rainbow arc, distant mountains, wet landscape highlights, and uplifting clean atmosphere."]
     ],
     cultural_market:[
       ["Thai flower market morning","A colorful Thai flower market with stalls, baskets, blooms, and strong market depth."],
@@ -6968,7 +6661,18 @@ const POKUN_V9 = (() => {
       ["Petal and glass composition","A minimal botanical study using selected petals and one restrained glass detail with precise light and clean background."],
       ["Jasmine garland still life","An elegant jasmine garland as the hero object with restrained petals/leaves, clean surface, and soft premium light."],
       ["Single lotus study","A restrained lotus flower or lotus arrangement as the hero subject with clean background, delicate natural detail, and calm negative space."],
-      ["Wildflower ceramic study","A minimal ceramic vessel with sparse scene-native wildflowers, clean surface, soft shadows, and editorial negative space."]
+      ["Wildflower ceramic study","A minimal ceramic vessel with sparse scene-native wildflowers, clean surface, soft shadows, and editorial negative space."],
+      ["Pastel bouquet in woven basket","A woven basket filled with a soft pastel bouquet, natural daylight, clean tabletop or garden setting, restrained decorative accents, and premium greeting-card styling."],
+      ["Wildflower bouquet hand-held","A hand-held bouquet of fresh mixed wildflowers with clear flower identity, soft natural background blur, warm daylight, and gentle lifestyle greeting mood."],
+      ["Daisy bouquet ceramic vase","A ceramic vase filled mainly with white daisies, soft window light, simple table surface, light background, and ample space for Thai typography."],
+      ["Sunflower bouquet rustic table","A rustic arrangement of fresh sunflowers on a simple table, warm morning light, natural wood texture, small supporting greenery, and cheerful country mood."],
+      ["Lavender bouquet glass jar","A clear glass jar or simple vase filled with lavender stems, airy negative space, soft daylight, and calm purple-green palette."],
+      ["Rose bouquet morning table","A refined bouquet of roses in a simple vase or basket, soft morning light, uncluttered background, elegant greeting-card balance, and realistic natural petals."],
+      ["Hydrangea bouquet by window","A lush but controlled hydrangea bouquet near a softly lit window, blue-purple clustered blooms, gentle reflections, and premium calm atmosphere."],
+      ["Single flower macro greeting","One clearly identified flower as the hero in a macro or close-up composition, soft bokeh background, gentle side light, and generous negative space for text."],
+      ["Flower basket by garden gate","A flower-filled basket placed beside a simple garden gate or wooden sign, natural greenery, warm morning light, and cozy welcoming composition."],
+      ["Flower vase with tea cup","A small floral vase paired with one tea cup on a clean surface, soft window light, balanced negative space, and calm morning greeting mood."],
+      ["Flower basket on bicycle","A simple bicycle with a front basket filled with fresh flowers, garden or countryside setting, soft sunlight, restrained styling, and cheerful lifestyle mood."]
     ],
     art_gallery:[
       ["Contemporary gallery hall","A modern gallery hall with large artworks, clean walls, polished floor, and generous exhibition-space negative space."],
@@ -7077,6 +6781,71 @@ const POKUN_V9 = (() => {
     "Tropical leaf garden":{name:"สวนใบไม้เขตร้อน",description:"สวนเขตร้อนที่เน้นใบไม้เขียวหลายชั้น มีแสงแดดกรองผ่าน และองค์ประกอบธรรมชาติที่สงบ"},
     "Minimal zen garden":{name:"สวนเซนแบบมินิมอล",description:"สวนเรียบสงบ มีหิน พืชเพียงพอดี เส้นทางเป็นระเบียบ แสงธรรมชาตินุ่ม และพื้นที่ว่างมาก"},
     "Orchid garden shade":{name:"สวนกล้วยไม้ในร่มเงา",description:"สวนกล้วยไม้ร่มรื่น มีดอกไม้ในปริมาณพอดี รากและใบห้อยตามธรรมชาติ พร้อมแสงกลางวันนุ่ม"},
+    "Rice terrace valley sunrise":{name:"หุบเขานาขั้นบันไดยามอรุณ",description:"นาขั้นบันไดเขียวสดทอดตัวตามหุบเขา มีแสงอรุณสีทอง ภูเขาซ้อนในระยะไกล แนวน้ำสะท้อน และท้องฟ้าเปิด"},
+    "Palm-lined rural road":{name:"ถนนชนบทใต้แนวมะพร้าว",description:"ถนนชนบทเงียบสงบทอดผ่านทุ่งเขียว มีต้นมะพร้าวสูงเรียงตามทาง ภูเขาไกล และท้องฟ้าสดใส"},
+    "Green field with lone tree":{name:"ทุ่งเขียวกับต้นไม้ใหญ่",description:"ทุ่งสีเขียวกว้างที่มีต้นไม้ใหญ่เดี่ยวเป็นจุดเด่น มีภูเขาไกล ท้องฟ้ากว้าง และพื้นที่ว่างสำหรับข้อความ"},
+    "Rural house beside rice fields":{name:"บ้านชนบทกลางทุ่งนา",description:"บ้านชนบทหลังเล็กตั้งอยู่ข้างทุ่งนาเขียว มีทางเดินคันนา ภูเขาไกล เมฆนุ่ม และบรรยากาศสงบ"},
+    "Flower-lined farm path":{name:"ทางเดินไร่ริมดอกไม้",description:"ทางเดินเกษตรคดโค้งที่มีดอกไม้ตามฤดูกาลประดับอย่างพอดี ทุ่งเขียว ภูเขาไกล และแสงเช้าสดใส"},
+    "Golden field sunset":{name:"ทุ่งสีทองยามเย็น",description:"ทุ่งเกษตรสีทองกว้างในแสงพระอาทิตย์ตก มีหญ้าหรือรวงพืชเรืองแสง แนวต้นไม้ไกล และท้องฟ้าหลายชั้น"},
+    "Countryside pond and fields":{name:"บ่อน้ำกลางทุ่งชนบท",description:"บ่อน้ำธรรมชาติขนาดเล็กข้างทุ่งเขียว มีหญ้าริมน้ำ ทางเดินชนบท ต้นไม้ และเงาสะท้อนอ่อน"},
+    "Misty village farmland":{name:"หมู่บ้านกลางไร่ในสายหมอก",description:"หมู่บ้านชนบทอยู่ท่ามกลางทุ่งเขียวและเนินเขา มีหมอกเช้า บ้านหลังเล็ก ทางเดิน และมิติอากาศนุ่ม"},
+    "Blue mountain lake valley":{name:"ทะเลสาบสีฟ้ากลางหุบเขา",description:"ทะเลสาบสีฟ้าใสล้อมด้วยภูเขาเขียวซ้อนหลายชั้น มีเงาสะท้อน ชายฝั่งธรรมชาติ และท้องฟ้าสดใส"},
+    "Sunray forest waterfall":{name:"น้ำตกป่ากับลำแสงอาทิตย์",description:"น้ำตกกลางป่าเขียวชอุ่ม มีลำแสงอาทิตย์ลอดผ่านต้นไม้ ละอองน้ำ โขดหินมีมอส และบรรยากาศเรืองรอง"},
+    "Mountain meadow with daisies":{name:"ทุ่งเดซี่กลางภูเขา",description:"ทุ่งหญ้าบนภูเขาที่มีดอกเดซี่สีขาวในปริมาณพอดี แนวเขาเขียว ท้องฟ้าสีน้ำเงิน และเมฆขาวสะอาด"},
+    "Valley road through hills":{name:"ถนนคดโค้งผ่านหุบเขา",description:"ถนนสายเล็กคดโค้งผ่านหุบเขาเขียว มีแนวสันเขาหลายชั้น ท้องฟ้าเปิด และเส้นทางนำสายตาชัดเจน"},
+    "Sunrise mountain river":{name:"สายน้ำในหุบเขายามอรุณ",description:"แม่น้ำใสไหลผ่านหุบเขาในแสงอรุณ มีภูเขาเขียว หมอกบาง แสงทองบนผิวน้ำ และท้องฟ้ากว้าง"},
+    "Misty hillside village":{name:"หมู่บ้านบนเนินเขาในสายหมอก",description:"หมู่บ้านเล็กบนเนินเขาที่รายล้อมด้วยภูเขาและหมอก มีหลังคาบ้านกระจาย ทางเดินคดโค้ง และแสงเช้าอ่อน"},
+    "Highland flower valley":{name:"หุบเขาดอกไม้บนที่สูง",description:"หุบเขาบนที่สูงที่มีดอกไม้ตามฤดูกาลด้านหน้า ภูเขาซ้อน หมอกบาง ท้องฟ้าสะอาด และมิติธรรมชาติกว้าง"},
+    "Mountain pass with great tree":{name:"หุบเขากับต้นไม้ใหญ่",description:"พื้นที่เปิดในหุบเขาที่มีต้นไม้ใหญ่เป็นจุดเด่น เนินเขาเขียว ภูเขาไกล และท้องฟ้าสว่าง"},
+    "Lakeside pavilion garden":{name:"สวนศาลาริมทะเลสาบ",description:"ทะเลสาบสงบข้างสวนจัดภูมิทัศน์และศาลาเล็ก มีเงาสะท้อน ต้นไม้ใหญ่ ภูเขาไกล และแสงเช้านุ่ม"},
+    "Mountain lake blue sky":{name:"ทะเลสาบภูเขาใต้ฟ้าสีคราม",description:"ทะเลสาบสีฟ้าใสใต้ภูเขาเขียวและท้องฟ้าสีน้ำเงิน มีเงาสะท้อน ชายฝั่งธรรมชาติ และพื้นที่ภาพเปิดกว้าง"},
+    "Tree-lined pond morning":{name:"บ่อน้ำใต้แนวต้นไม้ยามเช้า",description:"บ่อน้ำเงียบสงบที่มีต้นไม้ใหญ่รายล้อม หญ้าธรรมชาติ แสงเช้าลอดผ่าน และเงาสะท้อนนุ่ม"},
+    "River bend flower bank":{name:"โค้งแม่น้ำริมดอกไม้",description:"โค้งแม่น้ำสงบที่มีดอกไม้ตามฤดูกาลริมฝั่งแบบพอดี ต้นไม้เขียว ภูเขาไกล และแสงกลางวันสดชื่น"},
+    "Lotus lake with distant mountains":{name:"ทะเลบัวกับภูเขาไกล",description:"ทะเลสาบบัวธรรมชาติ มีดอกบัวกระจายอย่างพอดี ผิวน้ำกว้าง ภูเขาไกล หมอกเช้า และบรรยากาศสงบ"},
+    "Forest waterfall pool":{name:"แอ่งน้ำตกกลางป่า",description:"แอ่งน้ำใสใต้น้ำตกกลางป่า มีโขดหิน มอส พรรณไม้เขียวชอุ่ม ละอองน้ำ และแสงลอดใบไม้"},
+    "Quiet canal through green fields":{name:"คลองเล็กผ่านทุ่งเขียว",description:"คลองสงบคดผ่านทุ่งสีเขียว มีหญ้าริมฝั่ง ต้นไม้ไกล เงาสะท้อน และท้องฟ้าเปิด"},
+    "Lakeside house reflection":{name:"บ้านริมน้ำกับเงาสะท้อน",description:"บ้านหรือศาลาหลังเล็กริมผืนน้ำสงบ มีเงาสะท้อน ต้นไม้รอบข้าง ภูเขาไกล และแสงเช้าสบายตา"},
+    "Daisy field blue sky":{name:"ทุ่งเดซี่ใต้ฟ้าสีคราม",description:"ทุ่งดอกเดซี่สีขาวเกสรเหลืองเป็นดอกหลัก มีลำต้นเขียว ท้องฟ้าสีน้ำเงิน เมฆขาว และแสงเช้าสดใส"},
+    "Marigold field sunrise":{name:"ทุ่งดาวเรืองยามอรุณ",description:"ทุ่งดอกดาวเรืองสีส้มและทองเป็นดอกหลัก มีใบเขียว แสงพระอาทิตย์ขึ้น และบรรยากาศชนบทกว้าง"},
+    "Rose garden sunrise":{name:"สวนกุหลาบยามอรุณ",description:"สวนกุหลาบธรรมชาติที่จัดอย่างสง่างาม มีกุหลาบเป็นดอกหลัก แสงเช้าสีทอง ทางเดินสะอาด และพรรณไม้หลายชั้น"},
+    "Hydrangea mountain garden":{name:"สวนไฮเดรนเยียกลางภูเขา",description:"สวนไฮเดรนเยียที่มีช่อดอกสีน้ำเงินหรือม่วง ใบเขียว ภูเขาหรือเนินสูงด้านหลัง หมอกบาง และแสงธรรมชาติสดใส"},
+    "Wildflower path morning":{name:"ทางเดินทุ่งดอกไม้ป่ายามเช้า",description:"ทางเดินเล็กที่มีดอกไม้ป่าหลากสีแบบพอดี หญ้าสด ต้นไม้ไกล แสงเช้า และท้องฟ้าเปิด"},
+    "Yellow cosmos field":{name:"ทุ่งคอสมอสสีเหลือง",description:"ทุ่งดอกคอสมอสสีเหลืองเป็นดอกหลัก ลำต้นโปร่ง ใบละเอียด ภูเขาหรือต้นไม้ไกล และแสงเช้าสดใส"},
+    "Hibiscus tropical garden":{name:"สวนชบาเขตร้อน",description:"สวนเขตร้อนที่มีดอกชบาสีสดเป็นจุดเด่น รายล้อมด้วยใบไม้เขียว แสงธรรมชาติอุ่น และองค์ประกอบพฤกษชาติที่ลงตัว"},
+    "White flower meadow":{name:"ทุ่งดอกไม้สีขาว",description:"ทุ่งหญ้าที่มีดอกไม้สีขาวขนาดเล็กเป็นดอกหลัก ลมอ่อน ท้องฟ้าสว่าง ภูมิประเทศไกล และบรรยากาศละมุน"},
+    "Scenic rice terrace overlook":{name:"จุดชมวิวนาขั้นบันได",description:"มุมสูงที่มองเห็นนาขั้นบันไดหลายชั้น เส้นทางคดโค้ง ภูเขาไกล หมอกบาง และท้องฟ้ากว้างแบบภาพท่องเที่ยว"},
+    "Palm valley sunrise viewpoint":{name:"จุดชมวิวหุบเขามะพร้าวยามอรุณ",description:"มุมชมวิวหุบเขาเขตร้อนที่มีต้นมะพร้าวสูง ทุ่งเขียว ภูเขาไกล แสงอรุณ และท้องฟ้ากว้าง"},
+    "Country road mountain viewpoint":{name:"จุดชมวิวถนนชนบทสู่ภูเขา",description:"มุมท่องเที่ยวที่เห็นถนนชนบทคดโค้งนำสายตาไปยังภูเขาเขียวหลายชั้น มีท้องฟ้าเปิดและมิติภาพลึก"},
+    "Mountain lake overlook":{name:"จุดชมวิวทะเลสาบภูเขา",description:"มุมสูงเหนือทะเลสาบสีฟ้าที่ล้อมด้วยภูเขา มีหญ้าธรรมชาติด้านหน้า ท้องฟ้าสดใส และมิติกว้าง"},
+    "Flower valley viewpoint":{name:"จุดชมวิวหุบเขาดอกไม้",description:"มุมสูงเหนือหุบเขาเขียว มีดอกไม้ตามฤดูกาลด้านหน้า ภูเขาไกล หมอกบาง และแสงนุ่ม"},
+    "Countryside village panorama":{name:"พาโนรามาหมู่บ้านชนบท",description:"วิวกว้างของหมู่บ้านชนบท มีทุ่งเขียว บ้านกระจาย ถนนคดโค้ง ภูเขาไกล และแสงกลางวันโปร่ง"},
+    "Great tree field overlook":{name:"จุดชมวิวทุ่งกับต้นไม้ใหญ่",description:"วิวทุ่งหรือเนินเปิดที่มีต้นไม้ใหญ่เพียงต้นเดียวเป็นจุดเด่น มีเส้นขอบฟ้ากว้างและเมฆเป็นพื้นที่ข้อความ"},
+    "Rainbow valley viewpoint":{name:"จุดชมวิวหุบเขาหลังฝนกับสายรุ้ง",description:"หุบเขาเขียวหลังฝน มีสายรุ้งธรรมชาติพาดบนท้องฟ้า ภูเขาไกล พื้นผิวเปียกสะท้อนแสง และบรรยากาศสดชื่น"},
+    "Purple verbena field sunrise":{name:"ทุ่งเวอร์บีนาสีม่วงยามอรุณ",description:"ทุ่งดอกเวอร์บีนาสีม่วงเป็นดอกหลัก มีแสงอรุณนุ่ม ภูเขาไกล และท้องฟ้าโปร่ง"},
+    "Pink cosmos mountain field":{name:"ทุ่งคอสมอสชมพูกับภูเขา",description:"ทุ่งคอสมอสสีชมพูเป็นดอกหลัก ลำต้นโปร่ง ภูเขาเขียวด้านหลัง และแสงเช้าสดใส"},
+    "White daisy sunrise meadow":{name:"ทุ่งเดซี่ขาวรับแสงอรุณ",description:"ทุ่งเดซี่สีขาวเกสรเหลืองในแสงเช้าย้อนนุ่ม มีหมอกทองบาง หญ้าเขียว และท้องฟ้าเปิด"},
+    "Sunflower hill sunrise":{name:"เนินทานตะวันยามพระอาทิตย์ขึ้น",description:"เนินเขาที่เต็มไปด้วยดอกทานตะวัน แสงเช้าสีทอง หุบเขาไกล และบรรยากาศสดใส"},
+    "Lavender path golden hour":{name:"ทางเดินลาเวนเดอร์แสงทอง",description:"ทางเดินเล็กผ่านแถวลาเวนเดอร์สีม่วง มีแสงทองด้านข้าง ภูเขาไกล และเส้นนำสายตาชัดเจน"},
+    "Flower garden archway":{name:"ซุ้มดอกไม้ในสวน",description:"ทางเดินสวนลอดซุ้มดอกไม้ มีพรรณไม้เขียว ดอกไม้หลากสีอย่างพอดี และมิติภาพลึก"},
+    "Flower garden bicycle path":{name:"จักรยานริมทางสวนดอกไม้",description:"ทางเดินสวนหรือชนบทที่มีจักรยานวางอยู่ข้างดอกไม้ มีฉากเขียว ฟ้าเปิด และแสงเช้าอบอุ่น"},
+    "Flower meadow under dramatic sky":{name:"ทุ่งดอกไม้ใต้ท้องฟ้าสวย",description:"ทุ่งดอกไม้สีสดแบบคุมโทนใต้เมฆขาวและฟ้าสีน้ำเงิน มีภูเขาไกลและพื้นที่ว่างสำหรับ Headline"},
+    "Morning dew flower meadow":{name:"ทุ่งดอกไม้รับหยดน้ำค้าง",description:"ทุ่งดอกไม้สดที่มีหยดน้ำค้าง แสงย้อนอ่อน ลำต้นเขียว ดอกไม้พาสเทล และฉากหลังละลาย"},
+    "Wildflower valley sunset":{name:"หุบเขาดอกไม้ป่ายามเย็น",description:"หุบเขาดอกไม้ป่าหลากสีแบบพอดี แสงเย็นส้มชมพู เนินเขา และมิติแบบ cinematic"},
+    "Blue flower field mountain view":{name:"ทุ่งดอกไม้สีน้ำเงินกับภูเขา",description:"ทุ่งดอกไม้สีน้ำเงินขนาดเล็กเป็นดอกหลัก มีภูเขาซ้อน แสงเช้า และท้องฟ้าสีฟ้าสด"},
+    "Red flower field countryside":{name:"ทุ่งดอกไม้สีแดงชนบท",description:"ทุ่งดอกไม้สีแดงเป็นจุดเด่น มีใบเขียว ฉากชนบทหรือเนินไกล และแสงเช้าสดใส"},
+    "White cosmos valley morning":{name:"ทุ่งคอสมอสขาวกลางหุบเขา",description:"ทุ่งคอสมอสสีขาวเป็นดอกหลัก ลำต้นโปร่ง ภูเขาเขียว หมอกบาง และแสงเช้าละมุน"},
+    "Orange cosmos hill field":{name:"ทุ่งคอสมอสสีส้มบนเนิน",description:"ทุ่งคอสมอสสีส้มเป็นดอกหลักบนเนินกว้าง มีแสงอุ่น ภูเขาไกล และบรรยากาศตามฤดูกาล"},
+    "Pastel bouquet in woven basket":{name:"กระเช้าช่อดอกไม้พาสเทล",description:"กระเช้าสานใส่ช่อดอกไม้พาสเทล แสงธรรมชาติ ฉากโต๊ะหรือสวนเรียบสะอาด"},
+    "Wildflower bouquet hand-held":{name:"ช่อดอกไม้ป่าในมือ",description:"ช่อดอกไม้ป่าสดถืออยู่ในมือ ฉากหลังธรรมชาติละลาย แสงอุ่น และอารมณ์ไลฟ์สไตล์อ่อนโยน"},
+    "Daisy bouquet ceramic vase":{name:"แจกันเซรามิกช่อเดซี่",description:"แจกันเซรามิกที่มีดอกเดซี่สีขาวเป็นดอกหลัก แสงหน้าต่างอ่อน และพื้นที่ว่างสำหรับข้อความ"},
+    "Sunflower bouquet rustic table":{name:"ช่อทานตะวันบนโต๊ะไม้",description:"ช่อดอกทานตะวันบนโต๊ะไม้เรียบ แสงเช้าอุ่น พร็อพน้อย และบรรยากาศชนบทสดใส"},
+    "Lavender bouquet glass jar":{name:"ลาเวนเดอร์ในขวดแก้ว",description:"ก้านลาเวนเดอร์ในขวดแก้วหรือแจกันใส ฉากโปร่ง แสงนุ่ม และโทนม่วงเขียวสงบ"},
+    "Rose bouquet morning table":{name:"ช่อกุหลาบบนโต๊ะยามเช้า",description:"ช่อกุหลาบในแจกันหรือกระเช้าเรียบ แสงเช้านุ่ม ฉากไม่รก และองค์ประกอบหรูเป็นธรรมชาติ"},
+    "Hydrangea bouquet by window":{name:"ช่อไฮเดรนเยียริมหน้าต่าง",description:"ช่อไฮเดรนเยียสีน้ำเงินหรือม่วงใกล้หน้าต่าง แสงอ่อน และบรรยากาศพรีเมียม"},
+    "Single flower macro greeting":{name:"ดอกเดี่ยวมาโครสำหรับการ์ดสวัสดี",description:"ดอกไม้ชนิดเดียวเป็น Hero ระยะใกล้ ฉากหลังละลาย แสงด้านข้างนุ่ม และเว้นพื้นที่ข้อความ"},
+    "Flower basket by garden gate":{name:"กระเช้าดอกไม้ข้างประตูสวน",description:"กระเช้าดอกไม้ข้างประตูสวนหรือป้ายไม้เรียบ มีใบไม้เขียว แสงเช้า และองค์ประกอบอบอุ่น"},
+    "Flower vase with tea cup":{name:"แจกันดอกไม้กับถ้วยชา",description:"แจกันดอกไม้ขนาดเล็กคู่กับถ้วยชาเพียงหนึ่งใบ แสงหน้าต่างนุ่ม ฉากสะอาด"},
+    "Flower basket on bicycle":{name:"กระเช้าดอกไม้บนจักรยาน",description:"จักรยานเรียบง่ายที่มีกระเช้าดอกไม้ด้านหน้า อยู่ในสวนหรือชนบท แสงอ่อน และอารมณ์สดใส"},
     "Modern city promenade":{name:"ทางเดินเมืองสมัยใหม่",description:"ทางเดินเมืองสมัยใหม่ที่สะอาด มีสถาปัตยกรรม ต้นไม้ เส้นนำสายตายาว และแสงเช้า"},
     "Rooftop city morning":{name:"ดาดฟ้าเมืองยามเช้า",description:"ดาดฟ้าสว่างที่มองเห็นเส้นขอบฟ้าเมือง มีท้องฟ้าเปิด รายละเอียดเมืองแบบมินิมอล และองค์ประกอบสะอาด"},
     "Contemporary art district":{name:"ย่านศิลปะร่วมสมัย",description:"ย่านศิลปะในเมืองที่มีผนังพื้นผิว อาคารสมัยใหม่ ต้นไม้ริมถนน และพื้นที่ว่างแบบ Editorial"},
@@ -7447,8 +7216,8 @@ const PAIR_LOOKS={
   };
 
 
-  const POKUN_MASTER_LIBRARY_V1146={
-    version:"11.46",
+  const POKUN_MASTER_LIBRARY_V1153={
+    version:"11.53",
     purpose:"Curated Thai daily-greeting design library distilled from the user's reference boards and existing POKUN systems. Library guidance is supportive and must never override exact scene, subject, text, typography, frame, layout, weekday/date, or mode locks.",
 
     sceneProfiles:{
@@ -7462,27 +7231,27 @@ const PAIR_LOOKS={
       },
       rice_countryside:{
         label:"ชนบท / ทุ่งนา",
-        moods:["สดชื่นแบบบ้าน ๆ","อบอุ่นธรรมชาติ","ปลอดโปร่ง","เรียบง่ายมีความสุข"],
-        visualCues:["Thai rural morning","golden rice freshness","green countryside calm","soft open-sky rural light"],
-        props:["รวงข้าว","ทางคันนา","กระท่อมไกล ๆ","ดอกไม้ป่าขนาดเล็ก","จักรยานเมื่อเข้ากับฉาก"],
-        compositions:["เส้นทางนำสายตาเข้าสู่ทุ่ง","ฟ้าเปิดเป็นพื้นที่ Headline","Subject วางเยื้องข้างและฉากกว้าง"],
-        palettes:["เขียวสด-ฟ้า","ทองรวงข้าว-ครีม","เขียวมะกอก-เหลืองอ่อน","สีประจำวันแต้มในดอกไม้/พร็อพ"]
+        moods:["สดชื่นแบบบ้าน ๆ","อบอุ่นธรรมชาติ","ปลอดโปร่ง","เรียบง่ายมีความสุข","เขียวชอุ่มหลังฝน","แสงอรุณชนบท"],
+        visualCues:["Thai rural morning","golden rice freshness","green countryside calm","soft open-sky rural light","layered rice-terrace valley","palm-lined tropical countryside","single-tree open field"],
+        props:["รวงข้าว","ทางคันนา","กระท่อมไกล ๆ","ดอกไม้ป่าขนาดเล็ก","จักรยานเมื่อเข้ากับฉาก","ต้นมะพร้าว","บ่อน้ำธรรมชาติ","บ้านชนบทหลังเล็ก"],
+        compositions:["เส้นทางนำสายตาเข้าสู่ทุ่ง","ฟ้าเปิดเป็นพื้นที่ Headline","Subject วางเยื้องข้างและฉากกว้าง","นาขั้นบันไดสร้างเส้นโค้งนำสายตา","ต้นไม้ใหญ่เดี่ยวกับ negative space","บ้านเล็กอยู่ระยะกลางและปล่อยวิวกว้าง"],
+        palettes:["เขียวสด-ฟ้า","ทองรวงข้าว-ครีม","เขียวมะกอก-เหลืองอ่อน","สีประจำวันแต้มในดอกไม้/พร็อพ","เขียวมรกต-ฟ้าคราม","ทองอรุณ-เขียวสด"]
       },
       nature_mountain:{
         label:"ภูเขา / ธรรมชาติ",
-        moods:["ปลอดโปร่งมีพลัง","สงบสดชื่น","เริ่มต้นใหม่","อิสระและสดใส"],
-        visualCues:["layered mountain atmosphere","sunrise mist","forest freshness","cinematic natural depth"],
-        props:["หญ้าพลิ้ว","ดอกไม้ป่าประปราย","หมอก","ก้อนหินธรรมชาติ","นกไกล ๆ"],
-        compositions:["Hero landscape กินพื้นที่หลัก","ใช้ท้องฟ้าหรือหมอกเป็น negative space","มุม cinematic หรือ travel editorial"],
-        palettes:["ฟ้า-เขียว","ทองเช้า-เขียวป่า","ฟ้าอมเทา-เขียวเข้ม","สีประจำวันแต้มเล็ก ๆ"]
+        moods:["ปลอดโปร่งมีพลัง","สงบสดชื่น","เริ่มต้นใหม่","อิสระและสดใส","หลังฝนสดชื่น","แสงเช้าทะลุหมอก"],
+        visualCues:["layered mountain atmosphere","sunrise mist","forest freshness","cinematic natural depth","blue mountain-lake clarity","sunray waterfall glow","highland flower-valley freshness","winding valley-road depth"],
+        props:["หญ้าพลิ้ว","ดอกไม้ป่าประปราย","หมอก","ก้อนหินธรรมชาติ","นกไกล ๆ","ต้นไม้ใหญ่เดี่ยว","ลำธาร","บ้านบนเนินเมื่อเหมาะ"],
+        compositions:["Hero landscape กินพื้นที่หลัก","ใช้ท้องฟ้าหรือหมอกเป็น negative space","มุม cinematic หรือ travel editorial","ถนน/แม่น้ำคดโค้งเป็น leading line","Foreground ดอกไม้เล็กน้อย + ภูเขาซ้อน","ต้นไม้ใหญ่เป็น anchor ด้านหนึ่ง"],
+        palettes:["ฟ้า-เขียว","ทองเช้า-เขียวป่า","ฟ้าอมเทา-เขียวเข้ม","สีประจำวันแต้มเล็ก ๆ","น้ำเงินทะเลสาบ-เขียวภูเขา","เขียวมรกต-ทองแสงลอด"]
       },
       waterfront:{
         label:"ริมน้ำ / ทะเลสาบ / แม่น้ำ",
-        moods:["นิ่งสบาย","สดชื่น","ละมุน","ผ่อนคลาย"],
-        visualCues:["calm reflections","soft riverside morning","lotus-water serenity","misty waterfront"],
-        props:["ใบบัว","กอหญ้าริมน้ำ","สะพานไม้","เรือเล็กเมื่อเข้ากับฉาก","เงาสะท้อน"],
-        compositions:["ใช้ผิวน้ำเป็นพื้นที่หายใจ","Subject/วัตถุหลักวางริมกรอบ","แนวนอนลึกแต่จัดลงภาพ 3:4"],
-        palettes:["ฟ้าอ่อน-เขียว","เขียวบัว-ชมพู","ครีม-ฟ้า","สีประจำวันเป็น accent"]
+        moods:["นิ่งสบาย","สดชื่น","ละมุน","ผ่อนคลาย","เขียวชอุ่มริมน้ำ","สะอาดหลังฝน"],
+        visualCues:["calm reflections","soft riverside morning","lotus-water serenity","misty waterfront","mountain-lake clarity","garden-pavilion reflection","forest waterfall pool","green-field canal"],
+        props:["ใบบัว","กอหญ้าริมน้ำ","สะพานไม้","เรือเล็กเมื่อเข้ากับฉาก","เงาสะท้อน","ศาลาเล็ก","ต้นไม้ใหญ่ริมฝั่ง","ดอกไม้ริมตลิ่งแบบพอดี"],
+        compositions:["ใช้ผิวน้ำเป็นพื้นที่หายใจ","Subject/วัตถุหลักวางริมกรอบ","แนวนอนลึกแต่จัดลงภาพ 3:4","ศาลาหรือบ้านเล็กวางระยะกลาง","น้ำคดโค้งเป็น leading line","ภูเขาไกลช่วยสร้างชั้นภาพ"],
+        palettes:["ฟ้าอ่อน-เขียว","เขียวบัว-ชมพู","ครีม-ฟ้า","สีประจำวันเป็น accent","ฟ้าคราม-เขียวภูเขา","เขียวสด-ขาวหมอก"]
       },
       sea_coastal:{
         label:"ทะเล / ชายหาด / ชายฝั่ง / เกาะ",
@@ -7494,11 +7263,11 @@ const PAIR_LOOKS={
       },
       garden_botanical:{
         label:"สวน / ดอกไม้ / พฤกษชาติ",
-        moods:["สดใสใจฟู","หอมละมุน","สดชื่นธรรมชาติ","น่ารักอบอุ่น"],
-        visualCues:["fresh floral morning","botanical editorial","soft flower meadow","premium garden greeting"],
-        props:["ดอกทานตะวัน","ลาเวนเดอร์","ดอกกระเจียว","กุหลาบ","เดซี่","มะลิ","กลีบดอกไม้"],
-        compositions:["ใช้แนวดอกไม้โอบข้อความ","เว้นฟ้าหรือทางเดินให้ Headline","ดอกไม้ foreground + ฉากลึก"],
-        palettes:["สีดอกไม้ตามจริง + สีประจำวัน","เขียวสด-ครีม","ชมพู/ม่วง pastel","เหลืองสด-ฟ้า"]
+        moods:["สดใสใจฟู","หอมละมุน","สดชื่นธรรมชาติ","น่ารักอบอุ่น","ทุ่งดอกไม้เปิดฟ้า","สวนหลังฝนสดชื่น","โรแมนติกแสงเช้า","ดอกไม้ป่าเป็นธรรมชาติ","สีสดแต่สบายตา"],
+        visualCues:["fresh floral morning","botanical editorial","soft flower meadow","premium garden greeting","daisy-under-blue-sky freshness","golden marigold sunrise","hydrangea highland garden","white-flower meadow airiness","purple verbena sunrise field","pink cosmos mountain meadow","sunflower hill sunrise","lavender path golden-hour depth","dew-lit flower meadow"],
+        props:["ดอกทานตะวัน","ลาเวนเดอร์","ดอกกระเจียว","กุหลาบ","เดซี่","มะลิ","กลีบดอกไม้","ดาวเรือง","ไฮเดรนเยีย","คอสมอส","ชบา","เวอร์บีนา","จักรยานเรียบง่ายเมื่อเข้ากับฉาก","ซุ้มดอกไม้","ตะกร้าดอกไม้"],
+        compositions:["ใช้แนวดอกไม้โอบข้อความ","เว้นฟ้าหรือทางเดินให้ Headline","ดอกไม้ foreground + ฉากลึก","ดอกไม้เป็น foreground ต่ำไม่ทับข้อความ","ทางเดินสวนสร้าง leading line","ท้องฟ้ากว้างเป็นพื้นที่ Headline","ดอกไม้หลักชัดหนึ่งชนิด + ฉากภูเขาไกล","แสงย้อนลอดดอกไม้สร้าง glow","ซุ้มหรือแนวดอกไม้ช่วย frame ข้อความ"],
+        palettes:["สีดอกไม้ตามจริง + สีประจำวัน","เขียวสด-ครีม","ชมพู/ม่วง pastel","เหลืองสด-ฟ้า","ขาวเดซี่-ฟ้าคราม","ส้มดาวเรือง-ทองอรุณ","ฟ้าไฮเดรนเยีย-เขียวสด","ม่วงเวอร์บีนา-ทองเช้า","ชมพูคอสมอส-ฟ้า","เหลืองทานตะวัน-เขียวสด"]
       },
       urban_city:{
         label:"เมือง / สถาปัตย์สมัยใหม่",
@@ -7518,11 +7287,11 @@ const PAIR_LOOKS={
       },
       travel_viewpoint:{
         label:"ท่องเที่ยว / จุดชมวิว",
-        moods:["เปิดโลก","สดชื่น","มีแรงบันดาลใจ","วันดีน่าออกเดินทาง"],
-        visualCues:["travel poster depth","open scenic overlook","sunrise viewpoint","airy destination editorial"],
-        props:["ราวชมวิว","ป้ายทางเรียบ ๆ","หญ้าพลิ้ว","เมฆ","องค์ประกอบ native ของสถานที่"],
-        compositions:["Cinematic Poster","Floating Typography","Hero view + clean sky"],
-        palettes:["ตามสถานที่จริง + daily accent","ฟ้า-เขียว","ทองเช้า","pastel travel"]
+        moods:["เปิดโลก","สดชื่น","มีแรงบันดาลใจ","วันดีน่าออกเดินทาง","เขียวกว้างสบายตา","หลังฝนสดใส"],
+        visualCues:["travel poster depth","open scenic overlook","sunrise viewpoint","airy destination editorial","rice-terrace panorama","mountain-lake overlook","single-great-tree scenic anchor","rainbow-after-rain valley"],
+        props:["ราวชมวิว","ป้ายทางเรียบ ๆ","หญ้าพลิ้ว","เมฆ","องค์ประกอบ native ของสถานที่","ต้นไม้ใหญ่เดี่ยว","ดอกไม้ foreground แบบน้อย","สายรุ้งเมื่อฉากกำหนด"],
+        compositions:["Cinematic Poster","Floating Typography","Hero view + clean sky","มุมสูงให้เห็นเส้นทาง/นาขั้นบันไดหลายชั้น","ต้นไม้ใหญ่เป็น anchor เยื้องข้าง","Foreground ต่ำ + วิวกว้าง + ฟ้าสำหรับข้อความ"],
+        palettes:["ตามสถานที่จริง + daily accent","ฟ้า-เขียว","ทองเช้า","pastel travel","เขียวสด-ฟ้าคราม","ทองอรุณ-เขียวหุบเขา"]
       },
       cultural_market:{
         label:"ตลาด / วัฒนธรรม / งานคราฟต์",
@@ -7550,11 +7319,11 @@ const PAIR_LOOKS={
       },
       floral_stilllife:{
         label:"ดอกไม้ / Floral Still Life",
-        moods:["อ่อนโยน","ละมุน","สดชื่น","เรียบหรู"],
-        visualCues:["premium floral still life","soft vase-and-flower morning","minimal flower editorial","Thai greeting floral card"],
-        props:["แจกัน","กุหลาบ","มะลิ","บัว","เดซี่","ดอกไม้สีประจำวัน"],
-        compositions:["Still life เยื้องข้าง","Corner Editorial","Minimal Luxury"],
-        palettes:["pastel flower","ขาว-เขียว","ครีม-ชมพู","สีประจำวันเด่นหนึ่งจุด"]
+        moods:["อ่อนโยน","ละมุน","สดชื่น","เรียบหรู","อบอุ่นยามเช้า","น่ารักแบบไลฟ์สไตล์","เป็นธรรมชาติและอ่านง่าย"],
+        visualCues:["premium floral still life","soft vase-and-flower morning","minimal flower editorial","Thai greeting floral card","woven flower basket lifestyle","single-flower macro greeting","window-lit bouquet","bicycle flower-basket charm"],
+        props:["แจกัน","กุหลาบ","มะลิ","บัว","เดซี่","ดอกไม้สีประจำวัน","กระเช้าสาน","ขวดแก้ว","ถ้วยชาเพียงหนึ่งใบ","จักรยานเมื่อเหมาะ","โต๊ะไม้เรียบ"],
+        compositions:["Still life เยื้องข้าง","Corner Editorial","Minimal Luxury","ดอกเดี่ยวเป็น Hero + negative space","กระเช้าดอกไม้อยู่ล่าง/ข้างข้อความ","แจกันและถ้วยชาอยู่คนละน้ำหนักภาพไม่แย่งกัน"],
+        palettes:["pastel flower","ขาว-เขียว","ครีม-ชมพู","สีประจำวันเด่นหนึ่งจุด","ม่วงลาเวนเดอร์-เขียว","เหลืองทานตะวัน-ไม้","ฟ้าไฮเดรนเยีย-ครีม"]
       },
       art_gallery:{
         label:"ศิลปะ / แกลเลอรี / สตูดิโอ",
@@ -7606,12 +7375,8 @@ const PAIR_LOOKS={
       all_round:["ครบด้าน","อ่านง่าย","อบอุ่น","พลังบวก"]
     },
 
-    visualStyles:[
-      "Cute Kawaii","Storybook Soft","Soft 3D Cute","Thai Pastel Cute","Thai Retro Comic",
-      "Buddhist Gold Sacred","Floral Fresh Morning","Cozy Cafe Lifestyle","Minimal Clean Elegant",
-      "Warm Editorial","Luxury Blessing Card","Soft Dreamy Illustration","Nature Airy",
-      "Wealth Prosperity Gold","Vintage Gentle","Childlike Happy Card"
-    ],
+    visualStyles:Object.values(GENERAL_VISUAL_STYLES_V1152).map(x=>x.label),
+    visualStyleKeys:Object.keys(GENERAL_VISUAL_STYLES_V1152),
 
     compositions:[
       "Headline Top + Subject Bottom","Text Left + Subject Right","Subject Left + Text Right",
@@ -7638,6 +7403,59 @@ const PAIR_LOOKS={
       "Purple Dreamy","White Clean Minimal","Red Gold Prosperity","Earthy Warm","Ocean Breeze"
     ],
 
+    referenceBoardFloralPatterns:[
+      "one dominant flower species with clear botanical identity",
+      "flower field occupying lower half while upper sky remains clean for Thai headline",
+      "sunrise or golden-hour backlight glowing through petals and stems",
+      "soft blue sky with small white clouds behind vivid flowers",
+      "mountain or rolling-hill backdrop behind a colorful flower meadow",
+      "narrow garden path creating a leading line through flower beds",
+      "simple bicycle used as a lifestyle accent beside or within flowers",
+      "woven flower basket as a warm handcrafted focal object",
+      "single flower macro hero with soft bokeh and generous negative space",
+      "window-lit vase or bouquet with minimal tabletop props",
+      "purple, pink, yellow, white, blue, or red flower fields used as strong weekday-color harmony",
+      "dew, soft haze, or filtered sunlight used to make the floral scene feel fresh",
+      "floral arch, gate, or trellis used to frame the scene without crowding Thai text",
+      "avoid mixing too many flower species when one species can carry the scene clearly"
+    ],
+
+    referenceBoardScenicPatterns:[
+      "wide blue sky with small clean clouds above green landscape",
+      "winding path or road as a strong leading line",
+      "layered green mountains fading into atmospheric distance",
+      "large mature tree used as a single visual anchor",
+      "small rural house or pavilion placed in the middle distance",
+      "calm reflective lake/pond/canal with natural shoreline",
+      "sunrise or sunset glow used as an emotional focal light",
+      "flower field or restrained floral foreground framing the scene",
+      "waterfall, stream, or mist adding freshness and depth",
+      "rice terraces and curved agricultural geometry",
+      "tropical palms as vertical framing elements",
+      "open countryside negative space reserved for Thai headline text",
+      "fresh post-rain greens and luminous cloud breaks",
+      "natural rainbow only when explicitly chosen as the scene motif"
+    ],
+
+    referenceBoardBlessingExtraction:{
+      source:"User-supplied Thai daily-greeting screenshot boards, 2026-08-19",
+      policy:"STRICT SOURCE-ONLY: use only blessing wording previously extracted from the user's reference images; do not add model-written expansion, paraphrase, sentence completion, or inferred blessing text.",
+      visibleTextLevels:["Headline","Greeting/Blessing"],
+      supportingLineEnabled:false,
+      observedPatterns:[
+        "วันใหม่สดใส",
+        "จิตใจเบิกบาน",
+        "สดใสรับวันใหม่",
+        "ยิ้มรับวันใหม่",
+        "สุขกาย สุขใจ",
+        "พบแต่สิ่งดี ๆ",
+        "มีความสุขตลอดวัน",
+        "สดชื่น แจ่มใส",
+        "วันดีมีรอยยิ้ม",
+        "โชคดีตลอดวัน"
+      ]
+    },
+
     rules:[
       "Exact user-selected Scene Template always beats library inspiration.",
       "Exact Character / Gender / Age / Animal settings always beat library subject suggestions.",
@@ -7649,6 +7467,61 @@ const PAIR_LOOKS={
       "Deity hero belongs to Image 1 only when Deity pair rules say so.",
       "Use popular Thai greeting-card rhythm: clear, positive, familiar, readable, and not prayer-like.",
       "Do not overload the image with all library props; select only a small compatible subset."
+    ]
+  };
+
+  // v11.54 — SOURCE-ONLY FOOD / FRUIT / DESSERT REFERENCE LIBRARY
+  // Extracted from the user's food/fruit/dessert greeting screenshot boards.
+  // This block stores reusable wording and visual cues for future image creation.
+  const POKUN_FOOD_REFERENCE_LIBRARY_V1154={
+    source:"User-supplied Thai food / fruit / dessert greeting screenshot boards, 2026-08-19",
+    policy:"STRICT SOURCE-ONLY: store only clearly readable food/fruit-oriented wording patterns extracted from the user's boards. Do not invent recipe slogans or decorative blessing copy.",
+    visibleTextLevels:["Headline","Greeting/Blessing"],
+    supportingLineEnabled:false,
+    extractedHeadlines:[
+      "สดชื่นรับวันใหม่",
+      "อิ่มเอมใจ",
+      "สุขสดใส",
+      "วันใหม่สดใส",
+      "Good Morning"
+    ],
+    extractedBlessings:[
+      "สดชื่นทั้งวัน",
+      "มีความสุขมากมาย",
+      "สุขกาย สุขใจ",
+      "พบแต่สิ่งดี ๆ",
+      "โชคดี มีสุข",
+      "สดใสทั้งวัน"
+    ],
+    imagePatterns:[
+      "fruit basket or wooden tray used as the hero object, often overflowing with one dominant fruit or a colorful fruit mix",
+      "neatly sliced fruit arranged in a fan, ring, rosette, or geometric platter for a clean appetizing editorial look",
+      "clear glasses of juice, smoothie, or iced fruit drink used as bright lifestyle accents with visible condensation",
+      "Thai dessert, sweet, or breakfast set paired with fruit to create a cheerful morning-greeting mood",
+      "dark premium background with a spotlight effect used for selected fruit or dessert still-life cards",
+      "clean cream or pastel tabletop with generous negative space for weekday name and blessing text",
+      "woven basket, ceramic bowl, banana leaf, or wooden board used to make the food scene feel warm and natural",
+      "fruit close-up or macro texture shot showing freshness, juiciness, seeds, peel, or glossy surface detail",
+      "one clearly dominant fruit identity per image, such as watermelon, orange, mango, grape, strawberry, cherry, durian, banana, melon, or mixed berries",
+      "fruit and small flowers used together as decorative accents without distracting from the main edible subject",
+      "bright market-fresh abundance with many fruits grouped by color and shape, yet still keeping one clear hero zone",
+      "dessert cup, parfait, jelly, cake, or Thai sweet placed as a secondary accent beside the main fruit subject",
+      "top-view tray or table setting used for food greeting cards when multiple small dishes appear together",
+      "use food steam, cold condensation, cut-surface shine, or juicy highlights to make the image feel freshly prepared"
+    ],
+    props:[
+      "ตะกร้าผลไม้","ถาดไม้","ชามเซรามิก","จานผลไม้","แก้วน้ำผลไม้","ใบตอง","ดอกไม้เล็กน้อย","ผ้าโต๊ะคุมโทน","ช้อนส้อมเรียบง่าย","ผ้าเช็ดปาก",
+      "ผลไม้หั่นชิ้น","ผลไม้ทั้งลูก","ขนมไทย","เค้ก/พาร์เฟต์","เครื่องดื่มเย็น","ของหวานผลไม้"
+    ],
+    palettes:[
+      "เหลืองมะม่วง-ครีม","แดงแตงโม-เขียวมิ้นต์","ส้มซิตรัส-ขาว","ม่วงองุ่น-เขียวใบ","ชมพูสตรอว์เบอร์รี-ครีม","เขียวสดผลไม้-ไม้ธรรมชาติ","โทนดำพรีเมียมกับผลไม้สีสด"
+    ],
+    directions:[
+      "ผลไม้หรือขนมเป็น Hero ชัดเจน",
+      "คุมชนิดผลไม้ให้ตรงตัว ไม่สลับเป็นผลไม้อื่นเอง",
+      "ข้อความควรอ่านง่ายและวางบนพื้นที่ว่าง ไม่ทับรายละเอียดอาหาร",
+      "ใช้สีอาหารจริงเป็นฐาน แล้วแต้มสีประจำวันอย่างกลมกลืน",
+      "หากเป็นฉากผลไม้ ควรทำให้ดูสด ฉ่ำ น่ากิน และเป็นธรรมชาติ"
     ]
   };
 
@@ -8351,8 +8224,8 @@ const PAIR_LOOKS={
 
 
   function masterLibraryProfile(scene){
-    return POKUN_MASTER_LIBRARY_V1146.sceneProfiles[scene?.family]
-      || POKUN_MASTER_LIBRARY_V1146.sceneProfiles.minimal_abstract;
+    return POKUN_MASTER_LIBRARY_V1153.sceneProfiles[scene?.family]
+      || POKUN_MASTER_LIBRARY_V1153.sceneProfiles.minimal_abstract;
   }
 
   function masterLibraryDistinctPick(list,setNo,base){
@@ -8367,13 +8240,13 @@ const PAIR_LOOKS={
 
   function resolveMasterLibraryBundle(setNo,s,scene,texts,layout,pairLook,seed){
     const profile=masterLibraryProfile(scene);
-    const base=hashString(`${userSeed}|${s.day.isoDate}|${scene.family}|${scene.name}|master-library-v1146|${rerollSeed1}|${rerollSeed2}`);
+    const base=hashString(`${userSeed}|${s.day.isoDate}|${scene.family}|${scene.name}|master-library-v1153|${rerollSeed1}|${rerollSeed2}`);
     const themeKey=texts?.blessingThemeKey||resolvedBlessingTheme(s,setNo)||"all_round";
-    const headlineTones=POKUN_MASTER_LIBRARY_V1146.headlineTones[themeKey]
-      || POKUN_MASTER_LIBRARY_V1146.headlineTones.all_round;
+    const headlineTones=POKUN_MASTER_LIBRARY_V1153.headlineTones[themeKey]
+      || POKUN_MASTER_LIBRARY_V1153.headlineTones.all_round;
 
     return {
-      version:POKUN_MASTER_LIBRARY_V1146.version,
+      version:POKUN_MASTER_LIBRARY_V1153.version,
       sceneFamily:scene.family,
       sceneTheme:profile.label,
       mood:masterLibraryDistinctPick(profile.moods,setNo,base+101),
@@ -8387,14 +8260,18 @@ const PAIR_LOOKS={
       headlineFrame:resolvedTextFrame(s,"headline").label,
       blessingFrame:resolvedTextFrame(s,"blessing").label,
       pairLook:pairLook.label,
-      blessingTheme:texts?.blessingThemeLabel||themeKey
+      blessingTheme:texts?.blessingThemeLabel||themeKey,
+      scenicPattern:masterLibraryDistinctPick(POKUN_MASTER_LIBRARY_V1153.referenceBoardScenicPatterns,setNo,base+709),
+      floralPattern:["garden_botanical","floral_stilllife"].includes(scene.family)
+        ? masterLibraryDistinctPick(POKUN_MASTER_LIBRARY_V1153.referenceBoardFloralPatterns,setNo,base+811)
+        : ""
     };
   }
 
   function masterLibraryPromptLines(bundle,scene){
     if(!bundle)return [];
     return [
-      "POKUN MASTER LIBRARY v11.46 — CURATED GREETING DESIGN SUPPORT:",
+      "POKUN MASTER LIBRARY v11.53 — CURATED GREETING DESIGN SUPPORT:",
       "This block is SUPPORTIVE ONLY. Exact Subject, Character, Scene, Thai Text, Typography, Frame, Layout, Weekday/Date, and Mode locks above remain higher priority.",
       `Library Scene Theme: ${bundle.sceneTheme}.`,
       `Library Mood Accent: ${bundle.mood}.`,
@@ -8403,6 +8280,8 @@ const PAIR_LOOKS={
       `Library Composition Accent: ${bundle.compositionAccent}.`,
       `Library Palette Accent: ${bundle.paletteAccent}.`,
       `Library Headline Tone: ${bundle.headlineTone}.`,
+      `Reference-board Scenic Pattern: ${bundle.scenicPattern}.`,
+      bundle.floralPattern ? `Reference-board Floral Pattern: ${bundle.floralPattern}.` : "",
       `Existing Pair Look remains authoritative: ${bundle.pairLook}.`,
       `Existing Layout remains authoritative: ${bundle.layout}.`,
       `Existing Typography remains authoritative: ${bundle.typography}.`,
@@ -8412,6 +8291,7 @@ const PAIR_LOOKS={
       "Use the library accent only when it naturally belongs to the exact Scene Concept. Never add an unrelated object merely because it exists in the library.",
       "PAIR LIBRARY VARIETY: Image 1 and Image 2 should not repeat the same optional accent prop, composition accent, or decorative storytelling cue when alternatives exist.",
       "REFERENCE-BOARD DESIGN DNA: favor the successful Thai daily-greeting patterns seen repeatedly in curated examples — clear weekday identity, floral/nature/cafe/food/sacred/cute subject variety, readable headline hierarchy, compact positive blessing, and tasteful decorative framing.",
+      "REFERENCE-IMAGE BLESSING SOURCE LOCK: the resolved Thai Headline and Greeting come only from wording extracted from the user's uploaded reference images. Reproduce them EXACTLY. Do not paraphrase, expand, complete, combine, improve, or add any new blessing wording.",
       ""
     ];
   }
@@ -9930,10 +9810,10 @@ const PAIR_LOOKS={
 
 
   function masterLibraryCatalog(){
-    const blessingKeys=Object.keys(POKUN_BLESSING_LIBRARY||{});
+    const blessingKeys=Object.keys(REFERENCE_IMAGE_BLESSING_LIBRARY_V1153||{});
     return {
       version:VERSION,
-      curated:JSON.parse(JSON.stringify(POKUN_MASTER_LIBRARY_V1146)),
+      curated:JSON.parse(JSON.stringify(POKUN_MASTER_LIBRARY_V1153)),
       scenes:Object.fromEntries(Object.entries(TEMPLATE_CATALOG).map(([family,items])=>[
         family,
         items.map(x=>({
@@ -9943,8 +9823,8 @@ const PAIR_LOOKS={
           uiDescription:TEMPLATE_UI_TH[x[0]]?.description||x[1]
         }))
       ])),
-      headlines:Object.fromEntries(blessingKeys.map(k=>[k,[...(POKUN_BLESSING_LIBRARY[k]?.headlines||[])]])),
-      blessings:Object.fromEntries(blessingKeys.map(k=>[k,[...(POKUN_BLESSING_LIBRARY[k]?.greetings||[])]])),
+      headlines:Object.fromEntries(blessingKeys.map(k=>[k,[...(REFERENCE_IMAGE_BLESSING_LIBRARY_V1153[k]?.headlines||[])]])),
+      blessings:Object.fromEntries(blessingKeys.map(k=>[k,[...(REFERENCE_IMAGE_BLESSING_LIBRARY_V1153[k]?.greetings||[])]])),
       typography:DATA.typography.map(x=>({
         name:x.name,
         thaiDescription:x.thaiDesc||"",
@@ -9957,9 +9837,18 @@ const PAIR_LOOKS={
         category:v.category,label:v.label,contexts:[...(v.contexts||[])],desc:v.desc||""
       }])),
       palettes:Object.fromEntries(Object.entries(PAIR_LOOKS).map(([k,v])=>[k,{...v}])),
-      compositions:[...POKUN_MASTER_LIBRARY_V1146.compositions],
-      subjects:JSON.parse(JSON.stringify(POKUN_MASTER_LIBRARY_V1146.subjectFamilies)),
-      rules:[...POKUN_MASTER_LIBRARY_V1146.rules]
+      generalVisualStyles:JSON.parse(JSON.stringify(GENERAL_VISUAL_STYLES_V1152)),
+      autoGeneralVisualStylePools:JSON.parse(JSON.stringify(AUTO_GENERAL_VISUAL_STYLE_POOLS_V1152)),
+      compositions:[...POKUN_MASTER_LIBRARY_V1153.compositions],
+      subjects:JSON.parse(JSON.stringify(POKUN_MASTER_LIBRARY_V1153.subjectFamilies)),
+      scenicReferencePatterns:[...POKUN_MASTER_LIBRARY_V1153.referenceBoardScenicPatterns],
+      floralReferencePatterns:[...POKUN_MASTER_LIBRARY_V1153.referenceBoardFloralPatterns],
+      foodReferenceLibrary:JSON.parse(JSON.stringify(POKUN_FOOD_REFERENCE_LIBRARY_V1154)),
+      referenceBoardBlessings:JSON.parse(JSON.stringify(REFERENCE_IMAGE_BLESSING_LIBRARY_V1153)),
+      textHighlights:JSON.parse(JSON.stringify(TEXT_HIGHLIGHT_STYLES_V1151)),
+      autoTextHighlightPool:[...AUTO_TEXT_HIGHLIGHT_POOL_V1151],
+      blessingExtraction:JSON.parse(JSON.stringify(POKUN_MASTER_LIBRARY_V1153.referenceBoardBlessingExtraction)),
+      rules:[...POKUN_MASTER_LIBRARY_V1153.rules]
     };
   }
 
@@ -9979,6 +9868,8 @@ const PAIR_LOOKS={
       })),
       buddhistAllowed:[...BUDDHIST_ALLOWED_SCENE_FAMILIES],
       buddhistVisualStyles:Object.fromEntries(Object.entries(BUDDHIST_VISUAL_STYLES).map(([k,v])=>[k,{label:v.label,description:v.description}])),
+      generalVisualStyles:Object.fromEntries(Object.entries(GENERAL_VISUAL_STYLES_V1152).map(([k,v])=>[k,{category:v.cat,label:v.label,description:v.desc}])),
+      foodReferenceLibrary:JSON.parse(JSON.stringify(POKUN_FOOD_REFERENCE_LIBRARY_V1154)),
       textFrameCategories:Object.fromEntries(Object.entries(TEXT_FRAME_CATEGORIES).map(([k,v])=>[k,{label:v.label,contexts:[...(v.contexts||[])]}])),
       textFrames:Object.fromEntries(Object.entries(TEXT_FRAMES).map(([k,v])=>[k,{
         category:v.category,
@@ -10295,7 +10186,15 @@ $("aiPromptScope").value = aiPromptScope;
 $("aiBackendUrl").value = aiBackendUrl;
 updateAiPromptUI();
 $("watermark").value = watermarkText;
-$("blessingTheme").value = blessingTheme;
+{
+  const blessingEl=$("blessingTheme");
+  const allowed=new Set([...(blessingEl?.options||[])].map(o=>o.value));
+  if(!allowed.has(blessingTheme)){
+    blessingTheme="auto";
+    localStorage.setItem("pokunBlessingTheme",blessingTheme);
+  }
+  if(blessingEl) blessingEl.value=blessingTheme;
+}
 updateBlessingThemeDescription();
 $("birthdayName").value = birthdayName;
 $("birthdayRelation").value = birthdayRelation;
