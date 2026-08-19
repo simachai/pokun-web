@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#111827">
-<title>POKUN Web v11.45</title>
+<title>POKUN Web v11.47</title>
 <style>
 :root{--bg:#f4f5f7;--card:#fff;--ink:#16181d;--muted:#6b7280;--line:#e5e7eb;--accent:#111827;--good:#087f5b;--warn:#b45309}
 *{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI","Noto Sans Thai",sans-serif;background:var(--bg);color:var(--ink)}
@@ -180,7 +180,7 @@ button{border:0;border-radius:12px;padding:12px 14px;font-weight:800;cursor:poin
 <body>
 <div class="wrap">
   <div class="hero">
-    <h1>POKUN Web <span class="small">v11.45</span></h1>
+    <h1>POKUN Web <span class="small">v11.47</span></h1>
     <p>Daily Greeting Prompt Generator — ใช้ได้บนมือถือและคอม</p>
   </div>
 
@@ -266,7 +266,7 @@ button{border:0;border-radius:12px;padding:12px 14px;font-weight:800;cursor:poin
       <div id="blessingThemeDescription" class="notice" style="margin-top:8px"></div>
       <button id="rerollBlessingTheme" class="secondary" type="button" style="margin-top:8px;width:100%">🎲 สุ่มคำอวยพรใหม่ในหมวดนี้</button>
       <div class="small" style="margin-top:6px">
-        สุ่มเฉพาะ <b>Headline + คำอวยพร + Supporting Line</b> ในธีมเดิม โดยใช้คลังคำไทยที่นิยมและไม่เปลี่ยน Scene / คน / สัตว์ / Layout
+        สุ่มเฉพาะ <b>Headline + คำอวยพร</b> ในธีมเดิม โดยใช้คลังคำไทยที่นิยมและไม่เปลี่ยน Scene / คน / สัตว์ / Layout
       </div>
     </section>
 
@@ -6786,11 +6786,10 @@ function emotionalBlessingTexts(s,setNo,seed){
   const greeting=stripRepeatedWishPrefix(
     pairedBlessingValue(lib.greetings,key,pairBase,setNo,203)
   );
-  const supporting=stripRepeatedWishPrefix(
-    pairedBlessingValue(lib.supporting,key,pairBase,setNo,307)
-  );
-
-  return {theme:key,label:lib.label,headline,greeting,supporting,pairBase};
+  // v11.47: Daily greeting artwork uses only two visible text levels:
+  // Headline + main Greeting/Blessing. Supporting Line is intentionally disabled
+  // because it often repeats the same meaning and makes greeting cards text-heavy.
+  return {theme:key,label:lib.label,headline,greeting,supporting:"",pairBase};
 }
 
 function updateBlessingThemeDescription(){
@@ -6807,7 +6806,7 @@ function updateBlessingThemeDescription(){
 }
 
 const POKUN_V9 = (() => {
-  const VERSION="11.45";
+  const VERSION="11.47";
   const ENGINE_LABEL=`POKUN v${VERSION}`;
 
 
@@ -7445,6 +7444,212 @@ const PAIR_LOOKS={
       highlights:"clean bright highlights with no clipping",
       mood:"modern, polished, energetic"
     }
+  };
+
+
+  const POKUN_MASTER_LIBRARY_V1146={
+    version:"11.46",
+    purpose:"Curated Thai daily-greeting design library distilled from the user's reference boards and existing POKUN systems. Library guidance is supportive and must never override exact scene, subject, text, typography, frame, layout, weekday/date, or mode locks.",
+
+    sceneProfiles:{
+      buddhist_sacred:{
+        label:"วัด / พุทธศิลป์",
+        moods:["สงบและเป็นสิริมงคล","อิ่มบุญ อิ่มใจ","แสงธรรมอบอุ่น","สง่างามแบบไทย"],
+        visualCues:["golden sacred glow","lotus-and-ivory serenity","Thai temple heritage elegance","soft devotional morning light"],
+        props:["ดอกบัว","ดอกมะลิ","เทียน","พานดอกไม้","ใบโพธิ์","ลายกนกแบบพอดี"],
+        compositions:["พระ/วัตถุศักดิ์สิทธิ์เป็น Hero และเว้นพื้นที่ข้อความด้านข้าง","แสงเช้าจากด้านบนพร้อมพื้นที่ว่างเหนือ/ข้าง Subject","องค์ประกอบสมมาตรหรือ editorial ที่สงบ"],
+        palettes:["ทอง-งาช้าง","เขียวธรรมชาติ-ทอง","น้ำตาลไม้-ครีม","สีประจำวันแต้มแบบสุภาพ"]
+      },
+      rice_countryside:{
+        label:"ชนบท / ทุ่งนา",
+        moods:["สดชื่นแบบบ้าน ๆ","อบอุ่นธรรมชาติ","ปลอดโปร่ง","เรียบง่ายมีความสุข"],
+        visualCues:["Thai rural morning","golden rice freshness","green countryside calm","soft open-sky rural light"],
+        props:["รวงข้าว","ทางคันนา","กระท่อมไกล ๆ","ดอกไม้ป่าขนาดเล็ก","จักรยานเมื่อเข้ากับฉาก"],
+        compositions:["เส้นทางนำสายตาเข้าสู่ทุ่ง","ฟ้าเปิดเป็นพื้นที่ Headline","Subject วางเยื้องข้างและฉากกว้าง"],
+        palettes:["เขียวสด-ฟ้า","ทองรวงข้าว-ครีม","เขียวมะกอก-เหลืองอ่อน","สีประจำวันแต้มในดอกไม้/พร็อพ"]
+      },
+      nature_mountain:{
+        label:"ภูเขา / ธรรมชาติ",
+        moods:["ปลอดโปร่งมีพลัง","สงบสดชื่น","เริ่มต้นใหม่","อิสระและสดใส"],
+        visualCues:["layered mountain atmosphere","sunrise mist","forest freshness","cinematic natural depth"],
+        props:["หญ้าพลิ้ว","ดอกไม้ป่าประปราย","หมอก","ก้อนหินธรรมชาติ","นกไกล ๆ"],
+        compositions:["Hero landscape กินพื้นที่หลัก","ใช้ท้องฟ้าหรือหมอกเป็น negative space","มุม cinematic หรือ travel editorial"],
+        palettes:["ฟ้า-เขียว","ทองเช้า-เขียวป่า","ฟ้าอมเทา-เขียวเข้ม","สีประจำวันแต้มเล็ก ๆ"]
+      },
+      waterfront:{
+        label:"ริมน้ำ / ทะเลสาบ / แม่น้ำ",
+        moods:["นิ่งสบาย","สดชื่น","ละมุน","ผ่อนคลาย"],
+        visualCues:["calm reflections","soft riverside morning","lotus-water serenity","misty waterfront"],
+        props:["ใบบัว","กอหญ้าริมน้ำ","สะพานไม้","เรือเล็กเมื่อเข้ากับฉาก","เงาสะท้อน"],
+        compositions:["ใช้ผิวน้ำเป็นพื้นที่หายใจ","Subject/วัตถุหลักวางริมกรอบ","แนวนอนลึกแต่จัดลงภาพ 3:4"],
+        palettes:["ฟ้าอ่อน-เขียว","เขียวบัว-ชมพู","ครีม-ฟ้า","สีประจำวันเป็น accent"]
+      },
+      sea_coastal:{
+        label:"ทะเล / ชายหาด / ชายฝั่ง / เกาะ",
+        moods:["สดใสเปิดกว้าง","Vacation energy","ผ่อนคลาย","สดชื่นมีพลัง"],
+        visualCues:["true ocean horizon","turquoise tropical sea","coastal sunrise","airy island travel poster"],
+        props:["เปลือกหอยเล็กน้อย","หญ้าชายฝั่ง","โขดหิน","เรือไกล ๆ เมื่อเหมาะ","คลื่นฟองขาว"],
+        compositions:["ใช้ท้องฟ้า/ทะเลเป็น negative space","หน้าผาหรือ shoreline เป็นเส้นนำสายตา","Travel poster แบบโปร่ง"],
+        palettes:["ฟ้าเทอร์ควอยซ์-ขาว","ฟ้าคราม-ทราย","ทองพระอาทิตย์-น้ำเงิน","สีประจำวันแต้มพร็อพ"]
+      },
+      garden_botanical:{
+        label:"สวน / ดอกไม้ / พฤกษชาติ",
+        moods:["สดใสใจฟู","หอมละมุน","สดชื่นธรรมชาติ","น่ารักอบอุ่น"],
+        visualCues:["fresh floral morning","botanical editorial","soft flower meadow","premium garden greeting"],
+        props:["ดอกทานตะวัน","ลาเวนเดอร์","ดอกกระเจียว","กุหลาบ","เดซี่","มะลิ","กลีบดอกไม้"],
+        compositions:["ใช้แนวดอกไม้โอบข้อความ","เว้นฟ้าหรือทางเดินให้ Headline","ดอกไม้ foreground + ฉากลึก"],
+        palettes:["สีดอกไม้ตามจริง + สีประจำวัน","เขียวสด-ครีม","ชมพู/ม่วง pastel","เหลืองสด-ฟ้า"]
+      },
+      urban_city:{
+        label:"เมือง / สถาปัตย์สมัยใหม่",
+        moods:["ทันสมัยมั่นใจ","สดใสกระฉับกระเฉง","สะอาดพรีเมียม","ก้าวหน้า"],
+        visualCues:["modern urban editorial","clean city daylight","glass-and-sky modernity","premium lifestyle city"],
+        props:["ป้ายเมืองแบบไม่มียี่ห้อ","กระถางต้นไม้สมัยใหม่","ม้านั่งเมื่อเหมาะ","เส้นสถาปัตย์","แสงสะท้อนกระจก"],
+        compositions:["Magazine Editorial","Vertical Editorial","Subject เยื้องข้างกับ geometry อาคาร"],
+        palettes:["ฟ้า-ขาว-เทา","ครีม-ทองอ่อน","สีประจำวันเป็น graphic accent","clean neutral"]
+      },
+      thai_architecture:{
+        label:"สถาปัตยกรรมไทย",
+        moods:["สง่างามแบบไทย","อบอุ่น","คลาสสิก","ละเมียดละไม"],
+        visualCues:["Thai wooden veranda","heritage architectural detail","warm tropical morning","refined traditional Thai"],
+        props:["หน้าต่างไม้","ลายฉลุ","กระถางดอกไม้ไทย","ผ้าพื้นเมืองแบบพอดี","ต้นไม้ร่มรื่น"],
+        compositions:["Architecture เป็น Hero","กรอบประตู/หน้าต่างช่วย frame ข้อความ","แสงเฉียงอ่อน"],
+        palettes:["ไม้สัก-ครีม","เขียวธรรมชาติ-ทองอ่อน","แดงอิฐ-งาช้าง","สีประจำวันแต้มเล็กน้อย"]
+      },
+      travel_viewpoint:{
+        label:"ท่องเที่ยว / จุดชมวิว",
+        moods:["เปิดโลก","สดชื่น","มีแรงบันดาลใจ","วันดีน่าออกเดินทาง"],
+        visualCues:["travel poster depth","open scenic overlook","sunrise viewpoint","airy destination editorial"],
+        props:["ราวชมวิว","ป้ายทางเรียบ ๆ","หญ้าพลิ้ว","เมฆ","องค์ประกอบ native ของสถานที่"],
+        compositions:["Cinematic Poster","Floating Typography","Hero view + clean sky"],
+        palettes:["ตามสถานที่จริง + daily accent","ฟ้า-เขียว","ทองเช้า","pastel travel"]
+      },
+      cultural_market:{
+        label:"ตลาด / วัฒนธรรม / งานคราฟต์",
+        moods:["เป็นกันเอง","สีสันไทย","อบอุ่นชุมชน","สนุกมีชีวิตชีวา"],
+        visualCues:["Thai craft market warmth","handmade cultural detail","colorful local morning","friendly documentary editorial"],
+        props:["เครื่องจักสาน","ดอกไม้","ผ้าพื้นเมือง","ตะกร้า","ผลไม้/สินค้าเฉพาะฉาก"],
+        compositions:["รายละเอียดเป็นกลุ่มแต่เว้นข้อความ","Editorial crop","ใช้สีประจำวันเป็นจุดนำ"],
+        palettes:["earthy craft","สีสดแบบไทยแต่คุมโทน","ไม้-ครีม-สีประจำวัน","warm market"]
+      },
+      food_hero:{
+        label:"อาหาร / ขนม / ผลไม้",
+        moods:["น่ากินสดใส","อบอุ่น","น่ารัก","เช้าที่มีความสุข"],
+        visualCues:["premium food greeting","bright breakfast styling","Thai sweets editorial","fresh fruit still life"],
+        props:["จาน/ถ้วยตามเมนู","ดอกไม้เล็กน้อย","ผ้าโต๊ะ","ช้อนส้อมเรียบง่าย","ผลไม้จริง"],
+        compositions:["Food Hero กลาง/ล่าง","Bottom Editorial Block","Corner Editorial พร้อม negative space"],
+        palettes:["สีอาหารจริง + สีประจำวัน","ครีม-ไม้","pastel fresh","warm breakfast"]
+      },
+      wealth_prosperity:{
+        label:"มั่งคั่งร่ำรวย",
+        moods:["เฮงและรุ่งเรือง","มั่งคั่งพรีเมียม","รับทรัพย์","สำเร็จและมั่นคง"],
+        visualCues:["red-gold prosperity","modern wealth editorial","golden abundance","premium auspicious still life"],
+        props:["เหรียญทอง","ก้อนทอง","ซองแดงเมื่อเหมาะ","ผลไม้มงคล","ต้นไม้ทอง","แสงทอง"],
+        compositions:["Hero prosperity object","Luxury centered balance","Text zone ชัดเจนและไม่ทับวัตถุมงคล"],
+        palettes:["แดง-ทอง","ทอง-ดำ","ทอง-ครีม","สีประจำวัน + gold accent"]
+      },
+      floral_stilllife:{
+        label:"ดอกไม้ / Floral Still Life",
+        moods:["อ่อนโยน","ละมุน","สดชื่น","เรียบหรู"],
+        visualCues:["premium floral still life","soft vase-and-flower morning","minimal flower editorial","Thai greeting floral card"],
+        props:["แจกัน","กุหลาบ","มะลิ","บัว","เดซี่","ดอกไม้สีประจำวัน"],
+        compositions:["Still life เยื้องข้าง","Corner Editorial","Minimal Luxury"],
+        palettes:["pastel flower","ขาว-เขียว","ครีม-ชมพู","สีประจำวันเด่นหนึ่งจุด"]
+      },
+      art_gallery:{
+        label:"ศิลปะ / แกลเลอรี / สตูดิโอ",
+        moods:["สร้างสรรค์","พรีเมียม","โมเดิร์น","สงบมีรสนิยม"],
+        visualCues:["art-studio morning","gallery editorial","creative desk minimalism","refined artistic atmosphere"],
+        props:["เฟรมศิลป์นามธรรม","แจกันเรียบ","พู่กันเมื่อเหมาะ","กระดาษ/ผืนผ้าใบ","แสงหน้าต่าง"],
+        compositions:["Magazine Editorial","Minimal Luxury","Negative-space gallery wall"],
+        palettes:["neutral + accent","white gallery","warm beige","สีประจำวันเป็น art accent"]
+      },
+      minimal_abstract:{
+        label:"Minimal / Abstract",
+        moods:["สะอาด","สงบ","หรูเรียบ","อ่านง่าย"],
+        visualCues:["minimal greeting poster","soft abstract geometry","airy clean background","quiet premium composition"],
+        props:["รูปทรงเรียบ","เงาแสง","ริบบิ้น abstract","กระดาษ texture","ดอกไม้เดี่ยวเมื่อเหมาะ"],
+        compositions:["Oversized Headline","Minimal Luxury","Center Hero แบบเรียบ"],
+        palettes:["ขาว-ครีม","pastel monochrome","neutral + daily accent","soft gradient"]
+      },
+      home_lifestyle:{
+        label:"บ้าน / ไลฟ์สไตล์",
+        moods:["อบอุ่นเป็นกันเอง","สบาย ๆ","เช้าที่น่ารัก","slow living"],
+        visualCues:["cozy home morning","window-light lifestyle","warm Thai home","soft domestic editorial"],
+        props:["ถ้วยชา/กาแฟเมื่อเหมาะ","หมอน/ผ้าแบบน้อยชิ้น","ดอกไม้","หนังสือเมื่อเข้ากับฉาก","แสงหน้าต่าง"],
+        compositions:["Magazine Editorial","Corner Editorial","Subject + window negative space"],
+        palettes:["ครีม-ไม้","pastel home","green-ivory","daily accent"]
+      },
+      cafe_lifestyle:{
+        label:"คาเฟ่ / ไลฟ์สไตล์อาหาร",
+        moods:["อบอุ่น","ชิล","สดใส","น่ารักแบบ social greeting"],
+        visualCues:["cozy cafe greeting","coffee-and-flower morning","bright pastry editorial","cute lifestyle card"],
+        props:["กาแฟ","ชา","เค้ก/ขนมเมื่อเหมาะ","ดอกไม้","ถาดไม้","แก้วใส"],
+        compositions:["Text Left / Hero Right","Bottom Editorial Block","Corner Editorial"],
+        palettes:["coffee brown-cream","pastel cafe","green cafe garden","daily accent"]
+      }
+    },
+
+    headlineTones:{
+      work:["มั่นใจ","ก้าวหน้า","กระชับ","ให้พลัง"],
+      business_sales:["ค้าขายดี","เป็นมิตร","เฮง","มั่นใจ"],
+      money:["คล่องตัว","มั่นคง","สบายใจ","ตรงไปตรงมา"],
+      health:["สดชื่น","แข็งแรง","เบิกบาน","อ่อนโยน"],
+      senior_health:["สุภาพ","อบอุ่น","แข็งแรง","สบายใจ"],
+      happiness:["ใจฟู","อบอุ่น","สดใส","เป็นกันเอง"],
+      wealth:["มั่งคั่ง","พรีเมียม","รุ่งเรือง","มั่นคง"],
+      auspicious_wealth:["เฮง","รับทรัพย์","สิริมงคล","ทรงพลัง"],
+      success:["สมหวัง","สำเร็จ","มั่นใจ","ข่าวดี"],
+      luck:["โชคดี","สิริมงคล","สดใส","พลังบวก"],
+      encouragement:["เข้มแข็ง","เริ่มใหม่","อบอุ่น","มีหวัง"],
+      short_power:["สั้น","จำง่าย","คม","พลังบวก"],
+      all_round:["ครบด้าน","อ่านง่าย","อบอุ่น","พลังบวก"]
+    },
+
+    visualStyles:[
+      "Cute Kawaii","Storybook Soft","Soft 3D Cute","Thai Pastel Cute","Thai Retro Comic",
+      "Buddhist Gold Sacred","Floral Fresh Morning","Cozy Cafe Lifestyle","Minimal Clean Elegant",
+      "Warm Editorial","Luxury Blessing Card","Soft Dreamy Illustration","Nature Airy",
+      "Wealth Prosperity Gold","Vintage Gentle","Childlike Happy Card"
+    ],
+
+    compositions:[
+      "Headline Top + Subject Bottom","Text Left + Subject Right","Subject Left + Text Right",
+      "Center Hero + Bottom Greeting","Magazine Editorial","Minimal Luxury","Corner Editorial",
+      "Floating Typography","Cinematic Poster","Bottom Editorial Block","Oversized Headline",
+      "Frame Around Subject","Diagonal Dynamic","Split Card Left/Right","Sticker Poster Cute"
+    ],
+
+    subjectFamilies:{
+      people:["ผู้ชาย","ผู้หญิง","เด็ก","ผู้สูงอายุ","ครอบครัว","คนทำงาน","คนถือกาแฟ","คนเดินเล่น","ตัวละครน่ารัก"],
+      animals:["แมว","สุนัข","กระต่าย","นก","แฮมสเตอร์","กวาง","ม้า","เป็ด","ไก่","แกะ","วัว","ควาย","แพนด้า","ลิง","เต่า","ปลา","ผีเสื้อ","สุนัขจิ้งจอก","กระรอก"],
+      sacred:["พระพุทธรูป","พระภิกษุ","พระพิฆเนศ","ไฉ่ซิงเอี๊ย","กวนอู","พญานาคราช","ฮก–ลก–ซิ่ว"],
+      stillLife:["ดอกไม้","กาแฟ","ชา","ขนม","ผลไม้","หนังสือ","แจกัน","เทียน","ของมงคล"]
+    },
+
+    frameFamilies:[
+      "กรอบทองพุทธศิลป์","กรอบครีมทองคลาสสิก","กรอบ Cute Bubble","กรอบ Sticker Pastel",
+      "กรอบ Brush Stroke","กรอบวงรีหรู","กรอบ Cloud Label","กรอบ Kanok Ornate",
+      "กรอบ Minimal Border","กรอบ Scrapbook"
+    ],
+
+    palettes:[
+      "Golden Sunrise","Fresh Pastel","Soft Blue Morning","Pink Gentle Day","Green Calm Garden",
+      "Purple Dreamy","White Clean Minimal","Red Gold Prosperity","Earthy Warm","Ocean Breeze"
+    ],
+
+    rules:[
+      "Exact user-selected Scene Template always beats library inspiration.",
+      "Exact Character / Gender / Age / Animal settings always beat library subject suggestions.",
+      "Exact Thai Headline / Greeting must never be rewritten by library styling.",
+      "Selected Typography / Frame / Layout remain authoritative.",
+      "Image 1 and Image 2 should share pair mood but differ in scene detail, supporting prop emphasis, Headline, and main blessing wording.",
+      "General mode must not import Buddhist or Deity subjects unless explicitly selected.",
+      "Buddhist-only motifs remain inside Buddhist mode/holy-day logic.",
+      "Deity hero belongs to Image 1 only when Deity pair rules say so.",
+      "Use popular Thai greeting-card rhythm: clear, positive, familiar, readable, and not prayer-like.",
+      "Do not overload the image with all library props; select only a small compatible subset."
+    ]
   };
 
   const ADJACENT={
@@ -8144,6 +8349,73 @@ const PAIR_LOOKS={
     return {mode,label:map[mode]?.[0]||map.auto[0],text:map[mode]?.[1]||map.auto[1]};
   }
 
+
+  function masterLibraryProfile(scene){
+    return POKUN_MASTER_LIBRARY_V1146.sceneProfiles[scene?.family]
+      || POKUN_MASTER_LIBRARY_V1146.sceneProfiles.minimal_abstract;
+  }
+
+  function masterLibraryDistinctPick(list,setNo,base){
+    const source=(list||[]).filter(Boolean);
+    if(!source.length)return "";
+    if(source.length===1)return source[0];
+    const first=seededIndex(base,source.length);
+    if(setNo===1)return source[first];
+    const jump=1+seededIndex(base+1709,source.length-1);
+    return source[(first+jump)%source.length];
+  }
+
+  function resolveMasterLibraryBundle(setNo,s,scene,texts,layout,pairLook,seed){
+    const profile=masterLibraryProfile(scene);
+    const base=hashString(`${userSeed}|${s.day.isoDate}|${scene.family}|${scene.name}|master-library-v1146|${rerollSeed1}|${rerollSeed2}`);
+    const themeKey=texts?.blessingThemeKey||resolvedBlessingTheme(s,setNo)||"all_round";
+    const headlineTones=POKUN_MASTER_LIBRARY_V1146.headlineTones[themeKey]
+      || POKUN_MASTER_LIBRARY_V1146.headlineTones.all_round;
+
+    return {
+      version:POKUN_MASTER_LIBRARY_V1146.version,
+      sceneFamily:scene.family,
+      sceneTheme:profile.label,
+      mood:masterLibraryDistinctPick(profile.moods,setNo,base+101),
+      visualCue:masterLibraryDistinctPick(profile.visualCues,setNo,base+211),
+      accentProp:masterLibraryDistinctPick(profile.props,setNo,base+307),
+      compositionAccent:masterLibraryDistinctPick(profile.compositions,setNo,base+401),
+      paletteAccent:masterLibraryDistinctPick(profile.palettes,setNo,base+503),
+      headlineTone:masterLibraryDistinctPick(headlineTones,setNo,base+607),
+      layout:layout.label,
+      typography:s.style?.name||"Selected Thai typography",
+      headlineFrame:resolvedTextFrame(s,"headline").label,
+      blessingFrame:resolvedTextFrame(s,"blessing").label,
+      pairLook:pairLook.label,
+      blessingTheme:texts?.blessingThemeLabel||themeKey
+    };
+  }
+
+  function masterLibraryPromptLines(bundle,scene){
+    if(!bundle)return [];
+    return [
+      "POKUN MASTER LIBRARY v11.46 — CURATED GREETING DESIGN SUPPORT:",
+      "This block is SUPPORTIVE ONLY. Exact Subject, Character, Scene, Thai Text, Typography, Frame, Layout, Weekday/Date, and Mode locks above remain higher priority.",
+      `Library Scene Theme: ${bundle.sceneTheme}.`,
+      `Library Mood Accent: ${bundle.mood}.`,
+      `Library Visual Cue: ${bundle.visualCue}.`,
+      `Library Supporting Prop Accent: ${bundle.accentProp}.`,
+      `Library Composition Accent: ${bundle.compositionAccent}.`,
+      `Library Palette Accent: ${bundle.paletteAccent}.`,
+      `Library Headline Tone: ${bundle.headlineTone}.`,
+      `Existing Pair Look remains authoritative: ${bundle.pairLook}.`,
+      `Existing Layout remains authoritative: ${bundle.layout}.`,
+      `Existing Typography remains authoritative: ${bundle.typography}.`,
+      `Existing Headline Frame remains authoritative: ${bundle.headlineFrame}.`,
+      `Existing Blessing Frame remains authoritative: ${bundle.blessingFrame}.`,
+      `Existing Blessing Theme: ${bundle.blessingTheme}.`,
+      "Use the library accent only when it naturally belongs to the exact Scene Concept. Never add an unrelated object merely because it exists in the library.",
+      "PAIR LIBRARY VARIETY: Image 1 and Image 2 should not repeat the same optional accent prop, composition accent, or decorative storytelling cue when alternatives exist.",
+      "REFERENCE-BOARD DESIGN DNA: favor the successful Thai daily-greeting patterns seen repeatedly in curated examples — clear weekday identity, floral/nature/cafe/food/sacred/cute subject variety, readable headline hierarchy, compact positive blessing, and tasteful decorative framing.",
+      ""
+    ];
+  }
+
   function strokeSpec(){
     const raw=value("strokeLayers",strokeLayers||"2");
     const n=["1","2","3"].includes(String(raw))?String(raw):"2";
@@ -8258,16 +8530,14 @@ const PAIR_LOOKS={
       const e=emotionalBlessingTexts(s,setNo,seed+601);
       blessingThemeKey=e.theme;
       blessingThemeLabel=e.label;
-      supporting=e.supporting;
+      // v11.47: no Supporting Line in daily greeting mode.
 
-      // Normal daily greeting: Emotional Blessing Engine controls all three text levels.
+      // Normal daily greeting: Emotional Blessing Engine controls the two visible text levels.
       if(!s.special && !s.holy?.isHoly && !s.buddhist){
         headline=e.headline;
         greeting=e.greeting;
       }else{
-        // Important/Buddhist days keep their calendar-specific headline and main blessing,
-        // but may use one gentle supporting line from the selected blessing theme.
-        supporting=e.supporting;
+        // Important/Buddhist days keep their calendar-specific headline and main blessing.
       }
     }
 
@@ -8290,12 +8560,10 @@ const PAIR_LOOKS={
     const duplicate=[];
     if(a.headline===b.headline)duplicate.push("Headline");
     if(a.greeting===b.greeting)duplicate.push("Greeting");
-    if(a.supporting===b.supporting)duplicate.push("Supporting Line");
 
     const tooSimilar=[];
     if(blessingSimilarityScore(a.headline,b.headline)>=0.45)tooSimilar.push("Headline");
     if(blessingSimilarityScore(a.greeting,b.greeting)>=0.45)tooSimilar.push("Greeting");
-    if(blessingSimilarityScore(a.supporting,b.supporting)>=0.45)tooSimilar.push("Supporting Line");
 
     if(duplicate.length){
       throw new Error(`${ENGINE_LABEL} Pair Blessing Lock failed: duplicate ${duplicate.join(", ")} between Image 1 and Image 2.`);
@@ -8425,15 +8693,15 @@ const PAIR_LOOKS={
       `DATE TEXT EXACTLY: ${s.day.dateThai}`,
       `HEADLINE TEXT EXACTLY: ${texts.headline}`,
       `GREETING / BLESSING TEXT EXACTLY: ${texts.greeting}`,
-      appMode==="greeting" ? `SUPPORTING LINE EXACTLY: ${texts.supporting||"(none)"}` : "SUPPORTING LINE: not applicable to this artwork mode.",
       appMode==="greeting" ? `BLESSING THEME: ${texts.blessingThemeLabel||"AUTO"}.` : "BLESSING THEME: not applicable.",
+      appMode==="greeting" ? "VISIBLE TEXT STRUCTURE: EXACTLY TWO greeting text levels only — Headline + Greeting/Blessing. Do not invent any Supporting Line, subtitle, closing wish, footer blessing, or third message." : "",
       appMode==="greeting" ? "SPECIALIZED BLESSING LIBRARY: use the exact POKUN-selected wording appropriate to this category; do not generalize it into a generic prayer." : "",
       appMode==="greeting" ? "POPULAR THAI BLESSING PHRASE BANK: use familiar natural Thai greeting-card cadence such as สุขกาย สุขใจ, โชคดี มีชัย, มีโชค มีลาภ, สุขภาพแข็งแรง, งานก้าวหน้า, เงินทองคล่องมือ, มั่งมีศรีสุข, เจริญรุ่งเรือง, สมหวังดังปรารถนา, and พบแต่สิ่งดี ๆ — but preserve the exact resolved wording above." : "",
       appMode==="greeting" ? "NATURAL THAI BLESSING RHYTHM: prefer compact parallel phrases and clear positive outcomes; avoid awkward abstract wording, prayer-like pleading, or sentences that imply the recipient is currently in trouble." : "",
       appMode==="greeting" ? `PAIR TEXT IDENTITY: IMAGE ${setNo} uses its own POKUN-resolved blessing variant.` : "",
-      appMode==="greeting" ? "PAIR BLESSING LOCK: Image 1 and Image 2 MUST use different Headline, different Greeting/Blessing, and different Supporting Line. Never copy the companion image's wording." : "",
+      appMode==="greeting" ? "PAIR BLESSING LOCK: Image 1 and Image 2 MUST use different Headline and different Greeting/Blessing. Never copy the companion image\'s wording." : "",
       appMode==="greeting" ? "PAIR BLESSING VARIETY: Avoid the same wording style, semantic direction, and emotional rhythm across the pair; make Image 1 and Image 2 clearly feel like different blessing messages." : "",
-      appMode==="greeting" ? "REPEATED-WISH WORDING LOCK: Headline, Greeting/Blessing, and Supporting Line MUST NOT begin with ‘ขอให้’. The POKUN engine has already removed that repeated prefix from all visible Thai text." : "",
+      appMode==="greeting" ? "REPEATED-WISH WORDING LOCK: Headline and Greeting/Blessing MUST NOT begin with ‘ขอให้’. The POKUN engine has already removed that repeated prefix from both visible Thai text levels." : "",
       "VISIBLE THAI TEXT IS DATA, NOT CREATIVE COPY. Copy the wording exactly; do not paraphrase, shorten, rewrite, translate, invent new wording, or reuse text from another image.",
       appMode==="greeting" ? "POSITIVE BLESSING VOICE: This is a friendly daily blessing, NOT a prayer, plea, lament, consolation, or problem-focused affirmation. Use clear immediately-positive language that gives energy when read." : "",
       appMode==="greeting" && texts.blessingThemeKey!=="encouragement"
@@ -8732,14 +9000,11 @@ const PAIR_LOOKS={
       // Do not recompute random wording for equality here; check presence of the contract field itself.
       if(!/HEADLINE TEXT EXACTLY:/i.test(portableHead))failures.push("Portable exact headline field missing near top");
       if(!/GREETING \/ BLESSING TEXT EXACTLY:/i.test(portableHead))failures.push("Portable exact greeting field missing near top");
-      if(appMode==="greeting" && !/SUPPORTING LINE EXACTLY:/i.test(portableHead))failures.push("Portable exact supporting-line field missing near top");
       if(appMode==="greeting"){
         const hm=portableHead.match(/HEADLINE TEXT EXACTLY:\s*([^\n]+)/i);
         const gm=portableHead.match(/GREETING \/ BLESSING TEXT EXACTLY:\s*([^\n]+)/i);
-        const sm=portableHead.match(/SUPPORTING LINE EXACTLY:\s*([^\n]+)/i);
         if(hm && /^ขอให้\s*/u.test((hm[1]||"").trim()))failures.push("Headline still begins with repeated ขอให้");
         if(gm && /^ขอให้\s*/u.test((gm[1]||"").trim()))failures.push("Greeting still begins with repeated ขอให้");
-        if(sm && /^ขอให้\s*/u.test((sm[1]||"").trim()))failures.push("Supporting Line still begins with repeated ขอให้");
       }
     }
     if(expectedDay){
@@ -9189,6 +9454,7 @@ const PAIR_LOOKS={
     const shadow=shadowSpec(s);
     const texts=resolveTexts(s,setNo,seed);
     assertGreetingPairUniqueness(s,seed);
+    const masterLibraryBundle=resolveMasterLibraryBundle(setNo,s,scene,texts,layout,pairLook,seed);
     const other=getPair(setNo===1?2:1);
     const deityResolved=deitySubjectForImage(setNo);
 
@@ -9289,6 +9555,9 @@ const PAIR_LOOKS={
       `Headline Frame: ${resolvedTextFrame(s,"headline").label} (${resolvedTextFrame(s,"headline").key})`,
       `Blessing Frame: ${resolvedTextFrame(s,"blessing").label} (${resolvedTextFrame(s,"blessing").key})`,
       `Layout: ${layout.label}`,
+      `Master Library: v${masterLibraryBundle.version} / ${masterLibraryBundle.sceneTheme}`,
+      `Master Library Mood: ${masterLibraryBundle.mood}`,
+      `Master Library Accent: ${masterLibraryBundle.accentProp}`,
       "Forbidden Thai words: นะคะ , นะค่ะ",
       ""
     );
@@ -9302,7 +9571,6 @@ const PAIR_LOOKS={
       `EXACT DATE: ${s.day.dateThai}`,
       `EXACT HEADLINE TEXT: ${texts.headline}`,
       `EXACT GREETING / BLESSING TEXT: ${texts.greeting}`,
-      appMode==="greeting" ? `EXACT SUPPORTING LINE: ${texts.supporting||"(none)"}` : "EXACT SUPPORTING LINE: not applicable",
       appMode==="greeting" ? `BLESSING THEME: ${texts.blessingThemeLabel||"AUTO"}` : "BLESSING THEME: not applicable",
       `TYPOGRAPHY STYLE: ${s.style?.name||"Selected Thai typography"}`,
       `HEADLINE FRAME REQUIRED: ${lockedHeadlineFrame.label} (${lockedHeadlineFrame.key})`,
@@ -9321,7 +9589,6 @@ const PAIR_LOOKS={
       `Canonical visible date: ${s.day.dateThai}`,
       `Verified headline: ${texts.headline}`,
       `Verified greeting: ${texts.greeting}`,
-      appMode==="greeting" ? `Verified supporting line: ${texts.supporting||"(none)"}` : "",
       "The engine has normalized any stale weekday wording in generated/stored text to this canonical weekday.",
       "Do not introduce any different weekday during image rendering.",
       ""
@@ -9350,6 +9617,8 @@ const PAIR_LOOKS={
       L.push("ARTWORK TYPE: THAI DAILY GREETING ARTWORK.","");
     }
 
+    L.push(...masterLibraryPromptLines(masterLibraryBundle,scene));
+
     L.push(
       "LAYOUT / COMPOSITION — AUTHORITATIVE:",
       layout.text,
@@ -9370,7 +9639,6 @@ const PAIR_LOOKS={
       `LOCKED CONSISTENCY: ${s.day.dateThai} = ${s.day.dayThai}.`,
       `VISIBLE HEADLINE AFTER DAY NORMALIZATION: ${texts.headline}`,
       `VISIBLE GREETING AFTER DAY NORMALIZATION: ${texts.greeting}`,
-      appMode==="greeting" ? `VISIBLE SUPPORTING LINE AFTER DAY NORMALIZATION: ${texts.supporting||"(none)"}` : "",
       "Any Thai weekday other than the required weekday is PROHIBITED in the finished artwork.",
       "Do not infer, recalculate, autocorrect, translate, paraphrase, or substitute another weekday.",
       "Do not use a weekday remembered from earlier artwork, browser state, localStorage, or conversation context.",
@@ -9517,13 +9785,12 @@ const PAIR_LOOKS={
       L.push(
         "Visible Thai headline:",texts.headline,"",
         "Visible Thai greeting / blessing:",texts.greeting,"",
-        "Visible Thai supporting line:",texts.supporting||"","",
-        "EMOTIONAL BLESSING HIERARCHY:",
+        "EMOTIONAL BLESSING HIERARCHY — TWO LEVELS ONLY:",
         `Theme: ${texts.blessingThemeLabel||"AUTO"}.`,
-        "Headline = emotional hook / large primary text.",
-        "Greeting = main heartfelt blessing / medium supporting text.",
-        "Supporting Line = small final emotional note; keep it readable but clearly subordinate to the main blessing.",
-        "Do not merge the three text levels into one paragraph.",
+        "Headline = short emotional hook / large primary text.",
+        "Greeting = the single complete main blessing / secondary text.",
+        "Do NOT add a third Supporting Line, subtitle, closing wish, extra blessing sentence, or duplicate summary beneath the main blessing.",
+        "Keep the two text levels semantically complementary rather than repeating the same words or meaning.",
         texts.blessingThemeKey!=="encouragement"
           ? "VOICE: positive daily blessing only — clear, uplifting, easy to understand, and immediately energizing; not prayer-like, not problem-focused, and not consolation."
           : "VOICE: encouragement theme may acknowledge effort, but must remain warm, hopeful, and uplifting.",
@@ -9556,10 +9823,10 @@ const PAIR_LOOKS={
       `2. DATE must read exactly: ${s.day.dateThai}`,
       `3. HEADLINE text must remain exactly: ${texts.headline}`,
       `4. GREETING text must remain exactly: ${texts.greeting}`,
-      appMode==="greeting" ? `4A. SUPPORTING LINE must remain exactly: ${texts.supporting||"(none)"}` : "4A. SUPPORTING LINE: not applicable.",
-      appMode==="greeting" ? "4B. PAIR TEXT UNIQUENESS: do not reuse the companion image's Headline, Greeting, or Supporting Line." : "4B. PAIR TEXT UNIQUENESS: not applicable.",
+      appMode==="greeting" ? "4A. TWO-TEXT-LEVEL LOCK: render ONLY Headline + Greeting/Blessing; do not add any Supporting Line or extra closing sentence." : "4A. TWO-TEXT-LEVEL LOCK: not applicable.",
+      appMode==="greeting" ? "4B. PAIR TEXT UNIQUENESS: do not reuse the companion image's Headline or Greeting/Blessing." : "4B. PAIR TEXT UNIQUENESS: not applicable.",
       appMode==="greeting" ? "4B-2. PAIR TEXT VARIETY: do not use the same message pattern or near-duplicate semantic direction across the pair." : "4B-2. PAIR TEXT VARIETY: not applicable.",
-      appMode==="greeting" ? "4C. WORDING RHYTHM: Headline, Greeting, and Supporting Line must not begin with ‘ขอให้’; preserve the exact normalized text from POKUN." : "4C. WORDING RHYTHM: not applicable.",
+      appMode==="greeting" ? "4C. WORDING RHYTHM: Headline and Greeting/Blessing must not begin with ‘ขอให้’; preserve the exact normalized text from POKUN." : "4C. WORDING RHYTHM: not applicable.",
       `5. HEADLINE typography must use: ${s.style?.name||"Selected Thai typography"}`,
       `6. HEADLINE FRAME must visibly follow: ${resolvedTextFrame(s,"headline").label}`,
       `7. BLESSING FRAME must visibly follow: ${resolvedTextFrame(s,"blessing").label}`,
@@ -9628,6 +9895,10 @@ const PAIR_LOOKS={
       activityCategory:variation.activityCategory,
       pairLookKey:pairLook.key,
       pairLookLabel:pairLook.label,
+      masterLibraryVersion:masterLibraryBundle.version,
+      masterLibraryTheme:masterLibraryBundle.sceneTheme,
+      masterLibraryAccent:masterLibraryBundle.accentProp,
+      masterLibraryComposition:masterLibraryBundle.compositionAccent,
       templateLocked:!!scene.templateLocked
     };
 
@@ -9657,6 +9928,41 @@ const PAIR_LOOKS={
     return results;
   }
 
+
+  function masterLibraryCatalog(){
+    const blessingKeys=Object.keys(POKUN_BLESSING_LIBRARY||{});
+    return {
+      version:VERSION,
+      curated:JSON.parse(JSON.stringify(POKUN_MASTER_LIBRARY_V1146)),
+      scenes:Object.fromEntries(Object.entries(TEMPLATE_CATALOG).map(([family,items])=>[
+        family,
+        items.map(x=>({
+          name:x[0],
+          prompt:x[1],
+          uiName:TEMPLATE_UI_TH[x[0]]?.name||x[0],
+          uiDescription:TEMPLATE_UI_TH[x[0]]?.description||x[1]
+        }))
+      ])),
+      headlines:Object.fromEntries(blessingKeys.map(k=>[k,[...(POKUN_BLESSING_LIBRARY[k]?.headlines||[])]])),
+      blessings:Object.fromEntries(blessingKeys.map(k=>[k,[...(POKUN_BLESSING_LIBRARY[k]?.greetings||[])]])),
+      typography:DATA.typography.map(x=>({
+        name:x.name,
+        thaiDescription:x.thaiDesc||"",
+        direction:x.direction||"",
+        headline:x.headline||"",
+        support:x.support||"",
+        decoration:x.decoration||""
+      })),
+      frames:Object.fromEntries(Object.entries(TEXT_FRAMES).map(([k,v])=>[k,{
+        category:v.category,label:v.label,contexts:[...(v.contexts||[])],desc:v.desc||""
+      }])),
+      palettes:Object.fromEntries(Object.entries(PAIR_LOOKS).map(([k,v])=>[k,{...v}])),
+      compositions:[...POKUN_MASTER_LIBRARY_V1146.compositions],
+      subjects:JSON.parse(JSON.stringify(POKUN_MASTER_LIBRARY_V1146.subjectFamilies)),
+      rules:[...POKUN_MASTER_LIBRARY_V1146.rules]
+    };
+  }
+
   function uiCatalog(){
     return {
       labels:{...TEMPLATE_LABELS},
@@ -9683,7 +9989,7 @@ const PAIR_LOOKS={
       looks:Object.fromEntries(Object.entries(PAIR_LOOKS).map(([k,v])=>[k,{...v}]))
     };
   }
-  return {build,selfTest,activityCategory,uiCatalog};
+  return {build,selfTest,activityCategory,uiCatalog,masterLibrary:masterLibraryCatalog};
 })();
 
 
