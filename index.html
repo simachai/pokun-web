@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#111827">
-<title>POKUN Web v11.54</title>
+<title>POKUN Web v11.55</title>
 <style>
 :root{--bg:#f4f5f7;--card:#fff;--ink:#16181d;--muted:#6b7280;--line:#e5e7eb;--accent:#111827;--good:#087f5b;--warn:#b45309}
 *{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI","Noto Sans Thai",sans-serif;background:var(--bg);color:var(--ink)}
@@ -180,7 +180,7 @@ button{border:0;border-radius:12px;padding:12px 14px;font-weight:800;cursor:poin
 <body>
 <div class="wrap">
   <div class="hero">
-    <h1>POKUN Web <span class="small">v11.54</span></h1>
+    <h1>POKUN Web <span class="small">v11.55</span></h1>
     <p>Daily Greeting Prompt Generator — ใช้ได้บนมือถือและคอม</p>
   </div>
 
@@ -6404,7 +6404,7 @@ function pairedBlessingValue(pool,theme,pairBase,setNo,channelOffset){
 
 function stripRepeatedWishPrefix(text){
   return String(text||"")
-    .replace(/^\s*ขอให้\s*/u,"")
+    .replace(/^\s*(?:ขอให้\s*)+/u,"")
     .trim();
 }
 
@@ -6445,7 +6445,7 @@ function updateBlessingThemeDescription(){
 }
 
 const POKUN_V9 = (() => {
-  const VERSION="11.54";
+  const VERSION="11.55";
   const ENGINE_LABEL=`POKUN v${VERSION}`;
 
 
@@ -8271,7 +8271,7 @@ const PAIR_LOOKS={
   function masterLibraryPromptLines(bundle,scene){
     if(!bundle)return [];
     return [
-      "POKUN MASTER LIBRARY v11.53 — CURATED GREETING DESIGN SUPPORT:",
+      "POKUN MASTER LIBRARY v11.55 — CURATED GREETING DESIGN SUPPORT:",
       "This block is SUPPORTIVE ONLY. Exact Subject, Character, Scene, Thai Text, Typography, Frame, Layout, Weekday/Date, and Mode locks above remain higher priority.",
       `Library Scene Theme: ${bundle.sceneTheme}.`,
       `Library Mood Accent: ${bundle.mood}.`,
@@ -8425,6 +8425,14 @@ const PAIR_LOOKS={
     greeting=sanitizeVisible(enforceAuthoritativeWeekdayText(greeting,s.day.dayThai));
     supporting=sanitizeVisible(enforceAuthoritativeWeekdayText(supporting,s.day.dayThai));
 
+    // v11.55 FINAL GREETING TEXT SANITIZER:
+    // Normal days, special days, Wan Phra, and Buddhist calendar text all pass
+    // through the same visible-text rule before Portable Contract generation.
+    if(appMode==="greeting"){
+      headline=stripRepeatedWishPrefix(headline);
+      greeting=stripRepeatedWishPrefix(greeting);
+    }
+
     assertAuthoritativeWeekdayText(headline,s.day.dayThai,"headline");
     assertAuthoritativeWeekdayText(greeting,s.day.dayThai,"greeting");
     if(supporting)assertAuthoritativeWeekdayText(supporting,s.day.dayThai,"supporting");
@@ -8576,7 +8584,7 @@ const PAIR_LOOKS={
       appMode==="greeting" ? `BLESSING THEME: ${texts.blessingThemeLabel||"AUTO"}.` : "BLESSING THEME: not applicable.",
       appMode==="greeting" ? "VISIBLE TEXT STRUCTURE: EXACTLY TWO greeting text levels only — Headline + Greeting/Blessing. Do not invent any Supporting Line, subtitle, closing wish, footer blessing, or third message." : "",
       appMode==="greeting" ? "SPECIALIZED BLESSING LIBRARY: use the exact POKUN-selected wording appropriate to this category; do not generalize it into a generic prayer." : "",
-      appMode==="greeting" ? "POPULAR THAI BLESSING PHRASE BANK: use familiar natural Thai greeting-card cadence such as สุขกาย สุขใจ, โชคดี มีชัย, มีโชค มีลาภ, สุขภาพแข็งแรง, งานก้าวหน้า, เงินทองคล่องมือ, มั่งมีศรีสุข, เจริญรุ่งเรือง, สมหวังดังปรารถนา, and พบแต่สิ่งดี ๆ — but preserve the exact resolved wording above." : "",
+      appMode==="greeting" ? "REFERENCE-IMAGE BLESSING LIBRARY LOCK: the resolved Headline and Greeting/Blessing are source wording selected by POKUN from the user's reference-image library. Preserve them EXACTLY; do not add model-written blessing copy." : "",
       appMode==="greeting" ? "NATURAL THAI BLESSING RHYTHM: prefer compact parallel phrases and clear positive outcomes; avoid awkward abstract wording, prayer-like pleading, or sentences that imply the recipient is currently in trouble." : "",
       appMode==="greeting" ? `PAIR TEXT IDENTITY: IMAGE ${setNo} uses its own POKUN-resolved blessing variant.` : "",
       appMode==="greeting" ? "PAIR BLESSING LOCK: Image 1 and Image 2 MUST use different Headline and different Greeting/Blessing. Never copy the companion image\'s wording." : "",
@@ -8692,7 +8700,11 @@ const PAIR_LOOKS={
     return mode==="monk_reference" || mode==="monk_generated";
   }
   function buddhistSubjectPeopleAllowed(setNo,s){
-    return boolPeople(setNo) || buddhistSubjectIsHuman(setNo,s);
+    // v11.55: only the CURRENT resolved main mode / current Character UI may
+    // authorize people. Stale Buddhist dropdown values outside Buddhist mode
+    // have zero authority.
+    const resolved=resolveBuddhistSubjectComposition(setNo,s);
+    return !!resolved.humanRequired;
   }
   function buddhistSubjectLines(setNo,s){
     const resolved=resolveBuddhistSubjectComposition(setNo,s);
@@ -8883,8 +8895,23 @@ const PAIR_LOOKS={
       if(appMode==="greeting"){
         const hm=portableHead.match(/HEADLINE TEXT EXACTLY:\s*([^\n]+)/i);
         const gm=portableHead.match(/GREETING \/ BLESSING TEXT EXACTLY:\s*([^\n]+)/i);
-        if(hm && /^ขอให้\s*/u.test((hm[1]||"").trim()))failures.push("Headline still begins with repeated ขอให้");
-        if(gm && /^ขอให้\s*/u.test((gm[1]||"").trim()))failures.push("Greeting still begins with repeated ขอให้");
+        const promptHeadline=(hm?.[1]||"").trim();
+        const promptGreeting=(gm?.[1]||"").trim();
+        const resolvedHeadline=String(ctx?.texts?.headline||"").trim();
+        const resolvedGreeting=String(ctx?.texts?.greeting||"").trim();
+
+        if(/^\s*(?:ขอให้\s*)+/u.test(resolvedHeadline) || /^\s*(?:ขอให้\s*)+/u.test(promptHeadline)){
+          failures.push("Headline final sanitizer failed to remove ขอให้");
+        }
+        if(/^\s*(?:ขอให้\s*)+/u.test(resolvedGreeting) || /^\s*(?:ขอให้\s*)+/u.test(promptGreeting)){
+          failures.push("Greeting final sanitizer failed to remove ขอให้");
+        }
+        if(resolvedHeadline && promptHeadline!==resolvedHeadline){
+          failures.push("Portable Headline does not match final resolved Headline");
+        }
+        if(resolvedGreeting && promptGreeting!==resolvedGreeting){
+          failures.push("Portable Greeting does not match final resolved Greeting");
+        }
       }
     }
     if(expectedDay){
@@ -8955,17 +8982,20 @@ const PAIR_LOOKS={
       if(!/NO DEITY IN IMAGE 2/i.test(prompt))failures.push("Image 2 explicit no-deity rule missing");
     }
     if(ctx.people){
-      if(/SUBJECT SOURCE: Invent all visible non-human subjects/i.test(prompt)){
-        failures.push("selected human subject conflicts with non-human-only workflow source");
+      // v11.55: People validation uses the resolved current-mode snapshot.
+      // Stale Buddhist dropdown values outside Buddhist mode are no longer allowed
+      // to turn ctx.people on, so any remaining NO PEOPLE conflict is a real prompt bug.
+      if(/SUBJECT SOURCE: Invent all visible non-human subjects(?:, objects, scenery, architecture, nature, food, flowers, and decorative elements| and scene elements) specifically for this artwork/i.test(prompt)){
+        failures.push("resolved human subject conflicts with non-human-only workflow source");
       }
       if(/CHARACTER COMPOSITION: NO PEOPLE AND NO ANIMAL CHARACTERS/i.test(prompt)){
-        failures.push("selected human subject conflicts with generic NO PEOPLE character composition");
+        failures.push("resolved human subject conflicts with NO PEOPLE character composition");
       }
       if(/ARTWORK RENDERING:[^\n]*\/ NO PEOPLE\./i.test(prompt)){
-        failures.push("selected human subject conflicts with NO PEOPLE rendering");
+        failures.push("resolved human subject conflicts with NO PEOPLE rendering");
       }
       if(/NO PEOPLE: no man, woman, child, monk as a human figure/i.test(prompt)){
-        failures.push("selected human subject conflicts with generic NO PEOPLE prohibition");
+        failures.push("resolved human subject conflicts with NO PEOPLE prohibition");
       }
     }
     if(prompt.includes("SCENE-FAMILY AUTHORITY:"))failures.push("legacy scene-family authority leaked");
@@ -9318,7 +9348,9 @@ const PAIR_LOOKS={
     // Prevents late UI/derived-state changes from making Validator disagree with the Prompt.
     const characterStateSnapshot=Object.freeze({...exactCharacterState(setNo)});
     const buddhistSubjectResolved=resolveBuddhistSubjectComposition(setNo,s);
-    const effectivePeopleAllowed=buddhistSubjectResolved.humanRequired || buddhistSubjectPeopleAllowed(setNo,s);
+    // v11.55: this resolved snapshot is the single source of truth.
+    // It already includes current Character UI people plus active Buddhist human subjects.
+    const effectivePeopleAllowed=!!buddhistSubjectResolved.humanRequired;
     const seed=(typeof variationSeed==="function")?variationSeed(s,setNo):(Date.now()+setNo*997);
     const pairLook=resolvePairLook(s,seed);
     const family=chooseFamily(s,setNo,seed);
@@ -9783,7 +9815,7 @@ const PAIR_LOOKS={
     };
 
     const prompt=L.filter(x=>x!==undefined && x!==null && String(x).trim()!=="").join("\n");
-    validatePrompt(prompt,{setNo,s,scene,variation,stroke,blessing,people:effectivePeopleAllowed,other,pairLook,characterState:characterStateSnapshot});
+    validatePrompt(prompt,{setNo,s,scene,variation,stroke,blessing,texts,people:effectivePeopleAllowed,other,pairLook,characterState:characterStateSnapshot,buddhistSubjectResolved});
     setPair(setNo,signature);
     return prompt;
   }
