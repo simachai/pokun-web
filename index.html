@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#111827">
-<title>POKUN Web v11.55</title>
+<title>POKUN Web v11.56</title>
 <style>
 :root{--bg:#f4f5f7;--card:#fff;--ink:#16181d;--muted:#6b7280;--line:#e5e7eb;--accent:#111827;--good:#087f5b;--warn:#b45309}
 *{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI","Noto Sans Thai",sans-serif;background:var(--bg);color:var(--ink)}
@@ -180,7 +180,7 @@ button{border:0;border-radius:12px;padding:12px 14px;font-weight:800;cursor:poin
 <body>
 <div class="wrap">
   <div class="hero">
-    <h1>POKUN Web <span class="small">v11.55</span></h1>
+    <h1>POKUN Web <span class="small">v11.56</span></h1>
     <p>Daily Greeting Prompt Generator — ใช้ได้บนมือถือและคอม</p>
   </div>
 
@@ -6445,7 +6445,7 @@ function updateBlessingThemeDescription(){
 }
 
 const POKUN_V9 = (() => {
-  const VERSION="11.55";
+  const VERSION="11.56";
   const ENGINE_LABEL=`POKUN v${VERSION}`;
 
 
@@ -7216,8 +7216,8 @@ const PAIR_LOOKS={
   };
 
 
-  const POKUN_MASTER_LIBRARY_V1153={
-    version:"11.53",
+  const POKUN_MASTER_LIBRARY_V1156={
+    version:"11.56",
     purpose:"Curated Thai daily-greeting design library distilled from the user's reference boards and existing POKUN systems. Library guidance is supportive and must never override exact scene, subject, text, typography, frame, layout, weekday/date, or mode locks.",
 
     sceneProfiles:{
@@ -7930,9 +7930,26 @@ const PAIR_LOOKS={
     return "AUTO";
   }
 
-  function exactGenderAuthority(setNo,capturedState){
+  function exactGenderAuthority(setNo,capturedState,buddhistResolved){
     const c=capturedState||exactCharacterState(setNo);
-    if(!c.people)return [];
+    const b=buddhistResolved||null;
+
+    // v11.56 SPECIAL BUDDHIST HUMAN AUTHORITY:
+    // Buddhist monk subject selection outranks the generic Character gender UI.
+    if(b?.buddhistOn && b.mode==="monk_reference"){
+      return [
+        "EXACT GENDER AUTHORITY: BUDDHIST REFERENCE IDENTITY — preserve the gender identity shown by the uploaded monk / revered-teacher reference.",
+        "Generic Character Gender UI does NOT override the identity reference for this special Buddhist subject."
+      ];
+    }
+    if(b?.buddhistOn && b.mode==="monk_generated"){
+      return [
+        "EXACT GENDER AUTHORITY: BUDDHIST MONK ROLE — MALE BHIKKHU / MONK SUBJECT REQUIRED.",
+        "Generic Character Gender UI does NOT override the explicitly selected Buddhist monk subject role."
+      ];
+    }
+
+    if(!c.people)return ["EXACT GENDER AUTHORITY: NOT APPLICABLE — NO PEOPLE selected in the current Character UI."];
     if(c.personSource==="multi_photo"){
       return ["EXACT GENDER AUTHORITY: reference-role mapping / uploaded identities control gender; do not invent or swap gender."];
     }
@@ -7955,9 +7972,26 @@ const PAIR_LOOKS={
     return ["EXACT GENDER AUTHORITY: AUTO — gender may be selected only when the UI explicitly remains AUTO."];
   }
 
-  function exactAgeAuthority(setNo,capturedState){
+  function exactAgeAuthority(setNo,capturedState,buddhistResolved){
     const c=capturedState||exactCharacterState(setNo);
-    if(!c.people)return [];
+    const b=buddhistResolved||null;
+
+    // v11.56 SPECIAL BUDDHIST HUMAN AUTHORITY:
+    // Reference identity or monk subject role controls age before generic Character Age UI.
+    if(b?.buddhistOn && b.mode==="monk_reference"){
+      return [
+        "EXACT AGE AUTHORITY: BUDDHIST REFERENCE IDENTITY — preserve the age impression of the uploaded monk / revered-teacher reference.",
+        "Do not make the referenced monk materially younger or older because of a generic Character Age UI value."
+      ];
+    }
+    if(b?.buddhistOn && b.mode==="monk_generated"){
+      return [
+        "EXACT AGE AUTHORITY: BUDDHIST MONK ROLE — use a natural ADULT or ELDERLY monk age appropriate to the scene.",
+        "Generic Character Age UI does NOT override the explicitly selected Buddhist monk subject role."
+      ];
+    }
+
+    if(!c.people)return ["EXACT AGE AUTHORITY: NOT APPLICABLE — NO PEOPLE selected in the current Character UI."];
     const map={
       child:"CHILD ONLY",
       adult:"ADULT ONLY",
@@ -8224,8 +8258,8 @@ const PAIR_LOOKS={
 
 
   function masterLibraryProfile(scene){
-    return POKUN_MASTER_LIBRARY_V1153.sceneProfiles[scene?.family]
-      || POKUN_MASTER_LIBRARY_V1153.sceneProfiles.minimal_abstract;
+    return POKUN_MASTER_LIBRARY_V1156.sceneProfiles[scene?.family]
+      || POKUN_MASTER_LIBRARY_V1156.sceneProfiles.minimal_abstract;
   }
 
   function masterLibraryDistinctPick(list,setNo,base){
@@ -8240,13 +8274,13 @@ const PAIR_LOOKS={
 
   function resolveMasterLibraryBundle(setNo,s,scene,texts,layout,pairLook,seed){
     const profile=masterLibraryProfile(scene);
-    const base=hashString(`${userSeed}|${s.day.isoDate}|${scene.family}|${scene.name}|master-library-v1153|${rerollSeed1}|${rerollSeed2}`);
+    const base=hashString(`${userSeed}|${s.day.isoDate}|${scene.family}|${scene.name}|master-library-v1156|${rerollSeed1}|${rerollSeed2}`);
     const themeKey=texts?.blessingThemeKey||resolvedBlessingTheme(s,setNo)||"all_round";
-    const headlineTones=POKUN_MASTER_LIBRARY_V1153.headlineTones[themeKey]
-      || POKUN_MASTER_LIBRARY_V1153.headlineTones.all_round;
+    const headlineTones=POKUN_MASTER_LIBRARY_V1156.headlineTones[themeKey]
+      || POKUN_MASTER_LIBRARY_V1156.headlineTones.all_round;
 
     return {
-      version:POKUN_MASTER_LIBRARY_V1153.version,
+      version:POKUN_MASTER_LIBRARY_V1156.version,
       sceneFamily:scene.family,
       sceneTheme:profile.label,
       mood:masterLibraryDistinctPick(profile.moods,setNo,base+101),
@@ -8261,9 +8295,9 @@ const PAIR_LOOKS={
       blessingFrame:resolvedTextFrame(s,"blessing").label,
       pairLook:pairLook.label,
       blessingTheme:texts?.blessingThemeLabel||themeKey,
-      scenicPattern:masterLibraryDistinctPick(POKUN_MASTER_LIBRARY_V1153.referenceBoardScenicPatterns,setNo,base+709),
+      scenicPattern:masterLibraryDistinctPick(POKUN_MASTER_LIBRARY_V1156.referenceBoardScenicPatterns,setNo,base+709),
       floralPattern:["garden_botanical","floral_stilllife"].includes(scene.family)
-        ? masterLibraryDistinctPick(POKUN_MASTER_LIBRARY_V1153.referenceBoardFloralPatterns,setNo,base+811)
+        ? masterLibraryDistinctPick(POKUN_MASTER_LIBRARY_V1156.referenceBoardFloralPatterns,setNo,base+811)
         : ""
     };
   }
@@ -8271,7 +8305,7 @@ const PAIR_LOOKS={
   function masterLibraryPromptLines(bundle,scene){
     if(!bundle)return [];
     return [
-      "POKUN MASTER LIBRARY v11.55 — CURATED GREETING DESIGN SUPPORT:",
+      "POKUN MASTER LIBRARY v11.56 — CURATED GREETING DESIGN SUPPORT:",
       "This block is SUPPORTIVE ONLY. Exact Subject, Character, Scene, Thai Text, Typography, Frame, Layout, Weekday/Date, and Mode locks above remain higher priority.",
       `Library Scene Theme: ${bundle.sceneTheme}.`,
       `Library Mood Accent: ${bundle.mood}.`,
@@ -8541,17 +8575,29 @@ const PAIR_LOOKS={
       );
     }
 
+    const buddhistHumanAuthority=buddhistResolved?.buddhistOn && ["monk_reference","monk_generated"].includes(buddhistResolved.mode);
+    const portableGender=buddhistHumanAuthority
+      ? (buddhistResolved.mode==="monk_reference" ? "REFERENCE IDENTITY" : "MALE BUDDHIST MONK / BHIKKHU")
+      : (c.people?c.gender:"NOT APPLICABLE — NO PEOPLE");
+    const portableGenderContract=buddhistHumanAuthority
+      ? (buddhistResolved.mode==="monk_reference" ? "REFERENCE IDENTITY CONTROLS GENDER" : "BUDDHIST MONK ROLE — MALE BHIKKHU")
+      : genderContractFromState(c);
+    const portableAge=buddhistHumanAuthority
+      ? (buddhistResolved.mode==="monk_reference" ? "REFERENCE IDENTITY CONTROLS AGE" : "AUTO ADULT / ELDERLY MONK")
+      : (c.people?c.age:"NOT APPLICABLE — NO PEOPLE");
+
     const character=[
       `CHARACTER MODE: ${c.charMode}.`,
-      `GENDER: ${c.people?c.gender:"NOT APPLICABLE — NO PEOPLE"}.`,
-      `GENDER CONTRACT: ${genderContractFromState(c)}.`,
-      `AGE: ${c.people?c.age:"NOT APPLICABLE — NO PEOPLE"}.`,
+      `GENDER: ${portableGender}.`,
+      `GENDER CONTRACT: ${portableGenderContract}.`,
+      `AGE: ${portableAge}.`,
       `ANIMAL TYPE: ${c.animal?c.animalType:"NONE"}.`,
       `ANIMAL LOOK: ${c.animal?c.animalLook:"NONE"}.`,
       `ANIMAL BEHAVIOR: ${c.animal?c.animalBehavior:"NONE"}.`
     ];
-    if(c.people && c.gender==="male") character.push("MALE means MALE ONLY. Do not generate a woman or mixed-gender substitute.");
-    if(c.people && c.gender==="female") character.push("FEMALE means FEMALE ONLY. Do not generate a man or mixed-gender substitute.");
+    if(!buddhistHumanAuthority && c.people && c.gender==="male") character.push("MALE means MALE ONLY. Do not generate a woman or mixed-gender substitute.");
+    if(!buddhistHumanAuthority && c.people && c.gender==="female") character.push("FEMALE means FEMALE ONLY. Do not generate a man or mixed-gender substitute.");
+    if(!buddhistHumanAuthority && c.people && c.gender==="mixed") character.push("MIXED means at least one female and one male ordinary character are required.");
     if(c.animal && c.animalType!=="auto") character.push(`The animal species MUST be ${animalTypeLabel(c.animalType)} and must not be substituted.`);
 
     return [
@@ -8817,9 +8863,18 @@ const PAIR_LOOKS={
     }
 
     const capturedCharacter=characterStateSnapshot||exactCharacterState(setNo);
-    if(capturedCharacter.people && !monkRef && !monkGenerated){
-      L.push(...exactGenderAuthority(setNo,capturedCharacter));
-      L.push(...exactAgeAuthority(setNo,capturedCharacter));
+    if(monkRef || monkGenerated){
+      // v11.56: special Buddhist human subjects have their own exact authority.
+      L.push(...exactGenderAuthority(setNo,capturedCharacter,resolvedCombo));
+      L.push(...exactAgeAuthority(setNo,capturedCharacter,resolvedCombo));
+    }else if(capturedCharacter.people){
+      L.push(...exactGenderAuthority(setNo,capturedCharacter,resolvedCombo));
+      L.push(...exactAgeAuthority(setNo,capturedCharacter,resolvedCombo));
+    }else{
+      // Emit explicit NOT APPLICABLE authority so diagnostics never confuse
+      // absence of a human with a missing contract.
+      L.push(...exactGenderAuthority(setNo,capturedCharacter,resolvedCombo));
+      L.push(...exactAgeAuthority(setNo,capturedCharacter,resolvedCombo));
     }
 
     L.push(...exactAnimalAuthority(setNo,s));
@@ -8950,15 +9005,34 @@ const PAIR_LOOKS={
     const exactSetNo=ctx?.setNo||0;
     if(exactSetNo){
       const ec=ctx.characterState||exactCharacterState(exactSetNo);
+      const bsr=ctx?.buddhistSubjectResolved||resolveBuddhistSubjectComposition(exactSetNo,ctx?.s);
+      const buddhistHumanAuthority=!!(bsr?.buddhistOn && ["monk_reference","monk_generated"].includes(bsr.mode));
       const genderContract=genderContractFromState(ec);
-      if(ec.people && !/GENDER CONTRACT:/i.test(prompt))failures.push("Structured gender contract missing");
-      if(ec.people && ec.personSource!=="multi_photo" && !/EXACT GENDER AUTHORITY/i.test(prompt))failures.push("Exact gender authority missing");
-      if(ec.people && !/EXACT AGE AUTHORITY/i.test(prompt))failures.push("Exact age authority missing");
+
+      if((ec.people || buddhistHumanAuthority) && !/GENDER CONTRACT:/i.test(prompt))failures.push("Structured gender contract missing");
+      if(!/EXACT GENDER AUTHORITY/i.test(prompt))failures.push("Exact gender authority missing");
+      if(!/EXACT AGE AUTHORITY/i.test(prompt))failures.push("Exact age authority missing");
       if(!/EXACT ANIMAL AUTHORITY/i.test(prompt))failures.push("Exact animal authority missing");
-      if(genderContract==="MALE ONLY" && !/GENDER CONTRACT:\s*MALE ONLY/i.test(prompt))failures.push("Male selected but structured MALE ONLY contract missing");
-      if(genderContract==="FEMALE ONLY" && !/GENDER CONTRACT:\s*FEMALE ONLY/i.test(prompt))failures.push("Female selected but structured FEMALE ONLY contract missing");
-      if(genderContract==="BOTH FEMALE AND MALE REQUIRED" && !/GENDER CONTRACT:\s*BOTH FEMALE AND MALE REQUIRED/i.test(prompt))failures.push("Mixed gender selected but structured mixed-gender contract missing");
-      if(genderContract==="REFERENCE ROLE MAPPING" && !/GENDER CONTRACT:\s*REFERENCE ROLE MAPPING/i.test(prompt))failures.push("Multi-photo reference role gender contract missing");
+
+      if(buddhistHumanAuthority){
+        if(bsr.mode==="monk_reference"){
+          if(!/GENDER CONTRACT:\s*REFERENCE IDENTITY CONTROLS GENDER/i.test(prompt))failures.push("Monk reference gender contract missing");
+          if(!/AGE:\s*REFERENCE IDENTITY CONTROLS AGE/i.test(prompt))failures.push("Monk reference age contract missing");
+          if(!/EXACT GENDER AUTHORITY:\s*BUDDHIST REFERENCE IDENTITY/i.test(prompt))failures.push("Monk reference exact gender authority missing");
+          if(!/EXACT AGE AUTHORITY:\s*BUDDHIST REFERENCE IDENTITY/i.test(prompt))failures.push("Monk reference exact age authority missing");
+        }else{
+          if(!/GENDER CONTRACT:\s*BUDDHIST MONK ROLE — MALE BHIKKHU/i.test(prompt))failures.push("Generated monk gender contract missing");
+          if(!/AGE:\s*AUTO ADULT \/ ELDERLY MONK/i.test(prompt))failures.push("Generated monk age contract missing");
+          if(!/EXACT GENDER AUTHORITY:\s*BUDDHIST MONK ROLE/i.test(prompt))failures.push("Generated monk exact gender authority missing");
+          if(!/EXACT AGE AUTHORITY:\s*BUDDHIST MONK ROLE/i.test(prompt))failures.push("Generated monk exact age authority missing");
+        }
+      }else{
+        if(genderContract==="MALE ONLY" && !/GENDER CONTRACT:\s*MALE ONLY/i.test(prompt))failures.push("Male selected but structured MALE ONLY contract missing");
+        if(genderContract==="FEMALE ONLY" && !/GENDER CONTRACT:\s*FEMALE ONLY/i.test(prompt))failures.push("Female selected but structured FEMALE ONLY contract missing");
+        if(genderContract==="BOTH FEMALE AND MALE REQUIRED" && !/GENDER CONTRACT:\s*BOTH FEMALE AND MALE REQUIRED/i.test(prompt))failures.push("Mixed gender selected but structured mixed-gender contract missing");
+        if(genderContract==="REFERENCE ROLE MAPPING" && !/GENDER CONTRACT:\s*REFERENCE ROLE MAPPING/i.test(prompt))failures.push("Multi-photo reference role gender contract missing");
+      }
+
       if(ec.animal && ec.animalType!=="auto" && !new RegExp(`REQUIRED SPECIES:.*${ec.animalType}`,"i").test(prompt)){
         failures.push("Selected animal species exact lock missing");
       }
@@ -9446,6 +9520,7 @@ const PAIR_LOOKS={
       `Exact Character Mode: ${characterStateSnapshot.charMode}`,
       `Exact Gender UI: ${characterStateSnapshot.gender}`,
       `Exact Age UI: ${characterStateSnapshot.age}`,
+      `Resolved Buddhist Human Authority: ${buddhistSubjectResolved?.buddhistOn && ["monk_reference","monk_generated"].includes(buddhistSubjectResolved.mode) ? buddhistSubjectResolved.mode : "NONE / Character UI controls"}`,
       `Exact Animal Type UI: ${characterStateSnapshot.animalType}`,
       `Exact Animal Look UI: ${characterStateSnapshot.animalLook}`,
       `Exact Animal Behavior UI: ${characterStateSnapshot.animalBehavior}`,
@@ -9845,7 +9920,7 @@ const PAIR_LOOKS={
     const blessingKeys=Object.keys(REFERENCE_IMAGE_BLESSING_LIBRARY_V1153||{});
     return {
       version:VERSION,
-      curated:JSON.parse(JSON.stringify(POKUN_MASTER_LIBRARY_V1153)),
+      curated:JSON.parse(JSON.stringify(POKUN_MASTER_LIBRARY_V1156)),
       scenes:Object.fromEntries(Object.entries(TEMPLATE_CATALOG).map(([family,items])=>[
         family,
         items.map(x=>({
@@ -9871,16 +9946,16 @@ const PAIR_LOOKS={
       palettes:Object.fromEntries(Object.entries(PAIR_LOOKS).map(([k,v])=>[k,{...v}])),
       generalVisualStyles:JSON.parse(JSON.stringify(GENERAL_VISUAL_STYLES_V1152)),
       autoGeneralVisualStylePools:JSON.parse(JSON.stringify(AUTO_GENERAL_VISUAL_STYLE_POOLS_V1152)),
-      compositions:[...POKUN_MASTER_LIBRARY_V1153.compositions],
-      subjects:JSON.parse(JSON.stringify(POKUN_MASTER_LIBRARY_V1153.subjectFamilies)),
-      scenicReferencePatterns:[...POKUN_MASTER_LIBRARY_V1153.referenceBoardScenicPatterns],
-      floralReferencePatterns:[...POKUN_MASTER_LIBRARY_V1153.referenceBoardFloralPatterns],
+      compositions:[...POKUN_MASTER_LIBRARY_V1156.compositions],
+      subjects:JSON.parse(JSON.stringify(POKUN_MASTER_LIBRARY_V1156.subjectFamilies)),
+      scenicReferencePatterns:[...POKUN_MASTER_LIBRARY_V1156.referenceBoardScenicPatterns],
+      floralReferencePatterns:[...POKUN_MASTER_LIBRARY_V1156.referenceBoardFloralPatterns],
       foodReferenceLibrary:JSON.parse(JSON.stringify(POKUN_FOOD_REFERENCE_LIBRARY_V1154)),
       referenceBoardBlessings:JSON.parse(JSON.stringify(REFERENCE_IMAGE_BLESSING_LIBRARY_V1153)),
       textHighlights:JSON.parse(JSON.stringify(TEXT_HIGHLIGHT_STYLES_V1151)),
       autoTextHighlightPool:[...AUTO_TEXT_HIGHLIGHT_POOL_V1151],
-      blessingExtraction:JSON.parse(JSON.stringify(POKUN_MASTER_LIBRARY_V1153.referenceBoardBlessingExtraction)),
-      rules:[...POKUN_MASTER_LIBRARY_V1153.rules]
+      blessingExtraction:JSON.parse(JSON.stringify(POKUN_MASTER_LIBRARY_V1156.referenceBoardBlessingExtraction)),
+      rules:[...POKUN_MASTER_LIBRARY_V1156.rules]
     };
   }
 
