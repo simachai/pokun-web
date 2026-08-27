@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#111827">
-<title>POKUN Web v11.64</title>
+<title>POKUN Web v11.65</title>
 <style>
 :root{--bg:#f4f5f7;--card:#fff;--ink:#16181d;--muted:#6b7280;--line:#e5e7eb;--accent:#111827;--good:#087f5b;--warn:#b45309}
 *{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI","Noto Sans Thai",sans-serif;background:var(--bg);color:var(--ink)}
@@ -180,7 +180,7 @@ button{border:0;border-radius:12px;padding:12px 14px;font-weight:800;cursor:poin
 <body>
 <div class="wrap">
   <div class="hero">
-    <h1>POKUN Web <span class="small">v11.64</span></h1>
+    <h1>POKUN Web <span class="small">v11.65</span></h1>
     <p>Daily Greeting Prompt Generator — ใช้ได้บนมือถือและคอม</p>
   </div>
 
@@ -6786,7 +6786,7 @@ function updateBlessingThemeDescription(){
 }
 
 const POKUN_V9 = (() => {
-  const VERSION="11.64";
+  const VERSION="11.65";
   const ENGINE_LABEL=`POKUN v${VERSION}`;
 
 
@@ -7562,8 +7562,8 @@ const PAIR_LOOKS={
   };
 
 
-  const POKUN_MASTER_LIBRARY_V1164={
-    version:"11.64",
+  const POKUN_MASTER_LIBRARY_V1165={
+    version:"11.65",
     purpose:"Curated Thai daily-greeting design library distilled from the user's reference boards and existing POKUN systems. Library guidance is supportive and must never override exact scene, subject, text, typography, frame, layout, weekday/date, or mode locks.",
 
     sceneProfiles:{
@@ -8014,6 +8014,62 @@ const PAIR_LOOKS={
   };
 
 
+  const EXACT_MERIT_FOOD_AUTHORITY_V1165={
+    "Thai merit tiffin set":[
+      "EXACT MERIT-FOOD IDENTITY — THAI TIFFIN / PINTO HARD LOCK:",
+      "The visible hero food object MUST be a recognizably Thai stacked tiffin carrier / ปิ่นโต with multiple tiers or opened tier containers.",
+      "Show Thai SAVORY dishes associated with the tiffin set. The tiffin carrier itself must be unmistakably visible.",
+      "DO NOT replace the tiffin with Thai desserts, cakes, jelly, parfait, fruit platter, sweet tray, bakery items, or a generic plate of sweets.",
+      "For this exact Scene, dessert-only imagery is INVALID."
+    ],
+    "Thai alms meal set":[
+      "EXACT MERIT-FOOD IDENTITY — SAVORY ALMS MEAL HARD LOCK:",
+      "Show a recognizably Thai savory meal set prepared for merit-making / offering to monks.",
+      "Savory dishes and appropriate Thai containers are REQUIRED.",
+      "Do NOT replace the meal set with desserts, cake, jelly, parfait, fruit-only arrangement, or bakery styling."
+    ],
+    "Khao tom mat merit set":[
+      "EXACT MERIT-FOOD IDENTITY — KHAO TOM MAT HARD LOCK:",
+      "Show banana-leaf wrapped khao tom mat parcels as the unmistakable hero food.",
+      "Do not substitute another Thai dessert or generic sweets."
+    ],
+    "Khanom tom merit tray":[
+      "EXACT MERIT-FOOD IDENTITY — KHANOM TOM HARD LOCK:",
+      "Show Thai khanom tom coconut sweets as the unmistakable hero food.",
+      "Do not substitute thong yip, thong yod, foi thong, cake, jelly, or another dessert."
+    ],
+    "Thong yip thong yod merit tray":[
+      "EXACT MERIT-FOOD IDENTITY — THONG YIP + THONG YOD HARD LOCK:",
+      "Show both recognizable thong yip and thong yod as the hero Thai sweets.",
+      "Do not substitute another dessert family."
+    ],
+    "Foi thong merit set":[
+      "EXACT MERIT-FOOD IDENTITY — FOI THONG HARD LOCK:",
+      "Show recognizable fine golden foi thong strands as the hero Thai sweet.",
+      "Do not substitute cake, jelly, fruit, or another Thai dessert."
+    ],
+    "Mixed Thai auspicious desserts":[
+      "EXACT MERIT-FOOD IDENTITY — MIXED THAI AUSPICIOUS SWEETS:",
+      "Show a recognizable assortment of Thai auspicious sweets, not one generic Western dessert.",
+      "Keep Thai sweet identities visible and culturally appropriate."
+    ],
+    "Banana-leaf Thai sweets set":[
+      "EXACT MERIT-FOOD IDENTITY — BANANA-LEAF THAI SWEETS:",
+      "Thai sweets wrapped/presented with banana leaves are REQUIRED as the hero.",
+      "Do not replace with Western cake, jelly, parfait, or bakery display."
+    ],
+    "Thai fruit offering basket":[
+      "EXACT MERIT-FOOD IDENTITY — THAI FRUIT OFFERING:",
+      "A fresh Thai fruit basket/tray is REQUIRED as the hero object.",
+      "Do not replace fruit with desserts or savory food."
+    ],
+    "Morning alms food set":[
+      "EXACT MERIT-FOOD IDENTITY — MORNING ALMS FOOD:",
+      "Show Thai food prepared specifically for morning alms giving in appropriate containers.",
+      "Do not replace the food set with dessert-only imagery."
+    ]
+  };
+
   const EXACT_SCENE_AUTHORITY={
     "Paper and light composition":[
       "EXACT-SCENE AUTHORITY — PAPER AND LIGHT:",
@@ -8414,6 +8470,12 @@ const PAIR_LOOKS={
       all:"CHILD + ADULT + ELDERLY"
     };
     if(c.age==="auto")return ["EXACT AGE AUTHORITY: AUTO — age may be selected according to scene because UI is AUTO."];
+    if(c.age==="all")return [
+      "EXACT AGE AUTHORITY — HARD LOCK: CHILD + ADULT + ELDERLY.",
+      "VISIBLE COUNT REQUIREMENT: at least one child, at least one adult, and at least one elderly person must all appear clearly in the SAME image.",
+      "Minimum visible human count for ALL AGES = 3 unless a larger selected composition requires more.",
+      "Do not substitute another age group, omit one age group, or collapse all ages into a single adult."
+    ];
     return [
       `EXACT AGE AUTHORITY — HARD LOCK: ${map[c.age]||c.age}.`,
       "Do not substitute another age group or silently reinterpret this selection."
@@ -8721,8 +8783,8 @@ const PAIR_LOOKS={
 
 
   function masterLibraryProfile(scene){
-    return POKUN_MASTER_LIBRARY_V1164.sceneProfiles[scene?.family]
-      || POKUN_MASTER_LIBRARY_V1164.sceneProfiles.minimal_abstract;
+    return POKUN_MASTER_LIBRARY_V1165.sceneProfiles[scene?.family]
+      || POKUN_MASTER_LIBRARY_V1165.sceneProfiles.minimal_abstract;
   }
 
   function masterLibraryDistinctPick(list,setNo,base){
@@ -8737,13 +8799,13 @@ const PAIR_LOOKS={
 
   function resolveMasterLibraryBundle(setNo,s,scene,texts,layout,pairLook,seed){
     const profile=masterLibraryProfile(scene);
-    const base=hashString(`${userSeed}|${s.day.isoDate}|${scene.family}|${scene.name}|master-library-v1164|${rerollSeed1}|${rerollSeed2}`);
+    const base=hashString(`${userSeed}|${s.day.isoDate}|${scene.family}|${scene.name}|master-library-v1165|${rerollSeed1}|${rerollSeed2}`);
     const themeKey=texts?.blessingThemeKey||resolvedBlessingTheme(s,setNo)||"all_round";
-    const headlineTones=POKUN_MASTER_LIBRARY_V1164.headlineTones[themeKey]
-      || POKUN_MASTER_LIBRARY_V1164.headlineTones.all_round;
+    const headlineTones=POKUN_MASTER_LIBRARY_V1165.headlineTones[themeKey]
+      || POKUN_MASTER_LIBRARY_V1165.headlineTones.all_round;
 
     return {
-      version:POKUN_MASTER_LIBRARY_V1164.version,
+      version:POKUN_MASTER_LIBRARY_V1165.version,
       sceneFamily:scene.family,
       sceneTheme:profile.label,
       mood:masterLibraryDistinctPick(profile.moods,setNo,base+101),
@@ -8758,9 +8820,9 @@ const PAIR_LOOKS={
       blessingFrame:resolvedTextFrame(s,"blessing").label,
       pairLook:pairLook.label,
       blessingTheme:texts?.blessingThemeLabel||themeKey,
-      scenicPattern:masterLibraryDistinctPick(POKUN_MASTER_LIBRARY_V1164.referenceBoardScenicPatterns,setNo,base+709),
+      scenicPattern:masterLibraryDistinctPick(POKUN_MASTER_LIBRARY_V1165.referenceBoardScenicPatterns,setNo,base+709),
       floralPattern:["garden_botanical","floral_stilllife"].includes(scene.family)
-        ? masterLibraryDistinctPick(POKUN_MASTER_LIBRARY_V1164.referenceBoardFloralPatterns,setNo,base+811)
+        ? masterLibraryDistinctPick(POKUN_MASTER_LIBRARY_V1165.referenceBoardFloralPatterns,setNo,base+811)
         : ""
     };
   }
@@ -8772,7 +8834,7 @@ const PAIR_LOOKS={
       ? `SACRED-NAME PERSONALIZED BLESSING EXCEPTION v11.64: visible Thai text may use the user-typed ${sacredNamed.kindLabel} name “${sacredNamed.name}” with POKUN's dedicated named-sacred-subject blessing templates. Reproduce the FINAL resolved Headline and Greeting EXACTLY; do not paraphrase or add extra blessing text.`
       : "REFERENCE-IMAGE BLESSING SOURCE LOCK: the resolved Thai Headline and Greeting come only from wording extracted from the user's uploaded reference images. Reproduce them EXACTLY. Do not paraphrase, expand, complete, combine, improve, or add any new blessing wording.";
     return [
-      "POKUN MASTER LIBRARY v11.64 — CURATED GREETING DESIGN SUPPORT:",
+      "POKUN MASTER LIBRARY v11.65 — CURATED GREETING DESIGN SUPPORT:",
       "This block is SUPPORTIVE ONLY. Exact Subject, Character, Scene, Thai Text, Typography, Frame, Layout, Weekday/Date, and Mode locks above remain higher priority.",
       `Library Scene Theme: ${bundle.sceneTheme}.`,
       `Library Mood Accent: ${bundle.mood}.`,
@@ -9120,6 +9182,12 @@ const PAIR_LOOKS={
     if(!buddhistHumanAuthority && c.people && c.gender==="male") character.push("MALE means MALE ONLY. Do not generate a woman or mixed-gender substitute.");
     if(!buddhistHumanAuthority && c.people && c.gender==="female") character.push("FEMALE means FEMALE ONLY. Do not generate a man or mixed-gender substitute.");
     if(!buddhistHumanAuthority && c.people && c.gender==="mixed") character.push("MIXED means at least one female and one male ordinary character are required.");
+    if(c.people && c.age==="all"){
+      character.push(
+        "ALL AGE GROUPS — HARD COUNT LOCK: include at least THREE clearly visible human subjects in the same image: at least one CHILD, at least one ADULT, and at least one ELDERLY person.",
+        "All three age groups must be visually distinct. Do NOT collapse 'all ages' into one adult, one young person, or an ambiguous same-age group."
+      );
+    }
     if(c.animal && c.animalType!=="auto") character.push(`The animal species MUST be ${animalTypeLabel(c.animalType)} and must not be substituted.`);
 
     return [
@@ -9144,12 +9212,17 @@ const PAIR_LOOKS={
       scene.templateLocked
         ? "The user LOCKED this exact template. Preserve the scene identity; only composition/camera/detail variation may change."
         : "This exact scene has already been resolved by the POKUN engine. Do not choose a different Scene Family or replace it with a remembered favorite scene.",
+      scene.family==="buddhist_food_merit"
+        ? `EXACT MERIT-FOOD IDENTITY LOCK: render ${scene.name} specifically. Another merit food, dessert, fruit arrangement, or meal type is NOT an acceptable substitute.`
+        : "",
       "",
       "PRIORITY 4 — EXACT TEXT & TYPOGRAPHY CONTRACT:",
       `WEEKDAY TEXT EXACTLY: ${s.day.dayThai}`,
       `DATE TEXT EXACTLY: ${s.day.dateThai}`,
       `HEADLINE TEXT EXACTLY: ${texts.headline}`,
       `GREETING / BLESSING TEXT EXACTLY: ${texts.greeting}`,
+      `CREATOR WATERMARK TEXT EXACTLY: ${watermarkText}`,
+      "WATERMARK IS MANDATORY VISIBLE TEXT — render it at the bottom-right inside safe margins; do not omit, paraphrase, translate, hide, crop, or replace it.",
       appMode==="greeting" ? `BLESSING THEME: ${texts.blessingThemeLabel||"AUTO"}.` : "BLESSING THEME: not applicable.",
       appMode==="greeting" ? "VISIBLE TEXT STRUCTURE: EXACTLY TWO greeting text levels only — Headline + Greeting/Blessing. Do not invent any Supporting Line, subtitle, closing wish, footer blessing, or third message." : "",
       appMode==="greeting" ? "SPECIALIZED BLESSING LIBRARY: use the exact POKUN-selected wording appropriate to this category; do not generalize it into a generic prayer." : "",
@@ -9647,6 +9720,18 @@ const PAIR_LOOKS={
       }
     }
 
+    if(!prompt.includes(`EXACT WATERMARK TEXT: ${watermarkText}`)){
+      failures.push("Mandatory exact watermark authority missing");
+    }
+    if(ctx?.scene?.family==="buddhist_food_merit"){
+      if(!prompt.includes(`EXACT MERIT-FOOD IDENTITY LOCK: render ${ctx.scene.name} specifically.`)){
+        failures.push("Exact merit-food identity lock missing");
+      }
+      if(ctx.scene.name==="Thai merit tiffin set" && !/THAI TIFFIN \/ PINTO HARD LOCK/i.test(prompt)){
+        failures.push("Thai tiffin exact identity authority missing");
+      }
+    }
+
     const exactSetNo=ctx?.setNo||0;
     if(exactSetNo){
       const ec=ctx.characterState||exactCharacterState(exactSetNo);
@@ -9695,6 +9780,9 @@ const PAIR_LOOKS={
       if(!/EXACT GENDER AUTHORITY/i.test(prompt))failures.push("Exact gender authority missing");
       if(!/EXACT AGE AUTHORITY/i.test(prompt))failures.push("Exact age authority missing");
       if(!/EXACT ANIMAL AUTHORITY/i.test(prompt))failures.push("Exact animal authority missing");
+      if(ec.people && ec.age==="all" && !/ALL AGE GROUPS — HARD COUNT LOCK|VISIBLE COUNT REQUIREMENT: at least one child/i.test(prompt)){
+        failures.push("All-age visible group authority missing");
+      }
 
       if(buddhistHumanAuthority){
         const finalSceneCompatible=ctx?.scene
@@ -10420,9 +10508,10 @@ const PAIR_LOOKS={
         "Do not introduce European travel styling, Western cafe styling, or unrelated foreign cultural motifs.",
         ...(scene.family==="buddhist_food_merit" ? [
           "BUDDHIST MERIT-FOOD AUTHORITY:",
-          "Use only Thai merit-making food, Thai alms food, Thai fruit offerings, or traditional Thai sweets suitable for taking to a temple or offering to monks.",
-          "Suitable foods include Thai tiffin dishes, khao tom mat, khanom tom, thong yip, thong yod, foi thong, med kanoon, khanom chan, khanom sai sai, khanom tian, and Thai fruit offerings.",
-          "STRICTLY EXCLUDE spaghetti, pasta, pizza, burgers, steak, sandwiches, croissants, Western bakery displays, brunch styling, and Western cafe-food presentation."
+          `EXACT MERIT-FOOD SELECTION: ${scene.name}.`,
+          "The exact selected merit-food Template above is authoritative. Do NOT choose a different item from the Buddhist Food Library.",
+          "Other merit foods, Thai sweets, fruit offerings, or savory meal types are NOT interchangeable alternatives unless they are explicitly part of the selected exact Template.",
+          "STRICTLY EXCLUDE Western food styling and also exclude substitution by another Thai merit-food category."
         ] : []),
         ""
       );
@@ -10448,6 +10537,8 @@ const PAIR_LOOKS={
 
     const exactAuthority=EXACT_SCENE_AUTHORITY[scene.name]||[];
     if(exactAuthority.length)L.push(...exactAuthority,"");
+    const exactMeritFoodAuthority=EXACT_MERIT_FOOD_AUTHORITY_V1165[scene.name]||[];
+    if(exactMeritFoodAuthority.length)L.push(...exactMeritFoodAuthority,"");
     L.push(...authority(scene),"");
 
     L.push(
@@ -10541,6 +10632,9 @@ const PAIR_LOOKS={
       `19. ANIMAL TYPE must remain exactly: ${exactCharacterState(setNo).animalType}.`,
       `20. ANIMAL LOOK must remain exactly: ${exactCharacterState(setNo).animalLook}.`,
       `21. ANIMAL BEHAVIOR must remain exactly: ${exactCharacterState(setNo).animalBehavior}.`,
+      `22. WATERMARK must visibly read EXACTLY: ${watermarkText}, at bottom-right inside safe margins.`,
+      scene.family==="buddhist_food_merit" ? `23. MERIT-FOOD IDENTITY must remain EXACTLY: ${scene.name}; do not substitute another food/dessert.` : "",
+      exactCharacterState(setNo).age==="all" ? "24. ALL-AGE GROUP LOCK: child + adult + elderly must all be visibly present." : "",
       "If any item above is missing or conflicts with an earlier suggestion, correct it to THIS CURRENT PROMPT before finalizing the image.",
       ""
     );
@@ -10572,8 +10666,12 @@ const PAIR_LOOKS={
       "Optimize for smartphone viewing, LINE sharing, and social media.",
       "Keep important content inside safe margins.",
       "",
-      "Add a small elegant handwritten creator watermark at the bottom-right:",
-      watermarkText,
+      "MANDATORY CREATOR WATERMARK — FINAL OUTPUT LOCK:",
+      `EXACT WATERMARK TEXT: ${watermarkText}`,
+      "The watermark MUST be visibly rendered in the finished image at the bottom-right, inside the safe margin.",
+      "Use a small elegant handwritten/signature style with sufficient contrast to remain readable, while keeping it visually subordinate to the Headline and Greeting.",
+      "Do NOT omit the watermark. Do NOT crop it off. Do NOT replace it with a logo symbol, gibberish, blank area, or different text.",
+      "A final image without the exact watermark text is INVALID and must be corrected before presentation.",
       "",
       "Create the completed artwork now."
     );
@@ -10627,7 +10725,7 @@ const PAIR_LOOKS={
     const blessingKeys=Object.keys(REFERENCE_IMAGE_BLESSING_LIBRARY_V1153||{});
     return {
       version:VERSION,
-      curated:JSON.parse(JSON.stringify(POKUN_MASTER_LIBRARY_V1164)),
+      curated:JSON.parse(JSON.stringify(POKUN_MASTER_LIBRARY_V1165)),
       scenes:Object.fromEntries(Object.entries(TEMPLATE_CATALOG).map(([family,items])=>[
         family,
         items.map(x=>({
@@ -10653,17 +10751,17 @@ const PAIR_LOOKS={
       palettes:Object.fromEntries(Object.entries(PAIR_LOOKS).map(([k,v])=>[k,{...v}])),
       generalVisualStyles:JSON.parse(JSON.stringify(GENERAL_VISUAL_STYLES_V1152)),
       autoGeneralVisualStylePools:JSON.parse(JSON.stringify(AUTO_GENERAL_VISUAL_STYLE_POOLS_V1152)),
-      compositions:[...POKUN_MASTER_LIBRARY_V1164.compositions],
-      subjects:JSON.parse(JSON.stringify(POKUN_MASTER_LIBRARY_V1164.subjectFamilies)),
-      scenicReferencePatterns:[...POKUN_MASTER_LIBRARY_V1164.referenceBoardScenicPatterns],
-      floralReferencePatterns:[...POKUN_MASTER_LIBRARY_V1164.referenceBoardFloralPatterns],
+      compositions:[...POKUN_MASTER_LIBRARY_V1165.compositions],
+      subjects:JSON.parse(JSON.stringify(POKUN_MASTER_LIBRARY_V1165.subjectFamilies)),
+      scenicReferencePatterns:[...POKUN_MASTER_LIBRARY_V1165.referenceBoardScenicPatterns],
+      floralReferencePatterns:[...POKUN_MASTER_LIBRARY_V1165.referenceBoardFloralPatterns],
       foodReferenceLibrary:JSON.parse(JSON.stringify(POKUN_FOOD_REFERENCE_LIBRARY_V1154)),
       referenceBoardBlessings:JSON.parse(JSON.stringify(REFERENCE_IMAGE_BLESSING_LIBRARY_V1153)),
       sacredNamedPersonalizedBlessings:JSON.parse(JSON.stringify(SACRED_NAME_BLESSING_TEMPLATES_V1164)),
       textHighlights:JSON.parse(JSON.stringify(TEXT_HIGHLIGHT_STYLES_V1151)),
       autoTextHighlightPool:[...AUTO_TEXT_HIGHLIGHT_POOL_V1151],
-      blessingExtraction:JSON.parse(JSON.stringify(POKUN_MASTER_LIBRARY_V1164.referenceBoardBlessingExtraction)),
-      rules:[...POKUN_MASTER_LIBRARY_V1164.rules]
+      blessingExtraction:JSON.parse(JSON.stringify(POKUN_MASTER_LIBRARY_V1165.referenceBoardBlessingExtraction)),
+      rules:[...POKUN_MASTER_LIBRARY_V1165.rules]
     };
   }
 
@@ -11625,7 +11723,7 @@ window.addEventListener("load",()=>{
       }
       const label=data.labels[f.value]||f.value;
       if(x.value==="auto"){
-        box.innerHTML=`🔒 <b>ล็อกหมวดฉาก:</b> ${label}<br>${buddhistOn()&&f.value==="buddhist_food_merit"?"สุ่มเฉพาะปิ่นโต สำรับถวายพระ ขนมไทย ผลไม้ และอาหารสำหรับทำบุญ":"ระบบจะสุ่มเฉพาะ Template ภายในหมวดนี้"}`;
+        box.innerHTML=`🔒 <b>ล็อกหมวดฉาก:</b> ${label}<br>${buddhistOn()&&f.value==="buddhist_food_merit"?"หากต้องการ “ปิ่นโต” โดยเฉพาะ ให้เลือก Exact Template = ปิ่นโตอาหารไทยสำหรับทำบุญ • AUTO ในหมวดนี้สามารถสุ่มเป็นสำรับ ขนมไทย ผลไม้ หรืออาหารทำบุญชนิดอื่นได้":"ระบบจะสุ่มเฉพาะ Template ภายในหมวดนี้"}`;
         return;
       }
       const row=rowsFor(f.value).find(r=>r.name===x.value);
