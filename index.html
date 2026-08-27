@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#111827">
-<title>POKUN Web v11.58</title>
+<title>POKUN Web v11.64</title>
 <style>
 :root{--bg:#f4f5f7;--card:#fff;--ink:#16181d;--muted:#6b7280;--line:#e5e7eb;--accent:#111827;--good:#087f5b;--warn:#b45309}
 *{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI","Noto Sans Thai",sans-serif;background:var(--bg);color:var(--ink)}
@@ -180,7 +180,7 @@ button{border:0;border-radius:12px;padding:12px 14px;font-weight:800;cursor:poin
 <body>
 <div class="wrap">
   <div class="hero">
-    <h1>POKUN Web <span class="small">v11.58</span></h1>
+    <h1>POKUN Web <span class="small">v11.64</span></h1>
     <p>Daily Greeting Prompt Generator — ใช้ได้บนมือถือและคอม</p>
   </div>
 
@@ -246,13 +246,8 @@ button{border:0;border-radius:12px;padding:12px 14px;font-weight:800;cursor:poin
       <div id="status" class="status"></div>
       <div class="stylebox" id="wanPhraBehaviorBox" style="margin-top:10px">
         <strong>🪷 วันพระ / Wan Phra</strong>
-        <label class="small" style="display:block;margin-top:8px">เมื่อวันที่เลือกเป็นวันพระ</label>
-        <select id="wanPhraAutoMode" style="margin-top:5px">
-          <option value="buddhist">AUTO — ใช้พุทธศิลป์วันพระอัตโนมัติ</option>
-          <option value="normal">ภาพปกติ — ไม่บังคับพุทธศิลป์</option>
-        </select>
         <div id="wanPhraAutoDescription" class="small" style="margin-top:6px">
-          เลือก “ภาพปกติ” ได้แม้วันนั้นเป็นวันพระ • ข้อมูลวันพระยังแสดงตามปฏิทิน แต่ Headline / Scene / Subject / Typography จะใช้ระบบทั่วไป
+          วันพระเป็นข้อมูลปฏิทินเท่านั้น • 🌈 ทั่วไป จะไม่เปลี่ยนเป็นพุทธศิลป์อัตโนมัติ • หากต้องการภาพวันพระหรือพุทธศิลป์ ให้เลือกแท็บ 🪷 พุทธศิลป์ โดยตรง
         </div>
       </div>
     </section>
@@ -274,7 +269,7 @@ button{border:0;border-radius:12px;padding:12px 14px;font-weight:800;cursor:poin
       <div id="blessingThemeDescription" class="notice" style="margin-top:8px"></div>
       <button id="rerollBlessingTheme" class="secondary" type="button" style="margin-top:8px;width:100%">🎲 สุ่มคำอวยพรใหม่ในหมวดนี้</button>
       <div class="small" style="margin-top:6px">
-        สุ่มเฉพาะ <b>Headline + คำอวยพร</b> ในธีมเดิม โดยใช้ <b>เฉพาะคำที่สกัดจากภาพอ้างอิงของคุณ</b> และไม่เปลี่ยน Scene / คน / สัตว์ / Layout
+        สุ่มเฉพาะ <b>Headline + คำอวยพร</b> ในธีมเดิม โดยปกติใช้ <b>เฉพาะคำที่สกัดจากภาพอ้างอิงของคุณ</b> • ข้อยกเว้น: เมื่อเลือก “พระสงฆ์ / เกจิอาจารย์อ้างอิง” และพิมพ์ชื่อท่าน ระบบจะใช้แม่แบบคำอวยพรเฉพาะชื่อที่คุณร้องขอใน v11.63 • ไม่เปลี่ยน Scene / คน / สัตว์ / Layout
       </div>
     </section>
 
@@ -290,7 +285,7 @@ button{border:0;border-radius:12px;padding:12px 14px;font-weight:800;cursor:poin
     <section class="card full" id="buddhistSubjectSection" style="display:none">
       <label>🪷 องค์ประกอบหลักของพุทธศิลป์</label>
       <div class="notice" style="margin-bottom:10px">
-        ใช้เฉพาะเมื่อเปิดพุทธศิลป์หรือเป็นวันพระ/วันสำคัญทางพุทธศาสนา • พระพุทธรูปไม่นับเป็น “บุคคล” • เลือก “พระภิกษุ / พระสงฆ์ — สร้างใหม่” ได้โดยไม่อ้างอิงบุคคลจริง • หากต้องการพระ/เกจิอาจารย์บุคคลจริงให้ใช้โหมดรูปอ้างอิง
+        ใช้เฉพาะเมื่อเปิดพุทธศิลป์ • พระพุทธรูปไม่นับเป็น “บุคคล” • เลือก “พระภิกษุ / พระสงฆ์ — สร้างใหม่” ได้โดยไม่อ้างอิงบุคคลจริง • หากต้องการพระ/เกจิอาจารย์บุคคลจริงให้ใช้โหมดรูปอ้างอิง • 🆕 ภาพที่ 2 สามารถมี “บุคคลธรรมดา” หรือ “บุคคลจากรูปอ้างอิง” ได้ โดยเลือกที่หมวด 3 องค์ประกอบตัวละคร + แหล่งบุคคล
       </div>
       <div class="grid" style="grid-template-columns:repeat(2,minmax(0,1fr));gap:10px">
         <div class="stylebox">
@@ -305,13 +300,41 @@ button{border:0;border-radius:12px;padding:12px 14px;font-weight:800;cursor:poin
             <option value="temple_reference">ใช้รูปวัด / สิ่งศักดิ์สิทธิ์อ้างอิง</option>
           </select>
           <div id="buddhistSubjectHelp1" class="notice" style="margin-top:8px"></div>
+          <div id="buddhistBuddhaMetaBox1" class="stylebox" style="display:none;margin-top:8px;background:#fff7ed;border-color:#fed7aa">
+            <label class="small"><b>ชื่อพระพุทธรูป / องค์พระศักดิ์สิทธิ์ — ผู้ใช้เป็นคนระบุเอง</b></label>
+            <input id="buddhistBuddhaName1" type="text" maxlength="80" placeholder="เช่น หลวงพ่อโสธร / พระพุทธชินราช" style="margin-top:5px">
+            <label class="small" style="display:block;margin-top:8px">ใช้ชื่อองค์พระในข้อความ</label>
+            <select id="buddhistBuddhaTextUse1" style="margin-top:5px">
+              <option value="both">Headline + คำอวยพร</option>
+              <option value="greeting">เฉพาะคำอวยพร</option>
+              <option value="headline">เฉพาะ Headline</option>
+              <option value="off">ไม่ใส่ชื่อในข้อความ — ใช้ชื่อเฉพาะ Prompt อ้างอิง</option>
+            </select>
+            <div class="notice" style="margin-top:7px">
+              ใช้ได้กับชื่อที่คุณระบุเอง เช่น <b>หลวงพ่อโสธร, พระพุทธชินราช, พระแก้วมรกต</b> • POKUN จะไม่เดาหรือยืนยันชื่อจากรูป • หากไม่ได้ใช้รูปอ้างอิง ชื่อนี้เป็นข้อมูลที่ user ระบุสำหรับ Prompt/ข้อความ ไม่ใช่การรับรองว่ารูปลักษณ์องค์พระตรงกับสถานที่จริง
+            </div>
+          </div>
           <div id="buddhistUploadBox1" style="display:none;margin-top:8px">
             <label class="small">เลือกรูปอ้างอิง</label>
             <input id="buddhistReferenceFile1" type="file" accept="image/*" style="margin-top:5px">
+            <div id="buddhistMasterMetaBox1" class="stylebox" style="display:none;margin-top:8px;background:#fffbeb;border-color:#fde68a">
+              <label class="small"><b>ชื่อพระเกจิ / ครูบาอาจารย์ — ผู้ใช้เป็นคนระบุเอง</b></label>
+              <input id="buddhistMasterName1" type="text" maxlength="80" placeholder="เช่น หลวงปู่ทวด" style="margin-top:5px">
+              <label class="small" style="display:block;margin-top:8px">ใช้ชื่อท่านในข้อความ</label>
+              <select id="buddhistMasterTextUse1" style="margin-top:5px">
+                <option value="both">Headline + คำอวยพร</option>
+                <option value="greeting">เฉพาะคำอวยพร</option>
+                <option value="headline">เฉพาะ Headline</option>
+                <option value="off">ไม่ใส่ชื่อในข้อความ — ใช้ชื่อเฉพาะ Prompt อ้างอิง</option>
+              </select>
+              <div class="notice" style="margin-top:7px">
+                POKUN จะใช้ <b>ชื่อที่คุณพิมพ์เท่านั้น</b> และจะไม่เดาหรือยืนยันชื่อบุคคลจากรูปอ้างอิง • ถ้าเปิดใช้ชื่อในข้อความ ระบบจะสุ่มคำแนว “ขอบารมี…คุ้มครอง / บารมี…หนุนนำการงาน การเงิน สุขภาพ โชคลาภ ความสำเร็จ” ตามธีมคำอวยพรด้านบน
+              </div>
+            </div>
           <div class="notice buddhist-reference-mode-note" style="margin-top:7px">
             <b>📷 รูปอ้างอิง — สำหรับโหมด API</b><br>
             หากใช้งานผ่าน API สามารถเลือกรูปอ้างอิงสำหรับภาพที่ 1จากเครื่องได้ที่ช่องนี้<br>
-            <b>โหมด Manual / ใช้กับ ChatGPT:</b> ไม่จำเป็นต้องเลือกไฟล์ในช่องนี้ หากต้องการใช้รูปพระพุทธรูป พระสงฆ์ หรือเกจิอาจารย์เป็นอ้างอิง ให้แนบรูปนั้นใน ChatGPT พร้อม Prompt ก่อนสร้างภาพ
+            <b>โหมด Manual / ใช้กับ ChatGPT:</b> ไม่จำเป็นต้องเลือกไฟล์ในช่องนี้ หากต้องการใช้รูปพระพุทธรูป พระสงฆ์ เกจิอาจารย์ หรือบุคคลธรรมดาสำหรับภาพที่ 2 เป็นอ้างอิง ให้แนบรูปนั้นใน ChatGPT พร้อม Prompt ก่อนสร้างภาพ
           </div>
             <div id="buddhistReferenceName1" class="small" style="margin-top:5px"></div>
           </div>
@@ -326,15 +349,48 @@ button{border:0;border-radius:12px;padding:12px 14px;font-weight:800;cursor:poin
             <option value="buddha_reference">ใช้รูปพระพุทธรูปอ้างอิง</option>
             <option value="monk_reference">ใช้รูปพระสงฆ์ / เกจิอาจารย์อ้างอิง</option>
             <option value="temple_reference">ใช้รูปวัด / สิ่งศักดิ์สิทธิ์อ้างอิง</option>
+            <option value="layperson_generated">บุคคลธรรมดา — สร้างใหม่</option>
+            <option value="layperson_reference">ใช้รูปบุคคลอ้างอิง</option>
           </select>
           <div id="buddhistSubjectHelp2" class="notice" style="margin-top:8px"></div>
+          <div id="buddhistBuddhaMetaBox2" class="stylebox" style="display:none;margin-top:8px;background:#fff7ed;border-color:#fed7aa">
+            <label class="small"><b>ชื่อพระพุทธรูป / องค์พระศักดิ์สิทธิ์ — ผู้ใช้เป็นคนระบุเอง</b></label>
+            <input id="buddhistBuddhaName2" type="text" maxlength="80" placeholder="เช่น หลวงพ่อโสธร / พระพุทธชินราช" style="margin-top:5px">
+            <label class="small" style="display:block;margin-top:8px">ใช้ชื่อองค์พระในข้อความ</label>
+            <select id="buddhistBuddhaTextUse2" style="margin-top:5px">
+              <option value="both">Headline + คำอวยพร</option>
+              <option value="greeting">เฉพาะคำอวยพร</option>
+              <option value="headline">เฉพาะ Headline</option>
+              <option value="off">ไม่ใส่ชื่อในข้อความ — ใช้ชื่อเฉพาะ Prompt อ้างอิง</option>
+            </select>
+            <div class="notice" style="margin-top:7px">
+              ใช้ได้กับชื่อที่คุณระบุเอง เช่น <b>หลวงพ่อโสธร, พระพุทธชินราช, พระแก้วมรกต</b> • POKUN จะไม่เดาหรือยืนยันชื่อจากรูป • หากไม่ได้ใช้รูปอ้างอิง ชื่อนี้เป็นข้อมูลที่ user ระบุสำหรับ Prompt/ข้อความ ไม่ใช่การรับรองว่ารูปลักษณ์องค์พระตรงกับสถานที่จริง
+            </div>
+          </div>
+          <div class="notice" style="margin-top:8px;background:#eff6ff;border:1px solid #bfdbfe;color:#1d4ed8">
+            🆕 ภาพที่ 2 เลือกบุคคลได้ตรงจากเมนูนี้แล้ว: <b>“บุคคลธรรมดา — สร้างใหม่”</b> หรือ <b>“ใช้รูปบุคคลอ้างอิง”</b> • ระบบจะตั้ง Character เป็น “มีคนอย่างเดียว” และซิงก์แหล่งบุคคลให้อัตโนมัติ • เพศและช่วงวัยยังเลือกได้จากหมวด 3
+          </div>
           <div id="buddhistUploadBox2" style="display:none;margin-top:8px">
             <label class="small">เลือกรูปอ้างอิง</label>
             <input id="buddhistReferenceFile2" type="file" accept="image/*" style="margin-top:5px">
+            <div id="buddhistMasterMetaBox2" class="stylebox" style="display:none;margin-top:8px;background:#fffbeb;border-color:#fde68a">
+              <label class="small"><b>ชื่อพระเกจิ / ครูบาอาจารย์ — ผู้ใช้เป็นคนระบุเอง</b></label>
+              <input id="buddhistMasterName2" type="text" maxlength="80" placeholder="เช่น หลวงปู่ทวด" style="margin-top:5px">
+              <label class="small" style="display:block;margin-top:8px">ใช้ชื่อท่านในข้อความ</label>
+              <select id="buddhistMasterTextUse2" style="margin-top:5px">
+                <option value="both">Headline + คำอวยพร</option>
+                <option value="greeting">เฉพาะคำอวยพร</option>
+                <option value="headline">เฉพาะ Headline</option>
+                <option value="off">ไม่ใส่ชื่อในข้อความ — ใช้ชื่อเฉพาะ Prompt อ้างอิง</option>
+              </select>
+              <div class="notice" style="margin-top:7px">
+                POKUN จะใช้ <b>ชื่อที่คุณพิมพ์เท่านั้น</b> และจะไม่เดาหรือยืนยันชื่อบุคคลจากรูปอ้างอิง • ถ้าเปิดใช้ชื่อในข้อความ ระบบจะสุ่มคำแนว “ขอบารมี…คุ้มครอง / บารมี…หนุนนำการงาน การเงิน สุขภาพ โชคลาภ ความสำเร็จ” ตามธีมคำอวยพรด้านบน
+              </div>
+            </div>
           <div class="notice buddhist-reference-mode-note" style="margin-top:7px">
             <b>📷 รูปอ้างอิง — สำหรับโหมด API</b><br>
             หากใช้งานผ่าน API สามารถเลือกรูปอ้างอิงสำหรับภาพที่ 2จากเครื่องได้ที่ช่องนี้<br>
-            <b>โหมด Manual / ใช้กับ ChatGPT:</b> ไม่จำเป็นต้องเลือกไฟล์ในช่องนี้ หากต้องการใช้รูปพระพุทธรูป พระสงฆ์ หรือเกจิอาจารย์เป็นอ้างอิง ให้แนบรูปนั้นใน ChatGPT พร้อม Prompt ก่อนสร้างภาพ
+            <b>โหมด Manual / ใช้กับ ChatGPT:</b> ไม่จำเป็นต้องเลือกไฟล์ในช่องนี้ หากต้องการใช้รูปพระพุทธรูป พระสงฆ์ เกจิอาจารย์ หรือบุคคลธรรมดาสำหรับภาพที่ 2 เป็นอ้างอิง ให้แนบรูปนั้นใน ChatGPT พร้อม Prompt ก่อนสร้างภาพ
           </div>
             <div id="buddhistReferenceName2" class="small" style="margin-top:5px"></div>
           </div>
@@ -1461,18 +1517,9 @@ function wanPhraAutoActive(holy){
   return !!holy?.isHoly && !!wanPhraAutoBuddhist;
 }
 function currentDateBuddhistUIActive(){
-  try{
-    const raw=document.getElementById("date")?.value;
-    const d=localDateFromInput(raw);
-    const holy=holyInfo(d);
-    const sp=specialDayInfo(d);
-    return resolveMainArtworkMode()==="buddhist"
-      || !!forceBuddhist
-      || sp?.category==="buddhist"
-      || wanPhraAutoActive(holy);
-  }catch(e){
-    return resolveMainArtworkMode()==="buddhist" || !!forceBuddhist;
-  }
+  // v11.60 MODE-FIRST ARCHITECTURE:
+  // General is a strict Buddhist-free zone. Calendar metadata never activates Buddhist tools.
+  return resolveMainArtworkMode()==="buddhist";
 }
 function autoStyleIndex(d){return dateSeed(d)%DATA.typography.length}
 function sacredStyle(d){
@@ -1606,28 +1653,39 @@ function effectiveState(setNo){
     throw new Error("DAY CONSISTENCY LOCK: invalid selected date.");
   }
   const d=localDateFromInput(rawDate), day=daily(d), holy=holyInfo(d), special=specialDayInfo(d);
+  const primaryMode=resolveMainArtworkMode();
   let style, concepts, texts, buddhist=false;
-  const explicitBuddhistMode=resolveMainArtworkMode()==="buddhist";
-  const autoWanPhra=wanPhraAutoActive(holy);
+  let artworkSpecial=special;
 
-  if(special){
-    buddhist=special.category==="buddhist";
-    style=buddhist?sacredStyle(d):currentManualStyle(d);
-    concepts=specialConceptPair(special,d);
-    texts=specialTexts(special);
-  }else if(autoWanPhra){
-    // v11.58: Wan Phra becomes Buddhist automatically ONLY when user allows it.
-    buddhist=true; style=sacredStyle(d); concepts=buddhistConceptPair(d); texts=buddhistTexts(day.dayThai);
-  }else if(explicitBuddhistMode){
-    // Explicit Buddhist tab still works even when Wan Phra AUTO is disabled.
-    buddhist=true; style=sacredStyle(d); concepts=buddhistConceptPair(d); texts=normalTexts(d,day.dayThai);
-  }else if(forceBuddhist && setNo===1){
-    buddhist=true; style=sacredStyle(d); concepts=buddhistConceptPair(d); texts=normalTexts(d,day.dayThai);
+  if(primaryMode==="buddhist"){
+    buddhist=true;
+    style=sacredStyle(d);
+
+    if(special?.category==="buddhist"){
+      concepts=specialConceptPair(special,d);
+      texts=specialTexts(special);
+    }else{
+      concepts=buddhistConceptPair(d);
+      texts=holy.isHoly ? buddhistTexts(day.dayThai) : normalTexts(d,day.dayThai);
+    }
   }else{
-    // Wan Phra + NORMAL override lands here: use ordinary weekday artwork.
-    style=currentManualStyle(d); concepts=normalConceptPair(d); texts=normalTexts(d,day.dayThai);
+    // v11.60 GENERAL/DEITY MODE:
+    // Buddhist calendar days remain metadata only and have ZERO artwork authority.
+    buddhist=false;
+    style=currentManualStyle(d);
+
+    // A Buddhist special day must not inject sacred wording/scene into General.
+    artworkSpecial=(special?.category==="buddhist")?null:special;
+    if(artworkSpecial){
+      concepts=specialConceptPair(artworkSpecial,d);
+      texts=specialTexts(artworkSpecial);
+    }else{
+      concepts=normalConceptPair(d);
+      texts=normalTexts(d,day.dayThai);
+    }
   }
-  return {d,day,holy,special,style,concepts,texts,buddhist};
+
+  return {d,day,holy,special:artworkSpecial,calendarSpecial:special,style,concepts,texts,buddhist,primaryMode};
 }
 
 
@@ -1904,7 +1962,7 @@ function secondaryDetailDirection(c){
   if(family==="minimal_abstract"){
     return "Use restrained secondary detail, deliberate spatial balance, subtle material texture, controlled depth, and strong negative space.";
   }
-  if(["floral_stilllife","food_hero"].includes(family)){
+  if(["floral_stilllife","food_hero","buddhist_food_merit"].includes(family)){
     return "Use restrained scene-native supporting details, deliberate object hierarchy, controlled depth, and clean negative space.";
   }
   return "Use rich but scene-native secondary details, thoughtful spatial organization, layered depth, and coherent visual storytelling.";
@@ -1960,10 +2018,16 @@ function sceneFamilyAuthorityLines(c){
     ],
     food_hero:[
       "FOOD-SCENE AUTHORITY:",
-      "Keep the selected food or dessert as the hero subject.",
+      "Keep the selected ordinary food, dessert, or fruit as the hero subject.",
       "Use only ingredients, garnish, serving ware, and freshness cues directly related to that exact food.",
-      "Do not introduce unrelated decor, furniture clusters, floral styling, or non-food hero objects.",
-      "Playful energy may come from typography, sparse doodles, signature-color accents, garnish/texture already native to the food, light, and composition; do not invent a second hero prop."
+      "GENERAL FOOD LOCK: no Buddhist merit-making meaning, monk offerings, alms-giving, sacred subjects, or temple-food styling.",
+      "Do not introduce unrelated decor, furniture clusters, floral styling, or non-food hero objects."
+    ],
+    buddhist_food_merit:[
+      "BUDDHIST MERIT-FOOD AUTHORITY:",
+      "Use the exact selected Thai merit-making food / tiffin / alms meal / Thai sweets / fruit offering.",
+      "When a sacred Subject is selected, the sacred Subject remains primary and the merit food is supporting.",
+      "Use respectful Thai containers and no Western brunch/cafe reinterpretation."
     ],
     urban_city:[
       "URBAN-CITY AUTHORITY:",
@@ -2972,7 +3036,12 @@ function imageHasPeople(setNo){
   const mode=setNo===1 ? characterMode1 : characterMode2;
   const subjectEl=document.getElementById(setNo===1?"buddhistSubject1":"buddhistSubject2");
   const buddhistSubject=subjectEl?.value||"auto";
-  const buddhistHuman=resolveMainArtworkMode()==="buddhist" && ["monk_generated","monk_reference"].includes(buddhistSubject);
+  const buddhistMode=resolveMainArtworkMode()==="buddhist";
+  const buddhistHuman=buddhistMode && ["monk_generated","monk_reference","layperson_generated","layperson_reference"].includes(buddhistSubject);
+  if(buddhistMode && setNo===1){
+    // v11.62: Image 1 never accepts ordinary laypeople in Buddhist mode.
+    return ["monk_generated","monk_reference"].includes(buddhistSubject);
+  }
   return mode==="people" || mode==="both" || buddhistHuman;
 }
 function imageHasAnimal(setNo){
@@ -3288,7 +3357,8 @@ function familyVisualMaterialDirection(c){
   const map={
     floral_stilllife:"realistic ceramic, petals, stems, botanical textures, clean surfaces, restrained reflections, and scene-native glass only when explicitly required by the exact Scene Concept",
     minimal_abstract:"realistic sculptural materials, clean architectural wall surfaces, precise shadow geometry, restrained pedestal/surface texture, and paper only when explicitly required by the exact Scene Concept",
-    food_hero:"realistic food textures, ceramic serving ware, garnish, ingredients, syrup/gloss/moisture only when physically appropriate, and clean food-photography surfaces",
+    food_hero:"realistic ordinary food textures, ceramic serving ware, garnish, ingredients, syrup/gloss/moisture only when physically appropriate, and clean non-religious food-photography surfaces",
+    buddhist_food_merit:"realistic Thai merit-food textures, culturally appropriate tiffin carriers, Thai bowls/trays, banana leaves, fruit baskets, Thai sweets, savory Thai dishes, and respectful temple-merit serving details",
     cultural_market:"realistic woven fibers, textiles, timber stall fronts, handcrafted goods, baskets, craft materials, and market-native architectural textures",
     thai_architecture:"realistic timber, stone, roof tiles, plaster, landscaped vegetation, courtyard/path textures, and Thai architectural materials",
     urban_city:"realistic glass, concrete, metal, paving, street greenery, facade textures, railings, and city-native environmental surfaces",
@@ -5772,7 +5842,7 @@ function buildPromptLegacyV87(setNo){
     throw new Error("Exact Scene Variation Resolver failed for scene: "+String(c?.name||""));
   }
   const knownAuthorityFamilies=new Set([
-    "minimal_abstract","cultural_market","thai_architecture","food_hero",
+    "minimal_abstract","cultural_market","thai_architecture","food_hero","buddhist_food_merit",
     "urban_city","garden_botanical","art_gallery","floral_stilllife",
     "nature_mountain","rice_countryside","waterfront","sea_coastal","travel_viewpoint"
   ]);
@@ -5980,7 +6050,12 @@ return sanitizeThaiWeekdayText(L.join("\n"));
 }
 function renderStyles(){
   const q=$("styleSearch").value.trim().toLowerCase();
-  filteredIndices=DATA.typography.map((x,i)=>({x,i})).filter(o=>o.x.name.toLowerCase().includes(q)).map(o=>o.i);
+  const primaryMode=resolveMainArtworkMode();
+  filteredIndices=DATA.typography
+    .map((x,i)=>({x,i}))
+    .filter(o=>o.x.name.toLowerCase().includes(q))
+    .filter(o=>primaryMode!=="general" || !SACRED_NAMES.includes(o.x.name))
+    .map(o=>o.i);
   $("styleSelect").innerHTML="";
   filteredIndices.forEach(i=>{
     const o=document.createElement("option");o.value=i;o.textContent=`${String(i+1).padStart(3,"0")}. ${DATA.typography[i].name}`;$("styleSelect").appendChild(o);
@@ -6001,44 +6076,45 @@ function updateUI(){
   if(styleMode==="AUTO")selectedStyle=autoStyleIndex(d);
   $("buddhistToggle").checked=forceBuddhist;
   $("toggleText").textContent=forceBuddhist?"ON":"OFF";
-  const autoWanPhra=wanPhraAutoActive(h);
-  const explicitBuddhist=resolveMainArtworkMode()==="buddhist";
-  let style;
-  if(sp&&sp.category==="buddhist")style=sacredStyle(d);
-  else if(!sp&&(autoWanPhra||explicitBuddhist))style=sacredStyle(d);
-  else style=currentManualStyle(d);
+  const primaryMode=resolveMainArtworkMode();
+  const explicitBuddhist=primaryMode==="buddhist";
+  const artworkSpecial=(primaryMode==="general" && sp?.category==="buddhist")?null:sp;
+  const style=explicitBuddhist?sacredStyle(d):currentManualStyle(d);
 
-  const wanMode=document.getElementById("wanPhraAutoMode");
-  if(wanMode)wanMode.value=wanPhraAutoBuddhist?"buddhist":"normal";
   const wanDesc=document.getElementById("wanPhraAutoDescription");
   if(wanDesc){
-    wanDesc.innerHTML=h.isHoly
-      ? (autoWanPhra
-          ? "<b>วันนี้เป็นวันพระ:</b> AUTO พุทธศิลป์ทำงานอยู่"
-          : "<b>วันนี้เป็นวันพระ:</b> เลือกภาพปกติแล้ว — ระบบจะไม่บังคับพระพุทธรูป พระสงฆ์ ฉากทำบุญ หรือ Typography พุทธศิลป์")
-      : "วันที่เลือกไม่ใช่วันพระ • การตั้งค่านี้จะมีผลเมื่อเลือกวันที่เป็นวันพระ";
+    if(h.isHoly && primaryMode==="general"){
+      wanDesc.innerHTML="<b>วันนี้เป็นวันพระ:</b> แสดงเป็นข้อมูลปฏิทินเท่านั้น • 🌈 ทั่วไป = Buddhist Free Zone และจะสร้างภาพปกติ";
+    }else if(h.isHoly && primaryMode==="buddhist"){
+      wanDesc.innerHTML="<b>วันนี้เป็นวันพระ:</b> 🪷 พุทธศิลป์ทำงานเพราะ user เลือกแท็บพุทธศิลป์";
+    }else{
+      wanDesc.innerHTML="วันพระเป็นข้อมูลปฏิทินเท่านั้น • โหมดภาพยึดแท็บที่ user เลือก ไม่สลับเป็นพุทธศิลป์อัตโนมัติ";
+    }
   }
 
   $("status").innerHTML=`
     <div class="stat"><b>วัน</b><span>${x.dayThai}</span></div>
     <div class="stat"><b>สี</b><span style="color:${x.hex}">${x.colorThai}</span></div>
     <div class="stat"><b>วันพระ</b><span>${h.isHoly?"YES":"NO"}</span></div>
-    <div class="stat"><b>โหมดวันพระ</b><span>${h.isHoly?(autoWanPhra?"BUDDHIST AUTO":"NORMAL OVERRIDE"):"—"}</span></div>
-    <div class="stat"><b>Typography</b><span>${(sp&&sp.category==="buddhist")||(!sp&&(autoWanPhra||explicitBuddhist))?"BUDDHIST":styleMode}</span></div>`;
-  if(sp){
-    $("specialDayName").textContent=sp.name;
+    <div class="stat"><b>โหมดสร้างภาพ</b><span>${primaryMode==="general"?"GENERAL / Buddhist Free Zone":primaryMode==="buddhist"?"BUDDHIST":"DEITY"}</span></div>
+    <div class="stat"><b>Typography</b><span>${explicitBuddhist?"BUDDHIST":styleMode}</span></div>`;
+  if(artworkSpecial){
+    $("specialDayName").textContent=artworkSpecial.name;
     $("specialDayInfo").textContent="Headline + คำอวยพร + Concept จะใช้ธีมวันสำคัญนี้อัตโนมัติ";
   }else if(h.isHoly){
-    $("specialDayName").textContent=autoWanPhra?"วันพระ":"วันพระ (ใช้ภาพปกติ)";
-    $("specialDayInfo").textContent=autoWanPhra
-      ?"วันนี้เป็นวันพระ และ AUTO พุทธศิลป์กำลังทำงาน"
-      :"วันนี้เป็นวันพระตามปฏิทิน แต่ user เลือกใช้ภาพปกติ — Headline / คำอวยพร / Scene / Subject / Typography ใช้ระบบทั่วไป";
+    $("specialDayName").textContent=primaryMode==="buddhist"?"วันพระ":"วันพระ (ข้อมูลปฏิทินเท่านั้น)";
+    $("specialDayInfo").textContent=primaryMode==="buddhist"
+      ?"โหมดพุทธศิลป์กำลังทำงาน"
+      :"โหมดทั่วไปจะไม่ใช้พระพุทธรูป พระสงฆ์ ของทำบุญ อาหารทำบุญ หรือ Typography พุทธศิลป์";
+  }else if(sp?.category==="buddhist" && primaryMode==="general"){
+    $("specialDayName").textContent=`${sp.name} (ข้อมูลปฏิทินเท่านั้น)`;
+    $("specialDayInfo").textContent="โหมดทั่วไปไม่รับธีมพุทธศิลป์จากวันสำคัญทางพุทธศาสนา";
   }else{
     $("specialDayName").textContent="วันปกติ";
     $("specialDayInfo").textContent="ไม่มีวันสำคัญที่กำหนดไว้สำหรับวันนี้";
   }
   renderStyles();
-  if(!autoWanPhra&&!(sp&&sp.category==="buddhist")&&!explicitBuddhist)$("styleSelect").value=selectedStyle;
+  if(!explicitBuddhist)$("styleSelect").value=selectedStyle;
   renderStyleDetail();
 }
 function toast(t){$("toast").textContent=t;$("toast").classList.add("show");setTimeout(()=>$("toast").classList.remove("show"),1300)}
@@ -6059,18 +6135,8 @@ async function shareText(targetId,label){
 }
 const now=new Date();$("date").value=isoCE(now);
 $("buddhistToggle").checked=forceBuddhist;
-const wanPhraAutoModeEl=$("wanPhraAutoMode");
-if(wanPhraAutoModeEl)wanPhraAutoModeEl.value=wanPhraAutoBuddhist?"buddhist":"normal";
 $("date").addEventListener("change",updateUI);
 $("buddhistToggle").addEventListener("change",e=>{forceBuddhist=e.target.checked;localStorage.setItem("pokunBuddhistF6",forceBuddhist?"1":"0");updateUI()});
-wanPhraAutoModeEl?.addEventListener("change",e=>{
-  wanPhraAutoBuddhist=e.target.value!=="normal";
-  localStorage.setItem("pokunWanPhraAutoBuddhist",wanPhraAutoBuddhist?"1":"0");
-  updateUI();
-  if(typeof toast==="function")toast(wanPhraAutoBuddhist?"วันพระ: AUTO พุทธศิลป์":"วันพระ: ใช้ภาพปกติ");
-  // Refresh Buddhist-only sections and Scene filters immediately.
-  document.getElementById("date")?.dispatchEvent(new Event("change"));
-});
 $("styleSearch").addEventListener("input",renderStyles);
 $("styleSelect").addEventListener("change",e=>{selectedStyle=Number(e.target.value);styleMode="MANUAL";localStorage.setItem("pokunStyleIndex",selectedStyle);localStorage.setItem("pokunStyleMode",styleMode);renderStyleDetail();updateUI()});
 $("autoStyle").addEventListener("click",()=>{styleMode="AUTO";selectedStyle=autoStyleIndex(localDateFromInput($("date").value));localStorage.setItem("pokunStyleMode","AUTO");localStorage.setItem("pokunStyleIndex",selectedStyle);updateUI();toast("AUTO Typography")});
@@ -6471,6 +6537,205 @@ function pairedBlessingValue(pool,theme,pairBase,setNo,channelOffset){
   return source[(firstIndex+1)%source.length];
 }
 
+// v11.64 — USER-NAMED SACRED SUBJECT PERSONALIZATION
+// Explicit user-requested exception to the normal reference-image-only blessing library.
+// Supports: monk_reference + named Buddha/sacred-image modes.
+// Names are user-typed metadata only. POKUN never identifies or verifies a name from image pixels.
+const SACRED_NAME_BLESSING_TEMPLATES_V1164={
+  protection:{
+    label:"บารมีคุ้มครอง",
+    headlines:[
+      "ขอบารมี{NAME}คุ้มครอง",
+      "บารมี{NAME}คุ้มครอง",
+      "เมตตาบารมี{NAME}หนุนนำ"
+    ],
+    greetings:[
+      "ขอบารมี{NAME}คุ้มครอง ให้แคล้วคลาดปลอดภัย และพบแต่สิ่งดี ๆ",
+      "บารมี{NAME}คุ้มครอง ให้สุขกาย สุขใจ และมีความสุขตลอดวัน",
+      "เมตตาบารมี{NAME}หนุนนำ ให้โชคดี มีสุข และพบแต่สิ่งดี ๆ"
+    ]
+  },
+  happiness:{
+    label:"ความสุข / สดใส",
+    headlines:["บารมี{NAME}เติมสุขใจ","ขอบารมี{NAME}คุ้มครอง","เมตตาบารมี{NAME}หนุนนำ"],
+    greetings:[
+      "ขอบารมี{NAME}คุ้มครอง ให้สุขกาย สุขใจ และจิตใจเบิกบาน",
+      "บารมี{NAME}หนุนนำ ให้มีความสุขตลอดวัน และพบแต่สิ่งดี ๆ",
+      "เมตตาบารมี{NAME}คุ้มครอง ให้สดชื่น แจ่มใส และโชคดี มีสุข"
+    ]
+  },
+  health:{
+    label:"สุขภาพ / แข็งแรง",
+    headlines:["บารมี{NAME}คุ้มครองกายใจ","ขอบารมี{NAME}คุ้มครอง","เมตตาบารมี{NAME}หนุนนำ"],
+    greetings:[
+      "ขอบารมี{NAME}คุ้มครอง ให้สุขภาพแข็งแรง สุขกาย สุขใจ",
+      "บารมี{NAME}หนุนนำ ให้กายใจสดชื่น แข็งแรง และมีความสุขตลอดวัน",
+      "เมตตาบารมี{NAME}คุ้มครอง ให้สุขภาพแข็งแรง และจิตใจเบิกบาน"
+    ]
+  },
+  work:{
+    label:"การงาน / ความก้าวหน้า",
+    headlines:["บารมี{NAME}หนุนนำการงาน","เมตตาบารมี{NAME}เสริมความก้าวหน้า","ขอบารมี{NAME}หนุนนำ"],
+    greetings:[
+      "บารมี{NAME}หนุนนำ ให้การงานก้าวหน้า เจริญรุ่งเรือง และสมหวังดังใจ",
+      "ขอบารมี{NAME}คุ้มครอง ให้การงานก้าวหน้า และคิดสิ่งใดสมปรารถนา",
+      "เมตตาบารมี{NAME}หนุนนำ ให้การงานราบรื่น ก้าวหน้า และเจริญรุ่งเรือง"
+    ]
+  },
+  money:{
+    label:"การเงิน / เงินทอง",
+    headlines:["บารมี{NAME}หนุนนำการเงิน","เมตตาบารมี{NAME}เสริมโชคลาภ","ขอบารมี{NAME}หนุนนำ"],
+    greetings:[
+      "บารมี{NAME}หนุนนำ ให้เงินทองคล่องมือ มีโชค มีลาภ และมั่งมีศรีสุข",
+      "ขอบารมี{NAME}คุ้มครอง ให้การเงินราบรื่น เงินทองคล่องมือ และโชคดี มีสุข",
+      "เมตตาบารมี{NAME}หนุนนำ ให้ร่ำรวยเงินทอง มีโชค มีลาภ และเจริญรุ่งเรือง"
+    ]
+  },
+  wealth:{
+    label:"มั่งคั่ง / ร่ำรวย",
+    headlines:["บารมี{NAME}หนุนนำความมั่งคั่ง","เมตตาบารมี{NAME}เสริมสิริมงคล","บารมี{NAME}หนุนนำโชคลาภ"],
+    greetings:[
+      "บารมี{NAME}หนุนนำ ให้มั่งมีศรีสุข ร่ำรวยเงินทอง และเจริญรุ่งเรือง",
+      "ขอบารมี{NAME}คุ้มครอง ให้เงินทองคล่องมือ มีโชค มีลาภ และสมหวังดังใจ",
+      "เมตตาบารมี{NAME}หนุนนำ ให้มีโชค มีลาภ มั่งมีศรีสุข และพบแต่สิ่งดี ๆ"
+    ]
+  },
+  success:{
+    label:"ความสำเร็จ / สมหวัง",
+    headlines:["บารมี{NAME}หนุนนำความสำเร็จ","ขอบารมี{NAME}หนุนนำ","เมตตาบารมี{NAME}เสริมความสำเร็จ"],
+    greetings:[
+      "บารมี{NAME}หนุนนำ ให้คิดสิ่งใดสมปรารถนา และเจริญรุ่งเรือง",
+      "ขอบารมี{NAME}คุ้มครอง ให้สมหวังดังใจ การงานก้าวหน้า และพบแต่สิ่งดี ๆ",
+      "เมตตาบารมี{NAME}หนุนนำ ให้โชคดี มีชัย และสมหวังดังใจ"
+    ]
+  },
+  luck:{
+    label:"โชคดี / โชคลาภ",
+    headlines:["บารมี{NAME}เสริมสิริมงคล","เมตตาบารมี{NAME}หนุนนำโชคลาภ","ขอบารมี{NAME}คุ้มครอง"],
+    greetings:[
+      "บารมี{NAME}หนุนนำ ให้โชคดี มีชัย มีโชค มีลาภ และพบแต่สิ่งดี ๆ",
+      "ขอบารมี{NAME}คุ้มครอง ให้โชคดีตลอดวัน และสมหวังดังใจ",
+      "เมตตาบารมี{NAME}หนุนนำ ให้มีโชค มีลาภ และเจริญรุ่งเรือง"
+    ]
+  },
+  encouragement:{
+    label:"วันใหม่ / กำลังใจ",
+    headlines:["บารมี{NAME}หนุนนำวันใหม่","ขอบารมี{NAME}คุ้มครอง","เมตตาบารมี{NAME}หนุนนำ"],
+    greetings:[
+      "บารมี{NAME}หนุนนำ ให้วันใหม่สดใส จิตใจเบิกบาน และพบแต่สิ่งดี ๆ",
+      "ขอบารมี{NAME}คุ้มครอง ให้สดชื่น แจ่มใส และมีความสุขตลอดวัน",
+      "เมตตาบารมี{NAME}หนุนนำ ให้ยิ้มรับวันใหม่ และโชคดี มีสุข"
+    ]
+  },
+  short_power:{
+    label:"สั้น กระชับ",
+    headlines:["บารมี{NAME}คุ้มครอง","ขอบารมี{NAME}หนุนนำ","เมตตาบารมี{NAME}คุ้มครอง"],
+    greetings:[
+      "บารมี{NAME}คุ้มครอง สุขกาย สุขใจ โชคดี มีสุข",
+      "ขอบารมี{NAME}หนุนนำ ให้พบแต่สิ่งดี ๆ และสมหวังดังใจ",
+      "เมตตาบารมี{NAME}คุ้มครอง ให้โชคดี มีชัย"
+    ]
+  },
+  all_round:{
+    label:"รอบด้าน",
+    headlines:["บารมี{NAME}หนุนนำทุกด้าน","ขอบารมี{NAME}คุ้มครอง","เมตตาบารมี{NAME}เสริมสิริมงคล"],
+    greetings:[
+      "บารมี{NAME}หนุนนำ ให้สุขภาพแข็งแรง การงานก้าวหน้า เงินทองคล่องมือ และสมหวังดังใจ",
+      "ขอบารมี{NAME}คุ้มครอง ให้สุขกาย สุขใจ มีโชค มีลาภ และเจริญรุ่งเรือง",
+      "เมตตาบารมี{NAME}หนุนนำ ให้การงานก้าวหน้า การเงินราบรื่น และพบแต่สิ่งดี ๆ"
+    ]
+  }
+};
+
+function sanitizeSacredMasterName(value){
+  return String(value||"")
+    .normalize("NFC")
+    .replace(/[\r\n\t]+/g," ")
+    .replace(/[<>{}\[\]"'`\\]/g,"")
+    .replace(/\s+/g," ")
+    .trim()
+    .slice(0,80);
+}
+
+function sacredMasterMeta(setNo){
+  const mode=document.getElementById(setNo===1?"buddhistSubject1":"buddhistSubject2")?.value||"auto";
+  const rawName=document.getElementById(setNo===1?"buddhistMasterName1":"buddhistMasterName2")?.value
+    || localStorage.getItem(`pokunBuddhistMasterName${setNo}`)
+    || "";
+  const name=sanitizeSacredMasterName(rawName);
+  const textUse=document.getElementById(setNo===1?"buddhistMasterTextUse1":"buddhistMasterTextUse2")?.value
+    || localStorage.getItem(`pokunBuddhistMasterTextUse${setNo}`)
+    || "both";
+  const active=resolveMainArtworkMode()==="buddhist" && mode==="monk_reference" && !!name;
+  return {setNo,mode,name,textUse,active,personalizeText:active&&textUse!=="off"};
+}
+
+
+function sacredBuddhaMeta(setNo){
+  const mode=document.getElementById(setNo===1?"buddhistSubject1":"buddhistSubject2")?.value||"auto";
+  const rawName=document.getElementById(setNo===1?"buddhistBuddhaName1":"buddhistBuddhaName2")?.value
+    || localStorage.getItem(`pokunBuddhistBuddhaName${setNo}`)
+    || "";
+  const name=sanitizeSacredMasterName(rawName);
+  const textUse=document.getElementById(setNo===1?"buddhistBuddhaTextUse1":"buddhistBuddhaTextUse2")?.value
+    || localStorage.getItem(`pokunBuddhistBuddhaTextUse${setNo}`)
+    || "both";
+  const active=resolveMainArtworkMode()==="buddhist" && ["buddha_reference","buddha_statue"].includes(mode) && !!name;
+  return {
+    setNo,mode,name,textUse,active,personalizeText:active&&textUse!=="off",
+    kind:"buddha",
+    kindLabel:"พระพุทธรูป / องค์พระศักดิ์สิทธิ์"
+  };
+}
+
+function sacredNamedReferenceMeta(setNo){
+  const mode=document.getElementById(setNo===1?"buddhistSubject1":"buddhistSubject2")?.value||"auto";
+  if(mode==="monk_reference"){
+    const m=sacredMasterMeta(setNo);
+    return {...m,kind:"monk",kindLabel:"พระเกจิ / ครูบาอาจารย์"};
+  }
+  if(["buddha_reference","buddha_statue"].includes(mode)){
+    return sacredBuddhaMeta(setNo);
+  }
+  return {setNo,mode,name:"",textUse:"off",active:false,personalizeText:false,kind:"none",kindLabel:""};
+}
+
+function sacredNamedBlessingTheme(s,setNo,seed){
+  const raw=document.getElementById("blessingTheme")?.value || blessingTheme || "auto";
+  const directMap={
+    happiness:"happiness",health:"health",work:"work",money:"money",wealth:"wealth",
+    success:"success",luck:"luck",encouragement:"encouragement",short_power:"short_power",all_round:"all_round"
+  };
+  if(raw!=="auto" && directMap[raw])return directMap[raw];
+  const meta=sacredNamedReferenceMeta(setNo);
+  const pool=["protection","work","money","health","luck","success","happiness","all_round"];
+  const base=hashString(`${userSeed}|${s?.day?.isoDate||""}|${meta.name}|sacred-named-blessing-v1164|${setNo}|${blessingRerollSeed}|${seed}`);
+  return pool[seededIndex(base,pool.length)];
+}
+
+function sacredNamedBlessingTexts(s,setNo,seed){
+  const meta=sacredNamedReferenceMeta(setNo);
+  if(!meta.personalizeText)return null;
+  const key=sacredNamedBlessingTheme(s,setNo,seed);
+  const lib=SACRED_NAME_BLESSING_TEMPLATES_V1164[key]||SACRED_NAME_BLESSING_TEMPLATES_V1164.protection;
+  const base=hashString(`${userSeed}|${s?.day?.isoDate||""}|${meta.name}|${key}|sacred-named-text-v1164|${setNo}|${rerollSeed1}|${rerollSeed2}|${blessingRerollSeed}|${seed}`);
+  const headlineTemplate=lib.headlines[seededIndex(base+101,lib.headlines.length)];
+  const greetingTemplate=lib.greetings[seededIndex(base+203,lib.greetings.length)];
+  const fill=t=>stripRepeatedWishPrefix(String(t||"").replaceAll("{NAME}",meta.name));
+  return {
+    theme:`sacred_named_${key}`,
+    label:`บารมี${meta.name} / ${lib.label}`,
+    headline:fill(headlineTemplate),
+    greeting:fill(greetingTemplate),
+    supporting:"",
+    textUse:meta.textUse,
+    sacredName:meta.name,
+    sacredKind:meta.kind,
+    masterName:meta.kind==="monk"?meta.name:"",
+    source:"USER-NAMED SACRED SUBJECT PERSONALIZATION v11.64"
+  };
+}
+
 function stripRepeatedWishPrefix(text){
   return String(text||"")
     .replace(/^\s*(?:ขอให้\s*)+/u,"")
@@ -6504,17 +6769,24 @@ function updateBlessingThemeDescription(){
   const sel=document.getElementById("blessingTheme");
   if(!el||!sel)return;
   const raw=sel.value||"auto";
+  let base="";
   if(raw==="auto"){
-    el.innerHTML="<b>AUTO — Reference Image Only:</b> ระบบสุ่มเฉพาะคำที่สกัดจากภาพอ้างอิงของคุณเท่านั้น ไม่ผสมคลังคำที่โมเดลเคยแต่ง ไม่ขยายประโยค และไม่เขียนคำอวยพรใหม่";
-    return;
+    base="<b>AUTO — Reference Image Only:</b> ระบบปกติสุ่มเฉพาะคำที่สกัดจากภาพอ้างอิงของคุณ ไม่ผสมคลังคำที่โมเดลเคยแต่ง";
+  }else{
+    const key=REFERENCE_IMAGE_THEME_ALIAS_V1153[raw]||raw;
+    const lib=REFERENCE_IMAGE_BLESSING_LIBRARY_V1153[key];
+    base=lib?`<b>${lib.label}</b> — ${lib.desc}`:"";
   }
-  const key=REFERENCE_IMAGE_THEME_ALIAS_V1153[raw]||raw;
-  const lib=REFERENCE_IMAGE_BLESSING_LIBRARY_V1153[key];
-  el.innerHTML=lib?`<b>${lib.label}</b> — ${lib.desc}`:"";
+  const named=[1,2].map(n=>{try{return sacredNamedReferenceMeta(n)}catch(e){return null}}).filter(x=>x?.personalizeText);
+  if(named.length){
+    const names=named.map(x=>x.name).join(" / ");
+    base+=`<br><b>🪷 Personalized Sacred Name:</b> กำลังใช้ชื่อที่ user พิมพ์ (${names}) เพื่อสุ่ม Headline/คำอวยพรเฉพาะชื่อ • รองรับทั้งพระเกจิและพระพุทธรูป/องค์พระศักดิ์สิทธิ์ • AUTO = สุ่มหัวข้อบารมีหลายด้าน`;
+  }
+  el.innerHTML=base;
 }
 
 const POKUN_V9 = (() => {
-  const VERSION="11.58";
+  const VERSION="11.64";
   const ENGINE_LABEL=`POKUN v${VERSION}`;
 
 
@@ -6532,6 +6804,7 @@ const POKUN_V9 = (() => {
     travel_viewpoint:"ท่องเที่ยว / จุดชมวิว",
     cultural_market:"ตลาด / วัฒนธรรม / งานคราฟต์",
     food_hero:"อาหาร / ขนม / ผลไม้",
+    buddhist_food_merit:"🍱 อาหาร / ปิ่นโต / ของทำบุญ",
     wealth_prosperity:"มั่งคั่งร่ำรวย / Wealth & Prosperity",
     floral_stilllife:"ดอกไม้ / Floral Still Life",
     art_gallery:"ศิลปะ / แกลเลอรี / สตูดิโอ",
@@ -6804,9 +7077,13 @@ const POKUN_V9 = (() => {
     "Thai fruit offering basket":{name:"ตะกร้าผลไม้ไทยสำหรับทำบุญ",description:"ผลไม้ไทยสดจัดในตะกร้าหรือถาดอย่างสุภาพสำหรับทำบุญ"},
     "Morning alms food set":{name:"ชุดอาหารไทยสำหรับใส่บาตร",description:"อาหารไทยและภาชนะที่เตรียมไว้สำหรับใส่บาตรยามเช้า เรียบง่าย สะอาด และเหมาะกับการทำบุญ"}
   };
+  // v11.60 — dedicated Buddhist merit-food family.
+  // General food_hero remains ordinary food only; no Buddhist food substitution.
+  TEMPLATE_CATALOG.buddhist_food_merit=BUDDHIST_FOOD_TEMPLATES.map(row=>[...row]);
+
   const BUDDHIST_ALLOWED_SCENE_FAMILIES=new Set([
     "buddhist_sacred","rice_countryside","nature_mountain","waterfront",
-    "garden_botanical","thai_architecture","food_hero","floral_stilllife"
+    "garden_botanical","thai_architecture","buddhist_food_merit","floral_stilllife"
   ]);
 
   const TEMPLATE_UI_TH={
@@ -7285,8 +7562,8 @@ const PAIR_LOOKS={
   };
 
 
-  const POKUN_MASTER_LIBRARY_V1158={
-    version:"11.58",
+  const POKUN_MASTER_LIBRARY_V1164={
+    version:"11.64",
     purpose:"Curated Thai daily-greeting design library distilled from the user's reference boards and existing POKUN systems. Library guidance is supportive and must never override exact scene, subject, text, typography, frame, layout, weekday/date, or mode locks.",
 
     sceneProfiles:{
@@ -7369,6 +7646,14 @@ const PAIR_LOOKS={
         props:["เครื่องจักสาน","ดอกไม้","ผ้าพื้นเมือง","ตะกร้า","ผลไม้/สินค้าเฉพาะฉาก"],
         compositions:["รายละเอียดเป็นกลุ่มแต่เว้นข้อความ","Editorial crop","ใช้สีประจำวันเป็นจุดนำ"],
         palettes:["earthy craft","สีสดแบบไทยแต่คุมโทน","ไม้-ครีม-สีประจำวัน","warm market"]
+      },
+      buddhist_food_merit:{
+        label:"อาหาร / ปิ่นโต / ของทำบุญ",
+        moods:["สงบเรียบง่าย","อิ่มบุญแบบไทย","สะอาดและเคารพบริบท","อบอุ่นยามเช้า"],
+        visualCues:["Thai merit tiffin morning","respectful alms meal arrangement","Thai auspicious sweets for merit","fruit offering basket","temple-morning merit food"],
+        props:["ปิ่นโตไทย","ถาดอาหารไทย","ตะกร้าผลไม้","ใบตอง","ข้าวต้มมัด","ขนมต้ม","ทองหยิบ","ทองหยอด","ฝอยทอง","ภาชนะทำบุญที่เหมาะสม"],
+        compositions:["พระสงฆ์/พระพุทธรูปที่เลือกเป็น Subject หลัก + อาหารทำบุญเป็น supporting offering","ปิ่นโตหรือสำรับทำบุญเป็น Hero เมื่อเลือกไม่มีบุคคล","ถาดขนมไทยหรือผลไม้จัดด้านล่างและเว้นพื้นที่ข้อความ","องค์ประกอบเรียบสะอาด ไม่จัดแบบคาเฟ่ตะวันตก"],
+        palettes:["อาหารจริง + สีประจำวันแบบสุภาพ","ไม้-ครีม-เขียวธรรมชาติ","ทองขนมไทย-งาช้าง","สีผลไม้จริง + โทนวัดอบอุ่น"]
       },
       food_hero:{
         label:"อาหาร / ขนม / ผลไม้",
@@ -7535,6 +7820,7 @@ const PAIR_LOOKS={
       "Buddhist-only motifs remain inside Buddhist mode/holy-day logic.",
       "Deity hero belongs to Image 1 only when Deity pair rules say so.",
       "Use popular Thai greeting-card rhythm: clear, positive, familiar, readable, and not prayer-like.",
+      "When v11.63 Sacred Master Personalization is active, use only the exact user-typed monk/revered-teacher name; never infer or verify the name from the reference image.",
       "Do not overload the image with all library props; select only a small compatible subset."
     ]
   };
@@ -7604,12 +7890,13 @@ const PAIR_LOOKS={
     thai_architecture:["thai_architecture","travel_viewpoint"],
     travel_viewpoint:["travel_viewpoint","urban_city","thai_architecture","waterfront","sea_coastal","nature_mountain"],
     food_hero:["food_hero"],
+    buddhist_food_merit:["buddhist_food_merit","buddhist_sacred"],
     wealth_prosperity:["wealth_prosperity","minimal_abstract"],
     floral_stilllife:["floral_stilllife","garden_botanical"],
     minimal_abstract:["minimal_abstract","art_gallery"],
     cultural_market:["cultural_market","urban_city","travel_viewpoint"],
     art_gallery:["art_gallery","minimal_abstract"],
-    buddhist_sacred:["buddhist_sacred","thai_architecture"],
+    buddhist_sacred:["buddhist_sacred","thai_architecture","buddhist_food_merit"],
     home_lifestyle:["home_lifestyle","cafe_lifestyle"],
     cafe_lifestyle:["cafe_lifestyle","home_lifestyle","food_hero"]
   };
@@ -7671,7 +7958,16 @@ const PAIR_LOOKS={
       "FOOD-SCENE AUTHORITY:",
       "Keep the exact selected food, dessert, or fruit as the hero subject.",
       "Use only ingredients, garnish, serving ware, textures, and freshness cues directly related to that exact food.",
+      "Do not introduce Buddhist merit-making meaning, offerings to monks, alms-giving, sacred objects, monks, or Buddha imagery in GENERAL mode.",
       "Do not introduce unrelated decor, furniture clusters, floral styling, architecture as a competing scene, or a non-food hero object."
+    ],
+    buddhist_food_merit:[
+      "BUDDHIST MERIT-FOOD AUTHORITY:",
+      "Use the exact selected Thai merit-making food, tiffin, alms meal, Thai sweet, or fruit offering.",
+      "Keep culturally appropriate Thai containers, banana leaves, trays, baskets, tiffin carriers, and serving details.",
+      "If a Buddha or monk Subject is explicitly selected, that sacred Subject remains PRIMARY and the merit food becomes a supporting offering element.",
+      "If Buddhist Subject = NO FIGURE / AUTO without a required figure, the merit-food arrangement may be the hero object.",
+      "Do not reinterpret merit food as Western brunch, cafe food, pasta, pizza, burger, steak, sandwich, croissant, or Western bakery presentation."
     ],
     floral_stilllife:[
       "FLORAL STILL-LIFE AUTHORITY:",
@@ -7747,7 +8043,8 @@ const PAIR_LOOKS={
     waterfront:"realistic water surfaces, reflections, pier/railing materials when applicable, shoreline vegetation, mist, sky, and waterside textures",
     thai_architecture:"realistic timber, stone, roof tiles, plaster, courtyard/path textures, landscaped vegetation, and Thai architectural materials",
     travel_viewpoint:"realistic destination-native architecture, paving, railings, vegetation, water/landscape when applicable, and travel-environment textures",
-    food_hero:"realistic food textures, ceramic serving ware, garnish, ingredients, syrup/gloss/moisture only when physically appropriate, and clean food-photography surfaces",
+    food_hero:"realistic ordinary food textures, ceramic serving ware, garnish, ingredients, syrup/gloss/moisture only when physically appropriate, and clean non-religious food-photography surfaces",
+    buddhist_food_merit:"realistic Thai merit-making food textures, tiffin carriers, Thai trays/bowls, banana leaves, fruit baskets, Thai sweets, and respectful offering presentation",
     wealth_prosperity:"realistic polished gold metal, refined reflective surfaces, premium red/ivory/black or signature-color accents, controlled luminous particles, elegant ornamental details, and sophisticated prosperity-native materials",
     floral_stilllife:"realistic ceramic or glass only when named by the exact Scene Concept, petals, stems, botanical textures, clean surfaces, restrained reflections, and negative space",
     minimal_abstract:"realistic sculptural materials, restrained pedestal/surface texture, clean architectural wall surfaces when applicable, precise shadow geometry, and negative space",
@@ -7806,6 +8103,7 @@ const PAIR_LOOKS={
     thai_architecture:["soft sunlight moving across architectural details","tree shadows shifting across courtyard/path surfaces","gentle breeze in surrounding foliage"],
     travel_viewpoint:["changing light across the destination","gentle breeze in scene-native vegetation","subtle water reflections or moving clouds when scene-appropriate"],
     food_hero:["physically appropriate freshly-served cues such as gloss, texture, garnish, moisture, or warmth only when naturally plausible"],
+    buddhist_food_merit:["quiet respectful merit-food stillness, natural food freshness, gentle morning light on tiffin/trays/Thai sweets, and subtle scene-appropriate temple-morning atmosphere"],
     wealth_prosperity:["soft golden light moving across polished prosperity symbols","subtle luminous particles drifting through warm golden depth","controlled reflections changing across gold surfaces","gentle glow building toward a symbolic path or horizon"],
     floral_stilllife:["soft light shifting across petals/stems and the exact named vessel/surface","quiet botanical stillness with subtle shadow movement"],
     minimal_abstract:["slow shifting geometric light and shadow","quiet sculptural stillness with controlled light progression"],
@@ -7825,6 +8123,7 @@ const PAIR_LOOKS={
     thai_architecture:["Thai_pavilion","temple_courtyard","heritage_Thai_house","traditional_Thai_architecture"],
     travel_viewpoint:["scenic_overlook","city_viewpoint","historic_town_view","old_town_view","riverside_town","European_town","tourist_viewpoint"],
     food_hero:["food_scene","dessert_scene","dish_hero","fruit_scene","culinary_still_life","plated_food","food_photography"],
+    buddhist_food_merit:["buddhist_food_merit","merit_food","thai_merit_tiffin","alms_meal","temple_food_offering","thai_sweets_merit","fruit_offering","morning_alms_food"],
     wealth_prosperity:["wealth_scene","prosperity_scene","gold_abundance","fortune_gold","gold_ingots","prosperity_tree","luxury_wealth","auspicious_wealth"],
     floral_stilllife:["flower_arrangement","vase_still_life","botanical_still_life","floral_tabletop","flower_hero_object"],
     minimal_abstract:["minimal_still_life","gallery_minimalism","abstract_object_scene","sculptural_still_life","paper_art_scene","minimal_pedestal"],
@@ -7847,13 +8146,31 @@ const PAIR_LOOKS={
 
 
 
+  const GENERAL_BUDDHIST_BLOCKED_FAMILIES=new Set(["buddhist_sacred","buddhist_food_merit"]);
+  const GENERAL_BUDDHIST_TEMPLATE_RX=/\bbuddha\b|\bbuddhist\b|\bmonk\b|\bbhikkhu\b|\bwan phra\b|\bmerit[- ]?making\b|\balms\b|offering to monks|temple offering|พระพุทธ|พระสงฆ์|พระภิกษุ|วันพระ|ทำบุญ|ถวายพระ|ใส่บาตร|สังฆทาน|เจดีย์|\btemple\b/i;
+
   function buddhistSceneMode(){
-    const t=document.getElementById("buddhistToggle");
-    return !!(t && t.checked);
+    return resolveMainArtworkMode()==="buddhist";
+  }
+  function generalTemplateAllowed(row){
+    if(!row)return false;
+    const text=`${String(row[0]||row.name||"")} ${String(row[1]||row.prompt||"")}`;
+    return !GENERAL_BUDDHIST_TEMPLATE_RX.test(text);
+  }
+  function familyAllowedInMainMode(family){
+    const mode=resolveMainArtworkMode();
+    if(family==="auto")return true;
+    if(mode==="general")return !GENERAL_BUDDHIST_BLOCKED_FAMILIES.has(family);
+    if(mode==="buddhist")return BUDDHIST_ALLOWED_SCENE_FAMILIES.has(family);
+    return true;
   }
   function templateRowsForMode(family){
-    if(buddhistSceneMode() && family==="food_hero")return BUDDHIST_FOOD_TEMPLATES;
-    return TEMPLATE_CATALOG[family]||[];
+    if(family==="buddhist_food_merit"){
+      return buddhistSceneMode()?BUDDHIST_FOOD_TEMPLATES:[];
+    }
+    let rows=TEMPLATE_CATALOG[family]||[];
+    if(resolveMainArtworkMode()==="general")rows=rows.filter(generalTemplateAllowed);
+    return rows;
   }
   function templateMetaForMode(name){
     return BUDDHIST_FOOD_UI_TH[name]||TEMPLATE_UI_TH[name]||null;
@@ -7862,14 +8179,16 @@ const PAIR_LOOKS={
 
   function buddhistSubjectAllowedFamilies(setNo){
     const mode=buddhistSubjectMode(setNo);
-    if(mode==="monk_reference" || mode==="monk_generated") return new Set(["buddhist_sacred","thai_architecture","nature_mountain","garden_botanical","waterfront"]);
-    if(mode==="buddha_reference" || mode==="buddha_statue") return new Set(["buddhist_sacred","thai_architecture","nature_mountain","garden_botanical"]);
-    if(mode==="temple_reference") return new Set(["buddhist_sacred","thai_architecture","nature_mountain","garden_botanical","waterfront"]);
+    if(mode==="layperson_reference" || mode==="layperson_generated") return new Set(["buddhist_sacred","thai_architecture","nature_mountain","rice_countryside","garden_botanical","waterfront","buddhist_food_merit","floral_stilllife"]);
+    if(mode==="monk_reference" || mode==="monk_generated") return new Set(["buddhist_sacred","thai_architecture","nature_mountain","garden_botanical","waterfront","buddhist_food_merit"]);
+    if(mode==="buddha_reference" || mode==="buddha_statue") return new Set(["buddhist_sacred","thai_architecture","nature_mountain","garden_botanical","buddhist_food_merit"]);
+    if(mode==="temple_reference") return new Set(["buddhist_sacred","thai_architecture","nature_mountain","garden_botanical","waterfront","buddhist_food_merit"]);
     return BUDDHIST_ALLOWED_SCENE_FAMILIES;
   }
 
   function selectedTemplateFamily(setNo){
-    return value(setNo===1?"sceneTemplateFamily1":"sceneTemplateFamily2","auto");
+    const raw=value(setNo===1?"sceneTemplateFamily1":"sceneTemplateFamily2","auto");
+    return familyAllowedInMainMode(raw)?raw:"auto";
   }
 
   function selectedTemplateExact(setNo){
@@ -7947,6 +8266,12 @@ const PAIR_LOOKS={
   }
 
   function boolPeople(setNo){
+    const mainMode=resolveMainArtworkMode();
+    const bMode=document.getElementById(setNo===1?"buddhistSubject1":"buddhistSubject2")?.value||"auto";
+    if(mainMode==="buddhist" && setNo===1){
+      return ["monk_generated","monk_reference"].includes(bMode);
+    }
+    if(mainMode==="buddhist" && setNo===2 && ["layperson_generated","layperson_reference"].includes(bMode))return true;
     const m=setNo===1 ? characterMode1 : characterMode2;
     return m==="people" || m==="both";
   }
@@ -7957,7 +8282,12 @@ const PAIR_LOOKS={
   }
 
   function charLabel(setNo){
-    const m=setNo===1 ? characterMode1 : characterMode2;
+    const bMode=document.getElementById(setNo===1?"buddhistSubject1":"buddhistSubject2")?.value||"auto";
+    let m=setNo===1 ? characterMode1 : characterMode2;
+    if(resolveMainArtworkMode()==="buddhist" && setNo===1 && !["monk_generated","monk_reference"].includes(bMode)){
+      m=(m==="both")?"animal":(m==="people"?"none":m);
+    }
+    if(resolveMainArtworkMode()==="buddhist" && setNo===2 && ["layperson_generated","layperson_reference"].includes(bMode))m="people";
     return {
       none:"NO PEOPLE AND NO ANIMAL CHARACTERS",
       people:"PEOPLE ONLY — NO ANIMAL CHARACTER",
@@ -7967,14 +8297,27 @@ const PAIR_LOOKS={
   }
 
   function sourceFor(setNo){
+    const bMode=document.getElementById(setNo===1?"buddhistSubject1":"buddhistSubject2")?.value||"auto";
+    if(resolveMainArtworkMode()==="buddhist" && setNo===2){
+      if(bMode==="layperson_generated")return "generated";
+      if(bMode==="layperson_reference")return "user_photo";
+    }
     return setNo===1 ? personSource1 : personSource2;
   }
 
   function exactCharacterState(setNo){
-    const charMode=document.getElementById(setNo===1?"characterMode1":"characterMode2")?.value || (setNo===1?characterMode1:characterMode2) || "none";
+    let charMode=document.getElementById(setNo===1?"characterMode1":"characterMode2")?.value || (setNo===1?characterMode1:characterMode2) || "none";
     const gender=document.getElementById(setNo===1?"genderMode1":"genderMode2")?.value || (setNo===1?genderMode1:genderMode2) || "auto";
     const age=document.getElementById(setNo===1?"ageMode1":"ageMode2")?.value || (setNo===1?ageMode1:ageMode2) || "auto";
-    const personSource=document.getElementById(setNo===1?"personSource1":"personSource2")?.value || sourceFor(setNo) || "generated";
+    let personSource=document.getElementById(setNo===1?"personSource1":"personSource2")?.value || sourceFor(setNo) || "generated";
+    const bMode=document.getElementById(setNo===1?"buddhistSubject1":"buddhistSubject2")?.value||"auto";
+    if(resolveMainArtworkMode()==="buddhist" && setNo===1 && !["monk_generated","monk_reference"].includes(bMode)){
+      charMode=(charMode==="both")?"animal":(charMode==="people"?"none":charMode);
+    }
+    if(resolveMainArtworkMode()==="buddhist" && setNo===2){
+      if(bMode==="layperson_generated"){charMode="people";personSource="generated";}
+      if(bMode==="layperson_reference"){charMode="people";personSource="user_photo";}
+    }
 
     const aType=document.getElementById("animalType")?.value || animalType || "auto";
     const aLook=document.getElementById("animalLook")?.value || animalLook || "auto";
@@ -8154,6 +8497,7 @@ const PAIR_LOOKS={
     const explicit=String(c?._deepSceneFamily||c?.category||"");
     if(AUTHORITY[explicit]) return explicit;
     const x=((c?.name||"")+" "+(c?.prompt||"")).toLowerCase();
+    if(resolveMainArtworkMode()==="buddhist" && /tiffin|alms meal|merit food|fruit offering|thai sweets|dessert|food|dish|fruit|ปิ่นโต|อาหาร|ขนม|ผลไม้|ทำบุญ|ถวายพระ|ใส่บาตร/.test(x)) return "buddhist_food_merit";
     if(resolveMainArtworkMode()==="buddhist" && (s?.buddhist || /buddha|temple|lotus|wan phra|วันพระ|พระพุทธ|วัด/.test(x))) return "buddhist_sacred";
     if(/wealth|prosper|gold ingot|gold coin|prosperity tree|fortune gold|มั่งคั่ง|ร่ำรวย|ความรุ่งเรือง/.test(x)) return "wealth_prosperity";
     if(/dessert|food|dish|fruit|อาหาร|ขนม/.test(x)) return "food_hero";
@@ -8181,7 +8525,7 @@ const PAIR_LOOKS={
   function chooseFamily(s,setNo,seed){
     const subjectResolved=resolveBuddhistSubjectComposition(setNo,s);
     const manual=selectedTemplateFamily(setNo);
-    if(manual!=="auto" && TEMPLATE_CATALOG[manual]) return manual;
+    if(manual!=="auto" && familyAllowedInMainMode(manual) && TEMPLATE_CATALOG[manual]) return manual;
 
     const baseConcept=setNo===1?s.concepts.image1:s.concepts.image2;
 
@@ -8202,7 +8546,7 @@ const PAIR_LOOKS={
       return sceneFamilyFromConcept(baseConcept,s);
     }
 
-    let all=Object.keys(TEMPLATE_CATALOG);
+    let all=Object.keys(TEMPLATE_CATALOG).filter(f=>familyAllowedInMainMode(f));
     if(resolveMainArtworkMode()==="buddhist" && subjectResolved.buddhistOn){
       const allowed=buddhistSubjectAllowedFamilies(setNo);
       all=all.filter(f=>allowed.has(f));
@@ -8377,8 +8721,8 @@ const PAIR_LOOKS={
 
 
   function masterLibraryProfile(scene){
-    return POKUN_MASTER_LIBRARY_V1158.sceneProfiles[scene?.family]
-      || POKUN_MASTER_LIBRARY_V1158.sceneProfiles.minimal_abstract;
+    return POKUN_MASTER_LIBRARY_V1164.sceneProfiles[scene?.family]
+      || POKUN_MASTER_LIBRARY_V1164.sceneProfiles.minimal_abstract;
   }
 
   function masterLibraryDistinctPick(list,setNo,base){
@@ -8393,13 +8737,13 @@ const PAIR_LOOKS={
 
   function resolveMasterLibraryBundle(setNo,s,scene,texts,layout,pairLook,seed){
     const profile=masterLibraryProfile(scene);
-    const base=hashString(`${userSeed}|${s.day.isoDate}|${scene.family}|${scene.name}|master-library-v1158|${rerollSeed1}|${rerollSeed2}`);
+    const base=hashString(`${userSeed}|${s.day.isoDate}|${scene.family}|${scene.name}|master-library-v1164|${rerollSeed1}|${rerollSeed2}`);
     const themeKey=texts?.blessingThemeKey||resolvedBlessingTheme(s,setNo)||"all_round";
-    const headlineTones=POKUN_MASTER_LIBRARY_V1158.headlineTones[themeKey]
-      || POKUN_MASTER_LIBRARY_V1158.headlineTones.all_round;
+    const headlineTones=POKUN_MASTER_LIBRARY_V1164.headlineTones[themeKey]
+      || POKUN_MASTER_LIBRARY_V1164.headlineTones.all_round;
 
     return {
-      version:POKUN_MASTER_LIBRARY_V1158.version,
+      version:POKUN_MASTER_LIBRARY_V1164.version,
       sceneFamily:scene.family,
       sceneTheme:profile.label,
       mood:masterLibraryDistinctPick(profile.moods,setNo,base+101),
@@ -8414,17 +8758,21 @@ const PAIR_LOOKS={
       blessingFrame:resolvedTextFrame(s,"blessing").label,
       pairLook:pairLook.label,
       blessingTheme:texts?.blessingThemeLabel||themeKey,
-      scenicPattern:masterLibraryDistinctPick(POKUN_MASTER_LIBRARY_V1158.referenceBoardScenicPatterns,setNo,base+709),
+      scenicPattern:masterLibraryDistinctPick(POKUN_MASTER_LIBRARY_V1164.referenceBoardScenicPatterns,setNo,base+709),
       floralPattern:["garden_botanical","floral_stilllife"].includes(scene.family)
-        ? masterLibraryDistinctPick(POKUN_MASTER_LIBRARY_V1158.referenceBoardFloralPatterns,setNo,base+811)
+        ? masterLibraryDistinctPick(POKUN_MASTER_LIBRARY_V1164.referenceBoardFloralPatterns,setNo,base+811)
         : ""
     };
   }
 
-  function masterLibraryPromptLines(bundle,scene){
+  function masterLibraryPromptLines(bundle,scene,setNo){
     if(!bundle)return [];
+    const sacredNamed=(typeof sacredNamedReferenceMeta==="function" && setNo)?sacredNamedReferenceMeta(setNo):null;
+    const blessingSourceLock=sacredNamed?.personalizeText
+      ? `SACRED-NAME PERSONALIZED BLESSING EXCEPTION v11.64: visible Thai text may use the user-typed ${sacredNamed.kindLabel} name “${sacredNamed.name}” with POKUN's dedicated named-sacred-subject blessing templates. Reproduce the FINAL resolved Headline and Greeting EXACTLY; do not paraphrase or add extra blessing text.`
+      : "REFERENCE-IMAGE BLESSING SOURCE LOCK: the resolved Thai Headline and Greeting come only from wording extracted from the user's uploaded reference images. Reproduce them EXACTLY. Do not paraphrase, expand, complete, combine, improve, or add any new blessing wording.";
     return [
-      "POKUN MASTER LIBRARY v11.58 — CURATED GREETING DESIGN SUPPORT:",
+      "POKUN MASTER LIBRARY v11.64 — CURATED GREETING DESIGN SUPPORT:",
       "This block is SUPPORTIVE ONLY. Exact Subject, Character, Scene, Thai Text, Typography, Frame, Layout, Weekday/Date, and Mode locks above remain higher priority.",
       `Library Scene Theme: ${bundle.sceneTheme}.`,
       `Library Mood Accent: ${bundle.mood}.`,
@@ -8444,7 +8792,7 @@ const PAIR_LOOKS={
       "Use the library accent only when it naturally belongs to the exact Scene Concept. Never add an unrelated object merely because it exists in the library.",
       "PAIR LIBRARY VARIETY: Image 1 and Image 2 should not repeat the same optional accent prop, composition accent, or decorative storytelling cue when alternatives exist.",
       "REFERENCE-BOARD DESIGN DNA: favor the successful Thai daily-greeting patterns seen repeatedly in curated examples — clear weekday identity, floral/nature/cafe/food/sacred/cute subject variety, readable headline hierarchy, compact positive blessing, and tasteful decorative framing.",
-      "REFERENCE-IMAGE BLESSING SOURCE LOCK: the resolved Thai Headline and Greeting come only from wording extracted from the user's uploaded reference images. Reproduce them EXACTLY. Do not paraphrase, expand, complete, combine, improve, or add any new blessing wording.",
+      blessingSourceLock,
       ""
     ];
   }
@@ -8494,11 +8842,11 @@ const PAIR_LOOKS={
     for(const x of raw){
       const t=x.toLowerCase();
       if(family==="floral_stilllife" && /vase|glass|flower/.test(t))continue;
-      if(family==="food_hero" && /food|dish|dessert/.test(t))continue;
-      if((family==="minimal_abstract"||family==="floral_stilllife"||family==="food_hero") && t==="architecture"){
+      if(["food_hero","buddhist_food_merit"].includes(family) && /food|dish|dessert|tiffin|alms|offering/.test(t))continue;
+      if((family==="minimal_abstract"||family==="floral_stilllife"||family==="food_hero"||family==="buddhist_food_merit") && t==="architecture"){
         out.push("architecture as a competing scene or hero subject"); continue;
       }
-      if((family==="minimal_abstract"||family==="floral_stilllife"||family==="food_hero") && t==="water"){
+      if((family==="minimal_abstract"||family==="floral_stilllife"||family==="food_hero"||family==="buddhist_food_merit") && t==="water"){
         out.push("waterfront / waterside scenery as the environment"); continue;
       }
       if(t==="city") {out.push("city / urban scenery as the environment");continue;}
@@ -8507,11 +8855,11 @@ const PAIR_LOOKS={
       if(/veranda/.test(t)){out.push("veranda / domestic styling");continue;}
       if(/sofa|home interior|interior/.test(t)){out.push("interior / domestic furniture");continue;}
       if(/table/.test(t)){out.push("unrelated domestic tabletop styling");continue;}
-      if(/food/.test(t) && family!=="food_hero"){out.push("food-related props");continue;}
+      if(/food/.test(t) && !["food_hero","buddhist_food_merit"].includes(family)){out.push("food-related props");continue;}
       out.push(x);
     }
     // Universal contamination blockers, phrased narrowly.
-    if(!["food_hero","floral_stilllife","minimal_abstract"].includes(family)){
+    if(!["food_hero","buddhist_food_merit","floral_stilllife","minimal_abstract"].includes(family)){
       out.push("unrelated domestic tabletop styling");
     }
     out.push("recurring wooden-table + vase + cushion + veranda composition unless explicitly required");
@@ -8571,6 +8919,18 @@ const PAIR_LOOKS={
         greeting=e.greeting;
       }else{
         // Important/Buddhist days keep their calendar-specific headline and main blessing.
+      }
+    }
+
+    // v11.64: explicit user-named sacred subject personalization.
+    // Supports user-named monk/revered teacher and Buddha/sacred-image subjects.
+    if(appMode==="greeting"){
+      const sacredNamed=sacredNamedBlessingTexts(s,setNo,seed+1164);
+      if(sacredNamed){
+        blessingThemeKey=sacredNamed.theme;
+        blessingThemeLabel=sacredNamed.label;
+        if(["both","headline"].includes(sacredNamed.textUse))headline=sacredNamed.headline;
+        if(["both","greeting"].includes(sacredNamed.textUse))greeting=sacredNamed.greeting;
       }
     }
 
@@ -8639,6 +8999,8 @@ const PAIR_LOOKS={
       buddha_statue:"BUDDHA STATUE / พระพุทธรูป",
       monk_generated:"ORIGINAL GENERIC BUDDHIST MONK / พระภิกษุที่สร้างใหม่",
       monk_reference:"REFERENCE BUDDHIST MONK / พระภิกษุจากรูปอ้างอิง",
+      layperson_generated:"ORDINARY LAYPERSON / บุคคลธรรมดาสร้างใหม่",
+      layperson_reference:"REFERENCE ORDINARY PERSON / บุคคลธรรมดาจากรูปอ้างอิง",
       no_figure:"NO BUDDHA FIGURE / NO HUMAN",
       buddha_reference:"REFERENCE BUDDHA IMAGE / พระพุทธรูปจากรูปอ้างอิง",
       temple_reference:"REFERENCE TEMPLE / วัดจากรูปอ้างอิง"
@@ -8682,15 +9044,49 @@ const PAIR_LOOKS={
           : "No living character is selected: use only the resolved scene/environment/objects."
       );
     }else if(buddhistResolved?.buddhistOn){
+      const sacredNamed=sacredNamedReferenceMeta(setNo);
       subject.push(
         `MANDATORY BUDDHIST SUBJECT: ${portableBuddhistSubjectLabel(buddhistResolved.mode)}.`,
         "Follow this Buddhist subject selection exactly; do not replace it with a deity from another tradition or a generic unrelated character."
       );
+      if(sacredNamed.active){
+        subject.push(
+          sacredNamed.kind==="monk"
+            ? `USER-SPECIFIED SACRED MASTER NAME — EXACT: ${sacredNamed.name}.`
+            : `USER-SPECIFIED BUDDHA / SACRED IMAGE NAME — EXACT: ${sacredNamed.name}.`,
+          `NAME TYPE: ${sacredNamed.kindLabel}.`,
+          "The name is user-entered metadata. Do not infer, recognize, verify, correct, or substitute the name based on the image.",
+          sacredNamed.textUse==="off"
+            ? "Do not place this name in the visible blessing text; it is reference metadata only."
+            : `VISIBLE-TEXT PERSONALIZATION MODE: ${sacredNamed.textUse}. When the final resolved Headline/Greeting contains this name, reproduce it EXACTLY.`
+        );
+      }
       if(["monk_reference","monk_generated"].includes(buddhistResolved.mode)){
         subject.push(
           "PER-IMAGE BUDDHIST SUBJECT EXCLUSIVITY: the monk selection replaces any AUTO Buddha / Image 1 Buddha / Wan Phra Buddha default for THIS image.",
           "DO NOT include a Buddha statue or Buddha image in this image.",
           "A Buddha-themed exact Scene Template left from an earlier selection is invalid and must be ignored/replaced with a monk-compatible scene."
+        );
+      }
+      if(["layperson_generated","layperson_reference"].includes(buddhistResolved.mode)){
+        subject.push(
+          "IMAGE 2 ORDINARY-PERSON SUBJECT LOCK — HIGHEST HUMAN AUTHORITY:",
+          buddhistResolved.mode==="layperson_reference"
+            ? "The referenced ordinary person is the REQUIRED primary human subject for Image 2."
+            : "One newly generated ordinary layperson / everyday person is the REQUIRED primary human subject for Image 2.",
+          "Do NOT replace this person with a Buddha statue/image, Buddhist monk, novice, nun, priest, revered teacher, worshipper, or sacred human figure.",
+          "Buddhist atmosphere may come from temple architecture, Bodhi tree, lotus, merit food, flowers, landscape, or respectful environmental details; none may replace the selected person."
+        );
+      }
+      if(buddhistResolved.ordinaryHumanSelected){
+        subject.push(
+          buddhistResolved.ordinaryReferenceSelected
+            ? "ORDINARY HUMAN REFERENCE SUBJECT(S): REQUIRED by the Character controls. Use the attached ordinary-person photo(s) only as identity guidance."
+            : "ORDINARY HUMAN SUBJECT(S): REQUIRED by the Character controls. Use ordinary layperson / everyday human subject(s).",
+          buddhistResolved.hasBuddha
+            ? "If a Buddha statue/image is also selected, show both together respectfully: the Buddha remains the sacred object and the human remains an ordinary layperson."
+            : "If no monk mode is selected, the human subject must remain an ordinary layperson / everyday person within the Buddhist-art atmosphere.",
+          "Do not convert the selected ordinary person into a monk, novice monk, nun, priest, worshipper, revered teacher, or Buddha figure."
         );
       }
     }else{
@@ -8742,6 +9138,7 @@ const PAIR_LOOKS={
       "",
       "PRIORITY 3 — EXACT SCENE CONTRACT:",
       `SCENE FAMILY: ${scene.family}.`,
+      `FINAL SCENE RESOLUTION MODE: ${scene.templateMode||"resolved"}.`,
       `EXACT SCENE: ${scene.name} / ${sceneThai}.`,
       `SCENE DESCRIPTION: ${scene.prompt}`,
       scene.templateLocked
@@ -8793,7 +9190,7 @@ const PAIR_LOOKS={
   }
 
   function renderWorkflow(setNo,s,resolved,L){
-    const people=resolved?.humanRequired || boolPeople(setNo);
+    const people=resolved?.buddhistOn ? !!resolved.humanRequired : boolPeople(setNo);
     const source=sourceFor(setNo);
     // v11.25: stale Buddhist dropdown values have ZERO authority outside Buddhist main mode.
     const mode=resolved?.buddhistOn ? (resolved?.mode||"auto") : "auto";
@@ -8813,12 +9210,54 @@ const PAIR_LOOKS={
       return;
     }
 
+    if(mode==="layperson_reference"){
+      L.push(
+        `${ENGINE_LABEL} NEW ARTWORK WITH ORDINARY PERSON REFERENCE — IMAGE 2`,
+        "Task type: NEW ORIGINAL ARTWORK USING A HUMAN IDENTITY REFERENCE.",
+        "The attached ordinary-person reference image is REQUIRED identity guidance, not an editing canvas.",
+        "Create a new pose, clothing, lighting, environment, and composition while preserving recognizable facial identity, gender, and age impression.",
+        "The referenced subject is an ORDINARY LAYPERSON / EVERYDAY PERSON — not a monk, novice, nun, priest, worshipper, revered teacher, Buddha, deity, or sacred human figure.",
+        resolved?.refFile ? `Reference filename selected in POKUN: ${resolved.refFile}.` : "Manual/ChatGPT mode: attach the ordinary-person reference image together with this Prompt.",
+        ""
+      );
+      if(typeof userPhotoDirection==="function")L.push(...userPhotoDirection(setNo));
+      return;
+    }
+
+    if(mode==="buddha_reference"){
+      const buddha=sacredBuddhaMeta(setNo);
+      L.push(
+        `${ENGINE_LABEL} NEW ARTWORK WITH BUDDHA / SACRED IMAGE REFERENCE`,
+        "Task type: NEW ORIGINAL ARTWORK USING A SACRED-OBJECT VISUAL REFERENCE.",
+        "Create a new 3:4 vertical scene, lighting, environment, and composition.",
+        "The attached Buddha statue / sacred image is REQUIRED visual-reference guidance, not an editing canvas.",
+        buddha.name?`USER-SPECIFIED BUDDHA / SACRED IMAGE NAME: ${buddha.name}.`:"USER-SPECIFIED BUDDHA / SACRED IMAGE NAME: not provided.",
+        buddha.name?"NAME SOURCE AUTHORITY: this name was typed by the user. Use it exactly as textual metadata; do NOT infer, recognize, verify, correct, or replace the name from the image itself.":"Do not infer or guess the Buddha/sacred-image name from the image.",
+        ""
+      );
+      return;
+    }
+
+    if(mode==="layperson_generated"){
+      L.push(
+        `${ENGINE_LABEL} CLEAN GENERATION — ORDINARY PERSON / IMAGE 2`,
+        "Task type: ORIGINAL TEXT-TO-IMAGE.",
+        "Create one newly invented, non-famous ordinary layperson / everyday human subject as the primary human subject.",
+        "Do NOT make this person a monk, novice, nun, priest, worshipper, revered teacher, Buddha, deity, or sacred human figure.",
+        ""
+      );
+      return;
+    }
+
     if(mode==="monk_reference"){
+      const master=sacredMasterMeta(setNo);
       L.push(
         `${ENGINE_LABEL} NEW ARTWORK WITH BUDDHIST MONK REFERENCE`,
         "Task type: NEW ORIGINAL ARTWORK USING A HUMAN IDENTITY REFERENCE.",
         "Create a new 3:4 vertical scene, pose, lighting, environment, and composition.",
         "The attached monk / revered-teacher image is REQUIRED identity/reference guidance, not an editing canvas.",
+        master.name?`USER-SPECIFIED MONK / REVERED-TEACHER NAME: ${master.name}.`:"USER-SPECIFIED MONK / REVERED-TEACHER NAME: not provided.",
+        master.name?"NAME SOURCE AUTHORITY: this name was typed by the user. Use it exactly as a textual label; do NOT infer, recognize, verify, correct, or replace the identity name from the image itself.":"Do not infer or guess a monk/revered-teacher name from the image.",
         "Do not remove the referenced monk because the standard Character selector is set to no people.",
         ""
       );
@@ -8844,7 +9283,9 @@ const PAIR_LOOKS={
         "Start from a blank visual canvas.",
         "Create one entirely original 3:4 vertical artwork from this written brief.",
         people
-          ?"PERSON SOURCE: Invent a new non-famous human subject specifically for this artwork."
+          ? (resolved?.buddhistOn && !resolved?.noFigure && !["monk_reference","monk_generated"].includes(mode)
+              ? "PERSON SOURCE: Invent ordinary layperson / everyday human subject(s) for this Buddhist-art image. Do NOT turn them into a monk, novice monk, nun, priest, worshipper, revered teacher, or Buddha figure."
+              : "PERSON SOURCE: Invent a new non-famous human subject specifically for this artwork.")
           :"SUBJECT SOURCE: Invent all visible non-human subjects and scene elements specifically for this artwork.",
         ""
       );
@@ -8853,6 +9294,9 @@ const PAIR_LOOKS={
         `${ENGINE_LABEL} NEW ARTWORK WITH USER IDENTITY GUIDANCE`,
         "Create a new scene, pose, clothing treatment, lighting, and composition.",
         "Use the user-provided photo(s) only for identity guidance.",
+        resolved?.buddhistOn && !resolved?.noFigure && !["monk_reference","monk_generated"].includes(mode)
+          ? "In Buddhist mode, the referenced person is an ordinary layperson / everyday human subject unless monk_reference is explicitly selected. Do NOT convert the person into a monk, nun, novice, priest, worshipper, revered teacher, or Buddha figure."
+          : "",
         ""
       );
       if(typeof userPhotoDirection==="function")L.push(...userPhotoDirection(setNo));
@@ -8869,7 +9313,7 @@ const PAIR_LOOKS={
   }
   function buddhistSubjectIsHuman(setNo,s){
     const mode=buddhistSubjectMode(setNo);
-    return mode==="monk_reference" || mode==="monk_generated";
+    return ["monk_reference","monk_generated","layperson_generated","layperson_reference"].includes(mode);
   }
   function buddhistSubjectPeopleAllowed(setNo,s){
     // v11.55: only the CURRENT resolved main mode / current Character UI may
@@ -8886,13 +9330,33 @@ const PAIR_LOOKS={
     const lines=["BUDDHIST SUBJECT — AUTHORITATIVE:"];
     if(mode==="auto"){
       lines.push("Subject mode: AUTO. Choose a respectful Buddhist focal subject appropriate to this exact scene, without forcing a human figure.");
+      if(resolved.ordinaryHumanSelected){
+        lines.push(
+          resolved.ordinaryReferenceSelected
+            ? "The Character controls also require ordinary layperson subject(s) from uploaded reference photo(s). Use those photo(s) only as identity guidance."
+            : "The Character controls also require ordinary layperson / everyday human subject(s). These are normal people, not monks or revered teachers.",
+          "Do not convert the selected ordinary person into a monk, novice monk, nun, priest, worshipper, revered teacher, or Buddha figure."
+        );
+      }
     }else if(mode==="buddha_statue"){
+      const buddha=sacredBuddhaMeta(setNo);
       lines.push(
         "Subject mode: BUDDHA STATUE.",
+        buddha.name?`USER-SPECIFIED BUDDHA / SACRED IMAGE NAME — EXACT: ${buddha.name}.`:"No specific Buddha/sacred-image name was typed.",
+        buddha.name?"The typed name is user metadata for theme/text. Without a reference image, do not claim visual verification of the named real-world sacred image.":"",
         "Use a respectful Buddha statue or Buddha image as the sacred focal subject.",
         "A Buddha statue/image is NOT a human person for the People toggle.",
         "Keep posture, hands, facial expression, proportions, and sacred context dignified and culturally appropriate."
       );
+      if(resolved.ordinaryHumanSelected){
+        lines.push(
+          "The Character controls also require ordinary layperson subject(s) together with the Buddha statue/image.",
+          resolved.ordinaryReferenceSelected
+            ? "Use the uploaded ordinary-person photo(s) as identity reference only; keep the person recognizably consistent while rebuilding pose, clothing, and scene."
+            : "Generate the person as an ordinary layperson / everyday human subject appropriate to the Buddhist-art scene.",
+          "Do not reinterpret the person as a monk, nun, novice, priest, worshipper, or revered teacher."
+        );
+      }
     }else if(mode==="monk_generated"){
       lines.push(
         "Subject mode: ORIGINAL GENERIC BUDDHIST MONK.",
@@ -8904,6 +9368,22 @@ const PAIR_LOOKS={
         "Do not imitate or resemble a known monk, abbot, celebrity monk, historical figure, or living public figure.",
         "Keep hands, anatomy, robe folds, posture, and temple context natural and respectful."
       );
+    }else if(mode==="layperson_generated"){
+      lines.push(
+        "Subject mode: ORDINARY LAYPERSON — GENERATED / IMAGE 2.",
+        "Include one newly invented, non-famous ordinary layperson / everyday person as the required primary human subject.",
+        "Do not replace this person with a Buddha statue/image, monk, novice, nun, priest, worshipper, revered teacher, deity, or sacred human figure.",
+        "Use the selected Image 2 gender and age controls exactly; create clothing, pose, and activity naturally for the chosen Buddhist-art scene."
+      );
+    }else if(mode==="layperson_reference"){
+      lines.push(
+        "Subject mode: USER-PROVIDED ORDINARY PERSON REFERENCE / IMAGE 2.",
+        "The referenced ordinary person is REQUIRED as the primary human subject.",
+        "Create a NEW artwork; do not edit the original reference image.",
+        "Preserve recognizable facial identity, gender, age impression, face shape, and distinctive traits from the reference.",
+        "Do not transform the person into a Buddha statue/image, monk, novice, nun, priest, worshipper, revered teacher, deity, or sacred human figure.",
+        file?`Reference filename selected in POKUN: ${file}.`:"Manual/ChatGPT mode: attach the ordinary-person reference image together with this Prompt."
+      );
     }else if(mode==="no_figure"){
       lines.push(
         "Subject mode: NO BUDDHA FIGURE / NO HUMAN.",
@@ -8911,17 +9391,23 @@ const PAIR_LOOKS={
         "Use temple architecture, chedi, pavilion, Bodhi tree, lotus, candles, incense, merit offerings, Thai tiffin, Thai food/fruit offerings, or other scene-appropriate Buddhist elements."
       );
     }else if(mode==="buddha_reference"){
+      const buddha=sacredBuddhaMeta(setNo);
       lines.push(
         "Subject mode: USER-PROVIDED BUDDHA IMAGE REFERENCE.",
+        buddha.name?`USER-TYPED BUDDHA / SACRED IMAGE NAME — EXACT: ${buddha.name}.`:"USER-TYPED BUDDHA / SACRED IMAGE NAME: not provided; do not guess a name from the image.",
+        buddha.name?"Treat the typed name as user-provided metadata only. Do not claim visual identification or recognition from the reference image.":"Do not infer the sacred-image identity from pixels.",
         "Create a NEW artwork; do not treat the uploaded image as an editing canvas.",
         "Use the uploaded Buddha statue/image as visual reference for the sacred subject's appearance, posture, distinctive details, and identity of the statue/image.",
-        "Rebuild clothing/background/lighting/composition only as appropriate while preserving the recognizable sacred subject.",
+        "Rebuild background/lighting/composition only as appropriate while preserving the recognizable sacred subject.",
         file?`Reference filename selected in POKUN: ${file}.`:"The user must attach the Buddha reference image together with this Prompt."
       );
     }else if(mode==="monk_reference"){
+      const master=sacredMasterMeta(setNo);
       lines.push(
         "Subject mode: USER-PROVIDED MONK / REVERED TEACHER REFERENCE.",
         "This is a REAL HUMAN reference subject.",
+        master.name?`USER-TYPED REFERENCE NAME — EXACT: ${master.name}.`:"USER-TYPED REFERENCE NAME: not provided; do not guess a name from the image.",
+        master.name?"Treat the typed name as user-provided metadata only. Do not claim visual identification or recognition from the reference image.":"Do not infer identity from pixels.",
         "PRIMARY SACRED SUBJECT: the referenced monk / revered teacher.",
         "BUDDHA STATUE / IMAGE EXCLUSION: do NOT add a Buddha statue or Buddha image to this artwork; the monk reference replaces the Buddhist AUTO/Buddha default for this image.",
         "Create a NEW artwork using the uploaded photo only as identity reference; do not edit the original photo.",
@@ -8973,6 +9459,12 @@ const PAIR_LOOKS={
     }else if(monkGenerated){
       L.push("CHARACTER COMPOSITION: ONE ORIGINAL GENERIC BUDDHIST MONK — NO ANIMAL CHARACTER");
       L.push("PEOPLE: YES — include one newly invented non-famous Buddhist monk; do not use or imply any real-person identity.");
+    }else if(resolvedCombo.mode==="layperson_reference"){
+      L.push("CHARACTER COMPOSITION: ONE REFERENCED ORDINARY LAYPERSON / EVERYDAY PERSON — IMAGE 2.");
+      L.push("PEOPLE: YES — preserve the referenced person's identity; do not turn the person into a monk or sacred figure.");
+    }else if(resolvedCombo.mode==="layperson_generated"){
+      L.push("CHARACTER COMPOSITION: ONE GENERATED ORDINARY LAYPERSON / EVERYDAY PERSON — IMAGE 2.");
+      L.push("PEOPLE: YES — generate one ordinary non-famous person; do not turn the person into a monk or sacred figure.");
     }else if(resolvedCombo.humanRequired){
       L.push("CHARACTER COMPOSITION: SELECTED HUMAN SUBJECT(S) REQUIRED — NO UNSELECTED EXTRA PEOPLE.");
       L.push("PEOPLE: YES — selected Buddhist/Character subject authority overrides generic NO PEOPLE rules.");
@@ -8989,6 +9481,17 @@ const PAIR_LOOKS={
 
     if(noFigure){
       L.push("STRICT NO FIGURE: no Buddha statue/image and no human figure of any kind.");
+    }
+
+    if(resolvedCombo.buddhistOn && resolvedCombo.ordinaryHumanSelected && !monkRef && !monkGenerated && !noFigure){
+      L.push(
+        "BUDDHIST HUMAN ROLE LOCK:",
+        "Any selected human subject in this Buddhist-art image must be an ordinary layperson / everyday person unless monk_reference or monk_generated is explicitly selected.",
+        "Do NOT convert the selected person into a monk, novice monk, nun, priest, worshipper, revered teacher, or Buddha figure."
+      );
+      if(sourceFor(setNo)!=="generated"){
+        L.push("If a person reference photo is attached, use it only for the ordinary person's identity while creating a new composition.");
+      }
     }
 
     const capturedCharacter=characterStateSnapshot||exactCharacterState(setNo);
@@ -9131,10 +9634,16 @@ const PAIR_LOOKS={
         if(!/GENERAL CUTE CARTOON LOCK: ACTIVE/i.test(prompt))failures.push("General Cute Cartoon final lock missing");
       }
     }
-    if(ctx?.s?.holy?.isHoly && !wanPhraAutoBuddhist && resolveMainArtworkMode()==="general"){
-      if(!/WAN PHRA NORMAL OVERRIDE — HARD LOCK/i.test(prompt))failures.push("Wan Phra NORMAL override authority missing");
-      if(/Buddhist holy day:\s*วันพระ|Use a serene Buddhist sacred-art direction appropriate for Wan Phra/i.test(prompt)){
-        failures.push("Wan Phra NORMAL override still contains Buddhist holy-day generation instruction");
+    if(resolveMainArtworkMode()==="general"){
+      const fam=String(ctx?.scene?.family||"");
+      if(["buddhist_sacred","buddhist_food_merit"].includes(fam)){
+        failures.push("General mode resolved a Buddhist-only Scene Family");
+      }
+      if(!/GENERAL BUDDHIST FREE ZONE — ABSOLUTE/i.test(prompt)){
+        failures.push("General Buddhist-Free-Zone authority missing");
+      }
+      if(ctx?.s?.buddhist){
+        failures.push("General mode incorrectly resolved Buddhist artwork state");
       }
     }
 
@@ -9142,6 +9651,43 @@ const PAIR_LOOKS={
     if(exactSetNo){
       const ec=ctx.characterState||exactCharacterState(exactSetNo);
       const bsr=ctx?.buddhistSubjectResolved||resolveBuddhistSubjectComposition(exactSetNo,ctx?.s);
+      const sacredNamed=(typeof sacredNamedReferenceMeta==="function")?sacredNamedReferenceMeta(exactSetNo):null;
+      if(bsr?.buddhistOn && sacredNamed?.active){
+        const authorityPresent=sacredNamed.kind==="monk"
+          ? (prompt.includes("USER-SPECIFIED SACRED MASTER NAME — EXACT") || prompt.includes("USER-TYPED REFERENCE NAME — EXACT"))
+          : (prompt.includes("USER-SPECIFIED BUDDHA / SACRED IMAGE NAME — EXACT") || prompt.includes("USER-TYPED BUDDHA / SACRED IMAGE NAME — EXACT"));
+        if(!authorityPresent){
+          failures.push("User-specified sacred subject name authority missing");
+        }
+        if(!prompt.includes(sacredNamed.name)){
+          failures.push("User-specified sacred subject name missing from Prompt");
+        }
+        if(sacredNamed.personalizeText){
+          const finalHeadline=String(ctx?.texts?.headline||"");
+          const finalGreeting=String(ctx?.texts?.greeting||"");
+          if(["both","headline"].includes(sacredNamed.textUse) && !finalHeadline.includes(sacredNamed.name)){
+            failures.push("Sacred subject name missing from personalized Headline");
+          }
+          if(["both","greeting"].includes(sacredNamed.textUse) && !finalGreeting.includes(sacredNamed.name)){
+            failures.push("Sacred subject name missing from personalized Greeting");
+          }
+        }
+      }
+      if(bsr?.buddhistOn && exactSetNo===1 && bsr?.ordinaryHumanSelected){
+        failures.push("Buddhist Image 1 must not contain an ordinary layperson");
+      }
+      if(bsr?.buddhistOn && bsr?.ordinaryHumanSelected && !bsr?.noFigure){
+        if(!/ordinary layperson \/ everyday person|ordinary-person photo\(s\)|ORDINARY LAYPERSON \/ EVERYDAY PERSON|REFERENCED ORDINARY PERSON/i.test(prompt)){
+          failures.push("Buddhist Image ordinary-person authority missing");
+        }
+      }
+      if(bsr?.buddhistOn && ["layperson_generated","layperson_reference"].includes(bsr.mode)){
+        if(exactSetNo!==2)failures.push("Ordinary-person Buddhist subject mode is allowed only for Image 2");
+        if(ctx?.scene && !buddhistSubjectSceneCompatibleMode(bsr.mode,ctx.scene.name,ctx.scene.prompt))failures.push("Image 2 ordinary-person subject inherited Buddha/monk-specific Scene Template");
+        if(/Buddha statue \/ Buddha image:\s*REQUIRED|Buddhist monk \/ bhikkhu human subject:\s*REQUIRED|Referenced monk \/ revered teacher human subject:\s*REQUIRED/i.test(prompt)){
+          failures.push("Image 2 ordinary-person subject conflicts with Buddha/monk required authority");
+        }
+      }
       const buddhistHumanAuthority=!!(bsr?.buddhistOn && ["monk_reference","monk_generated"].includes(bsr.mode));
       const genderContract=genderContractFromState(ec);
 
@@ -9151,14 +9697,26 @@ const PAIR_LOOKS={
       if(!/EXACT ANIMAL AUTHORITY/i.test(prompt))failures.push("Exact animal authority missing");
 
       if(buddhistHumanAuthority){
-        if(ctx?.scene && !buddhistSubjectSceneCompatible(exactSetNo,ctx.scene.name,ctx.scene.prompt)){
-          failures.push("Selected monk subject conflicts with Buddha-specific Scene Template");
+        const finalSceneCompatible=ctx?.scene
+          ? buddhistSubjectSceneCompatibleMode(bsr.mode,ctx.scene.name,ctx.scene.prompt)
+          : false;
+
+        if(!finalSceneCompatible){
+          failures.push("Final resolved scene is incompatible with selected monk subject");
         }
         if(/Buddha statue \/ Buddha image:\s*REQUIRED|Referenced Buddha statue\/image:\s*REQUIRED/i.test(prompt)){
           failures.push("Selected monk subject conflicts with required Buddha subject");
         }
-        if(/EXACT SCENE:[^\n]*(Golden Buddha|Buddha image|Buddhist notebook page)/i.test(prompt)){
-          failures.push("Selected monk subject inherited Buddha-specific exact scene");
+
+        // v11.59: validate the exact scene line against ctx.scene itself.
+        // Do NOT grep broad prompt prose, because exclusion/diagnostic text can mention
+        // words such as “Buddha image” while explicitly forbidding it.
+        const exactSceneMatch=prompt.match(/EXACT SCENE:\s*([^\n]+)/i);
+        if(exactSceneMatch && ctx?.scene){
+          const expectedSceneName=String(ctx.scene.name||"").trim();
+          if(expectedSceneName && !exactSceneMatch[1].includes(expectedSceneName)){
+            failures.push("Portable Exact Scene does not match final resolved scene");
+          }
         }
         if(bsr.mode==="monk_reference"){
           if(!/GENDER CONTRACT:\s*REFERENCE IDENTITY CONTROLS GENDER/i.test(prompt))failures.push("Monk reference gender contract missing");
@@ -9573,9 +10131,10 @@ const PAIR_LOOKS={
     const seed=(typeof variationSeed==="function")?variationSeed(s,setNo):(Date.now()+setNo*997);
     const pairLook=resolvePairLook(s,seed);
     const family=chooseFamily(s,setNo,seed);
-    const scene=chooseExactScene(s,setNo,family,seed);
+    const preGuardScene=chooseExactScene(s,setNo,family,seed);
+    const scene=enforceFinalBuddhistSubjectScene(setNo,s,preGuardScene,seed,buddhistSubjectResolved);
     let variation=exactVariation(scene,seed);
-    variation.family=family;
+    variation.family=scene.family||family;
     variation.activityCategory=activityCategory(variation.activity);
     variation=normalizeActivityAgainstOther(setNo,s.day.isoDate,variation,seed);
 
@@ -9650,7 +10209,7 @@ const PAIR_LOOKS={
     L.push(
       `${ENGINE_LABEL} SECONDARY ENGINE DIAGNOSTICS — MUST NOT OVERRIDE PORTABLE CONTRACT:`,
       `Image: ${setNo}`,
-      `Scene Family: ${family}`,
+      `Scene Family: ${scene.family||family}`,
       `Exact Scene: ${scene.name}`,
       `Template selection: ${scene.templateMode||"auto"}`,
       `Template lock: ${scene.templateLocked?"ล็อกโดยผู้ใช้":"AUTO / สุ่มอัตโนมัติ"}`,
@@ -9662,6 +10221,7 @@ const PAIR_LOOKS={
       `Buddhist mode active for this image: ${buddhistSubjectResolved.buddhistOn?"YES":"NO"}`,
       `Buddhist Subject Mode: ${buddhistSubjectResolved.buddhistOn?buddhistSubjectResolved.mode:"IGNORED OUTSIDE BUDDHIST MODE"}`,
       `Per-Image Buddhist Subject Authority: IMAGE ${setNo} = ${buddhistSubjectResolved.buddhistOn?portableBuddhistSubjectLabel(buddhistSubjectResolved.mode):"OFF"}`,
+      `Final Resolved Scene Guard: ${scene.templateMode||"resolved"} / ${scene.family||family} / ${scene.name}`,
       `Deity Subject Mode: ${deityResolved.heroActive?deityResolved.deityMode:(deityResolved.companionNoDeity?"OFF — IMAGE 2 COMPANION NO DEITY":"OFF")}`,
       `Exact Character Mode: ${characterStateSnapshot.charMode}`,
       `Exact Gender UI: ${characterStateSnapshot.gender}`,
@@ -9750,7 +10310,7 @@ const PAIR_LOOKS={
       L.push("ARTWORK TYPE: THAI DAILY GREETING ARTWORK.","");
     }
 
-    L.push(...masterLibraryPromptLines(masterLibraryBundle,scene));
+    L.push(...masterLibraryPromptLines(masterLibraryBundle,scene,setNo));
 
     L.push(
       "LAYOUT / COMPOSITION — AUTHORITATIVE:",
@@ -9858,8 +10418,8 @@ const PAIR_LOOKS={
         "BUDDHIST MODE — SCENE COMPATIBILITY AUTHORITY:",
         "Keep the selected scene culturally compatible with Thai Buddhist merit-making and serene Thai sacred/lifestyle context.",
         "Do not introduce European travel styling, Western cafe styling, or unrelated foreign cultural motifs.",
-        ...(scene.family==="food_hero" ? [
-          "BUDDHIST FOOD AUTHORITY:",
+        ...(scene.family==="buddhist_food_merit" ? [
+          "BUDDHIST MERIT-FOOD AUTHORITY:",
           "Use only Thai merit-making food, Thai alms food, Thai fruit offerings, or traditional Thai sweets suitable for taking to a temple or offering to monks.",
           "Suitable foods include Thai tiffin dishes, khao tom mat, khanom tom, thong yip, thong yod, foi thong, med kanoon, khanom chan, khanom sai sai, khanom tian, and Thai fruit offerings.",
           "STRICTLY EXCLUDE spaghetti, pasta, pizza, burgers, steak, sandwiches, croissants, Western bakery displays, brunch styling, and Western cafe-food presentation."
@@ -10067,7 +10627,7 @@ const PAIR_LOOKS={
     const blessingKeys=Object.keys(REFERENCE_IMAGE_BLESSING_LIBRARY_V1153||{});
     return {
       version:VERSION,
-      curated:JSON.parse(JSON.stringify(POKUN_MASTER_LIBRARY_V1158)),
+      curated:JSON.parse(JSON.stringify(POKUN_MASTER_LIBRARY_V1164)),
       scenes:Object.fromEntries(Object.entries(TEMPLATE_CATALOG).map(([family,items])=>[
         family,
         items.map(x=>({
@@ -10093,16 +10653,17 @@ const PAIR_LOOKS={
       palettes:Object.fromEntries(Object.entries(PAIR_LOOKS).map(([k,v])=>[k,{...v}])),
       generalVisualStyles:JSON.parse(JSON.stringify(GENERAL_VISUAL_STYLES_V1152)),
       autoGeneralVisualStylePools:JSON.parse(JSON.stringify(AUTO_GENERAL_VISUAL_STYLE_POOLS_V1152)),
-      compositions:[...POKUN_MASTER_LIBRARY_V1158.compositions],
-      subjects:JSON.parse(JSON.stringify(POKUN_MASTER_LIBRARY_V1158.subjectFamilies)),
-      scenicReferencePatterns:[...POKUN_MASTER_LIBRARY_V1158.referenceBoardScenicPatterns],
-      floralReferencePatterns:[...POKUN_MASTER_LIBRARY_V1158.referenceBoardFloralPatterns],
+      compositions:[...POKUN_MASTER_LIBRARY_V1164.compositions],
+      subjects:JSON.parse(JSON.stringify(POKUN_MASTER_LIBRARY_V1164.subjectFamilies)),
+      scenicReferencePatterns:[...POKUN_MASTER_LIBRARY_V1164.referenceBoardScenicPatterns],
+      floralReferencePatterns:[...POKUN_MASTER_LIBRARY_V1164.referenceBoardFloralPatterns],
       foodReferenceLibrary:JSON.parse(JSON.stringify(POKUN_FOOD_REFERENCE_LIBRARY_V1154)),
       referenceBoardBlessings:JSON.parse(JSON.stringify(REFERENCE_IMAGE_BLESSING_LIBRARY_V1153)),
+      sacredNamedPersonalizedBlessings:JSON.parse(JSON.stringify(SACRED_NAME_BLESSING_TEMPLATES_V1164)),
       textHighlights:JSON.parse(JSON.stringify(TEXT_HIGHLIGHT_STYLES_V1151)),
       autoTextHighlightPool:[...AUTO_TEXT_HIGHLIGHT_POOL_V1151],
-      blessingExtraction:JSON.parse(JSON.stringify(POKUN_MASTER_LIBRARY_V1158.referenceBoardBlessingExtraction)),
-      rules:[...POKUN_MASTER_LIBRARY_V1158.rules]
+      blessingExtraction:JSON.parse(JSON.stringify(POKUN_MASTER_LIBRARY_V1164.referenceBoardBlessingExtraction)),
+      rules:[...POKUN_MASTER_LIBRARY_V1164.rules]
     };
   }
 
@@ -10124,6 +10685,7 @@ const PAIR_LOOKS={
       buddhistVisualStyles:Object.fromEntries(Object.entries(BUDDHIST_VISUAL_STYLES).map(([k,v])=>[k,{label:v.label,description:v.description}])),
       generalVisualStyles:Object.fromEntries(Object.entries(GENERAL_VISUAL_STYLES_V1152).map(([k,v])=>[k,{category:v.cat,label:v.label,description:v.desc}])),
       foodReferenceLibrary:JSON.parse(JSON.stringify(POKUN_FOOD_REFERENCE_LIBRARY_V1154)),
+      sacredNamedPersonalizedBlessings:JSON.parse(JSON.stringify(SACRED_NAME_BLESSING_TEMPLATES_V1164)),
       textFrameCategories:Object.fromEntries(Object.entries(TEXT_FRAME_CATEGORIES).map(([k,v])=>[k,{label:v.label,contexts:[...(v.contexts||[])]}])),
       textFrames:Object.fromEntries(Object.entries(TEXT_FRAMES).map(([k,v])=>[k,{
         category:v.category,
@@ -10197,6 +10759,7 @@ function mainModeIsolationLines(setNo){
     }else{
       L.push(
         "GENERAL MODE ACTIVE: generic/general artwork logic is authoritative.",
+        "GENERAL BUDDHIST FREE ZONE — ABSOLUTE: Buddhist sacred subjects, Buddhist sacred scenes, Wan Phra artwork logic, merit-making rituals, Buddhist merit-food/tiffin offerings, and Buddhist-only typography are prohibited in General mode.",
         "Buddhist auto-subject logic is OFF.",
         "Do NOT import Buddha statues, Buddhist monks, Wan Phra pair behavior, merit-making offerings, or Buddhist sacred scene logic from previous settings, localStorage, or previous artwork.",
         setNo===1
@@ -10237,38 +10800,95 @@ function resolveBuddhistSubjectComposition(setNo,s){
     const subjectEl=document.getElementById(setNo===1?"buddhistSubject1":"buddhistSubject2");
     const referenceEl=document.getElementById(setNo===1?"buddhistReferenceFile1":"buddhistReferenceFile2");
     const characterEl=document.getElementById(setNo===1?"characterMode1":"characterMode2");
+    const personSourceEl=document.getElementById(setNo===1?"personSource1":"personSource2");
     const mode=subjectEl?.value || "auto";
     const refFile=referenceEl?.files?.[0]?.name || "";
     const characterMode=characterEl?.value || (setNo===1 ? globalThis.characterMode1 : globalThis.characterMode2) || "none";
+    const personSource=personSourceEl?.value || sourceFor(setNo) || "generated";
     const primaryMode=resolveMainArtworkMode();
     const buddhistOn = primaryMode==="buddhist";
     const explicitSubject = buddhistOn && mode!=="auto";
     const hasBuddha=buddhistOn && ["buddha_statue","buddha_reference"].includes(mode);
     const hasMonk=buddhistOn && ["monk_generated","monk_reference"].includes(mode);
-    const hasReference=buddhistOn && (["buddha_reference","monk_reference","temple_reference"].includes(mode) || !!refFile);
+    const directLayperson=buddhistOn && setNo===2 && ["layperson_generated","layperson_reference"].includes(mode);
+    const hasReference=buddhistOn && (["buddha_reference","monk_reference","temple_reference","layperson_reference"].includes(mode) || !!refFile);
     const noFigure=buddhistOn && mode==="no_figure";
-    const uiPeople=characterMode==="people" || characterMode==="both";
-    const humanRequired = buddhistOn ? (hasMonk || uiPeople) : uiPeople;
+    const rawUiPeople=characterMode==="people" || characterMode==="both";
+    const uiPeople=buddhistOn ? (setNo===2 && rawUiPeople) : rawUiPeople;
+    const ordinaryHumanSelected=buddhistOn && !hasMonk && !noFigure && (directLayperson || (setNo===2 && uiPeople));
+    const ordinaryReferenceSelected=ordinaryHumanSelected && (mode==="layperson_reference" || ["user_photo","multi_photo"].includes(personSource));
+    const ordinaryGeneratedSelected=ordinaryHumanSelected && (mode==="layperson_generated" || personSource==="generated");
+    const humanRequired = buddhistOn ? (hasMonk || ordinaryHumanSelected) : uiPeople;
     const sacredRequired = buddhistOn && hasBuddha;
-    return {setNo,primaryMode,buddhistOn,mode,refFile,characterMode,explicitSubject,hasBuddha,hasMonk,hasReference,noFigure,uiPeople,humanRequired,sacredRequired};
+    return {setNo,primaryMode,buddhistOn,mode,refFile,characterMode,personSource,explicitSubject,hasBuddha,hasMonk,directLayperson,hasReference,noFigure,rawUiPeople,uiPeople,ordinaryHumanSelected,ordinaryReferenceSelected,ordinaryGeneratedSelected,humanRequired,sacredRequired};
   }
 
 
-function buddhistSubjectSceneCompatible(setNo,name,prompt){
-    const mode=document.getElementById(setNo===1?"buddhistSubject1":"buddhistSubject2")?.value || "auto";
+function buddhistSubjectSceneCompatibleMode(mode,name,prompt){
     const text=`${String(name||"")} ${String(prompt||"")}`.toLowerCase();
 
-    // v11.57: Buddhist Subject selection is higher priority than stale Scene Template.
-    // Monk modes must never inherit a Buddha-statue hero scene left from an earlier selection.
+    // v11.59: compatibility is evaluated against the RESOLVED per-image subject mode.
+    // This prevents a late UI/localStorage mismatch from changing the answer after scene resolution.
     if(mode==="monk_reference" || mode==="monk_generated"){
       return !/golden buddha|buddha statue|buddha image|buddhist notebook page|พระพุทธรูป|พุทธรูปทอง/i.test(text);
+    }
+    if(mode==="layperson_generated" || mode==="layperson_reference"){
+      return !/golden buddha|buddha statue|buddha image|buddhist notebook page|monk portrait|buddhist monk|bhikkhu|พระพุทธรูป|พุทธรูปทอง|พระสงฆ์|พระภิกษุ/i.test(text);
     }
     if(mode==="no_figure"){
       return !/golden buddha|buddha statue|buddha image|buddhist monk|bhikkhu|monk portrait|พระพุทธรูป|พระสงฆ์|พระภิกษุ/i.test(text);
     }
-    // Buddha modes may use Buddha-compatible sacred scenes.
-    // Temple reference / AUTO remain broad.
     return true;
+  }
+
+function buddhistSubjectSceneCompatible(setNo,name,prompt){
+    const mode=document.getElementById(setNo===1?"buddhistSubject1":"buddhistSubject2")?.value || "auto";
+    return buddhistSubjectSceneCompatibleMode(mode,name,prompt);
+  }
+
+function monkSafeFallbackScene(setNo,subjectResolved,seed){
+    const mode=subjectResolved?.mode||"auto";
+    const allowed=[...buddhistSubjectAllowedFamilies(setNo)];
+    const preferred=["thai_architecture","buddhist_sacred","nature_mountain","garden_botanical","waterfront"];
+    const ordered=[...preferred.filter(f=>allowed.includes(f)),...allowed.filter(f=>!preferred.includes(f))];
+
+    for(const family of ordered){
+      const rows=templateRowsForMode(family).filter(row=>buddhistSubjectSceneCompatibleMode(mode,row[0],row[1]));
+      if(rows.length){
+        const row=pick(rows,seed+1591+ordered.indexOf(family)*31);
+        return {
+          name:row[0],
+          prompt:row[1],
+          avoid:"",
+          family,
+          templateLocked:false,
+          templateMode:"v1159-final-subject-safe-fallback"
+        };
+      }
+    }
+
+    // Last-resort scene is deliberately free of Buddha statue/image wording.
+    return {
+      name:"Thai temple courtyard with Bodhi tree",
+      prompt:"A serene Thai temple courtyard with a mature Bodhi tree, traditional architecture, soft morning light, open negative space, and respectful atmosphere. No Buddha statue or Buddha image is visible.",
+      avoid:"Buddha statue, Buddha image, Buddha portrait, Buddha sculpture",
+      family:"thai_architecture",
+      templateLocked:false,
+      templateMode:"v1159-hardcoded-monk-safe-fallback"
+    };
+  }
+
+function enforceFinalBuddhistSubjectScene(setNo,s,scene,seed,subjectResolved){
+    const r=subjectResolved||resolveBuddhistSubjectComposition(setNo,s);
+    if(!r?.buddhistOn || !r.explicitSubject) return scene;
+
+    if(buddhistSubjectSceneCompatibleMode(r.mode,scene?.name,scene?.prompt)){
+      return scene;
+    }
+
+    // v11.59 FINAL RESOLVED SCENE GUARD:
+    // No stale Exact Scene / calendar default / pair memory can survive this point.
+    return monkSafeFallbackScene(setNo,r,seed);
   }
 
 function buddhistSubjectAuthorityLines(setNo,s){
@@ -10282,13 +10902,19 @@ function buddhistSubjectAuthorityLines(setNo,s){
     ];
 
     if(r.mode==="buddha_statue"){
+      const buddha=sacredBuddhaMeta(setNo);
       L.push(
         "Buddha statue / Buddha image: REQUIRED.",
+        buddha.name?`USER-SPECIFIED BUDDHA / SACRED IMAGE NAME — EXACT TEXT: ${buddha.name}.`:"No specific Buddha/sacred-image name was typed.",
+        buddha.name?"NAME ORIGIN: user-entered metadata. Preserve exact spelling where requested in visible text; do not claim image recognition.":"",
         "This is a sacred statue/image, not a living human person."
       );
     }else if(r.mode==="buddha_reference"){
+      const buddha=sacredBuddhaMeta(setNo);
       L.push(
         "Referenced Buddha statue/image: REQUIRED.",
+        buddha.name?`USER-SPECIFIED BUDDHA / SACRED IMAGE NAME — EXACT TEXT: ${buddha.name}.`:"No Buddha/sacred-image name was typed; do not infer one from the reference image.",
+        buddha.name?"NAME ORIGIN: user-entered metadata, not image recognition. Preserve exact spelling wherever the name is requested in visible text.":"",
         r.refFile ? `Reference filename selected in POKUN: ${r.refFile}.` : "Manual/ChatGPT mode: attach the Buddha reference image together with this Prompt."
       );
     }else if(r.mode==="monk_generated"){
@@ -10300,9 +10926,27 @@ function buddhistSubjectAuthorityLines(setNo,s){
         "This is NOT a portrait of a real monk, abbot, revered teacher, celebrity monk, historical figure, or public figure.",
         "Do not remove the monk because of any generic NO PEOPLE rule."
       );
+    }else if(r.mode==="layperson_generated"){
+      L.push(
+        "ORDINARY LAYPERSON / EVERYDAY PERSON: REQUIRED FOR IMAGE 2.",
+        "Create one newly invented, non-famous ordinary person as the primary human subject.",
+        "Do not substitute a Buddha statue/image, monk, novice, nun, priest, worshipper, revered teacher, deity, or sacred human figure.",
+        "Use Image 2 Gender and Age controls as exact character authority."
+      );
+    }else if(r.mode==="layperson_reference"){
+      L.push(
+        "REFERENCED ORDINARY PERSON: REQUIRED FOR IMAGE 2.",
+        r.refFile ? `Reference filename selected in POKUN: ${r.refFile}.` : "Manual/ChatGPT mode: attach the ordinary-person reference image together with this Prompt.",
+        "Use the uploaded image as identity guidance for the ordinary person.",
+        "Preserve recognizable face identity, gender, age impression, and distinctive facial traits while generating a new scene/pose/clothing treatment.",
+        "Do not transform or substitute the referenced person into a Buddha statue/image, monk, novice, nun, priest, worshipper, revered teacher, deity, or sacred human figure."
+      );
     }else if(r.mode==="monk_reference"){
+      const master=sacredMasterMeta(setNo);
       L.push(
         "Referenced monk / revered teacher human subject: REQUIRED.",
+        master.name?`USER-SPECIFIED SACRED MASTER NAME — EXACT TEXT: ${master.name}.`:"No sacred-master name was typed; do not infer one from the reference image.",
+        master.name?"NAME ORIGIN: user-entered metadata, not image recognition. Preserve this exact spelling wherever the name is requested in visible text.":"",
         "IMAGE-SPECIFIC SUBJECT LOCK: this Image uses the referenced monk as the PRIMARY and REQUIRED sacred human subject.",
         "BUDDHA STATUE / BUDDHA IMAGE: NOT SELECTED FOR THIS IMAGE — DO NOT INCLUDE ONE.",
         "Do not fall back to the Image 1 Buddha subject, Wan Phra default Buddha subject, a remembered Buddha composition, or a Buddha-based Scene Template.",
@@ -10325,6 +10969,14 @@ function buddhistSubjectAuthorityLines(setNo,s){
 
     if(r.uiPeople && !r.hasMonk){
       L.push("Character UI also requires selected human subject(s).");
+      if(!r.noFigure){
+        L.push(
+          r.ordinaryReferenceSelected
+            ? "ORDINARY PERSON REFERENCE SUPPORT: enabled. Use the uploaded ordinary-person photo(s) as identity guidance for this image."
+            : "ORDINARY PERSON SUPPORT: enabled. The selected human subject(s) are ordinary layperson / everyday person character(s).",
+          "Do not transform the selected person into a monk, novice monk, nun, priest, worshipper, revered teacher, or Buddha figure."
+        );
+      }
     }
 
     if(r.humanRequired){
@@ -10365,7 +11017,7 @@ function activeReferenceWorkflowForSet(setNo){
   const buddhistEl=document.getElementById(setNo===1?"buddhistSubject1":"buddhistSubject2");
   const buddhistMode=buddhistEl?.value || "auto";
   const buddhistReference=primary==="buddhist" &&
-    ["buddha_reference","monk_reference","temple_reference"].includes(buddhistMode);
+    ["buddha_reference","monk_reference","temple_reference","layperson_reference"].includes(buddhistMode);
 
   const deityState=(typeof deitySubjectForImage==="function") ? deitySubjectForImage(setNo) : null;
   const deityReference=!!deityState?.heroActive && deityState.deityMode==="reference";
@@ -10396,6 +11048,7 @@ function pokunSafeBuildPrompt(setNo){
         "reference usage mode:",
         "task type: new original artwork using a human identity reference",
         "subject mode: user-provided monk / revered teacher reference.",
+        "subject mode: user-provided ordinary person reference / image 2.",
         "subject mode: user-provided temple / sacred-object reference.",
         "referenced buddha statue/image: required.",
         "referenced monk / revered teacher human subject: required.",
@@ -10897,11 +11550,23 @@ window.addEventListener("load",()=>{
     const data=POKUN_V9.uiCatalog();
     function el(id){return document.getElementById(id);}
     function stored(key,fallback){return localStorage.getItem(key)||fallback;}
-    function buddhistOn(){return typeof currentDateBuddhistUIActive==="function" ? currentDateBuddhistUIActive() : !!el("buddhistToggle")?.checked;}
-    function allowedFamily(key){return !buddhistOn() || (data.buddhistAllowed||[]).includes(key);}
+    function currentPrimaryMode(){return localStorage.getItem("pokunPrimaryModeV110")||"general";}
+    function buddhistOn(){return currentPrimaryMode()==="buddhist";}
+    const GENERAL_BLOCKED_FAMILIES=new Set(["buddhist_sacred","buddhist_food_merit"]);
+    const GENERAL_BUDDHIST_ROW_RX=/\bbuddha\b|\bbuddhist\b|\bmonk\b|\bbhikkhu\b|\bwan phra\b|\bmerit[- ]?making\b|\balms\b|offering to monks|temple offering|พระพุทธ|พระสงฆ์|พระภิกษุ|วันพระ|ทำบุญ|ถวายพระ|ใส่บาตร|สังฆทาน|เจดีย์|\btemple\b/i;
+    function allowedFamily(key){
+      const mode=currentPrimaryMode();
+      if(mode==="general")return !GENERAL_BLOCKED_FAMILIES.has(key);
+      if(mode==="buddhist")return (data.buddhistAllowed||[]).includes(key);
+      return true;
+    }
     function rowsFor(family){
-      if(buddhistOn() && family==="food_hero")return data.buddhistFood||[];
-      return data.templates[family]||[];
+      if(family==="buddhist_food_merit")return buddhistOn()?(data.buddhistFood||[]):[];
+      let rows=data.templates[family]||[];
+      if(currentPrimaryMode()==="general"){
+        rows=rows.filter(r=>!GENERAL_BUDDHIST_ROW_RX.test(`${r.name||""} ${r.prompt||""}`));
+      }
+      return rows;
     }
     function populateFamilies(setNo,preferred){
       const familyEl=el("sceneTemplateFamily"+setNo); if(!familyEl)return;
@@ -10937,8 +11602,10 @@ window.addEventListener("load",()=>{
       exactEl.appendChild(auto);
       if(family!=="auto"){
         for(const row of rowsFor(family)){
-          if(buddhistOn() && typeof buddhistSubjectSceneCompatible==="function" &&
-             !buddhistSubjectSceneCompatible(setNo,row.name,row.prompt)) continue;
+          if(buddhistOn() && typeof buddhistSubjectSceneCompatibleMode==="function"){
+            const subjectMode=document.getElementById(setNo===1?"buddhistSubject1":"buddhistSubject2")?.value||"auto";
+            if(!buddhistSubjectSceneCompatibleMode(subjectMode,row.name,row.prompt)) continue;
+          }
           const opt=document.createElement("option");
           opt.value=row.name; opt.textContent=row.uiName||row.name; exactEl.appendChild(opt);
         }
@@ -10958,7 +11625,7 @@ window.addEventListener("load",()=>{
       }
       const label=data.labels[f.value]||f.value;
       if(x.value==="auto"){
-        box.innerHTML=`🔒 <b>ล็อกหมวดฉาก:</b> ${label}<br>${buddhistOn()&&f.value==="food_hero"?"สุ่มเฉพาะอาหารไทย ขนมไทย ผลไม้ และชุดทำบุญ":"ระบบจะสุ่มเฉพาะ Template ภายในหมวดนี้"}`;
+        box.innerHTML=`🔒 <b>ล็อกหมวดฉาก:</b> ${label}<br>${buddhistOn()&&f.value==="buddhist_food_merit"?"สุ่มเฉพาะปิ่นโต สำรับถวายพระ ขนมไทย ผลไม้ และอาหารสำหรับทำบุญ":"ระบบจะสุ่มเฉพาะ Template ภายในหมวดนี้"}`;
         return;
       }
       const row=rowsFor(f.value).find(r=>r.name===x.value);
@@ -10977,6 +11644,13 @@ window.addEventListener("load",()=>{
         updateTemplateDescription(setNo);
       });
     });
+    window.addEventListener("pokun-mode-changed",()=>{
+      [1,2].forEach(setNo=>{
+        const previous=el("sceneTemplateFamily"+setNo)?.value||stored("pokunSceneTemplateFamily"+setNo,"auto");
+        populateFamilies(setNo,previous);
+      });
+    });
+
     const b=el("buddhistToggle");
     if(b)b.addEventListener("change",()=>{
       [1,2].forEach(setNo=>{
@@ -11169,13 +11843,7 @@ window.addEventListener("load",()=>{
     if(!b||!section)return;
 
     function isBuddhistActive(){
-      const d=document.getElementById("date")?.value;
-      try{
-        const dt=localDateFromInput(d);
-        const holy=holyInfo(dt);
-        const sp=specialDayInfo(dt);
-        return b.checked || resolveMainArtworkMode()==="buddhist" || wanPhraAutoActive(holy) || sp?.category==="buddhist";
-      }catch(e){ return b.checked; }
+      return resolveMainArtworkMode()==="buddhist";
     }
     function mode(n){return document.getElementById(`buddhistSubject${n}`)?.value||"auto";}
     function help(n){
@@ -11190,20 +11858,75 @@ window.addEventListener("load",()=>{
         no_figure:"ไม่มีพระพุทธรูปและไม่มีบุคคล ใช้วัด เจดีย์ ดอกบัว เทียน เครื่องสักการะ หรือของทำบุญแทน",
         buddha_reference:"ใช้รูปพระพุทธรูปที่คุณเลือกเป็น Reference ขององค์ประกอบศักดิ์สิทธิ์",
         monk_reference:"ใช้รูปพระสงฆ์/เกจิอาจารย์เป็น Identity Reference — ระบบจะถือว่าภาพนี้มีบุคคลโดยอัตโนมัติ",
+        layperson_generated:"บุคคลธรรมดา — สร้างใหม่สำหรับภาพที่ 2 ระบบจะสร้างคนทั่วไป ไม่ใช่พระสงฆ์/นักบวช/บุคคลศักดิ์สิทธิ์",
+        layperson_reference:"ใช้รูปบุคคลอ้างอิงสำหรับภาพที่ 2 — รักษา Identity ของบุคคล แต่สร้างท่าทาง เสื้อผ้า ฉาก และแสงใหม่",
         temple_reference:"ใช้รูปวัดหรือสิ่งศักดิ์สิทธิ์เป็น Reference ของสถานที่/วัตถุ"
       };
-      box.textContent=map[m]||"";
-      upload.style.display=["buddha_reference","monk_reference","temple_reference"].includes(m)?"block":"none";
+      let extra="";
+      if(n===2){
+        const charMode=document.getElementById("characterMode2")?.value||"none";
+        const personSource=document.getElementById("personSource2")?.value||"generated";
+        const wantsPeople=charMode==="people" || charMode==="both";
+        if(wantsPeople && m!=="no_figure"){
+          extra=personSource==="generated"
+            ? " • ภาพที่ 2 จะใส่บุคคลธรรมดาตาม Character UI"
+            : " • ภาพที่ 2 จะใช้บุคคลจากรูปอ้างอิงตาม Character UI";
+        }else if(wantsPeople && m==="no_figure"){
+          extra=" • ขณะนี้ Character UI ขอมีบุคคล แต่โหมด ‘ไม่มีพระพุทธรูป/ไม่มีบุคคล’ จะห้ามคนทุกชนิด";
+        }
+      }
+      const masterBox=document.getElementById(`buddhistMasterMetaBox${n}`);
+      const buddhaBox=document.getElementById(`buddhistBuddhaMetaBox${n}`);
+      const masterName=sanitizeSacredMasterName(document.getElementById(`buddhistMasterName${n}`)?.value||"");
+      const masterTextUse=document.getElementById(`buddhistMasterTextUse${n}`)?.value||"both";
+      const buddhaName=sanitizeSacredMasterName(document.getElementById(`buddhistBuddhaName${n}`)?.value||"");
+      const buddhaTextUse=document.getElementById(`buddhistBuddhaTextUse${n}`)?.value||"both";
+      if(m==="monk_reference"){
+        extra+=masterName
+          ? ` • ชื่อพระเกจิที่ user ระบุ: ${masterName}${masterTextUse==="off"?" (ใช้เฉพาะ Prompt)":" (ใช้สุ่มคำอวยพรได้)"}`
+          : " • กรุณาพิมพ์ชื่อพระเกจิ/ครูบาอาจารย์ หากต้องการให้ชื่อปรากฏใน Prompt และคำอวยพร";
+      }
+      if(["buddha_reference","buddha_statue"].includes(m)){
+        extra+=buddhaName
+          ? ` • ชื่อองค์พระที่ user ระบุ: ${buddhaName}${buddhaTextUse==="off"?" (ใช้เฉพาะ Prompt)":" (ใช้สุ่มคำอวยพรได้)"}`
+          : " • สามารถพิมพ์ชื่อพระพุทธรูป/องค์พระ เช่น หลวงพ่อโสธร หรือพระพุทธชินราช เพื่อใช้ใน Prompt และคำอวยพร";
+      }
+      box.textContent=(map[m]||"")+extra;
+      upload.style.display=["buddha_reference","monk_reference","temple_reference","layperson_reference"].includes(m)?"block":"none";
+      if(masterBox)masterBox.style.display=m==="monk_reference"?"block":"none";
+      if(buddhaBox)buddhaBox.style.display=["buddha_reference","buddha_statue"].includes(m)?"block":"none";
     }
     function subjectAllowed(n,key){
       if(!isBuddhistActive())return true;
       const m=mode(n);
       let allowed;
-      if(m==="monk_reference" || m==="monk_generated")allowed=["buddhist_sacred","thai_architecture","nature_mountain","garden_botanical","waterfront"];
-      else if(["buddha_reference","buddha_statue"].includes(m))allowed=["buddhist_sacred","thai_architecture","nature_mountain","garden_botanical"];
-      else if(m==="temple_reference")allowed=["buddhist_sacred","thai_architecture","nature_mountain","garden_botanical","waterfront"];
-      else allowed=["buddhist_sacred","rice_countryside","nature_mountain","waterfront","garden_botanical","thai_architecture","food_hero","floral_stilllife"];
+      if(m==="layperson_reference" || m==="layperson_generated")allowed=["buddhist_sacred","thai_architecture","nature_mountain","rice_countryside","garden_botanical","waterfront","buddhist_food_merit","floral_stilllife"];
+      else if(m==="monk_reference" || m==="monk_generated")allowed=["buddhist_sacred","thai_architecture","nature_mountain","garden_botanical","waterfront","buddhist_food_merit"];
+      else if(["buddha_reference","buddha_statue"].includes(m))allowed=["buddhist_sacred","thai_architecture","nature_mountain","garden_botanical","buddhist_food_merit"];
+      else if(m==="temple_reference")allowed=["buddhist_sacred","thai_architecture","nature_mountain","garden_botanical","waterfront","buddhist_food_merit"];
+      else allowed=["buddhist_sacred","rice_countryside","nature_mountain","waterfront","garden_botanical","thai_architecture","buddhist_food_merit","floral_stilllife"];
       return allowed.includes(key);
+    }
+
+    function syncDirectImage2PersonMode(){
+      const m=mode(2);
+      if(!["layperson_generated","layperson_reference"].includes(m))return;
+      const char=document.getElementById("characterMode2");
+      const src=document.getElementById("personSource2");
+      if(char && char.value!=="people"){
+        char.value="people";
+        characterMode2="people";
+        localStorage.setItem("pokunCharacterMode2","people");
+        char.dispatchEvent(new Event("change"));
+      }
+      const wanted=m==="layperson_reference"?"user_photo":"generated";
+      if(src && src.value!==wanted){
+        src.value=wanted;
+        personSource2=wanted;
+        localStorage.setItem("pokunPersonSource2",wanted);
+        src.dispatchEvent(new Event("change"));
+      }
+      if(typeof syncDerivedCharacterModes==="function")syncDerivedCharacterModes();
     }
 
     function refilterFamilies(n){
@@ -11227,6 +11950,7 @@ window.addEventListener("load",()=>{
 
     function sync(){
       section.style.display=isBuddhistActive()?"block":"none";
+      syncDirectImage2PersonMode();
       [1,2].forEach(n=>{help(n);refilterFamilies(n);});
     }
 
@@ -11237,7 +11961,9 @@ window.addEventListener("load",()=>{
         if(saved && [...s.options].some(o=>o.value===saved))s.value=saved;
         s.addEventListener("change",()=>{
           localStorage.setItem(`pokunBuddhistSubject${n}`,s.value);
+          if(n===2)syncDirectImage2PersonMode();
           help(n); refilterFamilies(n);
+          if(typeof updateBlessingThemeDescription==="function")updateBlessingThemeDescription();
           // v11.57: refresh exact templates after subject changes.
           // A stale Buddha-specific exact template must not survive a switch to monk/reference.
           const fam=document.getElementById(`sceneTemplateFamily${n}`);
@@ -11249,8 +11975,70 @@ window.addEventListener("load",()=>{
         const name=document.getElementById(`buddhistReferenceName${n}`);
         if(name)name.textContent=f.files?.[0]?`ไฟล์ที่เลือก: ${f.files[0].name}`:"";
       });
+
+      const masterNameEl=document.getElementById(`buddhistMasterName${n}`);
+      const masterTextUseEl=document.getElementById(`buddhistMasterTextUse${n}`);
+      if(masterNameEl){
+        masterNameEl.value=localStorage.getItem(`pokunBuddhistMasterName${n}`)||"";
+        masterNameEl.addEventListener("input",()=>{
+          const safe=sanitizeSacredMasterName(masterNameEl.value);
+          localStorage.setItem(`pokunBuddhistMasterName${n}`,safe);
+          help(n);
+          if(typeof updateBlessingThemeDescription==="function")updateBlessingThemeDescription();
+        });
+        masterNameEl.addEventListener("change",()=>{
+          const safe=sanitizeSacredMasterName(masterNameEl.value);
+          masterNameEl.value=safe;
+          localStorage.setItem(`pokunBuddhistMasterName${n}`,safe);
+          help(n);
+          if(typeof updateBlessingThemeDescription==="function")updateBlessingThemeDescription();
+        });
+      }
+      if(masterTextUseEl){
+        const savedTextUse=localStorage.getItem(`pokunBuddhistMasterTextUse${n}`)||"both";
+        masterTextUseEl.value=[...masterTextUseEl.options].some(o=>o.value===savedTextUse)?savedTextUse:"both";
+        masterTextUseEl.addEventListener("change",()=>{
+          localStorage.setItem(`pokunBuddhistMasterTextUse${n}`,masterTextUseEl.value);
+          help(n);
+          if(typeof updateBlessingThemeDescription==="function")updateBlessingThemeDescription();
+          if(typeof toast==="function")toast(`ชื่อพระเกจิภาพที่ ${n}: ${masterTextUseEl.options[masterTextUseEl.selectedIndex].text}`);
+        });
+      }
+
+      const buddhaNameEl=document.getElementById(`buddhistBuddhaName${n}`);
+      const buddhaTextUseEl=document.getElementById(`buddhistBuddhaTextUse${n}`);
+      if(buddhaNameEl){
+        buddhaNameEl.value=localStorage.getItem(`pokunBuddhistBuddhaName${n}`)||"";
+        buddhaNameEl.addEventListener("input",()=>{
+          const safe=sanitizeSacredMasterName(buddhaNameEl.value);
+          localStorage.setItem(`pokunBuddhistBuddhaName${n}`,safe);
+          help(n);
+          if(typeof updateBlessingThemeDescription==="function")updateBlessingThemeDescription();
+        });
+        buddhaNameEl.addEventListener("change",()=>{
+          const safe=sanitizeSacredMasterName(buddhaNameEl.value);
+          buddhaNameEl.value=safe;
+          localStorage.setItem(`pokunBuddhistBuddhaName${n}`,safe);
+          help(n);
+          if(typeof updateBlessingThemeDescription==="function")updateBlessingThemeDescription();
+        });
+      }
+      if(buddhaTextUseEl){
+        const savedBuddhaTextUse=localStorage.getItem(`pokunBuddhistBuddhaTextUse${n}`)||"both";
+        buddhaTextUseEl.value=[...buddhaTextUseEl.options].some(o=>o.value===savedBuddhaTextUse)?savedBuddhaTextUse:"both";
+        buddhaTextUseEl.addEventListener("change",()=>{
+          localStorage.setItem(`pokunBuddhistBuddhaTextUse${n}`,buddhaTextUseEl.value);
+          help(n);
+          if(typeof updateBlessingThemeDescription==="function")updateBlessingThemeDescription();
+          if(typeof toast==="function")toast(`ชื่อองค์พระภาพที่ ${n}: ${buddhaTextUseEl.options[buddhaTextUseEl.selectedIndex].text}`);
+        });
+      }
     });
 
+    ["characterMode2","personSource2"].forEach(id=>{
+      const el=document.getElementById(id);
+      if(el)el.addEventListener("change",()=>help(2));
+    });
     b.addEventListener("change",sync);
     document.getElementById("date")?.addEventListener("change",()=>setTimeout(sync,0));
     sync();
@@ -11274,13 +12062,7 @@ window.addEventListener("load",()=>{
     if(saved && [...select.options].some(o=>o.value===saved))select.value=saved;
 
     function isBuddhistActive(){
-      const d=document.getElementById("date")?.value;
-      try{
-        const dt=localDateFromInput(d);
-        const holy=holyInfo(dt);
-        const sp=specialDayInfo(dt);
-        return toggle.checked || resolveMainArtworkMode()==="buddhist" || wanPhraAutoActive(holy) || sp?.category==="buddhist";
-      }catch(e){ return toggle.checked; }
+      return resolveMainArtworkMode()==="buddhist";
     }
     function refresh(){
       section.style.display=isBuddhistActive()?"block":"none";
@@ -11401,7 +12183,7 @@ window.addEventListener("load",()=>{
 
     const MODE_KEY="pokunPrimaryModeV110";
     const modeText={
-      general:"โหมดทั่วไป — แสดงเครื่องมือหลักสำหรับสวัสดีประจำวัน คำคม วันเกิด คน/สัตว์ Scene Typography และ Layout โดยซ่อนตัวเลือกพุทธศิลป์/เทพมงคลที่ไม่จำเป็น",
+      general:"โหมดทั่วไป — Buddhist Free Zone: ไม่มีพระพุทธรูป พระสงฆ์ วันพระ ฉากทำบุญ อาหารทำบุญ หรือ Typography พุทธศิลป์ในงานทั่วไป • ใช้คน/สัตว์ อาหารปกติ ผลไม้ ดอกไม้ ธรรมชาติ เมือง คาเฟ่ ท่องเที่ยว Scene Typography และ Layout",
       buddhist:"โหมดพุทธศิลป์ — เปิดพุทธศิลป์และแสดงเฉพาะเครื่องมือพระพุทธรูป พระ/เกจิ วัด ของทำบุญ อาหาร/ขนมไทย และ Visual Style พุทธศิลป์",
       deity:"โหมดเทพมงคล — ใช้สายมั่งคั่งร่ำรวย พร้อมพระพิฆเนศ ไฉ่ซิงเอี๊ย กวนอู พญานาคราช ฮก–ลก–ซิ่ว ศาลเทพ และเครื่องสักการะ"
     };
@@ -11447,6 +12229,7 @@ window.addEventListener("load",()=>{
       tabs.forEach(t=>t.classList.toggle("active",t.dataset.mode===mode));
       localStorage.setItem(MODE_KEY,mode);
       if(note)note.textContent=modeText[mode]||modeText.general;
+      window.dispatchEvent(new CustomEvent("pokun-mode-changed",{detail:{mode}}));
 
       // GENERAL
       if(mode==="general"){
