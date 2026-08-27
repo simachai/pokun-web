@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#111827">
-<title>POKUN Web v11.65</title>
+<title>POKUN Web v11.66</title>
 <style>
 :root{--bg:#f4f5f7;--card:#fff;--ink:#16181d;--muted:#6b7280;--line:#e5e7eb;--accent:#111827;--good:#087f5b;--warn:#b45309}
 *{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI","Noto Sans Thai",sans-serif;background:var(--bg);color:var(--ink)}
@@ -180,7 +180,7 @@ button{border:0;border-radius:12px;padding:12px 14px;font-weight:800;cursor:poin
 <body>
 <div class="wrap">
   <div class="hero">
-    <h1>POKUN Web <span class="small">v11.65</span></h1>
+    <h1>POKUN Web <span class="small">v11.66</span></h1>
     <p>Daily Greeting Prompt Generator — ใช้ได้บนมือถือและคอม</p>
   </div>
 
@@ -404,7 +404,7 @@ button{border:0;border-radius:12px;padding:12px 14px;font-weight:800;cursor:poin
     <section class="card full" id="buddhistVisualStyleSection" style="display:none">
       <label>✨ Visual Style / สไตล์ภาพพุทธศิลป์</label>
       <div class="notice" style="margin-bottom:10px">
-        Visual Style ใช้ร่วมกันทั้งภาพที่ 1 และภาพที่ 2 เพื่อให้เป็นชุดเดียวกัน • Scene Template กำหนดว่า “เป็นฉากอะไร” ส่วน Visual Style กำหนดว่า “นำเสนอภาพนั้นอย่างไร”
+        Visual Style ใช้ร่วมกันทั้งภาพที่ 1 และภาพที่ 2 เพื่อให้เป็นชุดเดียวกัน • Scene Template กำหนดว่า “เป็นฉากอะไร” ส่วน Visual Style กำหนดว่า “นำเสนอภาพนั้นอย่างไร” • <b>v11.66:</b> สีประจำวันเป็น <b>สีหลักของภาพพุทธศิลป์</b> ส่วนสีทองใช้เป็น Sacred Accent เท่านั้น
       </div>
       <div class="stylebox">
         <strong>สไตล์พุทธศิลป์ร่วมของภาพคู่</strong>
@@ -421,7 +421,7 @@ button{border:0;border-radius:12px;padding:12px 14px;font-weight:800;cursor:poin
         <div id="buddhistVisualStyleDescription" class="notice" style="margin-top:8px"></div>
       </div>
       <div class="small" style="margin-top:8px">
-        ระบบจะล็อกระดับทอง ความเข้ม/นุ่มของแสง Glow, Contrast, ความวิจิตรของลายไทย และบรรยากาศให้เหมือนกันทั้งภาพ 1 และภาพ 2 โดยไม่บังคับให้ Scene เหมือนกัน
+        ระบบจะล็อก <b>สีประจำวันเป็น Primary Theme</b> ให้เหมือนกันทั้งภาพ 1 และภาพ 2 พร้อมคุมแสง Glow, Contrast และความวิจิตรของลายไทยให้เป็นชุดเดียวกัน • แม้เลือก Golden Sacred Ornate / Golden Premium ก็ต้องเป็น “สีประจำวัน + ทอง” ไม่ใช่ภาพทองล้วน
       </div>
     </section>
 
@@ -5784,9 +5784,18 @@ function buildPromptLegacyV87(setNo){
     L.push("Special Buddhist art mode: ON","Use a serene Buddhist sacred-art direction for this first artwork even though today is not Wan Phra.");
   }
   L.push(`Signature color: ${s.day.colorThai} / ${s.day.colorEnglish} / ${s.day.hex}`);
-  L.push(`Use ${s.day.hex} as the recognizable daily signature accent.`);
-  if(s.buddhist && s.holy.isHoly && wanPhraAutoBuddhist)L.push("On Wan Phra AUTO, balance the daily signature color with sacred gold, warm ivory, natural temple tones, and peaceful lighting.");
-  L.push("Natural complementary colors are allowed.","");
+  if(s.buddhist){
+    L.push(
+      `BUDDHIST PRIMARY COLOR LOCK: use ${s.day.hex} / ${s.day.colorThai} as the dominant visible theme color across the artwork.`,
+      "Gold is a secondary sacred accent only; do not wash the full image in gold/amber/sepia.",
+      "Natural complementary colors and neutrals are allowed only when the weekday color remains immediately recognizable as the main theme."
+    );
+  }else{
+    L.push(`Use ${s.day.hex} as the recognizable daily signature accent.`);
+    L.push("Natural complementary colors are allowed.");
+  }
+  if(s.buddhist && s.holy.isHoly && wanPhraAutoBuddhist)L.push("On Wan Phra, preserve the weekday color as PRIMARY and use sacred gold, warm ivory, natural temple tones, and peaceful lighting only as coordinated support.");
+  L.push("");
   L.push(...textHighlightDirection(s,variation));
   L.push(
     "PROMPT CONSISTENCY SNAPSHOT:",
@@ -6786,7 +6795,7 @@ function updateBlessingThemeDescription(){
 }
 
 const POKUN_V9 = (() => {
-  const VERSION="11.65";
+  const VERSION="11.66";
   const ENGINE_LABEL=`POKUN v${VERSION}`;
 
 
@@ -7296,20 +7305,80 @@ const POKUN_V9 = (() => {
   };
 
   
+  const BUDDHIST_WEEKDAY_COLOR_MAP_V1166={
+    RED:{
+      thai:"สีแดง",hex:"#F44336",
+      direction:"Use a refined red family as the dominant sacred color: ruby red, crimson, vermilion, deep red, or softened warm red according to the scene."
+    },
+    YELLOW:{
+      thai:"สีเหลือง",hex:"#FDD835",
+      direction:"Use a clearly YELLOW family as the dominant sacred color: sunflower yellow, luminous yellow, saffron-yellow accent fields, or warm clear yellow distinct from metallic gold."
+    },
+    PINK:{
+      thai:"สีชมพู",hex:"#EC407A",
+      direction:"Use a refined PINK family as the dominant sacred color: lotus pink, rose pink, soft magenta-pink, or elegant blush-to-deep-pink according to the scene."
+    },
+    GREEN:{
+      thai:"สีเขียว",hex:"#43A047",
+      direction:"Use a refined GREEN family as the dominant sacred color: jade, emerald, botanical green, Bodhi-leaf green, or temple green according to the scene."
+    },
+    ORANGE:{
+      thai:"สีส้ม",hex:"#FB8C00",
+      direction:"Use a clearly ORANGE family as the dominant sacred color: warm orange, marigold orange, amber-orange, or saffron-orange distinct from metallic gold."
+    },
+    BLUE:{
+      thai:"สีฟ้า",hex:"#42A5F5",
+      direction:"Use a refined BLUE / SKY-BLUE family as the dominant sacred color: sky blue, sapphire-blue accents, turquoise-blue, or serene temple blue according to the scene."
+    },
+    PURPLE:{
+      thai:"สีม่วง",hex:"#8E44AD",
+      direction:"Use a refined PURPLE family as the dominant sacred color: royal purple, violet, lavender-purple, plum, or amethyst according to the scene."
+    }
+  };
+
+  function buddhistWeekdayColorAuthorityLines(s){
+    if(!s?.buddhist)return [];
+    const key=String(s.day?.colorEnglish||"").toUpperCase();
+    const cfg=BUDDHIST_WEEKDAY_COLOR_MAP_V1166[key]||{
+      thai:s.day?.colorThai||"สีประจำวัน",
+      hex:s.day?.hex||"",
+      direction:"Use today's weekday color as the dominant sacred color family."
+    };
+    return [
+      "BUDDHIST WEEKDAY COLOR AUTHORITY v11.66 — HIGHEST COLOR PRIORITY:",
+      `TODAY'S PRIMARY THEME COLOR: ${cfg.thai} / ${key} / ${cfg.hex}.`,
+      cfg.direction,
+      "PRIMARY COLOR DOMINANCE: the weekday color family must visually dominate the artwork, approximately 55–70% of the readable color impression across background atmosphere, textiles, flowers, light tint, panels, props, architectural accents, or coordinated surfaces.",
+      "SACRED GOLD ROLE: metallic gold is SECONDARY ACCENT ONLY, approximately 15–25% of the color impression. Reserve gold for kanok edges, sacred ornament, frame trim, statue details, tiffin metal highlights, lettering edge, halo-like highlights, or selected ceremonial details.",
+      "NEUTRAL SUPPORT: ivory, cream, natural wood, stone, white, or dark neutral may support the palette without replacing the weekday color.",
+      "ABSOLUTE ANTI-GOLD-WASH LOCK: do NOT grade the whole image in gold, amber, sepia, yellow-brown, or warm-gold monochrome. The viewer must recognize today's weekday color immediately before noticing the gold accents.",
+      "GOLDEN STYLE OVERRIDE RULE: if the selected Buddhist Visual Style contains GOLD / GOLDEN / gilded ornament, reinterpret it as WEEKDAY-COLOR-DOMINANT + GOLD ACCENT. Never let the golden style override today's primary weekday color.",
+      key==="YELLOW"
+        ? "MONDAY/YELLOW DISTINCTION LOCK: yellow must remain visibly clear, bright, and chromatically distinct from metallic gold. Use gold only as reflective metal/ornament; do not merge the entire palette into one gold tone."
+        : "",
+      key==="ORANGE"
+        ? "THURSDAY/ORANGE DISTINCTION LOCK: orange must remain visibly orange and distinct from metallic gold/amber highlights."
+        : "",
+      "PAIR COLOR LOCK: Image 1 and Image 2 must use the SAME weekday-color dominance and the SAME gold-as-secondary ratio, even when the scenes are different.",
+      ""
+    ];
+  }
+
   const BUDDHIST_VISUAL_STYLES={
     auto:{
       label:"AUTO — พุทธศิลป์ตามฉาก",
       description:"เลือกความวิจิตร แสง และวัสดุให้เหมาะกับฉากพุทธศิลป์โดยอัตโนมัติ และรักษาความต่อเนื่องของภาพคู่",
       lines:[
         "Use a coherent premium Thai Buddhist visual language appropriate to the exact scene.",
-        "Keep Image 1 and Image 2 matched in sacred color grade, light softness, ornamental density, glow level, and overall premium finish."
+        "TODAY'S WEEKDAY COLOR must be the dominant palette family. Gold is a secondary sacred accent only.",
+        "Keep Image 1 and Image 2 matched in weekday-color dominance, gold-accent ratio, light softness, ornamental density, glow level, and overall premium finish."
       ]
     },
     golden_sacred_ornate:{
       label:"พุทธศิลป์ทองอร่าม — Golden Sacred Ornate",
       description:"ทองอร่ามเข้ม แสงศักดิ์สิทธิ์เรืองรอง ลายกนกและกรอบไทยวิจิตร วัดไทยอลังการ เหมาะกับพระพุทธรูป ปิ่นโต สำรับ และงานวันพระ",
       lines:[
-        "Use a rich luminous golden sacred palette with deep warm gold, amber, ivory, and restrained daily signature-color accents.",
+        "Use TODAY'S WEEKDAY COLOR as the dominant sacred palette. Keep luminous metallic gold, amber, and ivory as secondary sacred accents only; do not create a gold-dominant overall grade.",
         "Use ornate Thai sacred framing, refined kanok-inspired carving, lotus motifs, temple ornament, and ceremonial gold detailing.",
         "Lighting is radiant and sacred: warm volumetric rays, luminous glow, polished gold reflections, controlled sparkle, and rich cinematic depth.",
         "Keep ornament highly detailed but disciplined; do not bury the focal subject or Thai text under decoration.",
@@ -7321,7 +7390,7 @@ const POKUN_V9 = (() => {
       label:"พุทธศิลป์ทองพรีเมียม — Golden Premium",
       description:"โทนทองหรูและสง่างาม ลดความแน่นของลวดลายลง เหมาะกับภาพที่ต้องการความพรีเมียมแต่ไม่อลังการเกินไป",
       lines:[
-        "Use refined premium gold with ivory, warm cream, bronze, and restrained signature-color accents.",
+        "Use TODAY'S WEEKDAY COLOR as the dominant premium sacred palette, supported by ivory/warm cream. Use refined metallic gold and bronze only as secondary highlights and trim.",
         "Use selective Thai ornamental details only at borders, focal edges, or sacred objects; keep negative space clean.",
         "Lighting is soft warm premium editorial light with polished highlights and moderate glow.",
         "Keep the visual world luxurious, calm, dignified, and less ornate than Golden Sacred Ornate."
@@ -7332,6 +7401,7 @@ const POKUN_V9 = (() => {
       description:"เน้นภาพถ่ายหรือภาพสมจริงของวัด สถาปัตยกรรม พระพุทธรูป และบรรยากาศจริง ลดความแฟนตาซีและลวดลายกรอบ",
       lines:[
         "Use photorealistic Thai temple architecture, realistic Buddha statue materials, authentic stone/timber/gold surfaces, and natural environmental detail.",
+        "Let TODAY'S WEEKDAY COLOR dominate the overall visual theme through atmosphere, textiles, flowers, sky/light tint, decorative panels, foreground elements, or coordinated architectural accents while preserving physically believable materials.",
         "Use believable natural daylight or soft temple-interior light rather than fantasy glow.",
         "Keep Thai ornamental motifs physically part of the architecture or sacred objects; avoid floating decorative frames unless explicitly required.",
         "Favor documentary-premium realism, cultural authenticity, clean composition, and natural depth."
@@ -7341,7 +7411,7 @@ const POKUN_V9 = (() => {
       label:"พุทธศิลป์แสงธรรม — Dhamma Light",
       description:"แสงนุ่ม สงบ มีรัศมีหรือแสงธรรมบาง ๆ เน้นความร่มเย็น ผ่องใส และพื้นที่ว่าง",
       lines:[
-        "Use soft sacred light, gentle ivory-gold luminance, subtle halo-like radiance, and serene atmospheric depth.",
+        "Use soft sacred light tinted to harmonize with TODAY'S WEEKDAY COLOR. Keep ivory-gold luminance and halo-like radiance as secondary highlights, never as the dominant overall color.",
         "Keep contrast soft-to-medium, shadows calm, highlights delicate, and ornament minimal.",
         "Let peaceful light, lotus, Bodhi leaves, temple silhouette, or calm sacred space create the Buddhist mood.",
         "Prioritize serenity, clarity, compassion, and contemplative negative space."
@@ -7352,7 +7422,7 @@ const POKUN_V9 = (() => {
       description:"แรงบันดาลใจจากจิตรกรรมไทย ลายกนก งานลงรักปิดทอง และงานประเพณี แต่ยังอ่านง่ายและดูพรีเมียม",
       lines:[
         "Use original Thai traditional sacred-art language inspired by mural rhythm, kanok curves, lacquer-and-gold surfaces, lotus geometry, and temple decorative craft.",
-        "Use warm gold, deep red-brown, ivory, muted green, and restrained signature-color accents.",
+        "Use TODAY'S WEEKDAY COLOR as the dominant modernized Thai sacred-art palette. Traditional warm gold, deep red-brown, ivory, and muted green may support it as secondary heritage accents.",
         "Keep the artwork original; do not copy a specific mural, temple panel, logo, or artist composition.",
         "Blend traditional Thai ornament with modern editorial hierarchy and readable Thai typography."
       ]
@@ -7361,7 +7431,7 @@ const POKUN_V9 = (() => {
       label:"พุทธศิลป์มินิมอล — Sacred Minimal",
       description:"เรียบ สงบ ทอง–ครีม พื้นที่ว่างมาก ลวดลายน้อย เหมาะกับข้อความธรรมะหรือภาพที่ต้องการความนิ่ง",
       lines:[
-        "Use a minimal sacred palette of warm ivory, cream, muted gold, natural stone/wood, and restrained daily signature-color accents.",
+        "Use a minimal sacred palette led by TODAY'S WEEKDAY COLOR, with warm ivory, cream, natural stone/wood, and muted gold only as restrained supporting accents.",
         "Use very few decorative motifs; one lotus, one sacred object, or a simple architectural line is enough.",
         "Use abundant negative space, soft diffused light, low-to-medium contrast, and quiet premium composition.",
         "Avoid ornate frames, dense gold carving, excessive glow, or decorative clutter."
@@ -7372,7 +7442,7 @@ const POKUN_V9 = (() => {
       description:"เน้นปิ่นโต สำรับอาหารไทย ขนมไทย ผลไม้ ดอกบัว พวงมาลัย และเครื่องสักการะในบริบททำบุญที่วัด",
       lines:[
         "Center the visual language on respectful Thai merit-making: tiffin carriers, Thai savory dishes, Thai desserts, fruit offerings, lotus, jasmine garlands, candles, incense, temple context, and clean ceremonial presentation.",
-        "Use warm natural gold/ivory/wood tones with restrained signature-color accents.",
+        "Use TODAY'S WEEKDAY COLOR as the dominant merit-making color theme, supported by natural wood/ivory. Use warm gold only on ceremonial vessels, tiffin highlights, frames, or sacred ornament.",
         "Keep lighting warm, welcoming, devotional, and premium rather than dramatic fantasy.",
         "Use only Thai merit-making food and culturally appropriate serving vessels; exclude Western food styling."
       ]
@@ -7391,14 +7461,15 @@ const POKUN_V9 = (() => {
     const key=buddhistVisualStyleKey(s);
     const st=BUDDHIST_VISUAL_STYLES[key];
     return [
-      "BUDDHIST VISUAL STYLE — PAIR AUTHORITY (SUBORDINATE TO MASTER RENDERING STYLE):",
+      ...buddhistWeekdayColorAuthorityLines(s),
+      "BUDDHIST VISUAL STYLE — PAIR AUTHORITY (SUBORDINATE TO MASTER RENDERING STYLE AND WEEKDAY COLOR AUTHORITY):",
       `Selected Buddhist Visual Style: ${st.label} (${key}).`,
       ...(masterRenderingState().mode==="cartoon" ? [
         "ILLUSTRATION TRANSLATION RULE: interpret every Buddhist visual-style instruction as painted/illustrated design language, never as photography, photorealistic sculpture, or realistic CGI.",
         "Buddha statues must read as illustrated sacred figures/statues with painted stylization; monks must read as dignified illustrated characters; temple architecture, lotus, gold ornament and light must share the same illustrated surface treatment."
       ] : []),
       ...st.lines,
-      "PAIR STYLE CONSISTENCY: Image 1 and Image 2 MUST use the same sacred gold intensity, ornamental density, glow character, contrast family, surface richness, and overall Buddhist visual language.",
+      "PAIR STYLE CONSISTENCY: Image 1 and Image 2 MUST use the same WEEKDAY-COLOR dominance, the same restrained sacred-gold accent ratio, ornamental density, glow character, contrast family, surface richness, and overall Buddhist visual language.",
       "The two scenes may differ completely, but they must look like one coordinated artwork set.",
       ""
     ];
@@ -7562,8 +7633,8 @@ const PAIR_LOOKS={
   };
 
 
-  const POKUN_MASTER_LIBRARY_V1165={
-    version:"11.65",
+  const POKUN_MASTER_LIBRARY_V1166={
+    version:"11.66",
     purpose:"Curated Thai daily-greeting design library distilled from the user's reference boards and existing POKUN systems. Library guidance is supportive and must never override exact scene, subject, text, typography, frame, layout, weekday/date, or mode locks.",
 
     sceneProfiles:{
@@ -7573,7 +7644,7 @@ const PAIR_LOOKS={
         visualCues:["golden sacred glow","lotus-and-ivory serenity","Thai temple heritage elegance","soft devotional morning light"],
         props:["ดอกบัว","ดอกมะลิ","เทียน","พานดอกไม้","ใบโพธิ์","ลายกนกแบบพอดี"],
         compositions:["พระ/วัตถุศักดิ์สิทธิ์เป็น Hero และเว้นพื้นที่ข้อความด้านข้าง","แสงเช้าจากด้านบนพร้อมพื้นที่ว่างเหนือ/ข้าง Subject","องค์ประกอบสมมาตรหรือ editorial ที่สงบ"],
-        palettes:["ทอง-งาช้าง","เขียวธรรมชาติ-ทอง","น้ำตาลไม้-ครีม","สีประจำวันแต้มแบบสุภาพ"]
+        palettes:["สีประจำวันเป็นสีหลัก + ทองเป็น accent","สีประจำวัน + งาช้าง","สีประจำวัน + ไม้ธรรมชาติ + ทองแต้ม","สีประจำวันเด่นชัด 55–70%"]
       },
       rice_countryside:{
         label:"ชนบท / ทุ่งนา",
@@ -7653,7 +7724,7 @@ const PAIR_LOOKS={
         visualCues:["Thai merit tiffin morning","respectful alms meal arrangement","Thai auspicious sweets for merit","fruit offering basket","temple-morning merit food"],
         props:["ปิ่นโตไทย","ถาดอาหารไทย","ตะกร้าผลไม้","ใบตอง","ข้าวต้มมัด","ขนมต้ม","ทองหยิบ","ทองหยอด","ฝอยทอง","ภาชนะทำบุญที่เหมาะสม"],
         compositions:["พระสงฆ์/พระพุทธรูปที่เลือกเป็น Subject หลัก + อาหารทำบุญเป็น supporting offering","ปิ่นโตหรือสำรับทำบุญเป็น Hero เมื่อเลือกไม่มีบุคคล","ถาดขนมไทยหรือผลไม้จัดด้านล่างและเว้นพื้นที่ข้อความ","องค์ประกอบเรียบสะอาด ไม่จัดแบบคาเฟ่ตะวันตก"],
-        palettes:["อาหารจริง + สีประจำวันแบบสุภาพ","ไม้-ครีม-เขียวธรรมชาติ","ทองขนมไทย-งาช้าง","สีผลไม้จริง + โทนวัดอบอุ่น"]
+        palettes:["สีประจำวันเป็นธีมหลัก + สีอาหารจริง","สีประจำวัน + ไม้/ครีม","สีประจำวัน + ทองภาชนะเป็น accent","สีประจำวันเด่นชัด + ผลไม้/อาหารสีธรรมชาติ"]
       },
       food_hero:{
         label:"อาหาร / ขนม / ผลไม้",
@@ -8296,7 +8367,7 @@ const PAIR_LOOKS={
     return {key,...PAIR_LOOKS[key]};
   }
 
-  function pairVisualLockLines(look){
+  function pairVisualLockLines(look,s){
     return [
       "PAIR VISUAL LOCK — HIGHEST PRIORITY:",
       `Shared Pair Look: ${look.label} (${look.key})`,
@@ -8316,7 +8387,9 @@ const PAIR_LOOKS={
       "DO NOT independently randomize lighting or color grading for Image 1 and Image 2.",
       "DO NOT make one image dramatic/high-contrast while the companion is soft/pastel.",
       "DO NOT make one image golden-hour while the companion is cool daylight unless the selected Pair Look explicitly describes that same treatment for both.",
-      "Today's daily signature color remains an ACCENT only and must not override the shared Pair Look.",
+      s?.buddhist
+        ? `BUDDHIST COLOR OVERRIDE: today's ${s.day.colorThai} / ${s.day.hex} is the PRIMARY THEME COLOR and MAY override the Pair Look's base color tone. Preserve Pair Look lighting/contrast/white-balance character while recoloring the palette toward the weekday theme. Sacred gold remains secondary accent only.`
+        : "Today's daily signature color remains an ACCENT only and must not override the shared Pair Look.",
       ""
     ];
   }
@@ -8783,8 +8856,8 @@ const PAIR_LOOKS={
 
 
   function masterLibraryProfile(scene){
-    return POKUN_MASTER_LIBRARY_V1165.sceneProfiles[scene?.family]
-      || POKUN_MASTER_LIBRARY_V1165.sceneProfiles.minimal_abstract;
+    return POKUN_MASTER_LIBRARY_V1166.sceneProfiles[scene?.family]
+      || POKUN_MASTER_LIBRARY_V1166.sceneProfiles.minimal_abstract;
   }
 
   function masterLibraryDistinctPick(list,setNo,base){
@@ -8799,13 +8872,13 @@ const PAIR_LOOKS={
 
   function resolveMasterLibraryBundle(setNo,s,scene,texts,layout,pairLook,seed){
     const profile=masterLibraryProfile(scene);
-    const base=hashString(`${userSeed}|${s.day.isoDate}|${scene.family}|${scene.name}|master-library-v1165|${rerollSeed1}|${rerollSeed2}`);
+    const base=hashString(`${userSeed}|${s.day.isoDate}|${scene.family}|${scene.name}|master-library-v1166|${rerollSeed1}|${rerollSeed2}`);
     const themeKey=texts?.blessingThemeKey||resolvedBlessingTheme(s,setNo)||"all_round";
-    const headlineTones=POKUN_MASTER_LIBRARY_V1165.headlineTones[themeKey]
-      || POKUN_MASTER_LIBRARY_V1165.headlineTones.all_round;
+    const headlineTones=POKUN_MASTER_LIBRARY_V1166.headlineTones[themeKey]
+      || POKUN_MASTER_LIBRARY_V1166.headlineTones.all_round;
 
     return {
-      version:POKUN_MASTER_LIBRARY_V1165.version,
+      version:POKUN_MASTER_LIBRARY_V1166.version,
       sceneFamily:scene.family,
       sceneTheme:profile.label,
       mood:masterLibraryDistinctPick(profile.moods,setNo,base+101),
@@ -8820,9 +8893,9 @@ const PAIR_LOOKS={
       blessingFrame:resolvedTextFrame(s,"blessing").label,
       pairLook:pairLook.label,
       blessingTheme:texts?.blessingThemeLabel||themeKey,
-      scenicPattern:masterLibraryDistinctPick(POKUN_MASTER_LIBRARY_V1165.referenceBoardScenicPatterns,setNo,base+709),
+      scenicPattern:masterLibraryDistinctPick(POKUN_MASTER_LIBRARY_V1166.referenceBoardScenicPatterns,setNo,base+709),
       floralPattern:["garden_botanical","floral_stilllife"].includes(scene.family)
-        ? masterLibraryDistinctPick(POKUN_MASTER_LIBRARY_V1165.referenceBoardFloralPatterns,setNo,base+811)
+        ? masterLibraryDistinctPick(POKUN_MASTER_LIBRARY_V1166.referenceBoardFloralPatterns,setNo,base+811)
         : ""
     };
   }
@@ -8834,7 +8907,7 @@ const PAIR_LOOKS={
       ? `SACRED-NAME PERSONALIZED BLESSING EXCEPTION v11.64: visible Thai text may use the user-typed ${sacredNamed.kindLabel} name “${sacredNamed.name}” with POKUN's dedicated named-sacred-subject blessing templates. Reproduce the FINAL resolved Headline and Greeting EXACTLY; do not paraphrase or add extra blessing text.`
       : "REFERENCE-IMAGE BLESSING SOURCE LOCK: the resolved Thai Headline and Greeting come only from wording extracted from the user's uploaded reference images. Reproduce them EXACTLY. Do not paraphrase, expand, complete, combine, improve, or add any new blessing wording.";
     return [
-      "POKUN MASTER LIBRARY v11.65 — CURATED GREETING DESIGN SUPPORT:",
+      "POKUN MASTER LIBRARY v11.66 — CURATED GREETING DESIGN SUPPORT:",
       "This block is SUPPORTIVE ONLY. Exact Subject, Character, Scene, Thai Text, Typography, Frame, Layout, Weekday/Date, and Mode locks above remain higher priority.",
       `Library Scene Theme: ${bundle.sceneTheme}.`,
       `Library Mood Accent: ${bundle.mood}.`,
@@ -9250,13 +9323,21 @@ const PAIR_LOOKS={
       layout.text,
       "Do not redesign the composition into another familiar layout. Protect clear negative space for all Thai text.",
       "",
-      "PRIORITY 6 — RENDERING / PAIR LOOK CONTRACT:",
+      "PRIORITY 6 — RENDERING / PAIR LOOK / COLOR CONTRACT:",
       `MASTER RENDERING: ${render.label}.`,
       `PAIR LOOK: ${pairLook.label} (${pairLook.key}).`,
-      "Rendering style, color language, and pair look may not override Subject, Character, Scene, Text, or Layout priorities above.",
+      s.buddhist
+        ? `BUDDHIST WEEKDAY PRIMARY COLOR — HARD LOCK: ${s.day.colorThai} / ${s.day.colorEnglish} / ${s.day.hex} is the dominant visual theme; metallic gold is secondary sacred accent only.`
+        : `DAILY SIGNATURE COLOR: ${s.day.colorThai} / ${s.day.colorEnglish} / ${s.day.hex} is a coordinated accent.`,
+      s.buddhist
+        ? "A gold-dominant, amber-monochrome, sepia, or yellow-brown result is INVALID unless today's weekday color itself is yellow—and even on yellow day, yellow must remain visually distinct from metallic gold."
+        : "",
+      "Rendering style and pair look may not override Subject, Character, Scene, Text, Layout, or the Buddhist weekday-color authority above.",
       "",
       "PORTABLE OUTPUT ACCEPTANCE TEST — MUST PASS BEFORE FINALIZING:",
-      "A result is INVALID if the mandatory subject is missing/replaced, the selected gender is changed, the selected animal species is changed, the exact scene is replaced, any Thai wording/date is rewritten, or the selected layout/frame/typography family is ignored.",
+      s.buddhist
+        ? `A result is INVALID if the mandatory subject is missing/replaced, the selected gender/age/animal/scene/text/layout is changed, OR if ${s.day.colorThai} / ${s.day.hex} is not the clearly dominant Buddhist theme color.`
+        : "A result is INVALID if the mandatory subject is missing/replaced, the selected gender is changed, the selected animal species is changed, the exact scene is replaced, any Thai wording/date is rewritten, or the selected layout/frame/typography family is ignored.",
       "If any of those failures occur, correct the artwork before presenting the final image.",
       ""
     ];
@@ -9722,6 +9803,20 @@ const PAIR_LOOKS={
 
     if(!prompt.includes(`EXACT WATERMARK TEXT: ${watermarkText}`)){
       failures.push("Mandatory exact watermark authority missing");
+    }
+    if(ctx?.s?.buddhist){
+      if(!/BUDDHIST WEEKDAY COLOR AUTHORITY v11\.66 — HIGHEST COLOR PRIORITY/i.test(prompt)){
+        failures.push("Buddhist weekday primary-color authority missing");
+      }
+      if(!prompt.includes(`TODAY'S PRIMARY THEME COLOR: ${ctx.s.day.colorThai} / ${ctx.s.day.colorEnglish} / ${ctx.s.day.hex}.`)){
+        failures.push("Buddhist exact weekday color value missing");
+      }
+      if(!/SACRED GOLD ROLE: metallic gold is SECONDARY ACCENT ONLY/i.test(prompt)){
+        failures.push("Buddhist gold-secondary authority missing");
+      }
+      if(!/ABSOLUTE ANTI-GOLD-WASH LOCK/i.test(prompt)){
+        failures.push("Buddhist anti-gold-wash authority missing");
+      }
     }
     if(ctx?.scene?.family==="buddhist_food_merit"){
       if(!prompt.includes(`EXACT MERIT-FOOD IDENTITY LOCK: render ${ctx.scene.name} specifically.`)){
@@ -10375,7 +10470,7 @@ const PAIR_LOOKS={
       ""
     );
 
-    L.push(...pairVisualLockLines(pairLook));
+    L.push(...pairVisualLockLines(pairLook,s));
     L.push(...buddhistVisualStyleLines(s));
     L.push(...buddhistSubjectLines(setNo,s));
     L.push(...crossBlock(setNo,s,scene,variation));
@@ -10412,7 +10507,12 @@ const PAIR_LOOKS={
       `Today: ${s.day.dayThai} (${s.day.dayEnglish})`,
       `Date: ${s.day.dateThai}`,
       `Signature color: ${s.day.colorThai} / ${s.day.colorEnglish} / ${s.day.hex}`,
-      `Use ${s.day.hex} as the recognizable daily signature accent; natural complementary colors are allowed.`,
+      s.buddhist
+        ? `BUDDHIST PRIMARY THEME COLOR: ${s.day.hex} / ${s.day.colorThai} MUST dominate the image; sacred metallic gold is a secondary accent only.`
+        : `Use ${s.day.hex} as the recognizable daily signature accent; natural complementary colors are allowed.`,
+      s.buddhist
+        ? "ANTI-GOLD-WASH: do not render the entire image in gold, amber, sepia, yellow-brown, or warm-gold monochrome."
+        : "",
       "",
       "VISIBLE DAY / DATE — ABSOLUTE TEXT LOCK:",
       `Required weekday text EXACTLY: ${s.day.dayThai}`,
@@ -10635,6 +10735,7 @@ const PAIR_LOOKS={
       `22. WATERMARK must visibly read EXACTLY: ${watermarkText}, at bottom-right inside safe margins.`,
       scene.family==="buddhist_food_merit" ? `23. MERIT-FOOD IDENTITY must remain EXACTLY: ${scene.name}; do not substitute another food/dessert.` : "",
       exactCharacterState(setNo).age==="all" ? "24. ALL-AGE GROUP LOCK: child + adult + elderly must all be visibly present." : "",
+      s.buddhist ? `25. BUDDHIST WEEKDAY COLOR: ${s.day.colorThai} / ${s.day.hex} must be the dominant overall theme; gold is secondary accent only.` : "",
       "If any item above is missing or conflicts with an earlier suggestion, correct it to THIS CURRENT PROMPT before finalizing the image.",
       ""
     );
@@ -10725,7 +10826,7 @@ const PAIR_LOOKS={
     const blessingKeys=Object.keys(REFERENCE_IMAGE_BLESSING_LIBRARY_V1153||{});
     return {
       version:VERSION,
-      curated:JSON.parse(JSON.stringify(POKUN_MASTER_LIBRARY_V1165)),
+      curated:JSON.parse(JSON.stringify(POKUN_MASTER_LIBRARY_V1166)),
       scenes:Object.fromEntries(Object.entries(TEMPLATE_CATALOG).map(([family,items])=>[
         family,
         items.map(x=>({
@@ -10751,17 +10852,17 @@ const PAIR_LOOKS={
       palettes:Object.fromEntries(Object.entries(PAIR_LOOKS).map(([k,v])=>[k,{...v}])),
       generalVisualStyles:JSON.parse(JSON.stringify(GENERAL_VISUAL_STYLES_V1152)),
       autoGeneralVisualStylePools:JSON.parse(JSON.stringify(AUTO_GENERAL_VISUAL_STYLE_POOLS_V1152)),
-      compositions:[...POKUN_MASTER_LIBRARY_V1165.compositions],
-      subjects:JSON.parse(JSON.stringify(POKUN_MASTER_LIBRARY_V1165.subjectFamilies)),
-      scenicReferencePatterns:[...POKUN_MASTER_LIBRARY_V1165.referenceBoardScenicPatterns],
-      floralReferencePatterns:[...POKUN_MASTER_LIBRARY_V1165.referenceBoardFloralPatterns],
+      compositions:[...POKUN_MASTER_LIBRARY_V1166.compositions],
+      subjects:JSON.parse(JSON.stringify(POKUN_MASTER_LIBRARY_V1166.subjectFamilies)),
+      scenicReferencePatterns:[...POKUN_MASTER_LIBRARY_V1166.referenceBoardScenicPatterns],
+      floralReferencePatterns:[...POKUN_MASTER_LIBRARY_V1166.referenceBoardFloralPatterns],
       foodReferenceLibrary:JSON.parse(JSON.stringify(POKUN_FOOD_REFERENCE_LIBRARY_V1154)),
       referenceBoardBlessings:JSON.parse(JSON.stringify(REFERENCE_IMAGE_BLESSING_LIBRARY_V1153)),
       sacredNamedPersonalizedBlessings:JSON.parse(JSON.stringify(SACRED_NAME_BLESSING_TEMPLATES_V1164)),
       textHighlights:JSON.parse(JSON.stringify(TEXT_HIGHLIGHT_STYLES_V1151)),
       autoTextHighlightPool:[...AUTO_TEXT_HIGHLIGHT_POOL_V1151],
-      blessingExtraction:JSON.parse(JSON.stringify(POKUN_MASTER_LIBRARY_V1165.referenceBoardBlessingExtraction)),
-      rules:[...POKUN_MASTER_LIBRARY_V1165.rules]
+      blessingExtraction:JSON.parse(JSON.stringify(POKUN_MASTER_LIBRARY_V1166.referenceBoardBlessingExtraction)),
+      rules:[...POKUN_MASTER_LIBRARY_V1166.rules]
     };
   }
 
