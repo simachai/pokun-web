@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#111827">
-<title>POKUN Web v11.66</title>
-<style>
+<title>POKUN Web v11.72</title>
+<script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=Ka7YUKqzSMxyS2NdSMdbwWuKa0yWMltPZo7JZTiR2HxnIDJp9VztqXO8NNGc7Y9LWM5xUYkwfyTFkQrj-7yomasA2XdPtBtFMadb8R-qTkEyMabOWUetotPvQM60O9Chtm3NvOZkkXLnyG1KsmtpT8U08K3xZPH25R1PWsVynZLhUVOQ4zLsI-JmMyqybVxRya4mmg4AwO2Nur5J9c8gc1Cb63pAJl32F3sUtFI-uAwBNZMrKHahHMYYhdRpoHY8a8LqsOeyBt_Uyl7xEV-dgI8LXJoVwP9CGvL_tola-DsDEAjnPbwJke0e1CoeAW1q" charset="UTF-8"></script><link rel="stylesheet" crossorigin="anonymous" href="https://gc.kis.v2.scr.kaspersky-labs.com/E3E8934C-235A-4B0E-825A-35A08381A191/abn/main.css?attr=aHR0cHM6Ly9jaGF0Z3B0LmNvbS9iYWNrZW5kLWFwaS9lc3R1YXJ5L2NvbnRlbnQ_aWQ9ZmlsZV8wMDAwMDAwMGRhYjg4MjBiYWE2ODI3Y2MyMzZhNjE3ZiZmbj1QT0tVTl9XZWJfdjExLjcyLmh0bWwmY2Q9YXR0YWNobWVudCZ0cz00OTY2NTUmcD1mcyZjaWQ9MSZzaWc9ODY5MDJjOTRhYTgyNDIwYjU3OWUxYmI4MjEyN2U5Y2RiMTZlZjEwOTBiMDJlZjBlNTAzYWRhOWE3MDc0MGQxNyZ2PTA"/><style>
 :root{--bg:#f4f5f7;--card:#fff;--ink:#16181d;--muted:#6b7280;--line:#e5e7eb;--accent:#111827;--good:#087f5b;--warn:#b45309}
 *{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI","Noto Sans Thai",sans-serif;background:var(--bg);color:var(--ink)}
 .wrap{max-width:940px;margin:auto;padding:18px 14px 60px}.hero{padding:10px 2px 16px}.hero h1{margin:0;font-size:clamp(26px,6vw,42px)}.hero p{margin:6px 0 0;color:var(--muted)}
@@ -180,7 +180,7 @@ button{border:0;border-radius:12px;padding:12px 14px;font-weight:800;cursor:poin
 <body>
 <div class="wrap">
   <div class="hero">
-    <h1>POKUN Web <span class="small">v11.66</span></h1>
+    <h1>POKUN Web <span class="small">v11.72</span></h1>
     <p>Daily Greeting Prompt Generator — ใช้ได้บนมือถือและคอม</p>
   </div>
 
@@ -273,13 +273,49 @@ button{border:0;border-radius:12px;padding:12px 14px;font-weight:800;cursor:poin
       </div>
     </section>
 
-    <section class="card">
-      <label>วันสำคัญ</label>
-      <div id="specialDayBox" class="stylebox">
+    <section class="card full" id="specialDaySettingsCard">
+      <label>📅 วันพิเศษ / Special Days</label>
+      <div class="notice" style="margin-bottom:10px">
+        <b>v11.72 — Special Day Engine</b> • AUTO ตรวจวันสำคัญตามวันที่จริง + วันที่ 1 / 16 / สิ้นเดือน • Manual Override เลือกวันพิเศษเองได้ทุกวัน • วันลุ้นโชคใช้เฉพาะธีมโชคลาภ/รับทรัพย์ ไม่สร้างหรือทำนายเลข
+      </div>
+      <div class="grid" style="grid-template-columns:repeat(3,minmax(0,1fr));gap:10px">
+        <div class="stylebox">
+          <strong>โหมดวันพิเศษ</strong>
+          <select id="specialDayMode" style="margin-top:8px">
+            <option value="auto">AUTO — ตรวจจากวันที่</option>
+            <option value="manual">Manual Override — เลือกเอง</option>
+            <option value="off">OFF — ใช้เป็นวันปกติ</option>
+          </select>
+        </div>
+        <div class="stylebox">
+          <strong>Priority เมื่อวันตรงกันหลายรายการ</strong>
+          <select id="specialDayPriority" style="margin-top:8px">
+            <option value="calendar_first">วันสำคัญ/เทศกาล มาก่อนวันที่ 1/16</option>
+            <option value="monthly_first">วันที่ 1/16/สิ้นเดือน มาก่อนวันสำคัญ</option>
+          </select>
+        </div>
+        <div class="stylebox">
+          <strong>เลือก Manual Preset</strong>
+          <select id="specialDayPreset" style="margin-top:8px"></select>
+        </div>
+      </div>
+      <div id="specialDayCustomBox" class="stylebox" style="display:none;margin-top:10px">
+        <strong>✏️ วันพิเศษกำหนดเอง</strong>
+        <div class="grid" style="grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:8px">
+          <input id="specialCustomName" type="text" maxlength="80" placeholder="ชื่อวัน เช่น วันเปิดร้าน POKUN">
+          <input id="specialCustomHeadline" type="text" maxlength="120" placeholder="Headline (ไม่กรอก = ระบบสร้างให้)">
+          <input id="specialCustomGreeting" type="text" maxlength="220" placeholder="คำอวยพร (ไม่กรอก = ระบบสร้างให้)">
+        </div>
+      </div>
+      <div id="specialDayBox" class="stylebox" style="margin-top:10px">
         <strong id="specialDayName">วันปกติ</strong>
         <div id="specialDayInfo" class="small" style="margin-top:5px">ระบบจะตรวจวันสำคัญให้อัตโนมัติ</div>
+        <div id="specialDayThemeInfo" class="small" style="margin-top:5px"></div>
       </div>
-      <div class="notice" style="margin-top:8px">ถ้าเป็นวันสำคัญ Headline, คำอวยพร และ Concept จะเปลี่ยนให้เข้ากับวันนั้นอัตโนมัติ</div>
+      <div id="specialDaySuggestions" class="notice" style="margin-top:8px"></div>
+      <div class="small" style="margin-top:7px">
+        วันเปลี่ยนทุกปี เช่น มาฆบูชา วิสาขบูชา อาสาฬหบูชา เข้าพรรษา ออกพรรษา ตรุษจีน และลอยกระทง จะใช้ตารางวันที่รายปีที่ POKUN มีอยู่ • ทุก Preset ยังเลือก Manual ได้เสมอ
+      </div>
     </section>
 
     <section class="card full" id="buddhistSubjectSection" style="display:none">
@@ -906,6 +942,18 @@ button{border:0;border-radius:12px;padding:12px 14px;font-weight:800;cursor:poin
               <b>โหมด Manual / ใช้กับ ChatGPT:</b> ไม่จำเป็นต้องเลือกไฟล์ที่นี่ ให้แนบรูปองค์เทพ/องค์บูชาใน ChatGPT พร้อม Prompt ก่อนสร้างภาพ
             </div>
           </div>
+          <div id="auspiciousDeityMetaBox" class="stylebox" style="display:block;margin-top:8px;background:#fffbeb;border-color:#fde68a">
+            <label class="small"><b>ชื่อเทพมงคล / องค์มงคล — ผู้ใช้เป็นคนระบุเอง (ไม่บังคับ)</b></label>
+            <input id="auspiciousDeityName" type="text" maxlength="80" placeholder="เช่น พระพิฆเนศ / ไฉ่ซิงเอี๊ย / ท้าวเวสสุวรรณ / เจ้าแม่กวนอิม" style="margin-top:5px">
+            <label class="small" style="display:block;margin-top:8px">การใช้ชื่อในข้อความ</label>
+            <select id="auspiciousDeityTextUse" style="margin-top:5px">
+              <option value="both">ใช้ทั้ง Headline และคำอวยพร</option>
+              <option value="headline">ใช้เฉพาะ Headline</option>
+              <option value="greeting">ใช้เฉพาะคำอวยพร</option>
+              <option value="off">ไม่ใส่ชื่อในข้อความ (เก็บเป็นข้อมูลอ้างอิงเท่านั้น)</option>
+            </select>
+            <div class="small" style="margin-top:6px">ถ้าไม่กรอกชื่อ ระบบจะไม่ใส่ชื่อเทพมงคลลงใน Headline หรือคำอวยพร</div>
+          </div>
         </div>
 <div class="small" style="margin-top:6px">
           ถ้าเลือก “การ์ตูน” ภาพที่ 1 และภาพที่ 2 จะใช้สไตล์การ์ตูนชุดเดียวกันทั้งหมด หากเลือกใช้รูปของฉัน ระบบ Prompt จะสั่งแปลงบุคคลจริงเป็นการ์ตูนที่ยังรักษาความคล้ายและเอกลักษณ์ของเจ้าของรูป
@@ -1055,108 +1103,244 @@ button{border:0;border-radius:12px;padding:12px 14px;font-weight:800;cursor:poin
 <section class="card full" id="animalSettingsSection">
       <label>🐾 ตั้งค่ารายละเอียดสัตว์ / Animal Character</label>
       <div class="notice" style="margin-bottom:10px">
-        ตั้งค่าส่วนนี้ต่อจาก “องค์ประกอบตัวละครในภาพ” ด้านบน หากภาพที่ 1 หรือภาพที่ 2 เลือก “มีสัตว์อย่างเดียว” หรือ “มีทั้งคนและสัตว์” ให้กำหนดชนิด รูปแบบ และพฤติกรรมของสัตว์ที่นี่
+        <b>v11.69 — ใส่ชื่อเทพมงคลได้ + คลังสัตว์ขนาดใหญ่</b> • การมี/ไม่มีสัตว์ยังยึดจาก “องค์ประกอบตัวละครในภาพ” ของภาพที่ 1 และภาพที่ 2 ด้านบน แต่รายละเอียดสัตว์แต่ละภาพตั้งแยกกันทั้งหมด มีสัตว์ให้เลือกมากกว่า 60 แบบ ครอบคลุมสัตว์เลี้ยง ฟาร์ม สัตว์ป่า นก สัตว์น้ำ และสัตว์ตัวเล็ก • เช่น ภาพที่ 1 = คาปิบาราการ์ตูน, ภาพที่ 2 = นกยูงสมจริง
       </div>
-
-      <div class="stylebox">
-        <strong>Character of the Day</strong>
-        <select id="animalMode" style="display:none">
-          <option value="none">ไม่มีสัตว์</option>
-          <option value="animal">มีสัตว์</option>
-        </select>
-        <div class="small" style="margin-top:6px">
-          การมี/ไม่มีสัตว์กำหนดจาก “องค์ประกอบตัวละคร” ของภาพที่ 1 และภาพที่ 2 ด้านบน หากทั้งสองภาพมีสัตว์ ระบบจะใช้ Character of the Day ตัวเดียวกันแต่เปลี่ยนฉากและกิจกรรม
-        </div>
-      </div>
-
-      <div class="grid" style="grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:10px">
+      <select id="animalMode" style="display:none">
+        <option value="none">ไม่มีสัตว์</option>
+        <option value="animal">มีสัตว์</option>
+      </select>
+      <div class="grid" style="grid-template-columns:repeat(2,minmax(0,1fr));gap:10px">
         <div class="stylebox">
-          <strong>ประเภทสัตว์</strong>
-          <select id="animalType" style="margin-top:8px">
-            <option value="auto">AUTO</option>
-            <option value="cat">แมว</option>
-            <option value="dog">สุนัข</option>
-            <option value="horse">ม้า</option>
-            <option value="rabbit">กระต่าย</option>
-            <option value="bear">หมี</option>
-            <option value="bird">นก</option>
-            <option value="elephant">ช้าง</option>
-            <option value="deer">กวาง</option>
-            <option value="squirrel">กระรอก</option>
-            <option value="hamster">แฮมสเตอร์</option>
-            <option value="duck">เป็ด</option>
-            <option value="chicken">ไก่</option>
-            <option value="goat">แพะ</option>
-            <option value="sheep">แกะ</option>
-            <option value="cow">วัว</option>
-            <option value="buffalo">ควาย</option>
-            <option value="pig">หมู</option>
-            <option value="fox">สุนัขจิ้งจอก</option>
-            <option value="panda">แพนด้า</option>
-            <option value="monkey">ลิง</option>
-            <option value="turtle">เต่า</option>
-            <option value="fish">ปลา</option>
-            <option value="butterfly">ผีเสื้อ</option>
+          <strong>🐾 ภาพที่ 1</strong>
+          <div class="small" style="margin-top:6px">ตั้งค่าสัตว์เฉพาะภาพที่ 1 — ไม่กระทบอีกภาพ</div>
+
+          <label class="small" style="display:block;margin-top:10px">ประเภทสัตว์</label>
+          <select id="animalType1" style="margin-top:5px">
+            <option value="auto">AUTO — ให้ระบบเลือก</option>
+            <optgroup label="🐶 สัตว์เลี้ยง / น่ารัก">
+              <option value="cat">แมว</option>
+              <option value="dog">สุนัข</option>
+              <option value="rabbit">กระต่าย</option>
+              <option value="hamster">แฮมสเตอร์</option>
+              <option value="guinea_pig">หนูแกสบี้</option>
+              <option value="hedgehog">เม่นแคระ</option>
+              <option value="ferret">เฟอร์เร็ต</option>
+              <option value="chinchilla">ชินชิลลา</option>
+            </optgroup>
+            <optgroup label="🐄 สัตว์ฟาร์ม / ชนบท">
+              <option value="horse">ม้า</option>
+              <option value="pony">ม้าโพนี่</option>
+              <option value="cow">วัว</option>
+              <option value="buffalo">ควาย</option>
+              <option value="goat">แพะ</option>
+              <option value="sheep">แกะ</option>
+              <option value="pig">หมู</option>
+              <option value="chicken">ไก่</option>
+              <option value="duck">เป็ด</option>
+              <option value="goose">ห่าน</option>
+              <option value="alpaca">อัลปากา</option>
+              <option value="llama">ลามา</option>
+            </optgroup>
+            <optgroup label="🦁 สัตว์ป่า / ป่าเขา">
+              <option value="elephant">ช้าง</option>
+              <option value="deer">กวาง</option>
+              <option value="squirrel">กระรอก</option>
+              <option value="bear">หมี</option>
+              <option value="panda">แพนด้า</option>
+              <option value="fox">สุนัขจิ้งจอก</option>
+              <option value="wolf">หมาป่า</option>
+              <option value="raccoon">แรคคูน</option>
+              <option value="otter">นาก</option>
+              <option value="capybara">คาปิบารา</option>
+              <option value="koala">โคอาลา</option>
+              <option value="monkey">ลิง</option>
+              <option value="gibbon">ชะนี</option>
+              <option value="kangaroo">จิงโจ้</option>
+              <option value="giraffe">ยีราฟ</option>
+              <option value="zebra">ม้าลาย</option>
+              <option value="lion">สิงโต</option>
+              <option value="tiger">เสือ</option>
+              <option value="leopard">เสือดาว</option>
+              <option value="cheetah">เสือชีตาห์</option>
+              <option value="hippo">ฮิปโป</option>
+              <option value="rhino">แรด</option>
+            </optgroup>
+            <optgroup label="🦜 นก">
+              <option value="bird">นกทั่วไป</option>
+              <option value="parrot">นกแก้ว</option>
+              <option value="owl">นกฮูก</option>
+              <option value="dove">นกพิราบ / นกเขา</option>
+              <option value="swan">หงส์</option>
+              <option value="peacock">นกยูง</option>
+              <option value="flamingo">ฟลามิงโก</option>
+              <option value="penguin">เพนกวิน</option>
+              <option value="eagle">นกอินทรี</option>
+              <option value="crane">นกกระเรียน</option>
+            </optgroup>
+            <optgroup label="🐬 สัตว์น้ำ / ริมน้ำ">
+              <option value="fish">ปลา</option>
+              <option value="turtle">เต่า</option>
+              <option value="dolphin">โลมา</option>
+              <option value="whale">วาฬ</option>
+              <option value="seal">แมวน้ำ</option>
+              <option value="otter_sea">นากทะเล</option>
+              <option value="octopus">ปลาหมึกยักษ์</option>
+              <option value="crab">ปู</option>
+              <option value="seahorse">ม้าน้ำ</option>
+              <option value="starfish">ดาวทะเล</option>
+            </optgroup>
+            <optgroup label="🦋 แมลง / สัตว์ตัวเล็ก">
+              <option value="butterfly">ผีเสื้อ</option>
+              <option value="bee">ผึ้ง</option>
+              <option value="dragonfly">แมลงปอ</option>
+              <option value="ladybug">เต่าทอง</option>
+              <option value="frog">กบ</option>
+              <option value="snail">หอยทาก</option>
+            </optgroup>
           </select>
-        </div>
 
-        <div class="stylebox">
-          <strong>รูปแบบสัตว์</strong>
-          <select id="animalStyle" style="margin-top:8px">
+          <label class="small" style="display:block;margin-top:10px">รูปแบบสัตว์</label>
+          <select id="animalStyle1" style="margin-top:5px">
             <option value="follow">ตามรูปแบบภาพหลัก</option>
             <option value="realistic">สมจริง</option>
             <option value="cartoon">การ์ตูน</option>
           </select>
-          <div class="notice" style="margin-top:7px">ถ้าเลือก “การ์ตูน” ระบบจะเน้นความน่ารัก สดใส เป็นมิตร และสุ่มสไตล์ Cute 3D / Kawaii / Storybook / Soft Illustration / Chibi / Premium Cartoon</div>
-        </div>
-      </div>
 
-      <div class="grid" style="grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:10px">
-        <div class="stylebox">
-          <strong>สายพันธุ์ / ลักษณะ</strong>
-          <select id="animalLook" style="margin-top:8px">
-            <option value="auto">AUTO</option>
-            <option value="orange_cat">แมวส้ม</option>
-            <option value="white_cat">แมวขาว</option>
-            <option value="black_cat">แมวดำ</option>
-            <option value="golden_dog">สุนัขสีทอง</option>
-            <option value="white_dog">สุนัขสีขาว</option>
-            <option value="brown_horse">ม้าสีน้ำตาล</option>
-            <option value="white_horse">ม้าสีขาว</option>
-            <option value="black_horse">ม้าสีดำ</option>
-            <option value="white_rabbit">กระต่ายขาว</option>
-            <option value="brown_bear">หมีสีน้ำตาล</option>
-            <option value="spotted_deer">กวางลายจุด</option>
-            <option value="red_squirrel">กระรอกสีน้ำตาลแดง</option>
-            <option value="yellow_duck">เป็ดสีเหลือง</option>
-            <option value="white_sheep">แกะขาว</option>
-            <option value="panda_classic">แพนด้าขาวดำ</option>
-            <option value="green_turtle">เต่าสีเขียว</option>
-          </select>
-        </div>
+          <label class="small" style="display:block;margin-top:10px">สายพันธุ์ / ลักษณะ</label>
+          <select id="animalLook1" style="margin-top:5px"><option value="auto">AUTO</option></select>
 
-        <div class="stylebox">
-          <strong>พฤติกรรม</strong>
-          <select id="animalBehavior" style="margin-top:8px">
+          <label class="small" style="display:block;margin-top:10px">พฤติกรรม</label>
+          <select id="animalBehavior1" style="margin-top:5px">
             <option value="auto">AUTO</option>
             <option value="natural">ท่าทางธรรมชาติ</option>
             <option value="humanlike">ทำท่าแบบคน</option>
           </select>
+
+          <label class="small" style="display:block;margin-top:10px">ระดับความเป็นตัวละคร</label>
+          <select id="anthroLevel1" style="margin-top:5px">
+            <option value="natural">สัตว์ธรรมชาติ</option>
+            <option value="semi">กึ่งมนุษย์</option>
+            <option value="full">ตัวละครเต็มรูปแบบ</option>
+          </select>
+          <div id="anthroDescription1" class="notice" style="margin-top:8px"></div>
+        </div>
+        <div class="stylebox">
+          <strong>🐾 ภาพที่ 2</strong>
+          <div class="small" style="margin-top:6px">ตั้งค่าสัตว์เฉพาะภาพที่ 2 — ไม่กระทบอีกภาพ</div>
+
+          <label class="small" style="display:block;margin-top:10px">ประเภทสัตว์</label>
+          <select id="animalType2" style="margin-top:5px">
+            <option value="auto">AUTO — ให้ระบบเลือก</option>
+            <optgroup label="🐶 สัตว์เลี้ยง / น่ารัก">
+              <option value="cat">แมว</option>
+              <option value="dog">สุนัข</option>
+              <option value="rabbit">กระต่าย</option>
+              <option value="hamster">แฮมสเตอร์</option>
+              <option value="guinea_pig">หนูแกสบี้</option>
+              <option value="hedgehog">เม่นแคระ</option>
+              <option value="ferret">เฟอร์เร็ต</option>
+              <option value="chinchilla">ชินชิลลา</option>
+            </optgroup>
+            <optgroup label="🐄 สัตว์ฟาร์ม / ชนบท">
+              <option value="horse">ม้า</option>
+              <option value="pony">ม้าโพนี่</option>
+              <option value="cow">วัว</option>
+              <option value="buffalo">ควาย</option>
+              <option value="goat">แพะ</option>
+              <option value="sheep">แกะ</option>
+              <option value="pig">หมู</option>
+              <option value="chicken">ไก่</option>
+              <option value="duck">เป็ด</option>
+              <option value="goose">ห่าน</option>
+              <option value="alpaca">อัลปากา</option>
+              <option value="llama">ลามา</option>
+            </optgroup>
+            <optgroup label="🦁 สัตว์ป่า / ป่าเขา">
+              <option value="elephant">ช้าง</option>
+              <option value="deer">กวาง</option>
+              <option value="squirrel">กระรอก</option>
+              <option value="bear">หมี</option>
+              <option value="panda">แพนด้า</option>
+              <option value="fox">สุนัขจิ้งจอก</option>
+              <option value="wolf">หมาป่า</option>
+              <option value="raccoon">แรคคูน</option>
+              <option value="otter">นาก</option>
+              <option value="capybara">คาปิบารา</option>
+              <option value="koala">โคอาลา</option>
+              <option value="monkey">ลิง</option>
+              <option value="gibbon">ชะนี</option>
+              <option value="kangaroo">จิงโจ้</option>
+              <option value="giraffe">ยีราฟ</option>
+              <option value="zebra">ม้าลาย</option>
+              <option value="lion">สิงโต</option>
+              <option value="tiger">เสือ</option>
+              <option value="leopard">เสือดาว</option>
+              <option value="cheetah">เสือชีตาห์</option>
+              <option value="hippo">ฮิปโป</option>
+              <option value="rhino">แรด</option>
+            </optgroup>
+            <optgroup label="🦜 นก">
+              <option value="bird">นกทั่วไป</option>
+              <option value="parrot">นกแก้ว</option>
+              <option value="owl">นกฮูก</option>
+              <option value="dove">นกพิราบ / นกเขา</option>
+              <option value="swan">หงส์</option>
+              <option value="peacock">นกยูง</option>
+              <option value="flamingo">ฟลามิงโก</option>
+              <option value="penguin">เพนกวิน</option>
+              <option value="eagle">นกอินทรี</option>
+              <option value="crane">นกกระเรียน</option>
+            </optgroup>
+            <optgroup label="🐬 สัตว์น้ำ / ริมน้ำ">
+              <option value="fish">ปลา</option>
+              <option value="turtle">เต่า</option>
+              <option value="dolphin">โลมา</option>
+              <option value="whale">วาฬ</option>
+              <option value="seal">แมวน้ำ</option>
+              <option value="otter_sea">นากทะเล</option>
+              <option value="octopus">ปลาหมึกยักษ์</option>
+              <option value="crab">ปู</option>
+              <option value="seahorse">ม้าน้ำ</option>
+              <option value="starfish">ดาวทะเล</option>
+            </optgroup>
+            <optgroup label="🦋 แมลง / สัตว์ตัวเล็ก">
+              <option value="butterfly">ผีเสื้อ</option>
+              <option value="bee">ผึ้ง</option>
+              <option value="dragonfly">แมลงปอ</option>
+              <option value="ladybug">เต่าทอง</option>
+              <option value="frog">กบ</option>
+              <option value="snail">หอยทาก</option>
+            </optgroup>
+          </select>
+
+          <label class="small" style="display:block;margin-top:10px">รูปแบบสัตว์</label>
+          <select id="animalStyle2" style="margin-top:5px">
+            <option value="follow">ตามรูปแบบภาพหลัก</option>
+            <option value="realistic">สมจริง</option>
+            <option value="cartoon">การ์ตูน</option>
+          </select>
+
+          <label class="small" style="display:block;margin-top:10px">สายพันธุ์ / ลักษณะ</label>
+          <select id="animalLook2" style="margin-top:5px"><option value="auto">AUTO</option></select>
+
+          <label class="small" style="display:block;margin-top:10px">พฤติกรรม</label>
+          <select id="animalBehavior2" style="margin-top:5px">
+            <option value="auto">AUTO</option>
+            <option value="natural">ท่าทางธรรมชาติ</option>
+            <option value="humanlike">ทำท่าแบบคน</option>
+          </select>
+
+          <label class="small" style="display:block;margin-top:10px">ระดับความเป็นตัวละคร</label>
+          <select id="anthroLevel2" style="margin-top:5px">
+            <option value="natural">สัตว์ธรรมชาติ</option>
+            <option value="semi">กึ่งมนุษย์</option>
+            <option value="full">ตัวละครเต็มรูปแบบ</option>
+          </select>
+          <div id="anthroDescription2" class="notice" style="margin-top:8px"></div>
         </div>
       </div>
-
-      <div class="stylebox" style="margin-top:10px">
-        <strong>ระดับความเป็นตัวละคร</strong>
-        <select id="anthroLevel" style="margin-top:8px">
-          <option value="natural">สัตว์ธรรมชาติ</option>
-          <option value="semi">กึ่งมนุษย์</option>
-          <option value="full">ตัวละครเต็มรูปแบบ</option>
-        </select>
-        <div id="anthroDescription" class="notice" style="margin-top:8px"></div>
-      </div>
-
-      <div class="notice" style="margin-top:8px">
-        ถ้าเลือก “การ์ตูน” ในรูปแบบภาพหลัก แนะนำให้สัตว์ใช้ “ตามรูปแบบภาพหลัก” เพื่อให้คน สัตว์ และฉากเป็นการ์ตูนชุดเดียวกัน
+      <div class="notice" style="margin-top:10px">
+        หากภาพใดไม่ได้เลือก “มีสัตว์อย่างเดียว” หรือ “มีทั้งคนและสัตว์” ชุดตั้งค่าสัตว์ของภาพนั้นจะถูกปิดไว้ • ค่า AUTO ของภาพที่ 1 และภาพที่ 2 จะสุ่มแยกกัน ไม่บังคับให้เป็นสัตว์ตัวเดียวกัน
       </div>
 </section>
 
@@ -1424,10 +1608,207 @@ const SACRED_NAMES = ["Thai Buddhist Sacred Art","Thai Temple Gold Calligraphy",
 
 const SPECIAL_FIXED = {"01-01": {"name": "วันขึ้นปีใหม่", "category": "celebration", "h1": "สวัสดีปีใหม่ ขอให้เป็นปีแห่งความสุข", "h2": "เริ่มต้นปีใหม่ด้วยสิ่งดี ๆ", "g1": "ขอให้ปีใหม่นี้เต็มไปด้วยความสุข ความสำเร็จ สุขภาพแข็งแรง และมีเรื่องดี ๆ เข้ามาตลอดทั้งปี", "g2": "ขอให้ทุกการเริ่มต้นนำไปสู่โอกาสที่ดี สมหวังในสิ่งที่ตั้งใจ และพบความราบรื่นในทุกวัน", "c1": {"name": "New Year elegant celebration still life", "prompt": "An elegant New Year celebration still life with tasteful festive lights, gift boxes, sparkling ornaments, flowers, and premium celebratory atmosphere. No people.", "avoid": "No human figures, crowds, hands, faces, or Buddhist sacred imagery."}, "c2": {"name": "New Year sunrise fresh beginning", "prompt": "A beautiful sunrise landscape symbolizing a fresh beginning, with elegant flowers, subtle festive accents, and uplifting premium atmosphere. No people.", "avoid": "No human figures and no duplicated gift-box celebration composition."}}, "01-16": {"name": "วันครู", "category": "education", "h1": "๑๖ มกราคม วันครู", "h2": "ระลึกถึงพระคุณครูด้วยหัวใจ", "g1": "ขอส่งความขอบคุณแด่ครูทุกท่าน ผู้มอบความรู้ ความเมตตา และแรงบันดาลใจให้ศิษย์ก้าวไปข้างหน้า", "g2": "ขอให้คุณครูมีความสุข สุขภาพแข็งแรง และภาคภูมิใจกับทุกความสำเร็จที่ได้ร่วมสร้างให้กับลูกศิษย์", "c1": {"name": "Teacher appreciation desk", "prompt": "A refined teacher appreciation still life with books, elegant stationery, fountain pen, flowers, and warm morning light. No people.", "avoid": "No human figures, hands, classroom crowd, or childish clutter."}, "c2": {"name": "Knowledge and gratitude composition", "prompt": "A premium symbolic education composition with stacked books, open notebook, flowers, and uplifting light representing knowledge and gratitude. No people.", "avoid": "No human figures and no duplicated desk composition."}}, "02-14": {"name": "วันวาเลนไทน์", "category": "celebration", "h1": "สุขสันต์วันวาเลนไทน์", "h2": "วันแห่งความรัก ขอให้หัวใจอบอุ่น", "g1": "ขอให้วันนี้เต็มไปด้วยความรัก ความห่วงใย และความรู้สึกดี ๆ จากคนสำคัญที่อยู่รอบตัว", "g2": "ขอให้ทุกความสัมพันธ์งดงามด้วยความเข้าใจ ความจริงใจ และมีความสุขในทุกช่วงเวลาที่แบ่งปันกัน", "c1": {"name": "Elegant Valentine floral heart", "prompt": "A premium Valentine still life with romantic flowers, heart-shaped details, ribbons, gift elements, and warm dreamy light. No people.", "avoid": "No couples, human hands, faces, or crowded restaurant scene."}, "c2": {"name": "Love letters and gentle roses", "prompt": "A refined romantic composition with love notes, roses, small hearts, tasteful stationery, and elegant pastel atmosphere. No people.", "avoid": "No human figures and no duplicated heart-gift arrangement."}}, "04-06": {"name": "วันจักรี", "category": "national", "h1": "๖ เมษายน วันจักรี", "h2": "น้อมรำลึกวันจักรี", "g1": "ขอน้อมรำลึกถึงความสำคัญของวันจักรี และขอให้วันนี้เป็นวันที่สงบ ร่มเย็น และเป็นสิริมงคล", "g2": "ขอให้บ้านเมืองมีความร่มเย็น ประชาชนมีความสุข และร่วมกันรักษาสิ่งดีงามของแผ่นดินไทย", "c1": {"name": "Thai heritage architecture", "prompt": "A dignified Thai heritage composition featuring elegant classical Thai architecture, ceremonial gold details, and respectful morning light. No people.", "avoid": "No human figures, portraits, political rally, or casual party styling."}, "c2": {"name": "Traditional Thai symbolic still life", "prompt": "A refined traditional Thai still life with classical ornament, ceremonial floral arrangement, gold-and-ivory details, and graceful heritage atmosphere. No people.", "avoid": "No human figures and no duplicated architecture composition."}}, "04-13": {"name": "เทศกาลสงกรานต์", "category": "culture", "h1": "สุขสันต์วันสงกรานต์", "h2": "สงกรานต์นี้ ขอให้ชุ่มฉ่ำด้วยความสุข", "g1": "ขอให้เทศกาลปีใหม่ไทยนำพาความสุข ความสดชื่น สุขภาพแข็งแรง และสิริมงคลมาสู่ทุกวันของชีวิต", "g2": "ขอให้ช่วงเวลานี้เต็มไปด้วยความร่มเย็น ความอบอุ่น และเป็นจุดเริ่มต้นของสิ่งดี ๆ ตลอดปี", "c1": {"name": "Songkran floral water bowl", "prompt": "A premium Thai Songkran still life with traditional silver water bowl, jasmine garlands, fragrant flower petals, elegant water droplets, and bright festive Thai atmosphere. No people.", "avoid": "No human figures, hands, crowds, water-gun battle, or chaotic street scene."}, "c2": {"name": "Thai New Year blessing arrangement", "prompt": "A refined Thai New Year arrangement with scented water, floral garlands, traditional textile, temple-inspired details, and fresh uplifting light. No people.", "avoid": "No people and no duplicated silver-bowl focal setup."}}, "04-14": {"name": "เทศกาลสงกรานต์ / วันครอบครัว", "category": "culture", "h1": "สุขสันต์วันครอบครัวและสงกรานต์", "h2": "วันครอบครัว ขอให้บ้านเต็มไปด้วยความสุข", "g1": "ขอให้เทศกาลปีใหม่ไทยนำพาความสุข ความสดชื่น สุขภาพแข็งแรง และสิริมงคลมาสู่ทุกวันของชีวิต", "g2": "ขอให้ช่วงเวลานี้เต็มไปด้วยความร่มเย็น ความอบอุ่น และเป็นจุดเริ่มต้นของสิ่งดี ๆ ตลอดปี", "c1": {"name": "Songkran floral water bowl", "prompt": "A premium Thai Songkran still life with traditional silver water bowl, jasmine garlands, fragrant flower petals, elegant water droplets, and bright festive Thai atmosphere. No people.", "avoid": "No human figures, hands, crowds, water-gun battle, or chaotic street scene."}, "c2": {"name": "Thai New Year blessing arrangement", "prompt": "A refined Thai New Year arrangement with scented water, floral garlands, traditional textile, temple-inspired details, and fresh uplifting light. No people.", "avoid": "No people and no duplicated silver-bowl focal setup."}}, "04-15": {"name": "เทศกาลสงกรานต์", "category": "culture", "h1": "ส่งท้ายสงกรานต์ด้วยความสุข", "h2": "ปีใหม่ไทย ขอให้สิ่งดี ๆ อยู่กับคุณ", "g1": "ขอให้เทศกาลปีใหม่ไทยนำพาความสุข ความสดชื่น สุขภาพแข็งแรง และสิริมงคลมาสู่ทุกวันของชีวิต", "g2": "ขอให้ช่วงเวลานี้เต็มไปด้วยความร่มเย็น ความอบอุ่น และเป็นจุดเริ่มต้นของสิ่งดี ๆ ตลอดปี", "c1": {"name": "Songkran floral water bowl", "prompt": "A premium Thai Songkran still life with traditional silver water bowl, jasmine garlands, fragrant flower petals, elegant water droplets, and bright festive Thai atmosphere. No people.", "avoid": "No human figures, hands, crowds, water-gun battle, or chaotic street scene."}, "c2": {"name": "Thai New Year blessing arrangement", "prompt": "A refined Thai New Year arrangement with scented water, floral garlands, traditional textile, temple-inspired details, and fresh uplifting light. No people.", "avoid": "No people and no duplicated silver-bowl focal setup."}}, "05-01": {"name": "วันแรงงานแห่งชาติ", "category": "national", "h1": "๑ พฤษภาคม วันแรงงานแห่งชาติ", "h2": "ส่งกำลังใจให้ทุกความตั้งใจในการทำงาน", "g1": "ขอให้ทุกความขยันและความทุ่มเทนำมาซึ่งความก้าวหน้า ความมั่นคง และความภาคภูมิใจในชีวิต", "g2": "ขอให้การงานราบรื่น มีโอกาสดี ๆ เข้ามา ได้รับผลตอบแทนที่เหมาะสม และมีความสุขกับทุกความสำเร็จ"}, "05-04": {"name": "วันฉัตรมงคล", "category": "national", "h1": "๔ พฤษภาคม วันฉัตรมงคล", "h2": "เนื่องในวันฉัตรมงคล", "g1": "ขอให้วันนี้เป็นวันแห่งความเป็นสิริมงคล ความร่มเย็น และความสุขของทุกคน", "g2": "ขอให้บ้านเมืองสงบสุข และทุกครอบครัวมีความมั่นคง ร่มเย็น และก้าวไปข้างหน้าด้วยสิ่งดีงาม"}, "06-03": {"name": "วันเฉลิมพระชนมพรรษา ๓ มิถุนายน", "category": "national", "h1": "๓ มิถุนายน วันเฉลิมพระชนมพรรษา", "h2": "เนื่องในวันสำคัญ ๓ มิถุนายน", "g1": "ขอให้วันนี้เป็นวันแห่งความเป็นสิริมงคล และขอให้ทุกครอบครัวมีความสุข ความร่มเย็น และความเจริญ", "g2": "ขอให้บ้านเมืองสงบสุข ผู้คนมีความสามัคคี และดำเนินชีวิตด้วยความมั่นคงและความหวังที่ดี"}, "07-28": {"name": "วันเฉลิมพระชนมพรรษา ๒๘ กรกฎาคม", "category": "national", "h1": "๒๘ กรกฎาคม วันเฉลิมพระชนมพรรษา", "h2": "เนื่องในวันสำคัญ ๒๘ กรกฎาคม", "g1": "ขอให้วันนี้เป็นวันแห่งความเป็นสิริมงคล ความสงบสุข และความร่มเย็นของแผ่นดิน", "g2": "ขอให้ทุกครอบครัวมีความสุข ความมั่นคง และร่วมกันสร้างสิ่งดีงามให้กับสังคมไทย"}, "08-12": {"name": "วันแม่แห่งชาติ", "category": "family", "h1": "๑๒ สิงหาคม สุขสันต์วันแม่แห่งชาติ", "h2": "วันแม่แห่งชาติ รักของแม่งดงามเสมอ", "g1": "ขอให้คุณแม่ทุกท่านมีสุขภาพแข็งแรง มีความสุขมาก ๆ และได้รับความรักความอบอุ่นจากครอบครัวเสมอ", "g2": "ขอให้ความรัก ความเสียสละ และความห่วงใยของแม่เป็นพลังใจที่งดงามในทุกวันของครอบครัว", "c1": {"name": "Mother Day jasmine garland still life", "prompt": "A beautiful Thai Mother Day still life with jasmine flowers and garlands, elegant pale-blue accents, refined gift box, warm home atmosphere, and soft loving light. No people.", "avoid": "No woman, mother figure, child, hands, faces, or identifiable family portrait."}, "c2": {"name": "Jasmine garden warm home symbolism", "prompt": "A serene jasmine garden or jasmine-filled veranda with soft pale-blue details, warm morning light, and subtle symbols of family love. No people.", "avoid": "No human figures and no duplicated gift-box arrangement."}}, "10-13": {"name": "วันนวมินทรมหาราช", "category": "national", "h1": "๑๓ ตุลาคม วันนวมินทรมหาราช", "h2": "น้อมรำลึก ๑๓ ตุลาคม", "g1": "ขอน้อมรำลึกถึงคุณูปการอันยิ่งใหญ่ และขอให้ความดีงามเป็นแรงบันดาลใจในการดำเนินชีวิต", "g2": "ขอให้วันนี้เป็นวันที่สงบ เรียบง่าย และเตือนใจให้เราร่วมกันทำความดีเพื่อส่วนรวม"}, "10-23": {"name": "วันปิยมหาราช", "category": "national", "h1": "๒๓ ตุลาคม วันปิยมหาราช", "h2": "น้อมรำลึกวันปิยมหาราช", "g1": "ขอน้อมรำลึกถึงพระมหากรุณาธิคุณ และขอให้คุณค่าของการพัฒนาบ้านเมืองเป็นแรงบันดาลใจสืบไป", "g2": "ขอให้วันนี้เป็นวันแห่งความสงบ ความกตัญญู และความภาคภูมิใจในประวัติศาสตร์ไทย"}, "12-05": {"name": "วันพ่อแห่งชาติ", "category": "family", "h1": "๕ ธันวาคม สุขสันต์วันพ่อแห่งชาติ", "h2": "วันพ่อแห่งชาติ ด้วยรักและความกตัญญู", "g1": "ขอให้คุณพ่อทุกท่านมีสุขภาพแข็งแรง มีความสุข และได้รับความรักความอบอุ่นจากครอบครัวในทุกวัน", "g2": "ขอให้ความรัก ความเสียสละ และคำสอนของพ่อเป็นพลังใจให้ครอบครัวก้าวผ่านทุกเรื่องด้วยความเข้มแข็ง", "c1": {"name": "Father Day yellow canna floral still life", "prompt": "A warm Thai Father Day still life with yellow canna flowers, elegant gift elements, classic pen symbolism, and soft golden home light. No people.", "avoid": "No man, father figure, child, hands, faces, or identifiable family portrait."}, "c2": {"name": "Warm home fatherly strength symbolism", "prompt": "A refined people-free home composition symbolizing fatherly strength and care, with yellow flowers, books, classic objects, and warm morning light. No people.", "avoid": "No human figures and no duplicated gift arrangement."}}, "12-10": {"name": "วันรัฐธรรมนูญ", "category": "national", "h1": "๑๐ ธันวาคม วันรัฐธรรมนูญ", "h2": "วันรัฐธรรมนูญ ๑๐ ธันวาคม", "g1": "ขอให้สังคมไทยก้าวไปข้างหน้าด้วยความสงบ เคารพซึ่งกันและกัน และร่วมกันสร้างประโยชน์เพื่อส่วนรวม", "g2": "ขอให้วันนี้เป็นวันที่เตือนใจถึงความรับผิดชอบต่อสังคม ความสามัคคี และการอยู่ร่วมกันอย่างสร้างสรรค์"}, "12-31": {"name": "วันสิ้นปี", "category": "celebration", "h1": "ส่งท้ายปีเก่า ต้อนรับสิ่งดี ๆ", "h2": "วันสุดท้ายของปี ขอให้จบอย่างงดงาม", "g1": "ขอให้เรื่องเหนื่อยใจผ่านไปพร้อมปีเก่า และเก็บทุกความทรงจำดี ๆ ไว้เป็นพลังสำหรับปีใหม่", "g2": "ขอให้วันสุดท้ายของปีเต็มไปด้วยความสุข ความสบายใจ และพร้อมต้อนรับการเริ่มต้นใหม่ที่สดใส", "c1": {"name": "Year-end elegant countdown still life", "prompt": "An elegant year-end celebration still life with refined clock near midnight, sparkling lights, tasteful ornaments, flowers, and premium festive atmosphere. No people.", "avoid": "No crowd, human figures, hands, nightclub scene, or excessive alcohol imagery."}, "c2": {"name": "Last sunset of the year", "prompt": "A breathtaking peaceful sunset landscape symbolizing the final day of the year, with warm golden light and contemplative premium mood. No people.", "avoid": "No human figures and no duplicated countdown still life."}}};
 const SPECIAL_2026 = {"2026-01-10": {"name": "วันเด็กแห่งชาติ", "category": "family", "h1": "สุขสันต์วันเด็กแห่งชาติ", "h2": "เด็กวันนี้ คือพลังของวันข้างหน้า", "g1": "ขอให้เด็ก ๆ เติบโตอย่างมีความสุข มีความฝัน มีความกล้าเรียนรู้ และได้รับโอกาสที่ดีในทุกช่วงวัย", "g2": "ขอให้ทุกวันของเด็ก ๆ เต็มไปด้วยความสนุก ความปลอดภัย ความอบอุ่น และการเรียนรู้ที่สร้างสรรค์", "c1": {"name": "Colorful children learning world", "prompt": "A joyful people-free children learning scene with colorful books, building blocks, art supplies, balloons, stars, and playful educational toys. No children or people.", "avoid": "No human figures, faces, hands, or copyrighted characters."}, "c2": {"name": "Dream and imagination objects", "prompt": "A whimsical people-free composition with kites, paper airplanes, toy telescope, colorful stars, clouds, pencils, and creative learning objects. No people.", "avoid": "No children, human figures, or duplicated book-block arrangement."}}, "2026-02-17": {"name": "วันตรุษจีน", "category": "culture", "h1": "สุขสันต์วันตรุษจีน เฮง ๆ รวย ๆ", "h2": "ตรุษจีนนี้ ขอให้โชคดีตลอดปี", "g1": "ขอให้ปีใหม่นี้มั่งมีศรีสุข การงานรุ่งเรือง การเงินคล่องตัว และมีโชคลาภตลอดทั้งปี", "g2": "ขอให้บ้านเต็มไปด้วยความสุข ความอบอุ่น ความสำเร็จ และสิ่งดี ๆ เข้ามาอย่างต่อเนื่อง", "c1": {"name": "Chinese New Year red-gold still life", "prompt": "A premium Chinese New Year still life with red envelopes, mandarin oranges, plum blossoms, elegant lanterns, gold decorative elements, and rich red-gold lighting. No people.", "avoid": "No human figures, hands, lion-dance performers, or crowded street scene."}, "c2": {"name": "Lantern and blossom festive courtyard", "prompt": "An elegant empty festive courtyard with red lanterns, blossoms, tasteful gold accents, and warm Chinese New Year atmosphere. No people.", "avoid": "No human figures and no duplicated orange-envelope tabletop."}}, "2026-03-03": {"name": "วันมาฆบูชา", "category": "buddhist", "h1": "วันมาฆบูชา น้อมใจสู่ความสงบ", "h2": "มาฆบูชานี้ ขอให้ใจสว่างด้วยธรรม", "g1": "ขอให้การระลึกถึงหลักธรรมในวันมาฆบูชานำความสงบ สติ และปัญญามาสู่การดำเนินชีวิต", "g2": "ขอให้วันนี้เป็นโอกาสดีในการทำความดี ลดสิ่งที่ทำให้ใจหนัก และเพิ่มความเมตตาให้กับตนเองและผู้อื่น"}, "2026-05-31": {"name": "วันวิสาขบูชา", "category": "buddhist", "h1": "วันวิสาขบูชา น้อมบูชาด้วยใจสงบ", "h2": "วิสาขบูชานี้ ขอให้ธรรมะนำทางใจ", "g1": "ขอให้วันวิสาขบูชานำความสงบ ความมีสติ และความสว่างทางปัญญามาสู่ชีวิต", "g2": "ขอให้บุญกุศลและความตั้งใจดีในวันนี้ช่วยเติมความร่มเย็น และเป็นกำลังใจให้ดำเนินชีวิตอย่างมีคุณค่า"}, "2026-06-08": {"name": "วันอัฏฐมีบูชา", "category": "buddhist", "h1": "วันอัฏฐมีบูชา น้อมระลึกด้วยศรัทธา", "h2": "อัฏฐมีบูชา ขอให้ใจตั้งมั่นในความดี", "g1": "ขอให้การระลึกถึงธรรมในวันนี้ช่วยให้มีสติ รู้เท่าทันใจ และดำเนินชีวิตด้วยความไม่ประมาท", "g2": "ขอให้ความดีที่ตั้งใจทำเป็นเหตุแห่งความสงบ ความเมตตา และปัญญาในทุกวัน"}, "2026-07-29": {"name": "วันอาสาฬหบูชา", "category": "buddhist", "h1": "วันอาสาฬหบูชา น้อมใจบูชาพระรัตนตรัย", "h2": "อาสาฬหบูชานี้ ขอให้ใจพบแสงแห่งธรรม", "g1": "ขอให้วันนี้เป็นวันที่ใจสงบ มีสติ และได้รับพลังจากหลักธรรมในการก้าวผ่านทุกเรื่องอย่างมั่นคง", "g2": "ขอให้การทำความดี ฟังธรรม และระลึกถึงพระรัตนตรัยนำความร่มเย็นและปัญญามาสู่ชีวิต"}, "2026-07-30": {"name": "วันเข้าพรรษา", "category": "buddhist", "h1": "วันเข้าพรรษา เริ่มต้นสิ่งดีด้วยใจตั้งมั่น", "h2": "เข้าพรรษานี้ ตั้งใจดี ทำดีให้ต่อเนื่อง", "g1": "ขอให้ช่วงเข้าพรรษาเป็นจุดเริ่มต้นของการลดสิ่งที่ไม่ดี เพิ่มสิ่งที่มีคุณค่า และดูแลใจให้สงบขึ้นทุกวัน", "g2": "ขอให้ความตั้งใจทำความดีในพรรษานี้เกิดผลเป็นความสุข ความมีสติ และความร่มเย็นในชีวิต"}, "2026-10-26": {"name": "วันออกพรรษา", "category": "buddhist", "h1": "วันออกพรรษา ขอให้ใจอิ่มบุญ", "h2": "ออกพรรษานี้ ขอให้ความดีงอกงาม", "g1": "ขอให้ผลแห่งความตั้งใจดีและการปฏิบัติตนตลอดพรรษานำความสุข ความสงบ และความสบายใจมาสู่ชีวิต", "g2": "ขอให้วันนี้เป็นอีกหนึ่งจุดเริ่มต้นของการรักษาความดี มีสติ และแบ่งปันสิ่งดีงามให้กับคนรอบข้าง"}, "2026-11-24": {"name": "วันลอยกระทง", "category": "culture", "h1": "สุขสันต์วันลอยกระทง", "h2": "ลอยกระทงนี้ ขอให้ทุกข์ลอยไป ความสุขลอยมา", "g1": "ขอให้ค่ำคืนลอยกระทงงดงาม สดใส และเป็นโอกาสให้ปล่อยสิ่งที่หนักใจไปพร้อมสายน้ำ", "g2": "ขอให้ความสุข ความหวัง และสิ่งดี ๆ เข้ามาแทนที่เรื่องที่ผ่านไป พร้อมเริ่มต้นวันใหม่ด้วยใจเบาสบาย", "c1": {"name": "Elegant krathong on moonlit water", "prompt": "A beautiful eco-friendly Thai krathong floating on calm moonlit water, decorated with flowers, candlelight, reflections, and elegant traditional details. No people.", "avoid": "No human figures, hands, crowds, plastic waste, or unsafe fire scene."}, "c2": {"name": "Loy Krathong riverside atmosphere", "prompt": "A serene empty Thai riverside at night with tasteful floating krathongs in the distance, warm lantern light, full moon reflections, flowers, and refined festival ambience. No people.", "avoid": "No human figures and no duplicated close-up krathong focal composition."}}};
-function specialDayInfo(d){
-  const full=isoCE(d), md=`${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
-  return SPECIAL_2026[full] || SPECIAL_FIXED[md] || null;
+// v11.72 — SPECIAL DAY ENGINE
+function specialPreset(id,name,group,category,h1,h2,g1,g2,colorTheme,sceneTheme){
+  const baseAvoid="No unrelated text, no copyrighted characters, no political campaign messaging, and no inappropriate religious mixing.";
+  return {
+    id,name,group,category,h1,h2,g1,g2,colorTheme,sceneTheme,
+    c1:{
+      name:`${id} special day hero`,
+      prompt:`A premium Thai greeting artwork concept for ${name}. ${sceneTheme}. Use tasteful event-relevant props, clean composition, and generous typography-safe space.`,
+      avoid:baseAvoid
+    },
+    c2:{
+      name:`${id} special day companion`,
+      prompt:`A distinct companion greeting artwork for ${name}. ${sceneTheme}. Use a different composition and supporting props from Image 1, with refined atmosphere and clear typography-safe space.`,
+      avoid:baseAvoid
+    }
+  };
 }
+
+const SPECIAL_PRESETS_V1172={
+  // Annual / fixed and general festivals
+  new_year:specialPreset("new_year","วันขึ้นปีใหม่","annual","celebration","สวัสดีปีใหม่ เริ่มต้นปีด้วยสิ่งดี ๆ","ปีใหม่นี้ ขอให้สดใสตลอดทาง","เริ่มปีใหม่ด้วยความสุข สุขภาพดี การงานก้าวหน้า และมีโอกาสดีเข้ามาตลอดปี","ทุกการเริ่มต้นนำไปสู่ความสำเร็จ ความสบายใจ และเรื่องน่ายินดีในทุกวัน","ทอง-ขาว-สีประจำวัน","แสงปีใหม่ ของขวัญ ดอกไม้ แสงระยิบระยับ และบรรยากาศเริ่มต้นใหม่"),
+  child_day:specialPreset("child_day","วันเด็กแห่งชาติ","family_education","family","สุขสันต์วันเด็กแห่งชาติ","เติบโตอย่างสดใส เรียนรู้ได้ทุกวัน","เด็ก ๆ เติบโตอย่างมีความสุข กล้าคิด กล้าฝัน และได้รับโอกาสดีในการเรียนรู้","ทุกวันเต็มไปด้วยความสนุก ความปลอดภัย ความอบอุ่น และจินตนาการสร้างสรรค์","สีสดใส-พาสเทล-สีประจำวัน","หนังสือ ของเล่นสร้างสรรค์ บอลลูน ดาว กระดาษสี และโลกแห่งการเรียนรู้"),
+  teacher_day:specialPreset("teacher_day","วันครู","family_education","education","๑๖ มกราคม วันครู","ระลึกพระคุณครูด้วยหัวใจ","ขอบคุณครูผู้มอบความรู้ ความเมตตา และแรงบันดาลใจให้ศิษย์ก้าวไปข้างหน้า","คุณครูมีความสุข สุขภาพแข็งแรง และภาคภูมิใจกับความสำเร็จของลูกศิษย์","ฟ้า-ขาว-ทอง-สีประจำวัน","หนังสือ ปากกา ดอกไม้ โต๊ะครู ห้องเรียนสะอาด และแสงแห่งความรู้"),
+  valentine:specialPreset("valentine","วันวาเลนไทน์","festival","celebration","สุขสันต์วันวาเลนไทน์","วันแห่งความรัก ขอให้หัวใจอบอุ่น","วันนี้เต็มไปด้วยความรัก ความห่วงใย และความรู้สึกดี ๆ จากคนสำคัญ","ทุกความสัมพันธ์งดงามด้วยความเข้าใจ ความจริงใจ และความสุข","ชมพู-แดงอ่อน-ครีม","ดอกกุหลาบ หัวใจ การ์ด ของขวัญ และแสงโรแมนติกอบอุ่น"),
+  songkran:specialPreset("songkran","เทศกาลสงกรานต์","festival","culture","สุขสันต์วันสงกรานต์","ปีใหม่ไทย สดชื่น ร่มเย็น เป็นสุข","สงกรานต์นี้นำความสดชื่น ความสุข สุขภาพแข็งแรง และสิริมงคลมาสู่ชีวิต","ช่วงปีใหม่ไทยเต็มไปด้วยความอบอุ่น ร่มเย็น และการเริ่มต้นสิ่งดี ๆ","ฟ้า-ดอกไม้สด-สีประจำวัน","ขันน้ำเงิน พวงมาลัย ดอกมะลิ น้ำอบ กลีบดอกไม้ และบรรยากาศปีใหม่ไทย"),
+  elderly_day:specialPreset("elderly_day","วันผู้สูงอายุแห่งชาติ","family_education","family","๑๓ เมษายน วันผู้สูงอายุแห่งชาติ","ส่งความรักและความห่วงใยถึงผู้สูงอายุ","สุขภาพแข็งแรง อายุยืน สดชื่น และมีความสุขกับครอบครัวในทุกวัน","ได้รับความรัก ความอบอุ่น การดูแล และความสบายใจจากคนรอบข้าง","ครีม-ทองอ่อน-สีประจำวัน","ดอกไม้ไทย ผ้าทอ ของใช้สุภาพ บ้านอบอุ่น และบรรยากาศครอบครัว"),
+  family_day:specialPreset("family_day","วันครอบครัว","family_education","family","๑๔ เมษายน วันครอบครัว","บ้านนี้เต็มไปด้วยความรัก","ครอบครัวอบอุ่น เข้าใจกัน มีสุขภาพดี และมีความสุขในทุกช่วงเวลา","ความรักและกำลังใจในบ้านเป็นพลังดี ๆ ให้ทุกคนก้าวไปข้างหน้า","อบอุ่น-ครีม-พาสเทล","บ้านอบอุ่น ดอกไม้ อาหารร่วมโต๊ะ ของที่ระลึก และบรรยากาศรักในครอบครัว"),
+  labor_day:specialPreset("labor_day","วันแรงงานแห่งชาติ","annual","national","๑ พฤษภาคม วันแรงงานแห่งชาติ","ส่งกำลังใจให้ทุกความตั้งใจในการทำงาน","ทุกความขยันนำมาซึ่งความก้าวหน้า ความมั่นคง และความภาคภูมิใจ","การงานราบรื่น มีโอกาสดี ได้รับผลตอบแทนเหมาะสม และมีความสุขกับความสำเร็จ","น้ำเงิน-ทอง-สีประจำวัน","โต๊ะทำงาน เครื่องมืออาชีพ เมืองสำนักงาน และภาพแทนความขยันอย่างสุภาพ"),
+  no_tobacco:specialPreset("no_tobacco","วันงดสูบบุหรี่โลก","awareness","health","๓๑ พฤษภาคม วันงดสูบบุหรี่โลก","เลือกสุขภาพดี เริ่มได้วันนี้","ดูแลปอดและสุขภาพให้แข็งแรง เติมอากาศดี ๆ และพลังสดใสให้ชีวิต","ทุกการเปลี่ยนแปลงเพื่อสุขภาพเป็นก้าวที่มีคุณค่าและน่าภูมิใจ","เขียว-ขาว-ฟ้า","อากาศสะอาด ใบไม้ การออกกำลัง และสัญลักษณ์สุขภาพโดยไม่แสดงบุหรี่เด่น"),
+  environment_day:specialPreset("environment_day","วันสิ่งแวดล้อมโลก","awareness","nature","๕ มิถุนายน วันสิ่งแวดล้อมโลก","โลกน่าอยู่ เริ่มจากสิ่งเล็ก ๆ ของเรา","ธรรมชาติสดชื่น อากาศสะอาด และสิ่งแวดล้อมที่ดีอยู่กับเรานาน ๆ","ร่วมดูแลต้นไม้ น้ำ อากาศ และลดสิ่งที่ทำร้ายธรรมชาติในชีวิตประจำวัน","เขียว-ฟ้า-ธรรมชาติ","ป่า ต้นไม้ ลำธาร โลกสีเขียว การรีไซเคิลแบบเรียบง่าย และแสงธรรมชาติ"),
+  mother_day:specialPreset("mother_day","วันแม่แห่งชาติ","family_education","family","๑๒ สิงหาคม สุขสันต์วันแม่แห่งชาติ","รักของแม่งดงามเสมอ","คุณแม่ทุกท่านสุขภาพแข็งแรง มีความสุข และได้รับความรักอบอุ่นจากครอบครัว","ความรัก ความเสียสละ และความห่วงใยของแม่เป็นพลังใจที่งดงามเสมอ","ฟ้าอ่อน-ขาว-มะลิ-สีประจำวัน","ดอกมะลิ พวงมาลัย บ้านอบอุ่น ของขวัญ และแสงนุ่มอ่อนโยน"),
+  father_day:specialPreset("father_day","วันพ่อแห่งชาติ","family_education","family","๕ ธันวาคม สุขสันต์วันพ่อแห่งชาติ","ด้วยรักและความกตัญญูถึงคุณพ่อ","คุณพ่อทุกท่านสุขภาพแข็งแรง มีความสุข และได้รับความรักอบอุ่นจากครอบครัว","ความรัก ความเสียสละ และคำสอนของพ่อเป็นพลังใจให้ครอบครัวเข้มแข็ง","เหลือง-ทองอ่อน-สีประจำวัน","ดอกพุทธรักษา หนังสือ ปากกา ของใช้สุภาพ บ้านอบอุ่น และแสงเช้า"),
+  halloween:specialPreset("halloween","วันฮาโลวีน","festival","celebration","สุขสันต์วันฮาโลวีน","คืนนี้สนุกแบบน่ารัก ไม่หลอนเกินไป","ค่ำคืนนี้เต็มไปด้วยความสนุก รอยยิ้ม และบรรยากาศแฟนตาซีที่เป็นมิตร","สนุกกับสีสันและจินตนาการ พร้อมเก็บความทรงจำดี ๆ ในค่ำคืนพิเศษ","ส้ม-ม่วง-ดำแบบน่ารัก","ฟักทอง โคมไฟ ใบไม้ฤดูใบไม้ร่วง ดาว และแฟนตาซีน่ารัก family-safe"),
+  christmas:specialPreset("christmas","วันคริสต์มาส","festival","celebration","Merry Christmas สุขสันต์วันคริสต์มาส","คริสต์มาสนี้ ขอให้หัวใจอบอุ่น","เทศกาลนี้เต็มไปด้วยความสุข ความรัก ของขวัญแห่งมิตรภาพ และช่วงเวลาดี ๆ","บ้านและหัวใจอบอุ่นด้วยรอยยิ้ม ความห่วงใย และความสุขตลอดเทศกาล","แดง-เขียว-ทอง-สีประจำวัน","ต้นคริสต์มาส ของขวัญ ไฟประดับ หิมะหรือบรรยากาศอบอุ่น และดาว"),
+  year_end:specialPreset("year_end","วันสิ้นปี / ส่งท้ายปีเก่า","annual","celebration","ส่งท้ายปีเก่า ต้อนรับสิ่งดี ๆ","วันสุดท้ายของปี ขอให้จบอย่างงดงาม","เรื่องเหนื่อยใจผ่านไปพร้อมปีเก่า และเก็บความทรงจำดีไว้เป็นพลังสำหรับปีใหม่","วันสุดท้ายของปีเต็มไปด้วยความสุข ความสบายใจ และพร้อมรับการเริ่มต้นใหม่","ทอง-กรมท่า-สีประจำวัน","นาฬิกานับถอยหลัง แสงไฟ ดอกไม้ วิวพระอาทิตย์ตก และประกายเฉลิมฉลอง"),
+
+  // Thai / Buddhist / Chinese movable manual presets
+  chinese_new_year:specialPreset("chinese_new_year","วันตรุษจีน","festival_chinese","culture","สุขสันต์วันตรุษจีน เฮง ๆ รวย ๆ","ตรุษจีนนี้ โชคดีตลอดปี","มั่งมีศรีสุข การงานรุ่งเรือง การเงินคล่องตัว และมีโชคลาภตลอดปี","บ้านเต็มไปด้วยความสุข ความอบอุ่น ความสำเร็จ และสิ่งดี ๆ","แดง-ทอง","โคมแดง ซองแดง ส้ม ดอกเหมย เหรียญมงคล และบรรยากาศจีนพรีเมียม"),
+  qingming:specialPreset("qingming","วันเช็งเม้ง","festival_chinese","culture","วันเช็งเม้ง รำลึกด้วยความกตัญญู","ส่งต่อความระลึกถึงและสายใยครอบครัว","ระลึกถึงบรรพบุรุษด้วยความกตัญญู และรักษาความผูกพันที่ดีของครอบครัว","วันนี้สงบ อบอุ่น และเต็มไปด้วยความหมายของการระลึกถึงคนสำคัญ","เขียวอ่อน-ขาว-ทอง","ดอกไม้ ธรรมชาติ โต๊ะรำลึกที่สุภาพ และบรรยากาศสงบโดยไม่แสดงพิธีรุนแรง"),
+  ghost_festival:specialPreset("ghost_festival","วันสารทจีน","festival_chinese","culture","วันสารทจีน ส่งความกตัญญูถึงบรรพบุรุษ","วันแห่งการระลึกถึงและความอบอุ่นในครอบครัว","ครอบครัวอยู่เย็นเป็นสุข มีความกตัญญู และร่วมกันรักษาความสัมพันธ์ที่ดี","วันนี้เต็มไปด้วยความสงบ ความเคารพ และสิริมงคลของครอบครัว","แดงเข้ม-ทอง-ครีม","ผลไม้ ดอกไม้ เครื่องไหว้ที่สุภาพ โคมจีน และโต๊ะมงคลอย่างเรียบร้อย"),
+  mid_autumn:specialPreset("mid_autumn","วันไหว้พระจันทร์","festival_chinese","culture","สุขสันต์วันไหว้พระจันทร์","พระจันทร์เต็มดวง เติมความสุขให้ครอบครัว","ครอบครัวพร้อมหน้า มีความสุข ความอุดมสมบูรณ์ และเรื่องดี ๆ เข้ามา","ค่ำคืนนี้งดงาม อบอุ่น และเต็มไปด้วยความหวังที่ดี","น้ำเงินกลางคืน-ทอง-แดง","พระจันทร์เต็มดวง โคมจีน ขนมไหว้พระจันทร์ ดอกไม้ และโต๊ะมงคล"),
+  vegetarian_festival:specialPreset("vegetarian_festival","เทศกาลกินเจ","festival_chinese","culture","เทศกาลกินเจ อิ่มใจ อิ่มบุญ","กินเจด้วยใจดี เติมพลังให้กายใจ","ช่วงเทศกาลนี้กายใจสดชื่น เบาสบาย และมีความสุขกับการเลือกสิ่งดี ๆ","ทุกมื้อเต็มไปด้วยความพอดี ความสบายใจ และความตั้งใจที่งดงาม","เหลือง-ขาว-แดง","อาหารเจ ผักผลไม้ โคมจีน และบรรยากาศสะอาดเรียบง่าย"),
+  makha:specialPreset("makha","วันมาฆบูชา","buddhist","buddhist","วันมาฆบูชา น้อมใจสู่ความสงบ","มาฆบูชานี้ ให้ธรรมะนำใจ","การระลึกถึงหลักธรรมนำความสงบ สติ และปัญญามาสู่การดำเนินชีวิต","วันนี้เป็นโอกาสดีในการทำความดี เพิ่มความเมตตา และดูแลใจให้สงบ","สีประจำวัน + ทองเป็น accent","วัด ดอกบัว เทียน แสงสงบ และองค์ประกอบพุทธศิลป์อย่างเคารพ"),
+  visakha:specialPreset("visakha","วันวิสาขบูชา","buddhist","buddhist","วันวิสาขบูชา น้อมบูชาด้วยใจสงบ","วิสาขบูชานี้ ให้ธรรมะนำทาง","วันนี้นำความสงบ ความมีสติ และความสว่างทางปัญญามาสู่ชีวิต","บุญกุศลและความตั้งใจดีเติมความร่มเย็นและกำลังใจให้ชีวิต","สีประจำวัน + ทองเป็น accent","วัด พระพุทธรูป ดอกบัว เทียน และแสงสงบแบบพุทธศิลป์"),
+  atthami:specialPreset("atthami","วันอัฏฐมีบูชา","buddhist","buddhist","วันอัฏฐมีบูชา น้อมระลึกด้วยศรัทธา","ตั้งมั่นในความดีด้วยใจสงบ","การระลึกถึงธรรมช่วยให้มีสติ รู้เท่าทันใจ และดำเนินชีวิตด้วยความไม่ประมาท","ความดีที่ตั้งใจทำเป็นเหตุแห่งความสงบ ความเมตตา และปัญญา","สีประจำวัน + ทองเป็น accent","วัด เทียน ดอกบัว และบรรยากาศพุทธศิลป์เรียบสงบ"),
+  asanha:specialPreset("asanha","วันอาสาฬหบูชา","buddhist","buddhist","วันอาสาฬหบูชา น้อมใจบูชาพระรัตนตรัย","อาสาฬหบูชานี้ ให้ใจพบแสงแห่งธรรม","วันนี้ใจสงบ มีสติ และได้รับพลังจากหลักธรรมในการก้าวผ่านทุกเรื่อง","การทำความดีและฟังธรรมนำความร่มเย็นและปัญญามาสู่ชีวิต","สีประจำวัน + ทองเป็น accent","วัด ดอกบัว แสงธรรม เทียน และพระธรรมจักรอย่างสุภาพ"),
+  lent:specialPreset("lent","วันเข้าพรรษา","buddhist","buddhist","วันเข้าพรรษา เริ่มต้นสิ่งดีด้วยใจตั้งมั่น","เข้าพรรษานี้ ทำดีให้ต่อเนื่อง","ช่วงเข้าพรรษาเป็นจุดเริ่มต้นของการลดสิ่งไม่ดี เพิ่มสิ่งมีคุณค่า และดูแลใจ","ความตั้งใจทำความดีเกิดผลเป็นความสุข ความมีสติ และความร่มเย็น","สีประจำวัน + ทองเป็น accent","เทียนพรรษา วัด ดอกบัว เครื่องทำบุญ และบรรยากาศสงบ"),
+  end_lent:specialPreset("end_lent","วันออกพรรษา","buddhist","buddhist","วันออกพรรษา ใจอิ่มบุญ","ออกพรรษานี้ ให้ความดีงอกงาม","ผลแห่งความตั้งใจดีนำความสุข ความสงบ และความสบายใจมาสู่ชีวิต","วันนี้เป็นจุดเริ่มต้นของการรักษาความดี มีสติ และแบ่งปันสิ่งดี ๆ","สีประจำวัน + ทองเป็น accent","วัด แสงเช้า ดอกบัว เทียน และองค์ประกอบบุญอย่างสงบ"),
+  wan_phra:specialPreset("wan_phra","วันพระ","buddhist","buddhist","สวัสดีวันพระ บุญรักษา ธรรมคุ้มครอง","วันพระนี้ ใจสงบ พบความสุข","วันนี้อิ่มบุญ อิ่มใจ สุขสงบ และเป็นสิริมงคล","ธรรมะนำทางให้ใจเบาสบาย มีสติ และพบความสุข","สีประจำวัน + ทองเป็น accent","พุทธศิลป์ วัด ดอกบัว เทียน ปิ่นโตหรือของทำบุญตามตัวเลือก"),
+  sangkhathan:specialPreset("sangkhathan","วันถวายสังฆทาน / ทำบุญ","buddhist","buddhist","วันดีของการทำบุญ","อิ่มบุญ อิ่มใจ","การทำบุญวันนี้นำความสบายใจ ความสงบ และสิ่งดีงามมาสู่ชีวิต","แบ่งปันด้วยใจดี เติมความสุขให้ตนเองและคนรอบข้าง","สีประจำวัน + ทองเป็น accent","สังฆทาน ปิ่นโต ดอกไม้ ผลไม้ และวัดอย่างสุภาพ"),
+  kathin:specialPreset("kathin","วันทอดกฐิน","buddhist","buddhist","ร่วมบุญทอดกฐินด้วยใจศรัทธา","บุญกฐิน เติมความอิ่มเอมใจ","การร่วมทำบุญเป็นพลังแห่งความสามัคคี ความสุข และความตั้งใจดี","วันนี้เต็มไปด้วยความอิ่มบุญ อิ่มใจ และความร่มเย็น","สีประจำวัน + ทองเป็น accent","กฐิน ผ้าไตร ดอกไม้ วัด และขบวนเครื่องไทยธรรมโดยเคารพ"),
+  pha_pa:specialPreset("pha_pa","วันทอดผ้าป่า","buddhist","buddhist","ร่วมบุญทอดผ้าป่าด้วยใจศรัทธา","บุญผ้าป่า เติมความสุขใจ","การร่วมบุญวันนี้นำความอิ่มใจ ความสามัคคี และสิ่งดี ๆ มาสู่ทุกคน","ความตั้งใจดีและการแบ่งปันสร้างความร่มเย็นให้ชีวิตและชุมชน","สีประจำวัน + ทองเป็น accent","ต้นผ้าป่า ผ้าไตร ดอกไม้ วัด และเครื่องไทยธรรมอย่างสุภาพ"),
+  house_merit:specialPreset("house_merit","วันทำบุญบ้าน","buddhist","buddhist","ทำบุญบ้าน รับสิริมงคล","บ้านร่มเย็น อยู่แล้วสบายใจ","บ้านเต็มไปด้วยความสงบ ความอบอุ่น ความสุข และสิริมงคล","สมาชิกในบ้านสุขภาพดี รักกัน และใช้ชีวิตอย่างราบรื่น","สีประจำวัน + ครีม + ทอง accent","บ้านไทย/ร่วมสมัย ดอกไม้ ของทำบุญ และบรรยากาศสะอาดอบอุ่น"),
+  birthday_merit:specialPreset("birthday_merit","วันทำบุญวันเกิด","buddhist","buddhist","วันเกิดนี้ อิ่มบุญ อิ่มใจ","เริ่มปีใหม่ของชีวิตด้วยความดี","ปีใหม่ของชีวิตเต็มไปด้วยสุขภาพดี ความสงบ ความก้าวหน้า และความสุข","การทำความดีวันนี้เป็นพลังใจให้ชีวิตเติบโตอย่างงดงาม","สีประจำวัน + ทอง accent","ดอกบัว เทียน ของทำบุญ ปิ่นโต และบรรยากาศวันเกิดที่สงบ"),
+
+  // Monthly / recurring
+  first_day:specialPreset("first_day","วันที่ 1 / เปิดเดือนใหม่","monthly","monthly","วันที่ 1 เปิดเดือนใหม่อย่างสดใส","เริ่มเดือนด้วยพลังดี ๆ","เดือนใหม่นี้การงานราบรื่น การเงินคล่องตัว และมีเรื่องดี ๆ เข้ามา","เริ่มต้นเดือนอย่างมั่นใจ สดชื่น และค่อย ๆ สำเร็จในสิ่งที่ตั้งใจ","สีประจำวัน + ทอง/เขียวมงคล","แสงเช้า ปฏิทิน ดอกไม้ เหรียญมงคลแบบพอดี และภาพเริ่มต้นใหม่"),
+  day16:specialPreset("day16","วันที่ 16 / กลางเดือน","monthly","monthly","วันที่ 16 กลางเดือนนี้ ขอให้ปัง","ครึ่งเดือนหลัง เดินหน้าต่ออย่างสดใส","ครึ่งเดือนหลังการงานเดินหน้า การเงินราบรื่น และมีข่าวดีเข้ามา","ทุกเรื่องที่กำลังทำคืบหน้าอย่างมั่นคง พร้อมรับโอกาสใหม่ ๆ","สีประจำวัน + ทอง/เขียวมงคล","แสงสดใส ปฏิทิน ดอกไม้ และพร็อพความสำเร็จแบบพรีเมียม"),
+  lottery_draw:specialPreset("lottery_draw","วันออกรางวัล / วันลุ้นโชค 1 และ 16","monthly","luck","วันลุ้นโชค เฮง ๆ รับทรัพย์","วันนี้ขอให้โชคดี มีสิ่งดี ๆ เข้ามา","วันนี้มีโชค มีลาภ การเงินคล่องตัว และพบโอกาสดีที่น่ายินดี","รับพลังบวก ความเฮง และความมั่งคั่งแบบพอดีตลอดวัน","แดง-ทอง-เขียวมรกต-สีประจำวัน","เหรียญมงคล ซองแดง แสงทอง ดอกไม้มงคล และองค์ประกอบรับทรัพย์ โดยไม่แสดงเลขหรือคำแนะนำเดิมพัน"),
+  month_end:specialPreset("month_end","วันสิ้นเดือน","monthly","monthly","ส่งท้ายเดือนอย่างสวยงาม","ปิดเดือนด้วยความสบายใจ","สิ่งที่ตั้งใจในเดือนนี้จบลงอย่างราบรื่น และได้เห็นความก้าวหน้าที่น่าภูมิใจ","วางเรื่องเหนื่อยไว้ข้างหลัง แล้วเตรียมรับเดือนใหม่ด้วยพลังดี ๆ","สีประจำวัน + ทองอ่อน","พระอาทิตย์ตก ปฏิทินปลายเดือน โต๊ะทำงานเรียบร้อย และดอกไม้"),
+  payday:specialPreset("payday","วันเงินเดือนออก","business","money","วันเงินเดือนออก รับทรัพย์แบบสบายใจ","เงินเข้าแล้ว ขอให้บริหารคล่องตัว","การเงินคล่องตัว ใช้จ่ายพอดี มีเหลือเก็บ และวางแผนได้อย่างสบายใจ","รายรับวันนี้ต่อยอดเป็นความมั่นคงและโอกาสดีในอนาคต","เขียวมรกต-ทอง-สีประจำวัน","กระเป๋าสตางค์ สมุดบัญชี เหรียญมงคล โต๊ะทำงาน และบรรยากาศการเงินที่เรียบร้อย"),
+  week_start:specialPreset("week_start","วันเริ่มต้นสัปดาห์ใหม่","monthly","work","เริ่มสัปดาห์ใหม่ด้วยพลังดี ๆ","สัปดาห์นี้ ขอให้งานไหลลื่น","เริ่มสัปดาห์อย่างสดชื่น งานเดินหน้า และจัดการทุกอย่างได้อย่างมั่นใจ","มีแรงใจ มีสมาธิ และพบโอกาสดีตลอดทั้งสัปดาห์","สีประจำวัน","โต๊ะทำงาน แสงเช้า ปฏิทิน กาแฟหรือดอกไม้แบบไม่ซ้ำ และบรรยากาศเริ่มงาน"),
+  happy_friday:specialPreset("happy_friday","วันศุกร์แห่งความสุข","monthly","happiness","สุขสันต์วันศุกร์","ศุกร์แล้ว ขอให้ใจเบาสบาย","วันนี้งานราบรื่น อารมณ์ดี และได้พักใจกับเรื่องดี ๆ รอบตัว","ปิดสัปดาห์อย่างมีความสุข พร้อมรับช่วงเวลาพักผ่อนอย่างสดใส","สีฟ้าวันศุกร์ + สีประจำวัน","ท้องฟ้า คาเฟ่ ธรรมชาติ ทะเล หรือบรรยากาศสบาย ๆ ก่อนวันหยุด"),
+  holiday_rest:specialPreset("holiday_rest","วันหยุดพักผ่อน","monthly","happiness","วันหยุดนี้ พักให้เต็มที่","เติมพลังให้กายใจ","วันนี้ได้พักผ่อนอย่างสบายใจ ทำสิ่งที่ชอบ และเติมพลังให้ตัวเอง","ปล่อยความเร่งรีบไว้ก่อน แล้วใช้วันหยุดกับความสุขเรียบง่าย","สีประจำวัน + พาสเทล","สวน ทะเล บ้านแสนสบาย หนังสือ ดอกไม้ หรือวิวธรรมชาติ"),
+
+  // Family / education / life milestones
+  school_open:specialPreset("school_open","วันเปิดเทอม","family_education","education","เปิดเทอมใหม่ เรียนรู้อย่างสดใส","เริ่มต้นบทเรียนใหม่ด้วยความมั่นใจ","เปิดเทอมนี้เรียนสนุก เข้าใจง่าย มีเพื่อนดี และเติบโตจากประสบการณ์ใหม่ ๆ","ทุกวันในโรงเรียนเต็มไปด้วยความปลอดภัย ความสนุก และแรงบันดาลใจ","สดใส-ฟ้า-เหลือง-สีประจำวัน","กระเป๋านักเรียน หนังสือ ดินสอ โรงเรียน และต้นไม้สดใส"),
+  school_close:specialPreset("school_close","วันปิดเทอม","family_education","education","ปิดเทอมแล้ว พักให้เต็มที่","เก็บความสำเร็จ แล้วไปสนุกกัน","ช่วงปิดเทอมเต็มไปด้วยการพักผ่อน ความสนุก และประสบการณ์ใหม่ที่สร้างสรรค์","ได้เติมพลัง อยู่กับครอบครัว และกลับมาเรียนอีกครั้งด้วยความสดใส","สดใส-พาสเทล","หนังสือปิดเล่ม กระเป๋าเดินทาง ของเล่นสร้างสรรค์ สวน และท้องฟ้า"),
+  graduation:specialPreset("graduation","วันรับปริญญา / เรียนจบ","family_education","success","ยินดีกับความสำเร็จ","อีกหนึ่งก้าวที่น่าภูมิใจ","ความพยายามที่ผ่านมาออกดอกผล และเปิดทางสู่โอกาสใหม่ที่ยิ่งใหญ่กว่าเดิม","ก้าวต่อไปด้วยความมั่นใจ ใช้ความรู้สร้างชีวิตที่ดี และพบความสำเร็จใหม่ ๆ","กรมท่า-ทอง-สีประจำวัน","หมวกรับปริญญา หนังสือ ใบประกาศ ดอกไม้ และสถาปัตยกรรมมหาวิทยาลัย"),
+  exam_day:specialPreset("exam_day","วันสอบ","family_education","education","วันสอบนี้ มั่นใจ ทำได้แน่นอน","ใจนิ่ง อ่านโจทย์ชัด ตอบอย่างมั่นใจ","มีสมาธิ ความจำดี ใจเย็น และแสดงความสามารถได้เต็มที่","ทุกสิ่งที่เตรียมมาช่วยให้ทำข้อสอบได้อย่างมั่นใจและราบรื่น","ฟ้า-เขียว-สีประจำวัน","หนังสือ ปากกา โต๊ะอ่านหนังสือ แสงเช้า และบรรยากาศมีสมาธิ"),
+  new_job:specialPreset("new_job","วันเริ่มงานใหม่","business","work","เริ่มงานใหม่อย่างมั่นใจ","ก้าวใหม่ของการทำงาน","งานใหม่ราบรื่น ได้เรียนรู้สิ่งดี พบทีมที่สนับสนุน และเติบโตอย่างมั่นคง","ทุกวันทำงานเต็มไปด้วยโอกาส ความมั่นใจ และความสำเร็จที่ค่อย ๆ เพิ่มขึ้น","น้ำเงิน-ทอง-สีประจำวัน","สำนักงาน โต๊ะทำงาน บัตรพนักงานแบบไม่ระบุแบรนด์ เมือง และแสงเช้า"),
+
+  // Business / commerce
+  shop_open:specialPreset("shop_open","วันเปิดร้าน","business","work","เปิดร้านวันดี เฮง ๆ ปัง ๆ","เปิดประตูรับลูกค้า รับทรัพย์","ร้านคึกคัก ลูกค้าเข้าต่อเนื่อง งานราบรื่น และยอดขายเติบโตอย่างสวยงาม","ทุกความตั้งใจในการเริ่มต้นร้านนำไปสู่ความมั่นคงและความสำเร็จ","แดง-ทอง-เขียว-สีประจำวัน","หน้าร้านสะอาด ป้ายเปิด ดอกไม้มงคล สินค้าเป็นระเบียบ และแสงต้อนรับ"),
+  business_open:specialPreset("business_open","วันเปิดกิจการ","business","work","เปิดกิจการใหม่ ก้าวไกลอย่างมั่นคง","เริ่มต้นธุรกิจด้วยพลังดี ๆ","กิจการเติบโต มีลูกค้าและโอกาสใหม่ การเงินคล่องตัว และทีมงานแข็งแรง","ทุกการตัดสินใจนำไปสู่ความสำเร็จและความมั่นคงในระยะยาว","กรมท่า-ทอง-เขียว-สีประจำวัน","ออฟฟิศใหม่ ป้ายเปิด ดอกไม้ โต๊ะประชุม และบรรยากาศธุรกิจพรีเมียม"),
+  good_sales:specialPreset("good_sales","วันค้าขายดี","business","money","วันนี้ค้าขายดี ลูกค้าแน่น","ขายคล่อง รับทรัพย์ทั้งวัน","ลูกค้าเข้าต่อเนื่อง เจรจาราบรื่น ยอดขายดี และมีรายรับน่าชื่นใจ","การค้าขายคล่องตัว สินค้าหมุนไว และมีโอกาสดีเพิ่มขึ้น","เขียวมรกต-ทอง-สีประจำวัน","หน้าร้าน สินค้า ดอกไม้มงคล เครื่องคิดเงินแบบทั่วไป และแสงคึกคัก"),
+  receive_wealth:specialPreset("receive_wealth","วันรับทรัพย์","business","wealth","เปิดวันรับทรัพย์ เฮง ๆ ปัง ๆ","เงินทองไหลมา โอกาสไหลเข้า","การเงินคล่องตัว มีรายรับดี มีโอกาสใหม่ และความมั่งคั่งเติบโตอย่างพอดี","วันนี้เต็มไปด้วยพลังบวกด้านงาน เงิน และความสำเร็จ","ทอง-เขียวมรกต-แดง accent","เหรียญมงคล ต้นไม้มงคล แสงทอง กระเป๋าสตางค์ และฉากหรูพอดี"),
+  money_flow:specialPreset("money_flow","วันเงินทองไหลมา","business","wealth","เงินทองไหลมา งานเดินหน้า","การเงินคล่องตัว รับโอกาสดี","รายรับราบรื่น จัดการเงินง่าย มีเหลือเก็บ และมีช่องทางดีเพิ่มขึ้น","ความมั่นคงทางการเงินค่อย ๆ เติบโตพร้อมความสบายใจ","เขียว-ทอง-สีประจำวัน","สัญลักษณ์การเงินเชิงมงคล โต๊ะวางแผน ดอกไม้ และแสงพรีเมียม"),
+  close_sale:specialPreset("close_sale","วันปิดการขาย","business","success","ปิดการขายอย่างสวยงาม","ดีลนี้ ขอให้สำเร็จ","การเจรจาลงตัว ลูกค้ามั่นใจ และปิดงานได้อย่างมืออาชีพ","ทุกขั้นตอนราบรื่น สื่อสารชัดเจน และได้ผลลัพธ์ที่ทุกฝ่ายพอใจ","น้ำเงิน-ทอง-สีประจำวัน","เอกสารข้อตกลง โต๊ะประชุม ปากกา การจับมือแบบ abstract หรือไม่มีคน และบรรยากาศมืออาชีพ"),
+  promotion_day:specialPreset("promotion_day","วันโปรโมชัน","business","money","โปรดีวันนี้ ช้อปคุ้มอย่างมีความสุข","วันดีของข้อเสนอพิเศษ","โปรโมชันได้รับความสนใจ ลูกค้าเข้าถึงง่าย และยอดขายเติบโตอย่างคึกคัก","ข้อเสนอชัดเจน น่าสนใจ และสร้างความสุขให้ทั้งร้านและลูกค้า","สีสดใส-แดง-เหลือง-สีประจำวัน","ป้ายโปรโมชันทรงกราฟิก กล่องสินค้า ริบบิ้น และองค์ประกอบ commercial โดยไม่ใส่ราคาปลอม"),
+  booth_day:specialPreset("booth_day","วันเปิดบูธ / ออกงาน","business","work","เปิดบูธวันนี้ ขอให้ปัง","คนแวะเยอะ งานราบรื่น","บูธโดดเด่น ลูกค้าแวะต่อเนื่อง การนำเสนอราบรื่น และเกิดโอกาสใหม่ ๆ","ทุกการพบปะนำไปสู่ความสัมพันธ์และผลลัพธ์ที่ดี","สีแบรนด์/สีประจำวัน","บูธจัดแสดง สินค้าตัวอย่าง ป้ายเรียบสะอาด ไฟงาน และบรรยากาศอีเวนต์"),
+  meeting_day:specialPreset("meeting_day","วันประชุมสำคัญ","business","work","ประชุมวันนี้ ราบรื่นและได้ข้อสรุป","คุยชัด คิดครบ เดินหน้าต่อ","การประชุมเป็นระบบ สื่อสารเข้าใจตรงกัน และได้ข้อสรุปที่นำไปใช้ได้จริง","ทุกฝ่ายร่วมมือกันดี และแผนงานเดินหน้าด้วยความมั่นใจ","น้ำเงิน-ขาว-สีประจำวัน","โต๊ะประชุม สมุดโน้ต หน้าจอกราฟ abstract และสำนักงานสะอาด"),
+  negotiation_day:specialPreset("negotiation_day","วันเจรจาธุรกิจ","business","success","เจรจาวันนี้ ลงตัวอย่างมืออาชีพ","คุยง่าย เข้าใจตรงกัน","การเจรจาราบรื่น ได้เงื่อนไขที่เหมาะสม และสร้างความสัมพันธ์ที่ดีต่อกัน","ทุกประเด็นได้รับการพูดคุยอย่างชัดเจนและนำไปสู่ผลลัพธ์ที่ดี","กรมท่า-ทอง-สีประจำวัน","โต๊ะเจรจา เอกสาร ปากกา อาคารสำนักงาน และแสงมืออาชีพ"),
+  project_start:specialPreset("project_start","วันเริ่มโปรเจกต์","business","work","เริ่มโปรเจกต์ใหม่ ไปให้สุด","ก้าวแรกที่ชัดเจน สู่เป้าหมายใหญ่","โปรเจกต์เดินหน้าเป็นระบบ ทีมร่วมมือดี และแก้ปัญหาได้อย่างคล่องตัว","ทุก milestone ค่อย ๆ สำเร็จ พร้อมเรียนรู้และเติบโตไปด้วยกัน","น้ำเงิน-เขียว-สีประจำวัน","แผนงาน sticky notes แบบไม่มีข้อความละเอียด laptop abstract และโต๊ะทีมงาน"),
+  salary_day:specialPreset("salary_day","วันเงินเดือนออก","business","money","เงินเดือนออกแล้ว จัดการดี มีเหลือเก็บ","รับรายได้อย่างสบายใจ","การเงินคล่องตัว วางแผนใช้จ่ายพอดี และต่อยอดความมั่นคงได้","รายรับเดือนนี้ช่วยให้ชีวิตสมดุล สบายใจ และพร้อมเดินหน้าต่อ","เขียว-ทอง-สีประจำวัน","สมุดวางแผนการเงิน กระเป๋าสตางค์ เหรียญ generic และโต๊ะทำงาน"),
+  bonus_day:specialPreset("bonus_day","วันโบนัส","business","money","โบนัสมาแล้ว รับความสำเร็จ","ผลตอบแทนของความตั้งใจ","ผลงานและความทุ่มเทได้รับผลตอบแทนที่น่าภูมิใจ และต่อยอดเป็นความมั่นคง","ใช้ความสำเร็จวันนี้เป็นแรงใจสำหรับเป้าหมายที่ยิ่งใหญ่ขึ้น","ทอง-เขียว-สีประจำวัน","กล่องของขวัญ เอกสารรางวัล abstract ดอกไม้ และแสงเฉลิมฉลองพรีเมียม"),
+  customer_thanks:specialPreset("customer_thanks","วันขอบคุณลูกค้า","business","happiness","ขอบคุณลูกค้าทุกท่านจากใจ","ทุกการสนับสนุนมีความหมาย","ขอบคุณสำหรับความไว้วางใจและการสนับสนุนที่ทำให้เราเติบโตไปด้วยกัน","ขอให้ลูกค้าทุกท่านมีความสุข พบสิ่งดี ๆ และประสบความสำเร็จในทุกวัน","สีแบรนด์/สีประจำวัน + ทองอ่อน","ของขวัญขอบคุณ ดอกไม้ การ์ด blank สินค้า generic และบรรยากาศอบอุ่น"),
+
+  custom:specialPreset("custom","วันพิเศษกำหนดเอง","custom","custom","วันพิเศษของวันนี้","วันนี้มีความหมายเป็นพิเศษ","วันนี้เต็มไปด้วยความสุข ความราบรื่น และเรื่องดี ๆ ที่น่าจดจำ","ทุกความตั้งใจในวันพิเศษนี้นำไปสู่ความสำเร็จและความสบายใจ","สีประจำวัน + สีที่เหมาะกับโอกาส","องค์ประกอบที่สื่อถึงโอกาสพิเศษอย่างตรงความหมาย เรียบหรู และเหมาะกับการ์ดสวัสดี")
+};
+
+function cloneSpecialPreset(id){
+  const p=SPECIAL_PRESETS_V1172[id];
+  if(!p)return null;
+  return JSON.parse(JSON.stringify(p));
+}
+
+function daysInMonth(d){
+  return new Date(d.getFullYear(),d.getMonth()+1,0,12,0,0).getDate();
+}
+function isSecondSaturdayOfJanuary(d){
+  if(d.getMonth()!==0 || canonicalWeekdayIndex(d)!==6)return false;
+  const day=d.getDate();
+  return day>=8 && day<=14;
+}
+
+function normalizeLegacySpecial(sp,id="calendar"){
+  if(!sp)return null;
+  const x=JSON.parse(JSON.stringify(sp));
+  x.id=x.id||id;
+  x.group=x.group||(x.category==="buddhist"?"buddhist":"annual");
+  x.colorTheme=x.colorTheme||"สีประจำวัน + สีเฉพาะเทศกาลอย่างพอดี";
+  x.sceneTheme=x.sceneTheme||"ใช้ฉากและพร็อพที่สื่อความหมายของวันสำคัญนี้อย่างชัดเจน";
+  return x;
+}
+
+function customSpecialPreset(){
+  const p=cloneSpecialPreset("custom");
+  const name=sanitizeVisible(String(specialCustomName||"").trim())||"วันพิเศษกำหนดเอง";
+  const h=sanitizeVisible(String(specialCustomHeadline||"").trim());
+  const g=sanitizeVisible(String(specialCustomGreeting||"").trim());
+  p.name=name;
+  p.h1=h||`${name} ขอให้วันนี้เต็มไปด้วยสิ่งดี ๆ`;
+  p.h2=h||`${name} วันดี ๆ ที่มีความหมาย`;
+  p.g1=g||"วันนี้เต็มไปด้วยความสุข ความราบรื่น ความสบายใจ และเรื่องน่ายินดี";
+  p.g2=g||"ทุกความตั้งใจในวันพิเศษนี้เดินหน้าอย่างสวยงาม และพบผลลัพธ์ที่ดี";
+  p.sceneTheme=`วันพิเศษกำหนดเอง: ${name}. ใช้พร็อพและบรรยากาศที่ตีความจากชื่อวันอย่างสุภาพ โดยไม่ประดิษฐ์ข้อเท็จจริงเพิ่มเติม`;
+  return p;
+}
+
+function calendarSpecialForDate(d){
+  const full=isoCE(d), md=`${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+  const exact=SPECIAL_2026[full];
+  if(exact)return normalizeLegacySpecial(exact,`calendar_${full}`);
+  const fixed=SPECIAL_FIXED[md];
+  if(fixed)return normalizeLegacySpecial(fixed,`fixed_${md}`);
+  if(isSecondSaturdayOfJanuary(d))return cloneSpecialPreset("child_day");
+  const extraFixed={
+    "05-31":"no_tobacco",
+    "06-05":"environment_day",
+    "10-31":"halloween",
+    "12-25":"christmas"
+  };
+  if(extraFixed[md])return cloneSpecialPreset(extraFixed[md]);
+  return null;
+}
+
+function monthlySpecialForDate(d){
+  const day=d.getDate();
+  if(day===1)return cloneSpecialPreset("lottery_draw");
+  if(day===16)return cloneSpecialPreset("lottery_draw");
+  if(day===daysInMonth(d))return cloneSpecialPreset("month_end");
+  return null;
+}
+
+function specialDaySuggestions(d){
+  const out=[];
+  const cal=calendarSpecialForDate(d);
+  const monthly=monthlySpecialForDate(d);
+  if(cal)out.push(cal.name);
+  if(monthly && !out.includes(monthly.name))out.push(monthly.name);
+  if(d.getDate()===1)out.push("เปิดเดือนใหม่ / วันที่ 1");
+  if(d.getDate()===16)out.push("กลางเดือน / วันที่ 16");
+  if(canonicalWeekdayIndex(d)===1)out.push("เริ่มต้นสัปดาห์ใหม่");
+  if(canonicalWeekdayIndex(d)===5)out.push("วันศุกร์แห่งความสุข");
+  if([0,6].includes(canonicalWeekdayIndex(d)))out.push("วันหยุดพักผ่อน");
+  return [...new Set(out)];
+}
+
+function manualSpecialForPreset(){
+  if(specialDayPreset==="custom")return customSpecialPreset();
+  return cloneSpecialPreset(specialDayPreset)||null;
+}
+
+function specialDayInfo(d){
+  if(specialDayMode==="off")return null;
+  if(specialDayMode==="manual")return manualSpecialForPreset();
+  const calendar=calendarSpecialForDate(d);
+  const monthly=monthlySpecialForDate(d);
+  if(specialDayPriority==="monthly_first")return monthly||calendar||null;
+  return calendar||monthly||null;
+}
+
+function specialDayPromptLines(s){
+  const sp=s?.special;
+  if(!sp)return [];
+  const buddhist=sp.category==="buddhist";
+  return [
+    "SPECIAL DAY VISUAL AUTHORITY v11.72:",
+    `SPECIAL DAY: ${sp.name}.`,
+    `SPECIAL DAY GROUP: ${sp.group||sp.category||"general"}.`,
+    `SPECIAL DAY COLOR THEME: ${sp.colorTheme||"coordinate with the weekday color"}.`,
+    `SPECIAL DAY SCENE THEME: ${sp.sceneTheme||"use event-appropriate visual cues"}.`,
+    buddhist
+      ? "BUDDHIST COLOR PRIORITY: keep the v11.66 weekday-color-as-primary rule; special-day colors are supporting accents only."
+      : "NON-BUDDHIST SPECIAL DAY: use the special-day palette and props as a strong event identity while keeping the weekday signature color visibly coordinated.",
+    "The scene must visibly communicate the selected special day without adding unsupported claims, fake dates, invented awards, lottery numbers, gambling advice, or unrelated religious iconography.",
+    ""
+  ];
+}
+
 
 let styleMode = localStorage.getItem("pokunStyleMode") || "AUTO";
 let selectedStyle = Number(localStorage.getItem("pokunStyleIndex") || 0);
@@ -1446,6 +1827,12 @@ let birthdayTheme = localStorage.getItem("pokunBirthdayTheme") || "auto";
 let birthdayAgeGroup = localStorage.getItem("pokunBirthdayAgeGroup") || "auto";
 let birthdayWishFocus = localStorage.getItem("pokunBirthdayWishFocus") || "auto_age";
 let birthdayCustomWish = localStorage.getItem("pokunBirthdayCustomWish") || "";
+let specialDayMode = localStorage.getItem("pokunSpecialDayModeV1172") || "auto";
+let specialDayPriority = localStorage.getItem("pokunSpecialDayPriorityV1172") || "calendar_first";
+let specialDayPreset = localStorage.getItem("pokunSpecialDayPresetV1172") || "first_day";
+let specialCustomName = localStorage.getItem("pokunSpecialCustomNameV1172") || "";
+let specialCustomHeadline = localStorage.getItem("pokunSpecialCustomHeadlineV1172") || "";
+let specialCustomGreeting = localStorage.getItem("pokunSpecialCustomGreetingV1172") || "";
 let quoteCategory = localStorage.getItem("pokunQuoteCategory") || "auto";
 let quoteLength = localStorage.getItem("pokunQuoteLength") || "short";
 let quoteVisualStyle = localStorage.getItem("pokunQuoteVisualStyle") || "auto";
@@ -1470,11 +1857,22 @@ let multiPhotoRole2 = localStorage.getItem("pokunMultiPhotoRole2") || "mother_da
 let referenceUse1 = localStorage.getItem("pokunReferenceUse1") || "face_only";
 let referenceUse2 = localStorage.getItem("pokunReferenceUse2") || "face_only";
 let animalMode = ["animal","both"].includes(characterMode1) || ["animal","both"].includes(characterMode2) ? "animal" : "none";
-let animalType = localStorage.getItem("pokunAnimalType") || "auto";
-let animalStyle = localStorage.getItem("pokunAnimalStyle") || "follow";
-let animalLook = localStorage.getItem("pokunAnimalLook") || "auto";
-let animalBehavior = localStorage.getItem("pokunAnimalBehavior") || "auto";
-let anthroLevel = localStorage.getItem("pokunAnthroLevel") || "natural";
+// v11.67 migration: old shared Animal settings seed both images the first time.
+const legacyAnimalType = localStorage.getItem("pokunAnimalType") || "auto";
+const legacyAnimalStyle = localStorage.getItem("pokunAnimalStyle") || "follow";
+const legacyAnimalLook = localStorage.getItem("pokunAnimalLook") || "auto";
+const legacyAnimalBehavior = localStorage.getItem("pokunAnimalBehavior") || "auto";
+const legacyAnthroLevel = localStorage.getItem("pokunAnthroLevel") || "natural";
+let animalType1 = localStorage.getItem("pokunAnimalType1") || legacyAnimalType;
+let animalType2 = localStorage.getItem("pokunAnimalType2") || legacyAnimalType;
+let animalStyle1 = localStorage.getItem("pokunAnimalStyle1") || legacyAnimalStyle;
+let animalStyle2 = localStorage.getItem("pokunAnimalStyle2") || legacyAnimalStyle;
+let animalLook1 = localStorage.getItem("pokunAnimalLook1") || legacyAnimalLook;
+let animalLook2 = localStorage.getItem("pokunAnimalLook2") || legacyAnimalLook;
+let animalBehavior1 = localStorage.getItem("pokunAnimalBehavior1") || legacyAnimalBehavior;
+let animalBehavior2 = localStorage.getItem("pokunAnimalBehavior2") || legacyAnimalBehavior;
+let anthroLevel1 = localStorage.getItem("pokunAnthroLevel1") || legacyAnthroLevel;
+let anthroLevel2 = localStorage.getItem("pokunAnthroLevel2") || legacyAnthroLevel;
 let strokeLayers = localStorage.getItem("pokunStrokeLayers") || "2";
 let shadowMode = localStorage.getItem("pokunShadowMode") || "offset";
 let blessingStrokeMode = localStorage.getItem("pokunBlessingStrokeMode") || "follow";
@@ -3057,78 +3455,171 @@ function syncDerivedCharacterModes(){
   $("animalMode").value=animalMode;
 }
 
-function resolvedAnimalStyle(){
-  if(animalStyle==="realistic") return "realistic";
-  if(animalStyle==="cartoon") return "cartoon";
+function animalSettingValue(setNo,key){
+  const fallback={
+    type:setNo===1?animalType1:animalType2,
+    style:setNo===1?animalStyle1:animalStyle2,
+    look:setNo===1?animalLook1:animalLook2,
+    behavior:setNo===1?animalBehavior1:animalBehavior2,
+    anthro:setNo===1?anthroLevel1:anthroLevel2
+  }[key];
+  const id={
+    type:`animalType${setNo}`,
+    style:`animalStyle${setNo}`,
+    look:`animalLook${setNo}`,
+    behavior:`animalBehavior${setNo}`,
+    anthro:`anthroLevel${setNo}`
+  }[key];
+  return document.getElementById(id)?.value || fallback;
+}
+
+function resolvedAnimalStyle(setNo){
+  const style=animalSettingValue(setNo,"style")||"follow";
+  if(style==="realistic") return "realistic";
+  if(style==="cartoon") return "cartoon";
   return humanStyle==="cartoon" ? "cartoon" : "realistic";
 }
 
-function animalSpeciesDirection(s){
-  const currentAnimalType=document.getElementById("animalType")?.value || animalType || "auto";
-  const supported=["cat","dog","horse","rabbit","bear","bird","elephant","deer","squirrel","hamster","duck","chicken","goat","sheep","cow","buffalo","pig","fox","panda","monkey","turtle","fish","butterfly"];
+function animalSpeciesDirection(s,setNo){
+  const currentAnimalType=animalSettingValue(setNo,"type")||"auto";
+  const supported=[
+    "cat","dog","rabbit","hamster","guinea_pig","hedgehog","ferret","chinchilla",
+    "horse","pony","cow","buffalo","goat","sheep","pig","chicken","duck","goose","alpaca","llama",
+    "elephant","deer","squirrel","bear","panda","fox","wolf","raccoon","otter","capybara","koala","monkey","gibbon","kangaroo","giraffe","zebra","lion","tiger","leopard","cheetah","hippo","rhino",
+    "bird","parrot","owl","dove","swan","peacock","flamingo","penguin","eagle","crane",
+    "fish","turtle","dolphin","whale","seal","otter_sea","octopus","crab","seahorse","starfish",
+    "butterfly","bee","dragonfly","ladybug","frog","snail"
+  ];
   if(supported.includes(currentAnimalType)) return currentAnimalType;
-  const seed=hashString(`${userSeed}|${s.day.isoDate}|animal-species-v1122`);
-  return pick(["cat","dog","horse","rabbit","bird","deer","squirrel","duck","sheep","panda"],seed+8101);
+  const seed=hashString(`${userSeed}|${s.day.isoDate}|${setNo}|animal-species-v1167`);
+  return pick([
+    "cat","dog","rabbit","hamster","hedgehog","horse","duck","sheep","alpaca",
+    "deer","squirrel","panda","fox","otter","capybara","koala",
+    "bird","parrot","owl","dove","peacock","penguin",
+    "fish","turtle","dolphin","butterfly","frog"
+  ],seed+8101);
 }
 
-function animalLookDirection(s){
-  const currentAnimalLook=document.getElementById("animalLook")?.value || animalLook || "auto";
-  const animalLook=currentAnimalLook;
-  if(animalLook==="orange_cat") return "an orange tabby cat with warm ginger fur and a distinctive friendly face";
-  if(animalLook==="white_cat") return "a clean white cat with soft bright fur and a gentle expressive face";
-  if(animalLook==="black_cat") return "a sleek black cat with expressive eyes and elegant silhouette";
-  if(animalLook==="golden_dog") return "a friendly golden-colored dog with warm fur and expressive features";
-  if(animalLook==="white_dog") return "a friendly white dog with clean soft fur and expressive features";
-  if(animalLook==="brown_horse") return "a graceful warm brown horse with a flowing mane and friendly expressive eyes";
-  if(animalLook==="white_horse") return "an elegant white horse with a clean flowing mane and gentle expressive eyes";
-  if(animalLook==="black_horse") return "a sleek black horse with a glossy mane and elegant silhouette";
-  if(animalLook==="white_rabbit") return "a soft white rabbit with clean fur, expressive ears, and a gentle face";
-  if(animalLook==="brown_bear") return "a warm brown bear character with soft rounded features";
-  if(animalLook==="spotted_deer") return "a gentle spotted deer with delicate markings and expressive eyes";
-  if(animalLook==="red_squirrel") return "a cute reddish-brown squirrel with a fluffy tail and bright expressive eyes";
-  if(animalLook==="yellow_duck") return "a cheerful yellow duck with a friendly rounded silhouette";
-  if(animalLook==="white_sheep") return "a fluffy white sheep with soft wool and a gentle friendly face";
-  if(animalLook==="panda_classic") return "a cute black-and-white panda with rounded friendly features";
-  if(animalLook==="green_turtle") return "a charming green turtle with a patterned shell and gentle expression";
-  const species=animalSpeciesDirection(s);
-  if(species==="cat") return "a distinctive friendly cat with a memorable face and consistent fur markings";
-  if(species==="dog") return "a friendly dog with a memorable face, consistent coat color, and recognizable markings";
-  if(species==="rabbit") return "a charming rabbit with consistent fur color, ears, and facial markings";
-  if(species==="bird") return "a charming small bird with consistent plumage colors and recognizable markings";
-  if(species==="elephant") return "a gentle Asian elephant character with consistent facial features and proportions";
-  if(species==="horse") return "a graceful friendly horse with a flowing mane, expressive eyes, and consistent coat markings";
-  if(species==="deer") return "a gentle deer with elegant proportions and recognizable markings";
-  if(species==="squirrel") return "a cute squirrel with a fluffy tail and lively expressive face";
-  if(species==="hamster") return "a tiny round hamster with soft fur and an adorable expressive face";
-  if(species==="duck") return "a cheerful duck with a rounded friendly silhouette and expressive face";
-  if(species==="chicken") return "a charming chicken with clean plumage and friendly illustrated character";
-  if(species==="goat") return "a friendly goat with expressive eyes and recognizable coat markings";
-  if(species==="sheep") return "a fluffy sheep with soft wool and a gentle friendly face";
-  if(species==="cow") return "a friendly cow with recognizable coat markings and gentle expressive eyes";
-  if(species==="buffalo") return "a gentle water buffalo with distinctive curved horns and calm expression";
-  if(species==="pig") return "a cute friendly pig with rounded features and expressive eyes";
-  if(species==="fox") return "a charming fox with a fluffy tail, warm coat, and bright expressive eyes";
-  if(species==="panda") return "a cute black-and-white panda with rounded friendly features";
-  if(species==="monkey") return "a playful friendly monkey with expressive face and clear natural anatomy";
-  if(species==="turtle") return "a charming turtle with a patterned shell and gentle expression";
-  if(species==="fish") return "a beautiful friendly ornamental fish with distinctive fins and consistent markings";
-  if(species==="butterfly") return "a delicate colorful butterfly with distinctive symmetrical wing patterns";
-  return "a distinctive friendly animal character with consistent visual identity";
+function animalLookDirection(s,setNo){
+  const animalLook=animalSettingValue(setNo,"look")||"auto";
+  const explicit={
+    orange_cat:"an orange tabby cat with warm ginger fur and a distinctive friendly face",
+    white_cat:"a clean white cat with soft bright fur and a gentle expressive face",
+    black_cat:"a sleek black cat with expressive eyes and elegant silhouette",
+    golden_dog:"a friendly golden-colored dog with warm fur and expressive features",
+    white_dog:"a friendly white dog with clean soft fur and expressive features",
+    brown_horse:"a graceful warm brown horse with a flowing mane and friendly expressive eyes",
+    white_horse:"an elegant white horse with a clean flowing mane and gentle expressive eyes",
+    black_horse:"a sleek black horse with a glossy mane and elegant silhouette",
+    white_rabbit:"a soft white rabbit with clean fur, expressive ears, and a gentle face",
+    brown_bear:"a warm brown bear character with soft rounded features",
+    spotted_deer:"a gentle spotted deer with delicate markings and expressive eyes",
+    red_squirrel:"a cute reddish-brown squirrel with a fluffy tail and bright expressive eyes",
+    yellow_duck:"a cheerful yellow duck with a friendly rounded silhouette",
+    white_sheep:"a fluffy white sheep with soft wool and a gentle friendly face",
+    panda_classic:"a cute black-and-white panda with rounded friendly features",
+    green_turtle:"a charming green turtle with a patterned shell and gentle expression",
+    tricolor_guinea_pig:"a cute tricolor guinea pig with white, brown, and black patches",
+    african_hedgehog:"a small African pygmy hedgehog with neat brown-and-cream quills",
+    white_alpaca:"a fluffy white alpaca with a charming rounded face",
+    fluffy_alpaca:"an extra-fluffy alpaca with dense soft wool and a cheerful face",
+    classic_raccoon:"a playful raccoon with a dark eye mask and ringed tail",
+    classic_capybara:"a calm brown capybara with rounded muzzle and relaxed friendly expression",
+    gray_koala:"a cuddly gray koala with fluffy round ears and a large dark nose",
+    blue_peacock:"a magnificent blue peacock with iridescent neck and full eye-pattern tail feathers",
+    white_peacock:"an elegant white peacock with a full delicate white fan tail",
+    emperor_penguin:"an emperor penguin with clean black-white-yellow plumage",
+    baby_penguin:"a fluffy gray baby penguin with adorable rounded proportions",
+    bottlenose_dolphin:"a friendly bottlenose dolphin with sleek gray body and curved smile-like mouth",
+    baby_seal:"a fluffy white seal pup with dark round eyes",
+    sea_otter:"a playful sea otter with dense brown fur and floating posture",
+    honey_bee:"a friendly honey bee with golden-black stripes and translucent wings",
+    green_frog:"a bright green frog with smooth skin and expressive golden eyes"
+  };
+  if(explicit[animalLook])return explicit[animalLook];
+  const species=animalSpeciesDirection(s,setNo);
+  const generic={
+    cat:"a distinctive friendly cat with a memorable face and consistent fur markings",
+    dog:"a friendly dog with a memorable face, consistent coat color, and recognizable markings",
+    rabbit:"a charming rabbit with consistent fur color, ears, and facial markings",
+    hamster:"a tiny round hamster with soft fur and an adorable expressive face",
+    guinea_pig:"a cute guinea pig with rounded body, soft coat, and distinctive markings",
+    hedgehog:"a small charming hedgehog with neat quills and an expressive face",
+    ferret:"a playful slender ferret with soft fur and recognizable mask/coat markings",
+    chinchilla:"a fluffy chinchilla with velvety fur, round ears, and expressive eyes",
+    horse:"a graceful friendly horse with a flowing mane, expressive eyes, and consistent coat markings",
+    pony:"a compact adorable pony with fluffy mane and friendly proportions",
+    cow:"a friendly cow with recognizable coat markings and gentle expressive eyes",
+    buffalo:"a gentle water buffalo with distinctive curved horns and calm expression",
+    goat:"a friendly goat with expressive eyes and recognizable coat markings",
+    sheep:"a fluffy sheep with soft wool and a gentle friendly face",
+    pig:"a cute friendly pig with rounded features and expressive eyes",
+    chicken:"a charming chicken with clean plumage and friendly character",
+    duck:"a cheerful duck with a rounded friendly silhouette and expressive face",
+    goose:"a graceful goose with clean plumage, long neck, and friendly expression",
+    alpaca:"a fluffy alpaca with long neck, soft wool, and a charming expressive face",
+    llama:"a friendly llama with long ears, woolly coat, and distinctive face",
+    elephant:"a gentle Asian elephant character with consistent facial features and proportions",
+    deer:"a gentle deer with elegant proportions and recognizable markings",
+    squirrel:"a cute squirrel with a fluffy tail and lively expressive face",
+    bear:"a friendly bear with rounded powerful proportions and soft expressive features",
+    panda:"a cute black-and-white panda with rounded friendly features",
+    fox:"a charming fox with a fluffy tail, warm coat, and bright expressive eyes",
+    wolf:"a dignified wolf with thick fur, clear canine anatomy, and expressive eyes",
+    raccoon:"a playful raccoon with black facial mask and ringed tail",
+    otter:"a charming brown otter with sleek fur, whiskers, and playful expression",
+    capybara:"a calm friendly capybara with rounded muzzle and relaxed expression",
+    koala:"a cuddly gray koala with round ears, dark nose, and gentle face",
+    monkey:"a playful friendly monkey with expressive face and clear natural anatomy",
+    gibbon:"an elegant gibbon with long arms and a distinctive expressive face",
+    kangaroo:"a friendly kangaroo with long ears, strong hind legs, and recognizable tail",
+    giraffe:"a graceful giraffe with patterned coat, long neck, and gentle expressive eyes",
+    zebra:"a clean black-and-white zebra with crisp stripe pattern and elegant proportions",
+    lion:"a majestic but friendly lion with clear feline anatomy and expressive face",
+    tiger:"a striking tiger with orange-and-black stripes and strong feline anatomy",
+    leopard:"an elegant leopard with clear rosette markings and feline proportions",
+    cheetah:"a sleek cheetah with black spots, tear lines, and athletic proportions",
+    hippo:"a rounded friendly hippopotamus with sturdy anatomy and expressive face",
+    rhino:"a powerful but calm rhinoceros with textured gray skin and clear horn anatomy",
+    bird:"a charming small bird with consistent plumage colors and recognizable markings",
+    parrot:"a colorful parrot with curved beak, vivid plumage, and lively expression",
+    owl:"a charming owl with large expressive eyes and detailed feather pattern",
+    dove:"a peaceful dove with soft clean plumage and graceful silhouette",
+    swan:"an elegant swan with long curved neck and graceful white or dark plumage",
+    peacock:"a magnificent peacock with iridescent blue-green plumage and ornate tail feathers",
+    flamingo:"a graceful pink flamingo with long legs and curved neck",
+    penguin:"a charming penguin with black-and-white plumage and upright friendly posture",
+    eagle:"a majestic eagle with powerful wings, sharp beak, and detailed feathers",
+    crane:"an elegant crane with long legs, long neck, and refined plumage",
+    fish:"a beautiful friendly ornamental fish with distinctive fins and consistent markings",
+    turtle:"a charming turtle with a patterned shell and gentle expression",
+    dolphin:"a sleek friendly dolphin with smooth gray body and playful expression",
+    whale:"a majestic whale with realistic marine anatomy and graceful scale",
+    seal:"a charming seal with smooth coat, whiskers, and expressive dark eyes",
+    otter_sea:"a playful sea otter with dense fur, whiskers, and floating posture",
+    octopus:"a charming octopus with eight clear arms, suction cups, and expressive form",
+    crab:"a colorful crab with clear claws, shell anatomy, and lively posture",
+    seahorse:"a delicate seahorse with curled tail and detailed ridged body",
+    starfish:"a beautiful starfish with clear five-arm form and natural surface texture",
+    butterfly:"a delicate colorful butterfly with distinctive symmetrical wing patterns",
+    bee:"a friendly bee with striped body, translucent wings, and clear insect anatomy",
+    dragonfly:"a delicate dragonfly with long body and four transparent wings",
+    ladybug:"a tiny red ladybug with black spots and clear rounded shell",
+    frog:"a charming frog with bright eyes, smooth natural anatomy, and friendly pose",
+    snail:"a cute snail with spiral shell, eye stalks, and gentle expressive presentation"
+  };
+  return generic[species]||"a distinctive friendly animal character with consistent visual identity";
 }
 
 function animalBehaviorDirection(s,setNo){
-  const mode=document.getElementById("animalBehavior")?.value || animalBehavior || "auto";
-  const seed=hashString(`${userSeed}|${s.day.isoDate}|${setNo}|animal-behavior-v33`);
-  if(mode==="natural"){
-    return "Use natural species-appropriate animal behavior and posture. Do not make the animal perform human actions.";
-  }
-  if(mode==="humanlike"){
-    return pick([
-      "Let the animal perform a playful human-like activity appropriate to the scene, such as holding flowers, reading, carrying a small bag, sitting at a table, greeting with a wai-like pose, or interacting with simple props.",
-      "Give the animal a charming human-like action while preserving clear animal anatomy and identity, such as standing upright briefly, holding a small object, arranging flowers, or posing like a friendly host.",
-      "Use an expressive human-like activity suited to the scene, with believable paws/wings/trunk handling and clean readable action."
-    ],seed+8203);
-  }
+  const mode=animalSettingValue(setNo,"behavior")||"auto";
+  const seed=hashString(`${userSeed}|${s.day.isoDate}|${setNo}|animal-behavior-v1167`);
+  if(mode==="natural")return "Use natural species-appropriate animal behavior and posture. Do not make the animal perform human actions.";
+  if(mode==="humanlike")return pick([
+    "Let the animal perform a playful human-like activity appropriate to the scene, such as holding flowers, reading, carrying a small bag, sitting at a table, greeting with a wai-like pose, or interacting with simple props.",
+    "Give the animal a charming human-like action while preserving clear animal anatomy and identity, such as standing upright briefly, holding a small object, arranging flowers, or posing like a friendly host.",
+    "Use an expressive human-like activity suited to the scene, with believable paws/wings/trunk handling and clean readable action."
+  ],seed+8203);
   return pick([
     "Choose either a natural animal action or a light human-like action according to the scene and overall mood.",
     "Use a scene-appropriate animal activity with clear storytelling and charming expression.",
@@ -3136,50 +3627,42 @@ function animalBehaviorDirection(s,setNo){
   ],seed+8309);
 }
 
-function anthroDirection(){
-  if(anthroLevel==="semi"){
-    return "SEMI-ANTHROPOMORPHIC: the animal may stand on two legs, hold simple objects, gesture, or use furniture, while still clearly retaining animal body structure, paws/feet, head shape, fur/feathers, and species identity.";
-  }
-  if(anthroLevel==="full"){
-    return "FULL CHARACTER MODE: the animal may wear tasteful clothing/accessories and perform human-like daily activities, but must remain unmistakably the selected animal species rather than becoming a human with animal ears.";
-  }
+function anthroDirection(setNo){
+  const level=animalSettingValue(setNo,"anthro")||"natural";
+  if(level==="semi")return "SEMI-ANTHROPOMORPHIC: the animal may stand on two legs, hold simple objects, gesture, or use furniture, while still clearly retaining animal body structure, paws/feet, head shape, fur/feathers, and species identity.";
+  if(level==="full")return "FULL CHARACTER MODE: the animal may wear tasteful clothing/accessories and perform human-like daily activities, but must remain unmistakably the selected animal species rather than becoming a human with animal ears.";
   return "NATURAL ANIMAL MODE: preserve natural species anatomy, posture, movement, and behavior. Avoid human clothing and strongly human body proportions.";
 }
 
-function sharedAnimalCharacter(s){
-  if(animalMode!=="animal") return null;
-  const style=resolvedAnimalStyle();
-  const species=animalSpeciesDirection(s);
-  const look=animalLookDirection(s);
-  const seed=hashString(`${userSeed}|${s.day.isoDate}|shared-animal-character-v33`);
+function animalCharacterForImage(s,setNo){
+  if(!imageHasAnimal(setNo))return null;
+  const style=resolvedAnimalStyle(setNo);
+  const species=animalSpeciesDirection(s,setNo);
+  const look=animalLookDirection(s,setNo);
+  const seed=hashString(`${userSeed}|${s.day.isoDate}|${setNo}|animal-character-v1167`);
   const accessory=pick([
     "a tiny signature-color scarf",
     "a small signature-color bow or ribbon",
     "a subtle signature-color collar detail",
     "no accessory; rely on distinctive fur/plumage markings"
   ],seed+8401);
-
-  return {
-    species,
-    look,
-    style,
-    accessory,
-    identity:`Use the same recognizable ${species} character identity across today's two-design set: ${look}; ${accessory}. Keep face shape, markings, fur/plumage color, body proportions, and signature accessory consistent.`
-  };
+  return {species,look,style,accessory,
+    identity:`IMAGE ${setNo} ANIMAL IDENTITY: use this recognizable ${species}: ${look}; ${accessory}. Keep face shape, markings, fur/plumage color, body proportions, and selected look consistent within this image. Do not inherit the animal species/look from the other image unless the UI selections happen to match.`};
 }
 
 function animalPromptDirection(s,setNo){
-  if(!imageHasAnimal(setNo)) return [];
-  const ch=sharedAnimalCharacter(s);
+  if(!imageHasAnimal(setNo))return [];
+  const ch=animalCharacterForImage(s,setNo);
   const styleText=ch.style==="cartoon"
-    ? "Render the animal as a polished cartoon/illustrated character consistent with the selected illustration family."
-    : "Render the animal with realistic species anatomy, fur/feathers/skin detail, believable lighting, and natural material response.";
+    ? "Render this image's animal as a polished cartoon/illustrated character consistent with the selected illustration family."
+    : "Render this image's animal with realistic species anatomy, fur/feathers/skin detail, believable lighting, and natural material response.";
   return [
-    "ANIMAL CHARACTER DIRECTION:",
+    `ANIMAL CHARACTER DIRECTION — IMAGE ${setNo}:`,
     ch.identity,
     styleText,
-    anthroDirection(),
+    anthroDirection(setNo),
     animalBehaviorDirection(s,setNo),
+    "ANIMAL SETTINGS ARE PER-IMAGE: do not copy or substitute the other image's species, breed/look, rendering style, behavior, or anthropomorphic level.",
     "Keep the animal visually clear and expressive without covering the Thai headline, blessing, watermark, people, food, or important scene focal points."
   ];
 }
@@ -3236,6 +3719,29 @@ function auspiciousDeityReferenceName(){
   return el?.files?.[0]?.name || "";
 }
 
+function auspiciousDeityNameMeta(setNo=1){
+  const d=resolveDeitySubject();
+  const rawName=document.getElementById("auspiciousDeityName")?.value
+    || localStorage.getItem("pokunAuspiciousDeityName")
+    || "";
+  const name=sanitizeSacredMasterName(rawName);
+  const textUse=document.getElementById("auspiciousDeityTextUse")?.value
+    || localStorage.getItem("pokunAuspiciousDeityTextUse")
+    || "both";
+  const active=!!d.active && setNo===1 && !!name;
+  return {
+    setNo,
+    deityMode:d.deityMode,
+    primary:d.primary,
+    name,
+    textUse,
+    active,
+    personalizeText:active && textUse!=="off",
+    kind:"deity",
+    kindLabel:"เทพมงคล / องค์มงคล"
+  };
+}
+
 function auspiciousDeityLines(setNo){
   if(lifestyleVisualStyle!=="wealth_prosperity")return [];
   const deityState=(setNo===1||setNo===2) ? deitySubjectForImage(setNo) : null;
@@ -3243,6 +3749,7 @@ function auspiciousDeityLines(setNo){
   const key=auspiciousDeityMode();
   const d=AUSPICIOUS_DEITIES[key]||AUSPICIOUS_DEITIES.auto;
   const file=auspiciousDeityReferenceName();
+  const meta=auspiciousDeityNameMeta(setNo);
   return [
     "AUSPICIOUS DEITY / FORTUNE SUBJECT — AUTHORITATIVE:",
     `Selected mode: ${d.label} (${key}).`,
@@ -3250,6 +3757,11 @@ function auspiciousDeityLines(setNo){
     key==="reference"
       ? (file?`Reference filename selected in POKUN: ${file}.`:"Manual/ChatGPT mode: attach the deity/statue/shrine reference image together with this Prompt.")
       : "Create an original respectful artwork; do not copy a specific existing poster, statue photograph, logo, or copyrighted composition.",
+    meta.active ? `USER-SPECIFIED DEITY NAME — EXACT: ${meta.name}.` : "",
+    meta.active ? "The deity name is user-entered metadata only. Do not infer, recognize, verify, correct, translate, or substitute the name based on the image." : "",
+    meta.active && meta.textUse==="off"
+      ? "Do not place this deity name in the visible blessing text; it is reference metadata only."
+      : (meta.active ? `VISIBLE-TEXT PERSONALIZATION MODE: ${meta.textUse}. When the final resolved Headline/Greeting contains this deity name, reproduce it EXACTLY.` : ""),
     "Use only ONE coherent religious/cultural visual system per image unless the selected mode explicitly defines a group.",
     "Do not mix Buddhist Buddha imagery, Hindu, Chinese, Thai Naga, and other deity iconography into one hybrid figure.",
     "Keep the deity/sacred subject dignified and visually clear; typography and wealth decoration must not cover the face, head, hands, sacred attributes, or principal symbolic details.",
@@ -4369,35 +4881,87 @@ function applyAppModeUI(){
 const ANIMAL_LOOK_OPTIONS={
  auto:[["auto","AUTO"]],
  cat:[["auto","AUTO"],["orange_cat","แมวส้ม"],["white_cat","แมวขาว"],["black_cat","แมวดำ"],["calico_cat","แมวสามสี"],["gray_cat","แมวสีเทา"],["fluffy_cat","แมวขนฟู"]],
- dog:[["auto","AUTO"],["golden_dog","โกลเด้นรีทรีฟเวอร์"],["corgi_dog","คอร์กี้"],["shiba_dog","ชิบะอินุ"],["thai_ridgeback","ไทยหลังอาน"],["white_dog","สุนัขสีขาว"]],
+ dog:[["auto","AUTO"],["golden_dog","โกลเด้นรีทรีฟเวอร์"],["corgi_dog","คอร์กี้"],["shiba_dog","ชิบะอินุ"],["thai_ridgeback","ไทยหลังอาน"],["white_dog","สุนัขสีขาว"],["beagle_dog","บีเกิล"],["husky_dog","ไซบีเรียนฮัสกี้"]],
  rabbit:[["auto","AUTO"],["white_rabbit","กระต่ายขาว"],["brown_rabbit","กระต่ายน้ำตาล"],["lop_rabbit","Holland Lop"],["gray_rabbit","กระต่ายสีเทา"]],
- bear:[["auto","AUTO"],["brown_bear","หมีสีน้ำตาล"],["polar_bear","หมีขั้วโลก"],["black_bear","หมีดำ"],["bear_cub","ลูกหมี"]],
- bird:[["auto","AUTO"],["parrot","นกแก้ว"],["sparrow","นกกระจอก"],["owl","นกฮูก"],["blue_bird","นกสีฟ้า"],["small_bird","นกตัวเล็กน่ารัก"]],
- elephant:[["auto","AUTO"],["thai_elephant","ช้างไทย"],["asian_elephant","ช้างเอเชีย"],["baby_elephant","ลูกช้าง"],["adult_elephant","ช้างโตเต็มวัย"]],
- horse:[["auto","AUTO"],["brown_horse","ม้าสีน้ำตาล"],["white_horse","ม้าสีขาว"],["black_horse","ม้าสีดำ"],["pony","ม้าโพนี่"],["foal","ลูกม้า"]],
- deer:[["auto","AUTO"],["spotted_deer","กวางลายจุด"],["white_deer","กวางสีขาว"],["young_deer","ลูกกวาง"]],
- squirrel:[["auto","AUTO"],["red_squirrel","กระรอกสีน้ำตาลแดง"],["gray_squirrel","กระรอกสีเทา"]],
  hamster:[["auto","AUTO"],["golden_hamster","แฮมสเตอร์สีทอง"],["white_hamster","แฮมสเตอร์สีขาว"]],
- duck:[["auto","AUTO"],["yellow_duck","เป็ดสีเหลือง"],["white_duck","เป็ดสีขาว"],["duckling","ลูกเป็ด"]],
- chicken:[["auto","AUTO"],["white_chicken","ไก่สีขาว"],["brown_chicken","ไก่สีน้ำตาล"],["chick","ลูกเจี๊ยบ"]],
- goat:[["auto","AUTO"],["white_goat","แพะสีขาว"],["brown_goat","แพะสีน้ำตาล"],["baby_goat","ลูกแพะ"]],
- sheep:[["auto","AUTO"],["white_sheep","แกะขาว"],["black_sheep","แกะดำ"],["lamb","ลูกแกะ"]],
+ guinea_pig:[["auto","AUTO"],["tricolor_guinea_pig","หนูแกสบี้สามสี"],["brown_guinea_pig","หนูแกสบี้น้ำตาล"],["fluffy_guinea_pig","หนูแกสบี้ขนฟู"]],
+ hedgehog:[["auto","AUTO"],["african_hedgehog","เม่นแคระแอฟริกัน"],["white_hedgehog","เม่นแคระสีอ่อน"]],
+ ferret:[["auto","AUTO"],["sable_ferret","เฟอร์เร็ตสีน้ำตาล"],["white_ferret","เฟอร์เร็ตสีขาว"]],
+ chinchilla:[["auto","AUTO"],["gray_chinchilla","ชินชิลลาสีเทา"],["white_chinchilla","ชินชิลลาสีขาว"]],
+
+ horse:[["auto","AUTO"],["brown_horse","ม้าสีน้ำตาล"],["white_horse","ม้าสีขาว"],["black_horse","ม้าสีดำ"],["foal","ลูกม้า"]],
+ pony:[["auto","AUTO"],["brown_pony","ม้าโพนี่สีน้ำตาล"],["white_pony","ม้าโพนี่สีขาว"],["spotted_pony","ม้าโพนี่ลาย"]],
  cow:[["auto","AUTO"],["dairy_cow","วัวขาวดำ"],["brown_cow","วัวสีน้ำตาล"],["calf","ลูกวัว"]],
  buffalo:[["auto","AUTO"],["thai_buffalo","ควายไทย"],["baby_buffalo","ลูกควาย"]],
- pig:[["auto","AUTO"],["pink_pig","หมูสีชมพู"],["piglet","ลูกหมู"]],
- fox:[["auto","AUTO"],["red_fox","สุนัขจิ้งจอกสีแดง"],["white_fox","สุนัขจิ้งจอกสีขาว"],["fox_cub","ลูกสุนัขจิ้งจอก"]],
+ goat:[["auto","AUTO"],["white_goat","แพะสีขาว"],["brown_goat","แพะสีน้ำตาล"],["baby_goat","ลูกแพะ"]],
+ sheep:[["auto","AUTO"],["white_sheep","แกะขาว"],["black_sheep","แกะดำ"],["lamb","ลูกแกะ"]],
+ pig:[["auto","AUTO"],["pink_pig","หมูสีชมพู"],["piglet","ลูกหมู"],["spotted_pig","หมูลาย"]],
+ chicken:[["auto","AUTO"],["white_chicken","ไก่สีขาว"],["brown_chicken","ไก่สีน้ำตาล"],["chick","ลูกเจี๊ยบ"]],
+ duck:[["auto","AUTO"],["yellow_duck","เป็ดสีเหลือง"],["white_duck","เป็ดสีขาว"],["duckling","ลูกเป็ด"]],
+ goose:[["auto","AUTO"],["white_goose","ห่านสีขาว"],["gray_goose","ห่านสีเทา"]],
+ alpaca:[["auto","AUTO"],["white_alpaca","อัลปากาสีขาว"],["brown_alpaca","อัลปากาสีน้ำตาล"],["fluffy_alpaca","อัลปากาขนฟู"]],
+ llama:[["auto","AUTO"],["white_llama","ลามาสีขาว"],["brown_llama","ลามาสีน้ำตาล"]],
+
+ elephant:[["auto","AUTO"],["thai_elephant","ช้างไทย"],["asian_elephant","ช้างเอเชีย"],["baby_elephant","ลูกช้าง"],["adult_elephant","ช้างโตเต็มวัย"]],
+ deer:[["auto","AUTO"],["spotted_deer","กวางลายจุด"],["white_deer","กวางสีขาว"],["young_deer","ลูกกวาง"]],
+ squirrel:[["auto","AUTO"],["red_squirrel","กระรอกสีน้ำตาลแดง"],["gray_squirrel","กระรอกสีเทา"]],
+ bear:[["auto","AUTO"],["brown_bear","หมีสีน้ำตาล"],["polar_bear","หมีขั้วโลก"],["black_bear","หมีดำ"],["bear_cub","ลูกหมี"]],
  panda:[["auto","AUTO"],["panda_classic","แพนด้าขาวดำ"],["panda_cub","ลูกแพนด้า"]],
+ fox:[["auto","AUTO"],["red_fox","สุนัขจิ้งจอกสีแดง"],["white_fox","สุนัขจิ้งจอกสีขาว"],["fox_cub","ลูกสุนัขจิ้งจอก"]],
+ wolf:[["auto","AUTO"],["gray_wolf","หมาป่าสีเทา"],["white_wolf","หมาป่าสีขาว"],["wolf_cub","ลูกหมาป่า"]],
+ raccoon:[["auto","AUTO"],["classic_raccoon","แรคคูนหน้ากากดำ"],["baby_raccoon","ลูกแรคคูน"]],
+ otter:[["auto","AUTO"],["brown_otter","นากสีน้ำตาล"],["baby_otter","ลูกนาก"]],
+ capybara:[["auto","AUTO"],["classic_capybara","คาปิบาราสีน้ำตาล"],["baby_capybara","ลูกคาปิบารา"]],
+ koala:[["auto","AUTO"],["gray_koala","โคอาลาสีเทา"],["baby_koala","ลูกโคอาลา"]],
  monkey:[["auto","AUTO"],["brown_monkey","ลิงสีน้ำตาล"],["baby_monkey","ลูกลิง"]],
- turtle:[["auto","AUTO"],["green_turtle","เต่าสีเขียว"],["land_turtle","เต่าบก"]],
- fish:[["auto","AUTO"],["goldfish","ปลาทอง"],["koi","ปลาคาร์ป"],["betta","ปลากัด"]],
- butterfly:[["auto","AUTO"],["yellow_butterfly","ผีเสื้อสีเหลือง"],["blue_butterfly","ผีเสื้อสีฟ้า"],["multicolor_butterfly","ผีเสื้อหลากสี"]]
+ gibbon:[["auto","AUTO"],["white_hand_gibbon","ชะนีมือขาว"],["dark_gibbon","ชะนีสีเข้ม"]],
+ kangaroo:[["auto","AUTO"],["red_kangaroo","จิงโจ้แดง"],["gray_kangaroo","จิงโจ้เทา"],["joey","ลูกจิงโจ้"]],
+ giraffe:[["auto","AUTO"],["adult_giraffe","ยีราฟโตเต็มวัย"],["baby_giraffe","ลูกยีราฟ"]],
+ zebra:[["auto","AUTO"],["classic_zebra","ม้าลายขาวดำ"],["zebra_foal","ลูกม้าลาย"]],
+ lion:[["auto","AUTO"],["male_lion","สิงโตตัวผู้"],["lioness","สิงโตตัวเมีย"],["lion_cub","ลูกสิงโต"]],
+ tiger:[["auto","AUTO"],["bengal_tiger","เสือโคร่งเบงกอล"],["white_tiger","เสือขาว"],["tiger_cub","ลูกเสือ"]],
+ leopard:[["auto","AUTO"],["spotted_leopard","เสือดาวลายจุด"],["leopard_cub","ลูกเสือดาว"]],
+ cheetah:[["auto","AUTO"],["adult_cheetah","เสือชีตาห์"],["cheetah_cub","ลูกเสือชีตาห์"]],
+ hippo:[["auto","AUTO"],["adult_hippo","ฮิปโปโตเต็มวัย"],["baby_hippo","ลูกฮิปโป"]],
+ rhino:[["auto","AUTO"],["gray_rhino","แรดสีเทา"],["baby_rhino","ลูกแรด"]],
+
+ bird:[["auto","AUTO"],["sparrow","นกกระจอก"],["blue_bird","นกสีฟ้า"],["small_bird","นกตัวเล็กน่ารัก"]],
+ parrot:[["auto","AUTO"],["green_parrot","นกแก้วสีเขียว"],["macaw","มาคอว์"],["cockatiel","ค็อกคาเทล"]],
+ owl:[["auto","AUTO"],["brown_owl","นกฮูกสีน้ำตาล"],["white_owl","นกฮูกสีขาว"],["baby_owl","ลูกนกฮูก"]],
+ dove:[["auto","AUTO"],["white_dove","นกพิราบขาว"],["gray_dove","นกพิราบเทา"]],
+ swan:[["auto","AUTO"],["white_swan","หงส์ขาว"],["black_swan","หงส์ดำ"]],
+ peacock:[["auto","AUTO"],["blue_peacock","นกยูงสีน้ำเงิน"],["white_peacock","นกยูงขาว"]],
+ flamingo:[["auto","AUTO"],["pink_flamingo","ฟลามิงโกสีชมพู"]],
+ penguin:[["auto","AUTO"],["emperor_penguin","เพนกวินจักรพรรดิ"],["baby_penguin","ลูกเพนกวิน"]],
+ eagle:[["auto","AUTO"],["golden_eagle","อินทรีทอง"],["bald_eagle","อินทรีหัวขาว"]],
+ crane:[["auto","AUTO"],["red_crowned_crane","นกกระเรียนมงกุฎแดง"],["white_crane","นกกระเรียนขาว"]],
+
+ fish:[["auto","AUTO"],["goldfish","ปลาทอง"],["koi","ปลาคาร์ป"],["betta","ปลากัด"],["tropical_fish","ปลาเขตร้อน"]],
+ turtle:[["auto","AUTO"],["green_turtle","เต่าสีเขียว"],["land_turtle","เต่าบก"],["sea_turtle","เต่าทะเล"]],
+ dolphin:[["auto","AUTO"],["bottlenose_dolphin","โลมาปากขวด"],["baby_dolphin","ลูกโลมา"]],
+ whale:[["auto","AUTO"],["blue_whale","วาฬสีน้ำเงิน"],["humpback_whale","วาฬหลังค่อม"]],
+ seal:[["auto","AUTO"],["gray_seal","แมวน้ำสีเทา"],["baby_seal","ลูกแมวน้ำสีขาว"]],
+ otter_sea:[["auto","AUTO"],["sea_otter","นากทะเล"],["sea_otter_pup","ลูกนากทะเล"]],
+ octopus:[["auto","AUTO"],["red_octopus","ปลาหมึกยักษ์สีแดง"],["cute_octopus","ปลาหมึกยักษ์น่ารัก"]],
+ crab:[["auto","AUTO"],["red_crab","ปูแดง"],["hermit_crab","ปูเสฉวน"]],
+ seahorse:[["auto","AUTO"],["yellow_seahorse","ม้าน้ำสีเหลือง"],["orange_seahorse","ม้าน้ำสีส้ม"]],
+ starfish:[["auto","AUTO"],["orange_starfish","ดาวทะเลสีส้ม"],["pink_starfish","ดาวทะเลสีชมพู"]],
+
+ butterfly:[["auto","AUTO"],["yellow_butterfly","ผีเสื้อสีเหลือง"],["blue_butterfly","ผีเสื้อสีฟ้า"],["multicolor_butterfly","ผีเสื้อหลากสี"]],
+ bee:[["auto","AUTO"],["honey_bee","ผึ้งน้ำผึ้ง"],["bumblebee","ผึ้งบัมเบิลบี"]],
+ dragonfly:[["auto","AUTO"],["blue_dragonfly","แมลงปอสีฟ้า"],["red_dragonfly","แมลงปอสีแดง"]],
+ ladybug:[["auto","AUTO"],["red_ladybug","เต่าทองสีแดง"]],
+ frog:[["auto","AUTO"],["green_frog","กบสีเขียว"],["tree_frog","กบต้นไม้"]],
+ snail:[["auto","AUTO"],["brown_snail","หอยทากเปลือกน้ำตาล"],["cute_snail","หอยทากน่ารัก"]]
 };
-function updateAnimalLookOptions(){
- const type=$("animalType").value;
- const sel=$("animalLook"), old=sel.value;
+function updateAnimalLookOptions(setNo){
+ const type=$(`animalType${setNo}`).value;
+ const sel=$(`animalLook${setNo}`), old=sel.value;
  const opts=ANIMAL_LOOK_OPTIONS[type]||ANIMAL_LOOK_OPTIONS.auto;
  sel.innerHTML=opts.map(([v,t])=>`<option value="${v}">${t}</option>`).join("");
  if(opts.some(x=>x[0]===old)) sel.value=old; else sel.value="auto";
+ if(setNo===1) animalLook1=sel.value; else animalLook2=sel.value;
+ localStorage.setItem(`pokunAnimalLook${setNo}`,sel.value);
 }
 const CUTE_CARTOON_STYLES=[
  "cute polished 3D cartoon","kawaii character illustration","charming storybook cartoon",
@@ -4464,7 +5028,7 @@ function autoLayoutCandidates(s,setNo){
 
   // Character-driven compositions.
   if(composition==="animal"){
-    if(animalStyle==="cartoon") return ["centerhero","frame","magazine","corner","oversized","diagonal"];
+    if(animalSettingValue(setNo,"style")==="cartoon") return ["centerhero","frame","magazine","corner","oversized","diagonal"];
     return ["centerhero","floating","corner","cinematic","minimal"];
   }
   if(composition==="people_animal"){
@@ -4981,7 +5545,7 @@ function analogQuoteCharacterPlacement(s,setNo,activeQuoteData){
     : (personSourceForSet(setNo)==="user_photo"
         ? "a recognizable portrait derived from the user-provided person reference"
         : "a tasteful photographic or printed portrait");
-  const animalRender = resolvedAnimalStyle()==="cartoon"
+  const animalRender = resolvedAnimalStyle(setNo)==="cartoon"
     ? "cute illustrated animal character"
     : "realistic animal portrait or printed animal image";
 
@@ -5773,6 +6337,7 @@ function buildPromptLegacyV87(setNo){
   if(s.special){
     L.push(`Important calendar day: ${s.special.name}`);
     L.push("The visible Thai headline MUST clearly mention today's important day exactly as supplied below.");
+    L.push(...specialDayPromptLines(s));
     if(s.special.category==="buddhist")L.push("Use a serene Buddhist sacred-art direction appropriate for this Buddhist important day.");
   }
   if(s.buddhist && s.holy.isHoly && wanPhraAutoBuddhist){
@@ -6032,8 +6597,9 @@ function buildPromptLegacyV87(setNo){
     "- polished professional finish",
     ""
   );
-  if(imageHasAnimal(setNo) && animalStyle!=="follow"){
-    L.push("ANIMAL STYLE EXCEPTION:",animalStyle==="cartoon" ? "The animal alone may use cartoon/illustration rendering while the rest of the artwork follows the selected main artwork mode." : "The animal alone may use realistic rendering while the rest of the artwork follows the selected main artwork mode.","");
+  const perImageAnimalStyle=animalSettingValue(setNo,"style");
+  if(imageHasAnimal(setNo) && perImageAnimalStyle!=="follow"){
+    L.push("ANIMAL STYLE EXCEPTION — IMAGE "+setNo+":",perImageAnimalStyle==="cartoon" ? "This image's animal alone may use cartoon/illustration rendering while the rest of the artwork follows the selected main artwork mode." : "This image's animal alone may use realistic rendering while the rest of the artwork follows the selected main artwork mode.","");
   }
   if(humanStyle==="cartoon"){
     L.push("CARTOON CONSISTENCY RULE:","Image 1 and Image 2 of this daily set must use the same illustration/cartoon rendering family, character design language, facial stylization, shading logic, line/edge treatment, and overall finish.","Do not switch one design to photography and the other to illustration.","");
@@ -6109,7 +6675,10 @@ function updateUI(){
     <div class="stat"><b>Typography</b><span>${explicitBuddhist?"BUDDHIST":styleMode}</span></div>`;
   if(artworkSpecial){
     $("specialDayName").textContent=artworkSpecial.name;
-    $("specialDayInfo").textContent="Headline + คำอวยพร + Concept จะใช้ธีมวันสำคัญนี้อัตโนมัติ";
+    const modeLabel=specialDayMode==="manual"?"Manual Override":"AUTO";
+    $("specialDayInfo").textContent=`${modeLabel} • Headline + คำอวยพร + Concept จะใช้ธีมวันพิเศษนี้`;
+    const themeInfo=$("specialDayThemeInfo");
+    if(themeInfo)themeInfo.textContent=`🎨 ${artworkSpecial.colorTheme||"สีประจำวัน"} • 🖼️ ${artworkSpecial.sceneTheme||"ฉากตามวันพิเศษ"}`;
   }else if(h.isHoly){
     $("specialDayName").textContent=primaryMode==="buddhist"?"วันพระ":"วันพระ (ข้อมูลปฏิทินเท่านั้น)";
     $("specialDayInfo").textContent=primaryMode==="buddhist"
@@ -6121,6 +6690,17 @@ function updateUI(){
   }else{
     $("specialDayName").textContent="วันปกติ";
     $("specialDayInfo").textContent="ไม่มีวันสำคัญที่กำหนดไว้สำหรับวันนี้";
+  }
+  if(!artworkSpecial){
+    const themeInfo=$("specialDayThemeInfo");
+    if(themeInfo)themeInfo.textContent="";
+  }
+  const suggestionBox=$("specialDaySuggestions");
+  if(suggestionBox){
+    const suggestions=specialDaySuggestions(d);
+    suggestionBox.innerHTML=suggestions.length
+      ? `<b>💡 วันนี้แนะนำ:</b> ${suggestions.join(" • ")}`
+      : "<b>💡 วันนี้แนะนำ:</b> การ์ดสวัสดีตามวัน / คำอวยพรทั่วไป";
   }
   renderStyles();
   if(!explicitBuddhist)$("styleSelect").value=selectedStyle;
@@ -6751,6 +7331,144 @@ function stripRepeatedWishPrefix(text){
     .trim();
 }
 
+const DEITY_NAME_BLESSING_TEMPLATES_V1169={
+  protection:{
+    label:"เทพคุ้มครอง",
+    headlines:["บารมี{NAME}คุ้มครอง","พลังมงคลจาก{NAME}","เมตตา{NAME}หนุนนำ"],
+    greetings:[
+      "บารมี{NAME}คุ้มครอง ให้พบแต่ความราบรื่น ปลอดภัย และสิ่งดี ๆ ตลอดวัน",
+      "พลังมงคลจาก{NAME}หนุนนำ ให้ใจสบาย ชีวิตลงตัว และมีแต่เรื่องน่ายินดี",
+      "เมตตา{NAME}หนุนนำ ให้แคล้วคลาดปลอดภัย และก้าวผ่านทุกเรื่องได้อย่างราบรื่น"
+    ]
+  },
+  happiness:{
+    label:"ความสุข / สดใส",
+    headlines:["บารมี{NAME}เติมสุข","แสงมงคลจาก{NAME}","พลังดี ๆ จาก{NAME}"],
+    greetings:[
+      "บารมี{NAME}เติมความสุข ให้ยิ้มได้ง่าย ใจเบิกบาน และมีความสุขตลอดวัน",
+      "แสงมงคลจาก{NAME}โอบล้อม ให้วันวันนี้สดใส อบอุ่น และเต็มไปด้วยพลังบวก",
+      "พลังดี ๆ จาก{NAME}หนุนนำ ให้ใช้ชีวิตอย่างสบายใจ และพบแต่เรื่องน่าชื่นใจ"
+    ]
+  },
+  health:{
+    label:"สุขภาพ / แข็งแรง",
+    headlines:["บารมี{NAME}เสริมพลังกายใจ","พลังมงคลจาก{NAME}","{NAME}หนุนสุขภาพ"],
+    greetings:[
+      "บารมี{NAME}เสริมพลังกายใจ ให้แข็งแรง สดชื่น และใช้ชีวิตอย่างมีความสุข",
+      "พลังมงคลจาก{NAME}หนุนนำ ให้สุขภาพดี สบายกาย สบายใจ และพักผ่อนอย่างเพียงพอ",
+      "{NAME}หนุนสุขภาพ ให้แข็งแรงทั้งกายและใจ พร้อมรับสิ่งดี ๆ ในทุกวัน"
+    ]
+  },
+  work:{
+    label:"การงาน / ความก้าวหน้า",
+    headlines:["บารมี{NAME}หนุนงาน","{NAME}เสริมความก้าวหน้า","พลังมงคลจาก{NAME}"],
+    greetings:[
+      "บารมี{NAME}หนุนงาน ให้ทุกหน้าที่ราบรื่น ก้าวหน้า และสำเร็จอย่างน่าภูมิใจ",
+      "{NAME}เสริมความก้าวหน้า ให้การงานเดินหน้า มีโอกาสดี และได้รับการสนับสนุนที่งดงาม",
+      "พลังมงคลจาก{NAME}หนุนนำ ให้ทำงานอย่างมั่นใจ คล่องตัว และเห็นผลสำเร็จชัดเจน"
+    ]
+  },
+  money:{
+    label:"การเงิน / เงินทอง",
+    headlines:["บารมี{NAME}หนุนการเงิน","{NAME}เสริมทรัพย์","พลังโชคจาก{NAME}"],
+    greetings:[
+      "บารมี{NAME}หนุนการเงิน ให้คล่องตัว รับทรัพย์ และมีความมั่นคงมากขึ้นทุกวัน",
+      "{NAME}เสริมทรัพย์ ให้เงินทองไหลลื่น จัดการง่าย และมีรายรับที่น่าชื่นใจ",
+      "พลังโชคจาก{NAME}หนุนนำ ให้มีโชคด้านการเงิน ใช้จ่ายสบาย และเก็บออมได้ดี"
+    ]
+  },
+  wealth:{
+    label:"มั่งคั่ง / ร่ำรวย",
+    headlines:["บารมี{NAME}เสริมมั่งคั่ง","{NAME}หนุนนำโชคลาภ","พลังมงคลจาก{NAME}"],
+    greetings:[
+      "บารมี{NAME}เสริมมั่งคั่ง ให้เงินทองงอกงาม โอกาสเปิดทาง และชีวิตรุ่งเรือง",
+      "{NAME}หนุนนำโชคลาภ ให้พบความอุดมสมบูรณ์ มั่งมี และสมหวังในสิ่งที่ตั้งใจ",
+      "พลังมงคลจาก{NAME}หนุนนำ ให้มีโชค มีทรัพย์ และความสำเร็จเข้ามาอย่างต่อเนื่อง"
+    ]
+  },
+  success:{
+    label:"ความสำเร็จ / สมหวัง",
+    headlines:["บารมี{NAME}หนุนความสำเร็จ","{NAME}เสริมสมหวัง","พลังมงคลจาก{NAME}"],
+    greetings:[
+      "บารมี{NAME}หนุนความสำเร็จ ให้ทุกเป้าหมายคืบหน้า และเห็นผลลัพธ์ที่น่าภูมิใจ",
+      "{NAME}เสริมสมหวัง ให้สิ่งที่ตั้งใจเดินหน้าอย่างราบรื่น และสำเร็จอย่างงดงาม",
+      "พลังมงคลจาก{NAME}หนุนนำ ให้มั่นใจ เดินถูกทาง และคว้าความสำเร็จได้ตามหวัง"
+    ]
+  },
+  luck:{
+    label:"โชคดี / โชคลาภ",
+    headlines:["{NAME}หนุนโชคดี","บารมี{NAME}เสริมโชค","พลังมงคลจาก{NAME}"],
+    greetings:[
+      "{NAME}หนุนโชคดี ให้พบโอกาสที่ดี เจอเรื่องน่ายินดี และมีโชคลาภเข้ามา",
+      "บารมี{NAME}เสริมโชค ให้วันวันนี้ราบรื่น สดใส และมีแต่สิ่งมงคลรายล้อม",
+      "พลังมงคลจาก{NAME}หนุนนำ ให้โชคดี มีแรงใจ และสมหวังในเรื่องสำคัญ"
+    ]
+  },
+  encouragement:{
+    label:"วันใหม่ / กำลังใจ",
+    headlines:["พลังดี ๆ จาก{NAME}","{NAME}หนุนวันใหม่","บารมี{NAME}เติมพลัง"],
+    greetings:[
+      "พลังดี ๆ จาก{NAME}หนุนนำ ให้เริ่มต้นวันใหม่อย่างมั่นใจ สดชื่น และมีแรงใจเต็มเปี่ยม",
+      "{NAME}หนุนวันใหม่ ให้ทุกอย่างค่อย ๆ เข้าที่เข้าทาง และเจอแต่เรื่องดี ๆ",
+      "บารมี{NAME}เติมพลัง ให้ยิ้มรับวันใหม่อย่างสบายใจ และพร้อมเดินหน้าต่อ"
+    ]
+  },
+  short_power:{
+    label:"สั้น กระชับ",
+    headlines:["บารมี{NAME}คุ้มครอง","{NAME}เสริมมงคล","พลังมงคลจาก{NAME}"],
+    greetings:[
+      "บารมี{NAME}คุ้มครอง สุขใจ โชคดี และราบรื่น",
+      "{NAME}เสริมมงคล ให้มั่งคั่ง สดใส และสมหวัง",
+      "พลังมงคลจาก{NAME} หนุนนำวันดี ๆ และความสำเร็จ"
+    ]
+  },
+  all_round:{
+    label:"รอบด้าน",
+    headlines:["บารมี{NAME}หนุนนำรอบด้าน","{NAME}เสริมทุกเรื่องดี","พลังมงคลจาก{NAME}"],
+    greetings:[
+      "บารมี{NAME}หนุนนำรอบด้าน ให้สุขภาพดี การงานก้าวหน้า การเงินคล่องตัว และมีความสุข",
+      "{NAME}เสริมทุกเรื่องดี ให้ชีวิตราบรื่น สดใส มั่งคั่ง และสมหวังในสิ่งสำคัญ",
+      "พลังมงคลจาก{NAME}หนุนนำ ให้ทุกด้านของชีวิตเติบโตอย่างสวยงามและมั่นคง"
+    ]
+  }
+};
+
+function deityNamedBlessingTheme(s,setNo,seed){
+  const raw=document.getElementById("blessingTheme")?.value || blessingTheme || "auto";
+  const directMap={
+    happiness:"happiness",health:"health",work:"work",money:"money",wealth:"wealth",
+    success:"success",luck:"luck",encouragement:"encouragement",short_power:"short_power",all_round:"all_round"
+  };
+  if(raw!=="auto" && directMap[raw])return directMap[raw];
+  const meta=auspiciousDeityNameMeta(setNo);
+  const pool=["wealth","luck","success","money","work","protection","happiness","all_round"];
+  const base=hashString(`${userSeed}|${s?.day?.isoDate||""}|${meta.name}|deity-named-blessing-v1169|${setNo}|${blessingRerollSeed}|${seed}`);
+  return pool[seededIndex(base,pool.length)];
+}
+
+function deityNamedBlessingTexts(s,setNo,seed){
+  const meta=auspiciousDeityNameMeta(setNo);
+  if(!meta.personalizeText)return null;
+  const key=deityNamedBlessingTheme(s,setNo,seed);
+  const lib=DEITY_NAME_BLESSING_TEMPLATES_V1169[key]||DEITY_NAME_BLESSING_TEMPLATES_V1169.wealth;
+  const base=hashString(`${userSeed}|${s?.day?.isoDate||""}|${meta.name}|${key}|deity-named-text-v1169|${setNo}|${rerollSeed1}|${rerollSeed2}|${blessingRerollSeed}|${seed}`);
+  const headlineTemplate=lib.headlines[seededIndex(base+101,lib.headlines.length)];
+  const greetingTemplate=lib.greetings[seededIndex(base+203,lib.greetings.length)];
+  const fill=t=>stripRepeatedWishPrefix(String(t||"").replaceAll("{NAME}",meta.name));
+  return {
+    theme:`deity_named_${key}`,
+    label:`เทพมงคล ${meta.name} / ${lib.label}`,
+    headline:fill(headlineTemplate),
+    greeting:fill(greetingTemplate),
+    supporting:"",
+    textUse:meta.textUse,
+    sacredName:"",
+    deityName:meta.name,
+    sacredKind:"",
+    source:"USER-NAMED AUSPICIOUS DEITY PERSONALIZATION v11.69"
+  };
+}
+
 function emotionalBlessingTexts(s,setNo,seed){
   const key=resolvedBlessingTheme(s,setNo);
   const lib=REFERENCE_IMAGE_BLESSING_LIBRARY_V1153[key]||REFERENCE_IMAGE_BLESSING_LIBRARY_V1153.all_round;
@@ -6791,11 +7509,15 @@ function updateBlessingThemeDescription(){
     const names=named.map(x=>x.name).join(" / ");
     base+=`<br><b>🪷 Personalized Sacred Name:</b> กำลังใช้ชื่อที่ user พิมพ์ (${names}) เพื่อสุ่ม Headline/คำอวยพรเฉพาะชื่อ • รองรับทั้งพระเกจิและพระพุทธรูป/องค์พระศักดิ์สิทธิ์ • AUTO = สุ่มหัวข้อบารมีหลายด้าน`;
   }
+  const deityNamed=(()=>{try{return auspiciousDeityNameMeta(1)}catch(e){return null}})();
+  if(deityNamed?.personalizeText){
+    base+=`<br><b>✨ Personalized Deity Name:</b> กำลังใช้ชื่อเทพมงคล “${deityNamed.name}” เพื่อสุ่ม Headline/คำอวยพรเฉพาะชื่อในหมวดเทพมงคล`;
+  }
   el.innerHTML=base;
 }
 
 const POKUN_V9 = (() => {
-  const VERSION="11.66";
+  const VERSION="11.70";
   const ENGINE_LABEL=`POKUN v${VERSION}`;
 
 
@@ -7633,8 +8355,8 @@ const PAIR_LOOKS={
   };
 
 
-  const POKUN_MASTER_LIBRARY_V1166={
-    version:"11.66",
+  const POKUN_MASTER_LIBRARY_V1172={
+    version:"11.70",
     purpose:"Curated Thai daily-greeting design library distilled from the user's reference boards and existing POKUN systems. Library guidance is supportive and must never override exact scene, subject, text, typography, frame, layout, weekday/date, or mode locks.",
 
     sceneProfiles:{
@@ -8448,11 +9170,11 @@ const PAIR_LOOKS={
       if(bMode==="layperson_reference"){charMode="people";personSource="user_photo";}
     }
 
-    const aType=document.getElementById("animalType")?.value || animalType || "auto";
-    const aLook=document.getElementById("animalLook")?.value || animalLook || "auto";
-    const aBehavior=document.getElementById("animalBehavior")?.value || animalBehavior || "auto";
-    const aStyle=document.getElementById("animalStyle")?.value || animalStyle || "follow";
-    const anthro=document.getElementById("anthroLevel")?.value || anthroLevel || "natural";
+    const aType=document.getElementById(`animalType${setNo}`)?.value || (setNo===1?animalType1:animalType2) || "auto";
+    const aLook=document.getElementById(`animalLook${setNo}`)?.value || (setNo===1?animalLook1:animalLook2) || "auto";
+    const aBehavior=document.getElementById(`animalBehavior${setNo}`)?.value || (setNo===1?animalBehavior1:animalBehavior2) || "auto";
+    const aStyle=document.getElementById(`animalStyle${setNo}`)?.value || (setNo===1?animalStyle1:animalStyle2) || "follow";
+    const anthro=document.getElementById(`anthroLevel${setNo}`)?.value || (setNo===1?anthroLevel1:anthroLevel2) || "natural";
 
     return {
       setNo,charMode,gender,age,personSource,
@@ -8556,11 +9278,19 @@ const PAIR_LOOKS={
   }
 
   function animalTypeLabel(v){
-    return ({cat:"CAT / แมว",dog:"DOG / สุนัข",horse:"HORSE / ม้า",rabbit:"RABBIT / กระต่าย",bear:"BEAR / หมี",bird:"BIRD / นก",elephant:"ELEPHANT / ช้าง",deer:"DEER / กวาง",squirrel:"SQUIRREL / กระรอก",hamster:"HAMSTER / แฮมสเตอร์",duck:"DUCK / เป็ด",chicken:"CHICKEN / ไก่",goat:"GOAT / แพะ",sheep:"SHEEP / แกะ",cow:"COW / วัว",buffalo:"WATER BUFFALO / ควาย",pig:"PIG / หมู",fox:"FOX / สุนัขจิ้งจอก",panda:"PANDA / แพนด้า",monkey:"MONKEY / ลิง",turtle:"TURTLE / เต่า",fish:"FISH / ปลา",butterfly:"BUTTERFLY / ผีเสื้อ"})[v]||"AUTO";
+    return ({
+      cat:"CAT / แมว",dog:"DOG / สุนัข",rabbit:"RABBIT / กระต่าย",hamster:"HAMSTER / แฮมสเตอร์",
+      guinea_pig:"GUINEA PIG / หนูแกสบี้",hedgehog:"HEDGEHOG / เม่นแคระ",ferret:"FERRET / เฟอร์เร็ต",chinchilla:"CHINCHILLA / ชินชิลลา",
+      horse:"HORSE / ม้า",pony:"PONY / ม้าโพนี่",cow:"COW / วัว",buffalo:"WATER BUFFALO / ควาย",goat:"GOAT / แพะ",sheep:"SHEEP / แกะ",pig:"PIG / หมู",chicken:"CHICKEN / ไก่",duck:"DUCK / เป็ด",goose:"GOOSE / ห่าน",alpaca:"ALPACA / อัลปากา",llama:"LLAMA / ลามา",
+      elephant:"ELEPHANT / ช้าง",deer:"DEER / กวาง",squirrel:"SQUIRREL / กระรอก",bear:"BEAR / หมี",panda:"PANDA / แพนด้า",fox:"FOX / สุนัขจิ้งจอก",wolf:"WOLF / หมาป่า",raccoon:"RACCOON / แรคคูน",otter:"OTTER / นาก",capybara:"CAPYBARA / คาปิบารา",koala:"KOALA / โคอาลา",monkey:"MONKEY / ลิง",gibbon:"GIBBON / ชะนี",kangaroo:"KANGAROO / จิงโจ้",giraffe:"GIRAFFE / ยีราฟ",zebra:"ZEBRA / ม้าลาย",lion:"LION / สิงโต",tiger:"TIGER / เสือ",leopard:"LEOPARD / เสือดาว",cheetah:"CHEETAH / เสือชีตาห์",hippo:"HIPPOPOTAMUS / ฮิปโป",rhino:"RHINOCEROS / แรด",
+      bird:"BIRD / นก",parrot:"PARROT / นกแก้ว",owl:"OWL / นกฮูก",dove:"DOVE / นกพิราบ",swan:"SWAN / หงส์",peacock:"PEACOCK / นกยูง",flamingo:"FLAMINGO / ฟลามิงโก",penguin:"PENGUIN / เพนกวิน",eagle:"EAGLE / นกอินทรี",crane:"CRANE / นกกระเรียน",
+      fish:"FISH / ปลา",turtle:"TURTLE / เต่า",dolphin:"DOLPHIN / โลมา",whale:"WHALE / วาฬ",seal:"SEAL / แมวน้ำ",otter_sea:"SEA OTTER / นากทะเล",octopus:"OCTOPUS / ปลาหมึกยักษ์",crab:"CRAB / ปู",seahorse:"SEAHORSE / ม้าน้ำ",starfish:"STARFISH / ดาวทะเล",
+      butterfly:"BUTTERFLY / ผีเสื้อ",bee:"BEE / ผึ้ง",dragonfly:"DRAGONFLY / แมลงปอ",ladybug:"LADYBUG / เต่าทอง",frog:"FROG / กบ",snail:"SNAIL / หอยทาก"
+    })[v]||"AUTO";
   }
 
-  function animalLookLabel(v){
-    const el=document.getElementById("animalLook");
+  function animalLookLabel(v,setNo){
+    const el=document.getElementById(`animalLook${setNo}`);
     return el?.selectedOptions?.[0]?.textContent?.trim() || v || "AUTO";
   }
 
@@ -8583,7 +9313,7 @@ const PAIR_LOOKS={
 
     if(c.animalLook!=="auto"){
       L.push(
-        `REQUIRED ANIMAL LOOK / BREED / COLOR: ${animalLookLabel(c.animalLook)} (${c.animalLook}).`,
+        `REQUIRED ANIMAL LOOK / BREED / COLOR: ${animalLookLabel(c.animalLook,setNo)} (${c.animalLook}).`,
         "Preserve this selected look; do not randomly change breed, coat color, markings, or subtype."
       );
     }else{
@@ -8597,7 +9327,8 @@ const PAIR_LOOKS={
     };
     L.push(`REQUIRED BEHAVIOR MODE: ${behaviorMap[c.animalBehavior]||c.animalBehavior}.`);
     L.push(`REQUIRED ANTHROPOMORPHIC LEVEL: ${c.anthro}.`);
-    L.push("Random Prompt Engine must NOT change species, selected look/breed/color, behavior mode, or anthropomorphic level.");
+    L.push(`PER-IMAGE ANIMAL SETTINGS LOCK: these animal settings belong ONLY to Image ${setNo}. Do not inherit, copy, merge, or substitute settings from Image ${setNo===1?2:1}.`);
+    L.push("Random Prompt Engine must NOT change species, selected look/breed/color, rendering style, behavior mode, or anthropomorphic level.");
     return L;
   }
 
@@ -8856,8 +9587,8 @@ const PAIR_LOOKS={
 
 
   function masterLibraryProfile(scene){
-    return POKUN_MASTER_LIBRARY_V1166.sceneProfiles[scene?.family]
-      || POKUN_MASTER_LIBRARY_V1166.sceneProfiles.minimal_abstract;
+    return POKUN_MASTER_LIBRARY_V1172.sceneProfiles[scene?.family]
+      || POKUN_MASTER_LIBRARY_V1172.sceneProfiles.minimal_abstract;
   }
 
   function masterLibraryDistinctPick(list,setNo,base){
@@ -8872,13 +9603,13 @@ const PAIR_LOOKS={
 
   function resolveMasterLibraryBundle(setNo,s,scene,texts,layout,pairLook,seed){
     const profile=masterLibraryProfile(scene);
-    const base=hashString(`${userSeed}|${s.day.isoDate}|${scene.family}|${scene.name}|master-library-v1166|${rerollSeed1}|${rerollSeed2}`);
+    const base=hashString(`${userSeed}|${s.day.isoDate}|${scene.family}|${scene.name}|master-library-v1170|${rerollSeed1}|${rerollSeed2}`);
     const themeKey=texts?.blessingThemeKey||resolvedBlessingTheme(s,setNo)||"all_round";
-    const headlineTones=POKUN_MASTER_LIBRARY_V1166.headlineTones[themeKey]
-      || POKUN_MASTER_LIBRARY_V1166.headlineTones.all_round;
+    const headlineTones=POKUN_MASTER_LIBRARY_V1172.headlineTones[themeKey]
+      || POKUN_MASTER_LIBRARY_V1172.headlineTones.all_round;
 
     return {
-      version:POKUN_MASTER_LIBRARY_V1166.version,
+      version:POKUN_MASTER_LIBRARY_V1172.version,
       sceneFamily:scene.family,
       sceneTheme:profile.label,
       mood:masterLibraryDistinctPick(profile.moods,setNo,base+101),
@@ -8893,9 +9624,9 @@ const PAIR_LOOKS={
       blessingFrame:resolvedTextFrame(s,"blessing").label,
       pairLook:pairLook.label,
       blessingTheme:texts?.blessingThemeLabel||themeKey,
-      scenicPattern:masterLibraryDistinctPick(POKUN_MASTER_LIBRARY_V1166.referenceBoardScenicPatterns,setNo,base+709),
+      scenicPattern:masterLibraryDistinctPick(POKUN_MASTER_LIBRARY_V1172.referenceBoardScenicPatterns,setNo,base+709),
       floralPattern:["garden_botanical","floral_stilllife"].includes(scene.family)
-        ? masterLibraryDistinctPick(POKUN_MASTER_LIBRARY_V1166.referenceBoardFloralPatterns,setNo,base+811)
+        ? masterLibraryDistinctPick(POKUN_MASTER_LIBRARY_V1172.referenceBoardFloralPatterns,setNo,base+811)
         : ""
     };
   }
@@ -8903,11 +9634,14 @@ const PAIR_LOOKS={
   function masterLibraryPromptLines(bundle,scene,setNo){
     if(!bundle)return [];
     const sacredNamed=(typeof sacredNamedReferenceMeta==="function" && setNo)?sacredNamedReferenceMeta(setNo):null;
+    const deityNamed=(typeof auspiciousDeityNameMeta==="function" && setNo)?auspiciousDeityNameMeta(setNo):null;
     const blessingSourceLock=sacredNamed?.personalizeText
       ? `SACRED-NAME PERSONALIZED BLESSING EXCEPTION v11.64: visible Thai text may use the user-typed ${sacredNamed.kindLabel} name “${sacredNamed.name}” with POKUN's dedicated named-sacred-subject blessing templates. Reproduce the FINAL resolved Headline and Greeting EXACTLY; do not paraphrase or add extra blessing text.`
-      : "REFERENCE-IMAGE BLESSING SOURCE LOCK: the resolved Thai Headline and Greeting come only from wording extracted from the user's uploaded reference images. Reproduce them EXACTLY. Do not paraphrase, expand, complete, combine, improve, or add any new blessing wording.";
+      : deityNamed?.personalizeText
+        ? `DEITY-NAME PERSONALIZED BLESSING EXCEPTION v11.69: visible Thai text may use the user-typed deity name “${deityNamed.name}” with POKUN's dedicated named-deity blessing templates. Reproduce the FINAL resolved Headline and Greeting EXACTLY; do not paraphrase or add extra blessing text.`
+        : "REFERENCE-IMAGE BLESSING SOURCE LOCK: the resolved Thai Headline and Greeting come only from wording extracted from the user's uploaded reference images. Reproduce them EXACTLY. Do not paraphrase, expand, complete, combine, improve, or add any new blessing wording.";
     return [
-      "POKUN MASTER LIBRARY v11.66 — CURATED GREETING DESIGN SUPPORT:",
+      "POKUN MASTER LIBRARY v11.72 — CURATED GREETING DESIGN SUPPORT:",
       "This block is SUPPORTIVE ONLY. Exact Subject, Character, Scene, Thai Text, Typography, Frame, Layout, Weekday/Date, and Mode locks above remain higher priority.",
       `Library Scene Theme: ${bundle.sceneTheme}.`,
       `Library Mood Accent: ${bundle.mood}.`,
@@ -9067,6 +9801,13 @@ const PAIR_LOOKS={
         if(["both","headline"].includes(sacredNamed.textUse))headline=sacredNamed.headline;
         if(["both","greeting"].includes(sacredNamed.textUse))greeting=sacredNamed.greeting;
       }
+      const deityNamed=deityNamedBlessingTexts(s,setNo,seed+1169);
+      if(deityNamed){
+        blessingThemeKey=deityNamed.theme;
+        blessingThemeLabel=deityNamed.label;
+        if(["both","headline"].includes(deityNamed.textUse))headline=deityNamed.headline;
+        if(["both","greeting"].includes(deityNamed.textUse))greeting=deityNamed.greeting;
+      }
     }
 
     headline=sanitizeVisible(enforceAuthoritativeWeekdayText(headline,s.day.dayThai));
@@ -9152,6 +9893,7 @@ const PAIR_LOOKS={
 
     if(deityResolved.heroActive){
       const label=portableDeityLabel(deityResolved.deityMode);
+      const deityNamed=auspiciousDeityNameMeta(setNo);
       if(deityResolved.deityMode==="fu_lu_shou"){
         subject.push(
           `MANDATORY HERO SUBJECT: ${label}.`,
@@ -9168,6 +9910,15 @@ const PAIR_LOOKS={
           `MANDATORY HERO SUBJECT: ${label}.`,
           "This selected deity/auspicious subject MUST be clearly visible and identifiable as the principal hero.",
           "Do not remove it, replace it, downgrade it to a tiny background detail, or substitute ordinary people, Buddha, monks, another deity, or scenery alone."
+        );
+      }
+      if(deityNamed.active){
+        subject.push(
+          `USER-SPECIFIED DEITY NAME — EXACT: ${deityNamed.name}.`,
+          "The deity name is user-entered metadata. Do not infer, recognize, verify, correct, translate, or substitute the name based on the image.",
+          deityNamed.textUse==="off"
+            ? "Do not place this deity name in the visible blessing text; it is reference metadata only."
+            : `VISIBLE-TEXT PERSONALIZATION MODE: ${deityNamed.textUse}. When the final resolved Headline/Greeting contains this deity name, reproduce it EXACTLY.`
         );
       }
     }else if(deityResolved.companionNoDeity){
@@ -9250,7 +10001,10 @@ const PAIR_LOOKS={
       `AGE: ${portableAge}.`,
       `ANIMAL TYPE: ${c.animal?c.animalType:"NONE"}.`,
       `ANIMAL LOOK: ${c.animal?c.animalLook:"NONE"}.`,
-      `ANIMAL BEHAVIOR: ${c.animal?c.animalBehavior:"NONE"}.`
+      `ANIMAL STYLE: ${c.animal?c.animalStyle:"NONE"}.`,
+      `ANIMAL BEHAVIOR: ${c.animal?c.animalBehavior:"NONE"}.`,
+      `ANIMAL ANTHRO LEVEL: ${c.animal?c.anthro:"NONE"}.`,
+      c.animal?`PER-IMAGE ANIMAL AUTHORITY: Image ${setNo} animal settings are independent from Image ${setNo===1?2:1}.`:""
     ];
     if(!buddhistHumanAuthority && c.people && c.gender==="male") character.push("MALE means MALE ONLY. Do not generate a woman or mixed-gender substitute.");
     if(!buddhistHumanAuthority && c.people && c.gender==="female") character.push("FEMALE means FEMALE ONLY. Do not generate a man or mixed-gender substitute.");
@@ -9667,12 +10421,12 @@ const PAIR_LOOKS={
 
     if(boolAnimal(setNo) && !monkRef && !monkGenerated){
       L.push("ANIMAL CHARACTER: include only the selected animal character according to the current UI settings.");
-      if(typeof sharedAnimalCharacter==="function"){
-        const a=sharedAnimalCharacter(s);
-        if(a?.direction)L.push(a.direction);
+      if(typeof animalCharacterForImage==="function"){
+        const a=animalCharacterForImage(s,setNo);
+        if(a?.identity)L.push(a.identity);
       }
       if(typeof animalBehaviorDirection==="function")L.push(animalBehaviorDirection(s,setNo));
-      if(typeof anthroDirection==="function")L.push(anthroDirection());
+      if(typeof anthroDirection==="function")L.push(anthroDirection(setNo));
     }else{
       L.push("NO ANIMAL CHARACTER: do not make an animal a main character or storytelling subject.");
     }
@@ -9804,6 +10558,11 @@ const PAIR_LOOKS={
     if(!prompt.includes(`EXACT WATERMARK TEXT: ${watermarkText}`)){
       failures.push("Mandatory exact watermark authority missing");
     }
+    if(ctx?.s?.special){
+      if(!/SPECIAL DAY VISUAL AUTHORITY v11\.70/i.test(prompt))failures.push("Special Day visual authority missing");
+      if(!prompt.includes(`SPECIAL DAY: ${ctx.s.special.name}.`))failures.push("Special Day exact name missing from Prompt");
+      if(!prompt.includes(`SPECIAL DAY COLOR THEME: ${ctx.s.special.colorTheme||"coordinate with the weekday color"}.`))failures.push("Special Day color theme missing");
+    }
     if(ctx?.s?.buddhist){
       if(!/BUDDHIST WEEKDAY COLOR AUTHORITY v11\.66 — HIGHEST COLOR PRIORITY/i.test(prompt)){
         failures.push("Buddhist weekday primary-color authority missing");
@@ -9850,6 +10609,26 @@ const PAIR_LOOKS={
           }
           if(["both","greeting"].includes(sacredNamed.textUse) && !finalGreeting.includes(sacredNamed.name)){
             failures.push("Sacred subject name missing from personalized Greeting");
+          }
+        }
+      }
+      const deityNamed=(typeof auspiciousDeityNameMeta==="function")?auspiciousDeityNameMeta(exactSetNo):null;
+      if(deityNamed?.active){
+        const authorityPresent=(prompt.includes("USER-SPECIFIED DEITY NAME — EXACT") || prompt.includes("USER-TYPED DEITY NAME — EXACT"));
+        if(!authorityPresent){
+          failures.push("User-specified deity name authority missing");
+        }
+        if(!prompt.includes(deityNamed.name)){
+          failures.push("User-specified deity name missing from Prompt");
+        }
+        if(deityNamed.personalizeText){
+          const finalHeadline=String(ctx?.texts?.headline||"");
+          const finalGreeting=String(ctx?.texts?.greeting||"");
+          if(["both","headline"].includes(deityNamed.textUse) && !finalHeadline.includes(deityNamed.name)){
+            failures.push("Deity name missing from personalized Headline");
+          }
+          if(["both","greeting"].includes(deityNamed.textUse) && !finalGreeting.includes(deityNamed.name)){
+            failures.push("Deity name missing from personalized Greeting");
           }
         }
       }
@@ -9921,6 +10700,15 @@ const PAIR_LOOKS={
 
       if(ec.animal && ec.animalType!=="auto" && !new RegExp(`REQUIRED SPECIES:.*${ec.animalType}`,"i").test(prompt)){
         failures.push("Selected animal species exact lock missing");
+      }
+      if(ec.animal && !prompt.includes(`PER-IMAGE ANIMAL SETTINGS LOCK: these animal settings belong ONLY to Image ${exactSetNo}.`)){
+        failures.push("Per-image animal settings authority missing");
+      }
+      if(ec.animal && !prompt.includes(`ANIMAL STYLE: ${ec.animalStyle}.`)){
+        failures.push("Per-image animal style missing from portable contract");
+      }
+      if(ec.animal && !prompt.includes(`ANIMAL ANTHRO LEVEL: ${ec.anthro}.`)){
+        failures.push("Per-image animal anthro level missing from portable contract");
       }
     }
 
@@ -10406,6 +11194,7 @@ const PAIR_LOOKS={
       `Per-Image Buddhist Subject Authority: IMAGE ${setNo} = ${buddhistSubjectResolved.buddhistOn?portableBuddhistSubjectLabel(buddhistSubjectResolved.mode):"OFF"}`,
       `Final Resolved Scene Guard: ${scene.templateMode||"resolved"} / ${scene.family||family} / ${scene.name}`,
       `Deity Subject Mode: ${deityResolved.heroActive?deityResolved.deityMode:(deityResolved.companionNoDeity?"OFF — IMAGE 2 COMPANION NO DEITY":"OFF")}`,
+      `User-Typed Deity Name: ${auspiciousDeityNameMeta(setNo).active?auspiciousDeityNameMeta(setNo).name:"OFF"}`,
       `Exact Character Mode: ${characterStateSnapshot.charMode}`,
       `Exact Gender UI: ${characterStateSnapshot.gender}`,
       `Exact Age UI: ${characterStateSnapshot.age}`,
@@ -10530,7 +11319,10 @@ const PAIR_LOOKS={
       ""
     );
 
-    if(s.special)L.push(`Important calendar day: ${s.special.name}`,"Keep the exact important-day meaning in the visible headline and scene.","");
+    if(s.special){
+      L.push(`Important calendar day: ${s.special.name}`,"Keep the exact important-day meaning in the visible headline and scene.","");
+      L.push(...specialDayPromptLines(s));
+    }
     if(s.buddhist && s.holy?.isHoly && wanPhraAutoBuddhist)L.push("Buddhist holy day: วันพระ",`Thai lunar date: ${s.holy.lunar}`,"");
     if(s.holy?.isHoly && !wanPhraAutoBuddhist && resolveMainArtworkMode()!=="buddhist")L.push("Wan Phra calendar detected — USER NORMAL OVERRIDE ACTIVE. Treat as an ordinary daily greeting artwork.","");
     if(!s.special && !s.buddhist && forceBuddhist && setNo===1)L.push("Special Buddhist art mode: ON","");
@@ -10731,11 +11523,13 @@ const PAIR_LOOKS={
       `18. AGE must remain exactly: ${exactCharacterState(setNo).age}.`,
       `19. ANIMAL TYPE must remain exactly: ${exactCharacterState(setNo).animalType}.`,
       `20. ANIMAL LOOK must remain exactly: ${exactCharacterState(setNo).animalLook}.`,
-      `21. ANIMAL BEHAVIOR must remain exactly: ${exactCharacterState(setNo).animalBehavior}.`,
-      `22. WATERMARK must visibly read EXACTLY: ${watermarkText}, at bottom-right inside safe margins.`,
-      scene.family==="buddhist_food_merit" ? `23. MERIT-FOOD IDENTITY must remain EXACTLY: ${scene.name}; do not substitute another food/dessert.` : "",
-      exactCharacterState(setNo).age==="all" ? "24. ALL-AGE GROUP LOCK: child + adult + elderly must all be visibly present." : "",
-      s.buddhist ? `25. BUDDHIST WEEKDAY COLOR: ${s.day.colorThai} / ${s.day.hex} must be the dominant overall theme; gold is secondary accent only.` : "",
+      `21. ANIMAL STYLE must remain exactly: ${exactCharacterState(setNo).animalStyle}.`,
+      `22. ANIMAL BEHAVIOR must remain exactly: ${exactCharacterState(setNo).animalBehavior}.`,
+      `23. ANIMAL ANTHRO LEVEL must remain exactly: ${exactCharacterState(setNo).anthro}.`,
+      `24. WATERMARK must visibly read EXACTLY: ${watermarkText}, at bottom-right inside safe margins.`,
+      scene.family==="buddhist_food_merit" ? `25. MERIT-FOOD IDENTITY must remain EXACTLY: ${scene.name}; do not substitute another food/dessert.` : "",
+      exactCharacterState(setNo).age==="all" ? "26. ALL-AGE GROUP LOCK: child + adult + elderly must all be visibly present." : "",
+      s.buddhist ? `27. BUDDHIST WEEKDAY COLOR: ${s.day.colorThai} / ${s.day.hex} must be the dominant overall theme; gold is secondary accent only.` : "",
       "If any item above is missing or conflicts with an earlier suggestion, correct it to THIS CURRENT PROMPT before finalizing the image.",
       ""
     );
@@ -10826,7 +11620,7 @@ const PAIR_LOOKS={
     const blessingKeys=Object.keys(REFERENCE_IMAGE_BLESSING_LIBRARY_V1153||{});
     return {
       version:VERSION,
-      curated:JSON.parse(JSON.stringify(POKUN_MASTER_LIBRARY_V1166)),
+      curated:JSON.parse(JSON.stringify(POKUN_MASTER_LIBRARY_V1172)),
       scenes:Object.fromEntries(Object.entries(TEMPLATE_CATALOG).map(([family,items])=>[
         family,
         items.map(x=>({
@@ -10852,17 +11646,17 @@ const PAIR_LOOKS={
       palettes:Object.fromEntries(Object.entries(PAIR_LOOKS).map(([k,v])=>[k,{...v}])),
       generalVisualStyles:JSON.parse(JSON.stringify(GENERAL_VISUAL_STYLES_V1152)),
       autoGeneralVisualStylePools:JSON.parse(JSON.stringify(AUTO_GENERAL_VISUAL_STYLE_POOLS_V1152)),
-      compositions:[...POKUN_MASTER_LIBRARY_V1166.compositions],
-      subjects:JSON.parse(JSON.stringify(POKUN_MASTER_LIBRARY_V1166.subjectFamilies)),
-      scenicReferencePatterns:[...POKUN_MASTER_LIBRARY_V1166.referenceBoardScenicPatterns],
-      floralReferencePatterns:[...POKUN_MASTER_LIBRARY_V1166.referenceBoardFloralPatterns],
+      compositions:[...POKUN_MASTER_LIBRARY_V1172.compositions],
+      subjects:JSON.parse(JSON.stringify(POKUN_MASTER_LIBRARY_V1172.subjectFamilies)),
+      scenicReferencePatterns:[...POKUN_MASTER_LIBRARY_V1172.referenceBoardScenicPatterns],
+      floralReferencePatterns:[...POKUN_MASTER_LIBRARY_V1172.referenceBoardFloralPatterns],
       foodReferenceLibrary:JSON.parse(JSON.stringify(POKUN_FOOD_REFERENCE_LIBRARY_V1154)),
       referenceBoardBlessings:JSON.parse(JSON.stringify(REFERENCE_IMAGE_BLESSING_LIBRARY_V1153)),
       sacredNamedPersonalizedBlessings:JSON.parse(JSON.stringify(SACRED_NAME_BLESSING_TEMPLATES_V1164)),
       textHighlights:JSON.parse(JSON.stringify(TEXT_HIGHLIGHT_STYLES_V1151)),
       autoTextHighlightPool:[...AUTO_TEXT_HIGHLIGHT_POOL_V1151],
-      blessingExtraction:JSON.parse(JSON.stringify(POKUN_MASTER_LIBRARY_V1166.referenceBoardBlessingExtraction)),
-      rules:[...POKUN_MASTER_LIBRARY_V1166.rules]
+      blessingExtraction:JSON.parse(JSON.stringify(POKUN_MASTER_LIBRARY_V1172.referenceBoardBlessingExtraction)),
+      rules:[...POKUN_MASTER_LIBRARY_V1172.rules]
     };
   }
 
@@ -10885,6 +11679,8 @@ const PAIR_LOOKS={
       generalVisualStyles:Object.fromEntries(Object.entries(GENERAL_VISUAL_STYLES_V1152).map(([k,v])=>[k,{category:v.cat,label:v.label,description:v.desc}])),
       foodReferenceLibrary:JSON.parse(JSON.stringify(POKUN_FOOD_REFERENCE_LIBRARY_V1154)),
       sacredNamedPersonalizedBlessings:JSON.parse(JSON.stringify(SACRED_NAME_BLESSING_TEMPLATES_V1164)),
+      deityNamedPersonalizedBlessings:JSON.parse(JSON.stringify(DEITY_NAME_BLESSING_TEMPLATES_V1169)),
+      specialDayPresets:JSON.parse(JSON.stringify(SPECIAL_PRESETS_V1172)),
       textFrameCategories:Object.fromEntries(Object.entries(TEXT_FRAME_CATEGORIES).map(([k,v])=>[k,{label:v.label,contexts:[...(v.contexts||[])]}])),
       textFrames:Object.fromEntries(Object.entries(TEXT_FRAMES).map(([k,v])=>[k,{
         category:v.category,
@@ -11379,11 +12175,18 @@ $("referenceUse1").value = referenceUse1;
 $("referenceUse2").value = referenceUse2;
 updateReferenceUseUI();
 $("animalMode").value = animalMode;
-$("animalType").value = animalType;
-$("animalStyle").value = animalStyle;
-$("animalLook").value = animalLook;
-$("animalBehavior").value = animalBehavior;
-$("anthroLevel").value = anthroLevel;
+$("animalType1").value = animalType1;
+$("animalType2").value = animalType2;
+$("animalStyle1").value = animalStyle1;
+$("animalStyle2").value = animalStyle2;
+$("animalBehavior1").value = animalBehavior1;
+$("animalBehavior2").value = animalBehavior2;
+$("anthroLevel1").value = anthroLevel1;
+$("anthroLevel2").value = anthroLevel2;
+updateAnimalLookOptions(1);
+updateAnimalLookOptions(2);
+if([...$("animalLook1").options].some(o=>o.value===animalLook1)) $("animalLook1").value=animalLook1;
+if([...$("animalLook2").options].some(o=>o.value===animalLook2)) $("animalLook2").value=animalLook2;
 $("strokeLayers").value = strokeLayers;
 $("shadowMode").value = shadowMode;
 $("blessingStrokeMode").value = blessingStrokeMode;
@@ -11392,27 +12195,33 @@ $("frameMode2").value = frameMode2;
 
 
 
-function updateAnthroDescription(){
-  const box=$("anthroDescription");
+function updateAnthroDescription(setNo){
+  const box=$(`anthroDescription${setNo}`);
   if(!box) return;
   const descriptions={
     natural:"สัตว์ธรรมชาติ — เดิน นั่ง นอน และเคลื่อนไหวตามธรรมชาติของสัตว์ ไม่แต่งตัว และไม่ทำกิจกรรมแบบคน",
     semi:"กึ่งมนุษย์ — รูปร่างและสัดส่วนยังเป็นสัตว์เป็นหลัก แต่สามารถยืนสองขา ถือของ หรือทำท่าทางแบบคนได้เล็กน้อย เช่น แมวส้มยืนสองขาถือดอกไม้",
     full:"ตัวละครเต็มรูปแบบ — เป็นสัตว์คาแรกเตอร์ที่ใช้ชีวิตคล้ายคน ยืนสองขาเป็นหลัก ใส่เสื้อผ้า ทำงาน ทำอาหาร นั่งคาเฟ่ หรือขี่จักรยานได้ แต่ยังคงหน้า หู ขน หาง และเอกลักษณ์ของสัตว์ชัดเจน"
   };
-  box.textContent=descriptions[anthroLevel]||descriptions.natural;
+  const level=animalSettingValue(setNo,"anthro")||"natural";
+  box.textContent=descriptions[level]||descriptions.natural;
 }
 
 function syncAnimalControls(){
-  const on=imageHasAnimal(1)||imageHasAnimal(2);
-  for(const id of ["animalType","animalStyle","animalLook","animalBehavior","anthroLevel"]){
-    $(id).disabled=!on;
-    $(id).style.opacity=on ? "1" : ".55";
-  }
+  [1,2].forEach(setNo=>{
+    const on=imageHasAnimal(setNo);
+    for(const base of ["animalType","animalStyle","animalLook","animalBehavior","anthroLevel"]){
+      const el=$(`${base}${setNo}`);
+      if(!el)continue;
+      el.disabled=!on;
+      el.style.opacity=on ? "1" : ".55";
+    }
+  });
 }
 syncDerivedCharacterModes();
 syncAnimalControls();
-updateAnthroDescription();
+updateAnthroDescription(1);
+updateAnthroDescription(2);
 
 
 function updateUserPhotoNotice(){
@@ -11546,35 +12355,34 @@ $("quoteVisualStyle").addEventListener("change",e=>{
   toast("แนวภาพคำคม: "+e.target.options[e.target.selectedIndex].text);
 });
 
-$("animalType").addEventListener("change",()=>{updateAnimalLookOptions(); localStorage.setItem("pokunAnimalType",$("animalType").value);});
-$("characterMode1").addEventListener("change",e=>applyCharacterModeChange(1,e.target.value));
-$("characterMode2").addEventListener("change",e=>applyCharacterModeChange(2,e.target.value));
-
-$("animalType").addEventListener("change",e=>{
-  animalType=e.target.value;
-  localStorage.setItem("pokunAnimalType",animalType);
-  toast("ประเภทสัตว์: "+e.target.options[e.target.selectedIndex].text);
-});
-$("animalStyle").addEventListener("change",e=>{
-  animalStyle=e.target.value;
-  localStorage.setItem("pokunAnimalStyle",animalStyle);
-  toast("รูปแบบสัตว์: "+e.target.options[e.target.selectedIndex].text);
-});
-$("animalLook").addEventListener("change",e=>{
-  animalLook=e.target.value;
-  localStorage.setItem("pokunAnimalLook",animalLook);
-  toast("ลักษณะสัตว์: "+e.target.options[e.target.selectedIndex].text);
-});
-$("animalBehavior").addEventListener("change",e=>{
-  animalBehavior=e.target.value;
-  localStorage.setItem("pokunAnimalBehavior",animalBehavior);
-  toast("พฤติกรรมสัตว์: "+e.target.options[e.target.selectedIndex].text);
-});
-$("anthroLevel").addEventListener("change",e=>{
-  anthroLevel=e.target.value;
-  localStorage.setItem("pokunAnthroLevel",anthroLevel);
-  updateAnthroDescription();
-  toast("ระดับตัวละคร: "+e.target.options[e.target.selectedIndex].text);
+[1,2].forEach(setNo=>{
+  $(`animalType${setNo}`).addEventListener("change",e=>{
+    if(setNo===1)animalType1=e.target.value;else animalType2=e.target.value;
+    localStorage.setItem(`pokunAnimalType${setNo}`,e.target.value);
+    updateAnimalLookOptions(setNo);
+    toast(`ประเภทสัตว์ภาพที่ ${setNo}: `+e.target.options[e.target.selectedIndex].text);
+  });
+  $(`animalStyle${setNo}`).addEventListener("change",e=>{
+    if(setNo===1)animalStyle1=e.target.value;else animalStyle2=e.target.value;
+    localStorage.setItem(`pokunAnimalStyle${setNo}`,e.target.value);
+    toast(`รูปแบบสัตว์ภาพที่ ${setNo}: `+e.target.options[e.target.selectedIndex].text);
+  });
+  $(`animalLook${setNo}`).addEventListener("change",e=>{
+    if(setNo===1)animalLook1=e.target.value;else animalLook2=e.target.value;
+    localStorage.setItem(`pokunAnimalLook${setNo}`,e.target.value);
+    toast(`ลักษณะสัตว์ภาพที่ ${setNo}: `+e.target.options[e.target.selectedIndex].text);
+  });
+  $(`animalBehavior${setNo}`).addEventListener("change",e=>{
+    if(setNo===1)animalBehavior1=e.target.value;else animalBehavior2=e.target.value;
+    localStorage.setItem(`pokunAnimalBehavior${setNo}`,e.target.value);
+    toast(`พฤติกรรมสัตว์ภาพที่ ${setNo}: `+e.target.options[e.target.selectedIndex].text);
+  });
+  $(`anthroLevel${setNo}`).addEventListener("change",e=>{
+    if(setNo===1)anthroLevel1=e.target.value;else anthroLevel2=e.target.value;
+    localStorage.setItem(`pokunAnthroLevel${setNo}`,e.target.value);
+    updateAnthroDescription(setNo);
+    toast(`ระดับตัวละครสัตว์ภาพที่ ${setNo}: `+e.target.options[e.target.selectedIndex].text);
+  });
 });
 
 $("humanStyle").addEventListener("change",e=>{
@@ -12317,6 +13125,67 @@ window.addEventListener("load",()=>{
 })();;
 
 
+
+(function initPokunV1172SpecialDayUI(){
+  function run(){
+    const mode=$("specialDayMode"), priority=$("specialDayPriority"), preset=$("specialDayPreset");
+    const customBox=$("specialDayCustomBox"), name=$("specialCustomName"), headline=$("specialCustomHeadline"), greeting=$("specialCustomGreeting");
+    if(!mode||!priority||!preset)return;
+
+    const groups=[
+      ["annual","📅 วันสำคัญประจำปี / เทศกาล",["new_year","child_day","teacher_day","valentine","songkran","elderly_day","family_day","labor_day","no_tobacco","environment_day","mother_day","father_day","halloween","christmas","year_end"]],
+      ["chinese","🧧 เทศกาลจีน",["chinese_new_year","qingming","ghost_festival","mid_autumn","vegetarian_festival"]],
+      ["buddhist","🪷 วันพระ / วันบุญ / พุทธศิลป์",["wan_phra","makha","visakha","atthami","asanha","lent","end_lent","sangkhathan","kathin","pha_pa","house_merit","birthday_merit"]],
+      ["monthly","💰 รายเดือน / วันที่ 1 / 16 / รับทรัพย์",["first_day","day16","lottery_draw","month_end","payday","week_start","happy_friday","holiday_rest"]],
+      ["education","👨‍👩‍👧 ครอบครัว / การศึกษา / ชีวิต",["school_open","school_close","graduation","exam_day","new_job"]],
+      ["business","💼 งาน / ค้าขาย / การเงิน",["shop_open","business_open","good_sales","receive_wealth","money_flow","close_sale","promotion_day","booth_day","meeting_day","negotiation_day","project_start","salary_day","bonus_day","customer_thanks"]],
+      ["custom","✏️ กำหนดเอง",["custom"]]
+    ];
+    preset.innerHTML=groups.map(([_,label,ids])=>`<optgroup label="${label}">${ids.map(id=>{
+      const p=SPECIAL_PRESETS_V1172[id]; return p?`<option value="${id}">${p.name}</option>`:"";
+    }).join("")}</optgroup>`).join("");
+
+    mode.value=[...mode.options].some(o=>o.value===specialDayMode)?specialDayMode:"auto";
+    priority.value=[...priority.options].some(o=>o.value===specialDayPriority)?specialDayPriority:"calendar_first";
+    preset.value=[...preset.options].some(o=>o.value===specialDayPreset)?specialDayPreset:"first_day";
+    if(name)name.value=specialCustomName;
+    if(headline)headline.value=specialCustomHeadline;
+    if(greeting)greeting.value=specialCustomGreeting;
+
+    function refresh(){
+      const manual=mode.value==="manual";
+      preset.disabled=!manual;
+      preset.style.opacity=manual?"1":".55";
+      priority.disabled=mode.value!=="auto";
+      priority.style.opacity=mode.value==="auto"?"1":".55";
+      if(customBox)customBox.style.display=manual && preset.value==="custom"?"block":"none";
+      if(typeof updateUI==="function")updateUI();
+    }
+    mode.addEventListener("change",()=>{
+      specialDayMode=mode.value;
+      localStorage.setItem("pokunSpecialDayModeV1172",specialDayMode);
+      refresh();
+      toast(`วันพิเศษ: ${mode.options[mode.selectedIndex].text}`);
+    });
+    priority.addEventListener("change",()=>{
+      specialDayPriority=priority.value;
+      localStorage.setItem("pokunSpecialDayPriorityV1172",specialDayPriority);
+      refresh();
+    });
+    preset.addEventListener("change",()=>{
+      specialDayPreset=preset.value;
+      localStorage.setItem("pokunSpecialDayPresetV1172",specialDayPreset);
+      refresh();
+      toast(`วันพิเศษ Manual: ${preset.options[preset.selectedIndex].text}`);
+    });
+    if(name)name.addEventListener("input",()=>{specialCustomName=name.value;localStorage.setItem("pokunSpecialCustomNameV1172",specialCustomName);refresh();});
+    if(headline)headline.addEventListener("input",()=>{specialCustomHeadline=headline.value;localStorage.setItem("pokunSpecialCustomHeadlineV1172",specialCustomHeadline);refresh();});
+    if(greeting)greeting.addEventListener("input",()=>{specialCustomGreeting=greeting.value;localStorage.setItem("pokunSpecialCustomGreetingV1172",specialCustomGreeting);refresh();});
+    refresh();
+  }
+  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",run);else run();
+})();
+
 (function initPokunV109AuspiciousDeityUI(){
   function run(){
     const style=document.getElementById("lifestyleVisualStyle");
@@ -12326,10 +13195,17 @@ window.addEventListener("load",()=>{
     const upload=document.getElementById("auspiciousDeityUploadBox");
     const file=document.getElementById("auspiciousDeityReferenceFile");
     const name=document.getElementById("auspiciousDeityReferenceName");
+    const typedName=document.getElementById("auspiciousDeityName");
+    const textUse=document.getElementById("auspiciousDeityTextUse");
     if(!style||!box||!mode||!desc||!upload)return;
 
     const saved=localStorage.getItem("pokunAuspiciousDeityMode");
     if(saved && [...mode.options].some(o=>o.value===saved))mode.value=saved;
+    if(typedName)typedName.value=localStorage.getItem("pokunAuspiciousDeityName")||"";
+    if(textUse){
+      const savedTextUse=localStorage.getItem("pokunAuspiciousDeityTextUse")||"both";
+      if([...textUse.options].some(o=>o.value===savedTextUse))textUse.value=savedTextUse;
+    }
 
     const map={
       auto:"AUTO — สุ่มเทพมงคลหรือสัญลักษณ์โชคลาภ 1 แบบ โดยไม่ผสมหลายสายเข้าด้วยกัน",
@@ -12345,7 +13221,8 @@ window.addEventListener("load",()=>{
 
     function refresh(){
       box.style.display=style.value==="wealth_prosperity"?"block":"none";
-      desc.textContent=map[mode.value]||map.auto;
+      const nameNote=(typedName && typedName.value.trim()) ? ` • ใช้ชื่อเทพมงคล: ${typedName.value.trim()}` : " • ถ้ากรอกชื่อด้านล่าง ระบบจะนำชื่อไปใช้ใน Headline/คำอวยพรตามที่เลือก";
+      desc.textContent=(map[mode.value]||map.auto)+nameNote;
       upload.style.display=mode.value==="reference"?"block":"none";
     }
 
@@ -12357,6 +13234,14 @@ window.addEventListener("load",()=>{
     });
     if(file)file.addEventListener("change",()=>{
       if(name)name.textContent=file.files?.[0]?`ไฟล์ที่เลือก: ${file.files[0].name}`:"";
+    });
+    if(typedName)typedName.addEventListener("input",()=>{
+      localStorage.setItem("pokunAuspiciousDeityName",typedName.value||"");
+      refresh();
+    });
+    if(textUse)textUse.addEventListener("change",()=>{
+      localStorage.setItem("pokunAuspiciousDeityTextUse",textUse.value||"both");
+      refresh();
     });
     refresh();
   }
@@ -12662,6 +13547,196 @@ window.addEventListener("load",()=>{
   else run();
 })();;;
 
+</script>
+<style id="pokun-v1172-mode-tab-fix">
+  /* v11.72 — keep the primary mode controls above sticky/relocated sections. */
+  #pokunModeTabsShell{position:relative;z-index:50;pointer-events:auto}
+  #pokunModeTabs,#pokunModeTabs .mode-tab{pointer-events:auto}
+</style>
+<script id="pokun-v1172-mode-tab-fix-script">
+(function initPokunV1172ModeTabFix(){
+  function start(){
+    const shell=document.getElementById("pokunModeTabsShell");
+    if(!shell || shell.dataset.v1172Bound==="1")return;
+    shell.dataset.v1172Bound="1";
+
+    const tabs=[...shell.querySelectorAll(".mode-tab[data-mode]")];
+    const note=document.getElementById("pokunModeContextNote");
+    const quick=document.getElementById("buddhistQuickAccess");
+    const subject=document.getElementById("buddhistSubjectSection");
+    const visual=document.getElementById("buddhistVisualStyleSection");
+    const toggle=document.getElementById("buddhistToggle");
+    const deityBox=document.getElementById("auspiciousDeityBox");
+    const lifestyle=document.getElementById("lifestyleVisualStyle");
+    const key="pokunPrimaryModeV110";
+    const messages={
+      general:"โหมดทั่วไป — ไม่มีองค์ประกอบพุทธศิลป์หรือเทพมงคล ใช้ฉาก คน สัตว์ อาหาร ธรรมชาติ เมือง Typography และ Layout ตามปกติ",
+      buddhist:"โหมดพุทธศิลป์ — เปิดเครื่องมือพระพุทธรูป พระ/เกจิ วัด ของทำบุญ อาหาร/ขนมไทย และ Visual Style พุทธศิลป์",
+      deity:"โหมดเทพมงคล — เปิดเครื่องมือเทพแห่งโชคลาภ ศาลเทพ เครื่องสักการะ และฉากสายมั่งคั่งร่ำรวย"
+    };
+
+    function hide(el,value){if(el)el.classList.toggle("context-hidden",!!value)}
+    function sceneOptions(deityMode){
+      const allowed=new Set(["auto","wealth_prosperity","thai_architecture","garden_botanical","nature_mountain","waterfront","minimal_abstract"]);
+      [1,2].forEach(n=>{
+        const select=document.getElementById(`sceneTemplateFamily${n}`);
+        if(!select)return;
+        [...select.options].forEach(option=>{
+          const blocked=deityMode && option.value && !allowed.has(option.value);
+          option.hidden=blocked; option.disabled=blocked;
+        });
+        if(deityMode && select.options[select.selectedIndex]?.disabled){
+          select.value="auto";
+          localStorage.setItem(`pokunSceneTemplateFamily${n}`,"auto");
+          localStorage.setItem(`pokunSceneTemplateExact${n}`,"auto");
+          select.dispatchEvent(new Event("change",{bubbles:true}));
+        }
+      });
+    }
+    function setToggle(value){
+      if(toggle && toggle.checked!==value){
+        toggle.checked=value;
+        toggle.dispatchEvent(new Event("change",{bubbles:true}));
+      }
+    }
+    function apply(mode){
+      if(!["general","buddhist","deity"].includes(mode))mode="general";
+      tabs.forEach(tab=>{
+        const active=tab.dataset.mode===mode;
+        tab.classList.toggle("active",active);
+        tab.setAttribute("aria-selected",active?"true":"false");
+      });
+      localStorage.setItem(key,mode);
+      if(note)note.textContent=messages[mode];
+
+      if(mode==="general"){
+        setToggle(false); hide(quick,true); hide(subject,true); hide(visual,true);
+        if(deityBox){deityBox.classList.remove("mode-deity-emphasis");deityBox.style.display="none"}
+        sceneOptions(false);
+      }else if(mode==="buddhist"){
+        hide(quick,false); if(quick)quick.classList.add("context-inline"); setToggle(true);
+        hide(subject,false); hide(visual,false);
+        if(deityBox){deityBox.classList.remove("mode-deity-emphasis");deityBox.style.display="none"}
+        sceneOptions(false);
+      }else{
+        setToggle(false); hide(quick,true); hide(subject,true); hide(visual,true);
+        if(lifestyle && lifestyle.value!=="wealth_prosperity"){
+          lifestyle.value="wealth_prosperity";
+          lifestyle.dispatchEvent(new Event("change",{bubbles:true}));
+        }
+        if(deityBox){deityBox.classList.add("mode-deity-emphasis");deityBox.style.display="block"}
+        sceneOptions(true);
+      }
+      window.dispatchEvent(new CustomEvent("pokun-mode-changed",{detail:{mode,source:"v11.72-fix"}}));
+    }
+
+    /* Capture phase keeps the tabs usable even if another late handler fails. */
+    shell.addEventListener("click",event=>{
+      const button=event.target.closest(".mode-tab[data-mode]");
+      if(button && shell.contains(button))apply(button.dataset.mode);
+    },true);
+
+    let saved=localStorage.getItem(key)||"general";
+    apply(saved);
+    window.POKUN_applyPrimaryModeV1172=apply;
+  }
+  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",start);
+  else start();
+})();
+</script>
+<script id="pokun-v1172-select-recovery">
+(function initPokunV1172SelectRecovery(){
+  function option(select,value,label){
+    const item=document.createElement("option");
+    item.value=value; item.textContent=label; select.appendChild(item);
+  }
+  function recoverTypography(){
+    const select=document.getElementById("styleSelect");
+    const detail=document.getElementById("styleDetail");
+    if(!select || select.options.length)return;
+    const list=(typeof DATA!=="undefined" && Array.isArray(DATA.typography))?DATA.typography:[];
+    const sacred=(typeof SACRED_NAMES!=="undefined")?SACRED_NAMES:[];
+    const mode=localStorage.getItem("pokunPrimaryModeV110")||"general";
+    list.forEach((style,index)=>{
+      if(mode==="general" && sacred.includes(style.name))return;
+      option(select,String(index),`${String(index+1).padStart(3,"0")}. ${style.name}`);
+    });
+    const saved=localStorage.getItem("pokunStyleIndex");
+    if(saved!==null && [...select.options].some(x=>x.value===saved))select.value=saved;
+    if(detail && select.selectedIndex>=0){
+      const style=list[Number(select.value)];
+      if(style)detail.innerHTML=`<strong>${style.name}</strong><div class="small" style="margin-top:5px">${style.thaiDesc||style.direction||""}</div>`;
+    }
+  }
+  function recoverSpecialPresets(){
+    const select=document.getElementById("specialDayPreset");
+    if(!select || select.options.length)return;
+    const presets=(typeof SPECIAL_PRESETS_V1172!=="undefined")?SPECIAL_PRESETS_V1172:{};
+    const groups=[
+      ["📅 วันสำคัญประจำปี / เทศกาล",["new_year","child_day","teacher_day","valentine","songkran","elderly_day","family_day","labor_day","no_tobacco","environment_day","mother_day","father_day","halloween","christmas","year_end"]],
+      ["🧧 เทศกาลจีน",["chinese_new_year","qingming","ghost_festival","mid_autumn","vegetarian_festival"]],
+      ["🪷 วันพระ / วันบุญ / พุทธศิลป์",["wan_phra","makha","visakha","atthami","asanha","lent","end_lent","sangkhathan","kathin","pha_pa","house_merit","birthday_merit"]],
+      ["💰 รายเดือน / วันที่ 1 / 16 / รับทรัพย์",["first_day","day16","lottery_draw","month_end","payday","week_start","happy_friday","holiday_rest"]],
+      ["👨‍👩‍👧 ครอบครัว / การศึกษา / ชีวิต",["school_open","school_close","graduation","exam_day","new_job"]],
+      ["💼 งาน / ค้าขาย / การเงิน",["shop_open","business_open","good_sales","receive_wealth","money_flow","close_sale","promotion_day","booth_day","meeting_day","negotiation_day","project_start","salary_day","bonus_day","customer_thanks"]],
+      ["✏️ กำหนดเอง",["custom"]]
+    ];
+    groups.forEach(([label,ids])=>{
+      const group=document.createElement("optgroup"); group.label=label;
+      ids.forEach(id=>{if(presets[id])option(group,id,presets[id].name)});
+      if(group.children.length)select.appendChild(group);
+    });
+    const saved=localStorage.getItem("pokunSpecialDayPresetV1172")||"first_day";
+    if([...select.options].some(x=>x.value===saved))select.value=saved;
+  }
+  function recoverFrames(){
+    const hCat=document.getElementById("headlineFrameCategory");
+    const hMode=document.getElementById("headlineFrameMode");
+    const bCat=document.getElementById("blessingFrameCategory");
+    const bMode=document.getElementById("blessingFrameMode");
+    if(!hCat||!hMode||!bCat||!bMode)return;
+    let catalog={};
+    try{catalog=(typeof POKUN_V9!=="undefined"&&POKUN_V9.uiCatalog)?POKUN_V9.uiCatalog():{}}catch(_){catalog={}}
+    const cats=catalog.textFrameCategories||{};
+    const frames=catalog.textFrames||{};
+    const mode=localStorage.getItem("pokunPrimaryModeV110")||"general";
+    function fillCats(select,blessing){
+      if(select.options.length)return;
+      Object.entries(cats).forEach(([key,item])=>{
+        if((item.contexts||[]).includes(mode))option(select,key,item.label);
+      });
+      if(blessing){
+        const follow=document.createElement("option");follow.value="follow";follow.textContent="ตามกรอบ Headline";
+        const auto=[...select.options].find(x=>x.value==="auto");
+        select.insertBefore(follow,auto?.nextSibling||select.firstChild);
+      }
+      if(!select.options.length){option(select,"auto","AUTO — เลือกให้เข้ากับงาน");option(select,"none","ไม่ใช้กรอบ")}
+    }
+    function fillModes(category,select,blessing){
+      if(select.options.length)return;
+      if(blessing && category.value==="follow"){option(select,"follow_headline","ตาม Headline — ใช้แบบที่เบากว่า");return}
+      if(category.value==="auto"||category.value==="none"){option(select,category.value,category.value==="auto"?"AUTO — เลือกแบบให้เข้ากับงาน":"ไม่ใช้กรอบ");return}
+      Object.entries(frames).forEach(([key,item])=>{
+        if(item.category===category.value && (item.contexts||[]).includes(mode))option(select,key,item.label);
+      });
+      if(!select.options.length)option(select,"auto","AUTO — เลือกแบบให้เข้ากับงาน");
+    }
+    fillCats(hCat,false); fillCats(bCat,true);
+    const hc=localStorage.getItem("pokunHeadlineFrameCategory")||"auto";
+    const bc=localStorage.getItem("pokunBlessingFrameCategory")||"auto";
+    if([...hCat.options].some(x=>x.value===hc))hCat.value=hc;
+    if([...bCat.options].some(x=>x.value===bc))bCat.value=bc;
+    fillModes(hCat,hMode,false); fillModes(bCat,bMode,true);
+    if(!hCat.dataset.v1172Recovery){
+      hCat.dataset.v1172Recovery="1"; bCat.dataset.v1172Recovery="1";
+      hCat.addEventListener("change",()=>{hMode.innerHTML="";fillModes(hCat,hMode,false)});
+      bCat.addEventListener("change",()=>{bMode.innerHTML="";fillModes(bCat,bMode,true)});
+    }
+  }
+  function run(){recoverTypography();recoverSpecialPresets();recoverFrames()}
+  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",run);else run();
+  window.addEventListener("pokun-mode-changed",()=>setTimeout(run,0));
+})();
 </script>
 </body>
 </html>
