@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#111827">
-<title>POKUN Web v11.78</title>
-<script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=VZ0IGpHJ2CSGrjNVskAx9ftXGLIOTMtwzLp54qFMzetqL0R_K69r7Ml5fyF41V1Z9MOObmarVQJkZVDy7RGfJtBh3sFdF2iyzzw_kTLcAvBWvx6NyO8FlO6gk71_Xy2xWgfCMt_OLL646gETJ0G-qr4JKiuOi1Op3BdeS1taTWwPB55B_edeHuV6PTopMRu8e4x2TNjC8QkgJte2SbNOhi0SKIa5bQ29lYc9rVzueqZsqRAuodPEzdde3XZ-YKNFCcZZglvAqTUYU5yqFrp9TDwb7ZZWEe4JWdo_kGXj_xHD-_HfdwD7Ls68hBVkKFTd" charset="UTF-8"></script><link rel="stylesheet" crossorigin="anonymous" href="https://gc.kis.v2.scr.kaspersky-labs.com/E3E8934C-235A-4B0E-825A-35A08381A191/abn/main.css?attr=aHR0cHM6Ly9jaGF0Z3B0LmNvbS9iYWNrZW5kLWFwaS9lc3R1YXJ5L2NvbnRlbnQ_aWQ9ZmlsZV8wMDAwMDAwMDRmMDg4MjBiOWExZWRiNjdjOGRhOWVhYiZmbj1QT0tVTl9XZWJfdjExLjc4Lmh0bWwmY2Q9YXR0YWNobWVudCZ0cz00OTY2NTcmcD1mcyZjaWQ9MSZzaWc9M2Y1MzQ5ZDg1NmJjNmU4MmJlM2VlMDQxNDk2ZWFhZmMwOWM5M2Q5MTIyMjU4NmIxNzBhMTk4NWMwNzZhYjg3YiZ2PTA"/><style>
+<title>POKUN Web v11.97</title>
+<style>
 :root{--bg:#f4f5f7;--card:#fff;--ink:#16181d;--muted:#6b7280;--line:#e5e7eb;--accent:#111827;--good:#087f5b;--warn:#b45309}
 *{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI","Noto Sans Thai",sans-serif;background:var(--bg);color:var(--ink)}
 .wrap{max-width:940px;margin:auto;padding:18px 14px 60px}.hero{padding:10px 2px 16px}.hero h1{margin:0;font-size:clamp(26px,6vw,42px)}.hero p{margin:6px 0 0;color:var(--muted)}
@@ -174,13 +174,47 @@ button{border:0;border-radius:12px;padding:12px 14px;font-weight:800;cursor:poin
 #workflowCharacter #animalSettingsSection{
   margin-top:10px;
 }
+
+/* v11.84 — Interactive Layout Studio */
+.layout-studio{margin:12px 0;border:2px solid #0b8f64;background:linear-gradient(180deg,#fff,#f7fcfa)}
+.layout-studio-head{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:12px}.layout-studio-actions{display:flex;gap:8px;flex-wrap:wrap}.layout-studio-actions button{width:auto}
+.layout-studio-head h2{font-size:19px;margin:0}.layout-studio-grid{display:grid;grid-template-columns:minmax(270px,360px) 1fr;gap:16px;align-items:start}
+.layout-canvas{position:relative;aspect-ratio:3/4;overflow:hidden;border-radius:26px;border:1px solid rgba(255,255,255,.72);background:linear-gradient(150deg,#ffe9a8 0%,#f7b9bd 43%,#bc7895 70%,#52664b 100%);box-shadow:0 20px 48px rgba(55,35,45,.22),inset 0 1px 0 rgba(255,255,255,.82);isolation:isolate}
+.layout-canvas:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 82% 12%,rgba(255,255,255,.72),transparent 25%),radial-gradient(circle at 15% 80%,rgba(255,211,128,.25),transparent 28%),linear-gradient(0deg,rgba(35,29,32,.26),transparent 52%);z-index:-1}
+.layout-canvas:after{content:"LAYOUT STUDIO";position:absolute;right:18px;top:16px;color:rgba(255,255,255,.42);font-size:9px;font-weight:900;letter-spacing:1.8px;z-index:-1}
+.layout-hotspot{position:absolute;overflow:hidden;border:1px solid rgba(255,255,255,.58);color:#fff;border-radius:15px;padding:10px 28px 10px 13px;cursor:pointer;text-shadow:0 1px 2px rgba(0,0,0,.28);transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease,filter .18s ease;box-shadow:0 10px 22px rgba(35,24,30,.20),inset 0 1px 0 rgba(255,255,255,.22);text-align:left;font-weight:900;line-height:1.18;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.layout-hotspot:before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--spot-accent,#facc15);box-shadow:0 0 16px var(--spot-accent,#facc15)}
+.layout-hotspot:after{content:"›";position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:22px;font-weight:500;color:rgba(255,255,255,.72)}
+.layout-hotspot:hover{transform:translateY(-2px) scale(1.018);filter:saturate(1.08) brightness(1.05);border-color:rgba(255,255,255,.92);box-shadow:0 14px 28px rgba(28,20,25,.28),inset 0 1px 0 rgba(255,255,255,.30)}
+.layout-hotspot.active{transform:translateY(-1px) scale(1.012);border-color:#fff;outline:3px solid rgba(255,255,255,.25);box-shadow:0 15px 30px rgba(24,19,23,.30),0 0 0 1px var(--spot-accent,#facc15)}
+.layout-hotspot small{display:block;width:max-content;max-width:100%;margin-top:5px;padding:3px 7px;border-radius:999px;background:rgba(255,255,255,.14);font-size:9px;font-weight:700;line-height:1.15;opacity:.92;white-space:normal}
+.layout-headline{--spot-accent:#fcd34d;left:7%;top:7%;width:68%;font-size:22px;background:linear-gradient(135deg,rgba(74,48,66,.82),rgba(118,75,91,.72))}
+.layout-date{--spot-accent:#f9a8d4;right:6%;top:28%;width:35%;background:linear-gradient(135deg,rgba(157,57,105,.82),rgba(115,57,91,.76))}
+.layout-blessing{--spot-accent:#6ee7b7;left:8%;top:40%;width:46%;min-height:21%;background:linear-gradient(145deg,rgba(5,120,87,.84),rgba(6,78,59,.72))}
+.layout-subject{--spot-accent:#f59e0b;right:6%;top:55%;width:38%;height:31%;display:flex;flex-direction:column;justify-content:center;color:#422006;text-shadow:0 1px 0 rgba(255,255,255,.38);background:linear-gradient(150deg,rgba(254,240,138,.94),rgba(251,191,36,.84));border-color:rgba(255,251,235,.94);box-shadow:0 12px 26px rgba(120,72,8,.24),inset 0 1px 0 rgba(255,255,255,.62)}
+.layout-subject small{color:#422006;background:rgba(120,72,8,.12)}
+.layout-subject:after{color:rgba(66,32,6,.64)}
+.layout-scene{--spot-accent:#67e8f9;left:5%;bottom:7%;width:38%;background:linear-gradient(135deg,rgba(8,114,120,.86),rgba(17,94,89,.78))}
+.layout-watermark{--spot-accent:#fde68a;right:5%;bottom:3%;width:31%;font-size:11px;background:linear-gradient(135deg,rgba(31,41,55,.88),rgba(55,65,81,.78))}
+.layout-inspector{min-height:420px;border:1px solid var(--line);border-radius:16px;padding:14px;background:#fff}.layout-inspector-title{font-size:17px;font-weight:900;margin-bottom:4px}.layout-inspector-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:12px}.layout-inspector-fields>.wide{grid-column:1/-1}.studio-field{padding:10px;border-radius:12px;background:#fafafa;border:1px solid var(--line)}.studio-field label{margin-bottom:5px}.studio-field.wide{grid-column:1/-1}.studio-back{margin-bottom:12px;width:100%;background:#0b8f64;color:#fff}.studio-flash{outline:4px solid rgba(11,143,100,.24);transition:outline .25s}
+.layout-studio:not(.editing) .layout-inspector{display:none}.layout-studio:not(.editing) .layout-studio-grid{grid-template-columns:1fr}.layout-studio:not(.editing) .layout-canvas{width:min(100%,390px);margin:auto}
+.layout-studio.editing .layout-studio-grid{grid-template-columns:1fr}.layout-studio.editing .layout-canvas{display:none}.layout-studio.editing .layout-studio-head{display:none}.layout-studio.editing .layout-inspector{display:block;max-width:760px;width:100%;margin:auto}
+.studio-create{margin-top:12px;width:100%;background:#111827;color:#fff}.studio-output{width:100%;min-height:230px;resize:vertical;white-space:pre-wrap}.studio-output-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+.studio-prompt-controls{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:12px;border:1px solid var(--line);border-radius:14px;background:#f8fafc}.studio-prompt-controls .wide{grid-column:1/-1}.studio-prompt-controls .secondary{background:#e5e7eb;color:#111827}.studio-prompt-controls .ghost{background:#fff;color:#111827;border:1px solid #d1d5db}
+@media(max-width:560px){.studio-prompt-controls{grid-template-columns:1fr}.studio-prompt-controls .wide{grid-column:auto}}
+body.layout-studio-focus .wrap>*:not(#layoutStudioSection):not(.toast){display:none!important}body.layout-studio-focus #layoutStudioSection{margin-top:8px;min-height:calc(100vh - 16px)}
+/* v11.87 — true two-page workflow: Work Type -> Layout Studio */
+body.pokun-step1 .wrap>*{display:none!important}body.pokun-step1 .wrap>.hero,body.pokun-step1 .wrap>#modeLauncherCard{display:block!important}body.pokun-step1 #modeLauncherCard{margin-top:10px}
+body.pokun-step2 .wrap>*{display:none!important}body.pokun-step2 .wrap>.hero,body.pokun-step2 .wrap>#pokunModeTabsShell,body.pokun-step2 .wrap>#layoutStudioSection{display:block!important}
+body.pokun-step2.layout-studio-focus .wrap>*{display:none!important}body.pokun-step2.layout-studio-focus .wrap>#layoutStudioSection{display:block!important}
+@media(max-width:760px){.layout-studio-grid{grid-template-columns:1fr}.layout-canvas{max-width:390px;margin:auto}.layout-inspector-fields{grid-template-columns:1fr}.layout-inspector-fields>.wide,.studio-field.wide{grid-column:auto}}
 </style>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2215%22%20fill%3D%22%230b8f64%22%2F%3E%0A%3Cpath%20fill%3D%22%23ffffff%22%20d%3D%22M18%2012h20c10.5%200%2017%206.1%2017%2015.1C55%2036.2%2048.3%2042%2038%2042H29v10H18V12zm11%209v12h8.3c4.3%200%206.7-2.1%206.7-6s-2.4-6-6.7-6H29z%22%2F%3E%0A%3Ccircle%20cx%3D%2249%22%20cy%3D%2249%22%20r%3D%226%22%20fill%3D%22%23f6c344%22%2F%3E%0A%3C%2Fsvg%3E">
 </head>
-<body>
+<body class="pokun-step1">
 <div class="wrap">
   <div class="hero">
-    <h1>POKUN Web <span class="small">v11.78</span></h1>
+    <h1>POKUN Web <span class="small">v11.97</span></h1>
     <p>Daily Greeting Prompt Generator — ใช้ได้บนมือถือและคอม</p>
   </div>
 
@@ -191,6 +225,30 @@ button{border:0;border-radius:12px;padding:12px 14px;font-weight:800;cursor:poin
       <button type="button" class="mode-tab" data-mode="deity" role="tab">✨ เทพมงคล</button>
     </div>
     <div id="pokunModeContextNote" class="notice mode-context-note"></div>
+  </section>
+
+  <section class="card full layout-studio" id="layoutStudioSection">
+    <div class="layout-studio-head">
+      <div><h2>🖼️ Layout Studio / คลิกภาพเพื่อปรับแต่ง</h2><div class="small">คลิกส่วนบนภาพจำลอง แล้วปรับค่าจริงของ POKUN ได้ทันที</div></div>
+      <div class="layout-studio-actions"><button type="button" class="ghost" id="layoutBackToWorkType">← เลือกประเภทงาน</button><button type="button" class="secondary" id="layoutStudioReset">↩ กลับ AUTO</button><button type="button" id="layoutStudioCreatePrompt">🎲 สร้าง Prompt</button></div>
+    </div>
+    <div class="layout-studio-grid">
+      <div class="layout-canvas" id="layoutStudioCanvas" aria-label="ภาพจำลอง Layout การ์ดสวัสดี">
+        <button type="button" class="layout-hotspot layout-headline active" data-studio-part="headline">✦ สวัสดีวันใหม่<small>Headline · คลิกเพื่อออกแบบ</small></button>
+        <button type="button" class="layout-hotspot layout-date" data-studio-part="date">📅 วันที่ / วัน<small>Date · วันสำคัญ</small></button>
+        <button type="button" class="layout-hotspot layout-blessing" data-studio-part="blessing">💝 คำอวยพร<small>Blessing · ความยาว · กรอบ</small></button>
+        <button type="button" class="layout-hotspot layout-subject" data-studio-part="subject">👤 🐾<small>คน / สัตว์ / ตัวละคร</small></button>
+        <button type="button" class="layout-hotspot layout-scene" data-studio-part="scene">🏞️ ฉากและโทนภาพ<small>Scene / Pair Look / Layout</small></button>
+        <button type="button" class="layout-hotspot layout-watermark" data-studio-part="watermark">✦ POKUN<small>Watermark</small></button>
+      </div>
+      <div class="layout-inspector" id="layoutStudioInspector">
+        <button type="button" class="studio-back" id="layoutInspectorBack">← กลับไปที่ Layout</button>
+        <div class="layout-inspector-title" id="layoutInspectorTitle">Headline / ข้อความหลัก</div>
+        <div class="small" id="layoutInspectorHint">เลือกฟอนต์ กรอบ Stroke เงา และ Highlight ได้จากแผงนี้</div>
+        <div class="layout-inspector-fields" id="layoutInspectorFields"></div>
+        <button type="button" class="studio-create" id="layoutInspectorCreatePrompt">🎲 สร้าง Prompt</button>
+      </div>
+    </div>
   </section>
 
 
@@ -266,17 +324,49 @@ button{border:0;border-radius:12px;padding:12px 14px;font-weight:800;cursor:poin
         <option value="short_power">สั้น กระชับ</option>
         <option value="all_round">รวมคำอวยพรจากภาพ</option>
       </select>
+      <div class="grid" style="grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:10px">
+        <div>
+          <label class="small"><b>ความยาวคำอวยพร</b></label>
+          <select id="blessingLengthMode">
+            <option value="auto">AUTO — ยาวอบอุ่น</option>
+            <option value="short">สั้น กระชับ</option>
+            <option value="medium">ปานกลาง</option>
+            <option value="long">ยาวและอบอุ่น</option>
+          </select>
+        </div>
+        <div>
+          <label class="small"><b>จำนวนบรรทัด</b></label>
+          <select id="blessingTargetLines">
+            <option value="auto">AUTO ตาม Layout</option>
+            <option value="1">1 บรรทัด</option><option value="2">2 บรรทัด</option>
+            <option value="3">3 บรรทัด</option><option value="4">4 บรรทัด</option>
+            <option value="5">5 บรรทัด</option><option value="6">6 บรรทัด</option>
+            <option value="7">7 บรรทัด</option>
+          </select>
+        </div>
+        <div>
+          <label class="small"><b>จำนวนคำโดยประมาณ</b></label>
+          <select id="blessingWordRange">
+            <option value="auto">AUTO ตามความยาว</option>
+            <option value="5-12">5–12 คำ</option>
+            <option value="13-25">13–25 คำ</option>
+            <option value="26-40">26–40 คำ</option>
+            <option value="41-50">41–50 คำ</option>
+          </select>
+        </div>
+      </div>
+      <div id="blessingLengthDescription" class="small" style="margin-top:7px"></div>
       <div id="blessingThemeDescription" class="notice" style="margin-top:8px"></div>
       <button id="rerollBlessingTheme" class="secondary" type="button" style="margin-top:8px;width:100%">🎲 สุ่มคำอวยพรใหม่ในหมวดนี้</button>
       <div class="small" style="margin-top:6px">
-        สุ่มเฉพาะ <b>Headline + คำอวยพร</b> ในธีมเดิม โดยปกติใช้ <b>เฉพาะคำที่สกัดจากภาพอ้างอิงของคุณ</b> • ข้อยกเว้น: เมื่อเลือก “พระสงฆ์ / เกจิอาจารย์อ้างอิง” และพิมพ์ชื่อท่าน ระบบจะใช้แม่แบบคำอวยพรเฉพาะชื่อที่คุณร้องขอใน v11.63 • ไม่เปลี่ยน Scene / คน / สัตว์ / Layout
+        สุ่มเฉพาะ <b>Headline + คำอวยพร</b> ในธีมเดิม • v11.84 รักษาความยาว จำนวนบรรทัด และช่วงจำนวนคำที่เลือก • ปรับผ่าน Layout Studio ได้ • ไม่เปลี่ยน Scene / คน / สัตว์ / Layout
       </div>
     </section>
 
     <section class="card full" id="specialDaySettingsCard">
       <label>📅 วันพิเศษ / Special Days</label>
       <div class="notice" style="margin-bottom:10px">
-        <b>v11.78 — Special Day Engine</b> • AUTO ตรวจวันสำคัญตามวันที่จริง + วันที่ 1 / 16 / สิ้นเดือน • Manual Override เลือกวันพิเศษเองได้ทุกวัน • วันลุ้นโชคใช้เฉพาะธีมโชคลาภ/รับทรัพย์ ไม่สร้างหรือทำนายเลข
+        <b>v11.97 — Complete AUTO Scene Choices</b> • เมื่อ Scene Family เป็น AUTO ช่อง Scene จะแสดง Template ที่เลือกเองได้จากทุกหมวดที่เข้ากับโหมด พร้อมเปลี่ยน Family ให้อัตโนมัติเมื่อเลือกฉาก
       </div>
       <div class="grid" style="grid-template-columns:repeat(3,minmax(0,1fr));gap:10px">
         <div class="stylebox">
@@ -1608,7 +1698,7 @@ const SACRED_NAMES = ["Thai Buddhist Sacred Art","Thai Temple Gold Calligraphy",
 
 const SPECIAL_FIXED = {"01-01": {"name": "วันขึ้นปีใหม่", "category": "celebration", "h1": "สวัสดีปีใหม่ ขอให้เป็นปีแห่งความสุข", "h2": "เริ่มต้นปีใหม่ด้วยสิ่งดี ๆ", "g1": "ขอให้ปีใหม่นี้เต็มไปด้วยความสุข ความสำเร็จ สุขภาพแข็งแรง และมีเรื่องดี ๆ เข้ามาตลอดทั้งปี", "g2": "ขอให้ทุกการเริ่มต้นนำไปสู่โอกาสที่ดี สมหวังในสิ่งที่ตั้งใจ และพบความราบรื่นในทุกวัน", "c1": {"name": "New Year elegant celebration still life", "prompt": "An elegant New Year celebration still life with tasteful festive lights, gift boxes, sparkling ornaments, flowers, and premium celebratory atmosphere. No people.", "avoid": "No human figures, crowds, hands, faces, or Buddhist sacred imagery."}, "c2": {"name": "New Year sunrise fresh beginning", "prompt": "A beautiful sunrise landscape symbolizing a fresh beginning, with elegant flowers, subtle festive accents, and uplifting premium atmosphere. No people.", "avoid": "No human figures and no duplicated gift-box celebration composition."}}, "01-16": {"name": "วันครู", "category": "education", "h1": "๑๖ มกราคม วันครู", "h2": "ระลึกถึงพระคุณครูด้วยหัวใจ", "g1": "ขอส่งความขอบคุณแด่ครูทุกท่าน ผู้มอบความรู้ ความเมตตา และแรงบันดาลใจให้ศิษย์ก้าวไปข้างหน้า", "g2": "ขอให้คุณครูมีความสุข สุขภาพแข็งแรง และภาคภูมิใจกับทุกความสำเร็จที่ได้ร่วมสร้างให้กับลูกศิษย์", "c1": {"name": "Teacher appreciation desk", "prompt": "A refined teacher appreciation still life with books, elegant stationery, fountain pen, flowers, and warm morning light. No people.", "avoid": "No human figures, hands, classroom crowd, or childish clutter."}, "c2": {"name": "Knowledge and gratitude composition", "prompt": "A premium symbolic education composition with stacked books, open notebook, flowers, and uplifting light representing knowledge and gratitude. No people.", "avoid": "No human figures and no duplicated desk composition."}}, "02-14": {"name": "วันวาเลนไทน์", "category": "celebration", "h1": "สุขสันต์วันวาเลนไทน์", "h2": "วันแห่งความรัก ขอให้หัวใจอบอุ่น", "g1": "ขอให้วันนี้เต็มไปด้วยความรัก ความห่วงใย และความรู้สึกดี ๆ จากคนสำคัญที่อยู่รอบตัว", "g2": "ขอให้ทุกความสัมพันธ์งดงามด้วยความเข้าใจ ความจริงใจ และมีความสุขในทุกช่วงเวลาที่แบ่งปันกัน", "c1": {"name": "Elegant Valentine floral heart", "prompt": "A premium Valentine still life with romantic flowers, heart-shaped details, ribbons, gift elements, and warm dreamy light. No people.", "avoid": "No couples, human hands, faces, or crowded restaurant scene."}, "c2": {"name": "Love letters and gentle roses", "prompt": "A refined romantic composition with love notes, roses, small hearts, tasteful stationery, and elegant pastel atmosphere. No people.", "avoid": "No human figures and no duplicated heart-gift arrangement."}}, "04-06": {"name": "วันจักรี", "category": "national", "h1": "๖ เมษายน วันจักรี", "h2": "น้อมรำลึกวันจักรี", "g1": "ขอน้อมรำลึกถึงความสำคัญของวันจักรี และขอให้วันนี้เป็นวันที่สงบ ร่มเย็น และเป็นสิริมงคล", "g2": "ขอให้บ้านเมืองมีความร่มเย็น ประชาชนมีความสุข และร่วมกันรักษาสิ่งดีงามของแผ่นดินไทย", "c1": {"name": "Thai heritage architecture", "prompt": "A dignified Thai heritage composition featuring elegant classical Thai architecture, ceremonial gold details, and respectful morning light. No people.", "avoid": "No human figures, portraits, political rally, or casual party styling."}, "c2": {"name": "Traditional Thai symbolic still life", "prompt": "A refined traditional Thai still life with classical ornament, ceremonial floral arrangement, gold-and-ivory details, and graceful heritage atmosphere. No people.", "avoid": "No human figures and no duplicated architecture composition."}}, "04-13": {"name": "เทศกาลสงกรานต์", "category": "culture", "h1": "สุขสันต์วันสงกรานต์", "h2": "สงกรานต์นี้ ขอให้ชุ่มฉ่ำด้วยความสุข", "g1": "ขอให้เทศกาลปีใหม่ไทยนำพาความสุข ความสดชื่น สุขภาพแข็งแรง และสิริมงคลมาสู่ทุกวันของชีวิต", "g2": "ขอให้ช่วงเวลานี้เต็มไปด้วยความร่มเย็น ความอบอุ่น และเป็นจุดเริ่มต้นของสิ่งดี ๆ ตลอดปี", "c1": {"name": "Songkran floral water bowl", "prompt": "A premium Thai Songkran still life with traditional silver water bowl, jasmine garlands, fragrant flower petals, elegant water droplets, and bright festive Thai atmosphere. No people.", "avoid": "No human figures, hands, crowds, water-gun battle, or chaotic street scene."}, "c2": {"name": "Thai New Year blessing arrangement", "prompt": "A refined Thai New Year arrangement with scented water, floral garlands, traditional textile, temple-inspired details, and fresh uplifting light. No people.", "avoid": "No people and no duplicated silver-bowl focal setup."}}, "04-14": {"name": "เทศกาลสงกรานต์ / วันครอบครัว", "category": "culture", "h1": "สุขสันต์วันครอบครัวและสงกรานต์", "h2": "วันครอบครัว ขอให้บ้านเต็มไปด้วยความสุข", "g1": "ขอให้เทศกาลปีใหม่ไทยนำพาความสุข ความสดชื่น สุขภาพแข็งแรง และสิริมงคลมาสู่ทุกวันของชีวิต", "g2": "ขอให้ช่วงเวลานี้เต็มไปด้วยความร่มเย็น ความอบอุ่น และเป็นจุดเริ่มต้นของสิ่งดี ๆ ตลอดปี", "c1": {"name": "Songkran floral water bowl", "prompt": "A premium Thai Songkran still life with traditional silver water bowl, jasmine garlands, fragrant flower petals, elegant water droplets, and bright festive Thai atmosphere. No people.", "avoid": "No human figures, hands, crowds, water-gun battle, or chaotic street scene."}, "c2": {"name": "Thai New Year blessing arrangement", "prompt": "A refined Thai New Year arrangement with scented water, floral garlands, traditional textile, temple-inspired details, and fresh uplifting light. No people.", "avoid": "No people and no duplicated silver-bowl focal setup."}}, "04-15": {"name": "เทศกาลสงกรานต์", "category": "culture", "h1": "ส่งท้ายสงกรานต์ด้วยความสุข", "h2": "ปีใหม่ไทย ขอให้สิ่งดี ๆ อยู่กับคุณ", "g1": "ขอให้เทศกาลปีใหม่ไทยนำพาความสุข ความสดชื่น สุขภาพแข็งแรง และสิริมงคลมาสู่ทุกวันของชีวิต", "g2": "ขอให้ช่วงเวลานี้เต็มไปด้วยความร่มเย็น ความอบอุ่น และเป็นจุดเริ่มต้นของสิ่งดี ๆ ตลอดปี", "c1": {"name": "Songkran floral water bowl", "prompt": "A premium Thai Songkran still life with traditional silver water bowl, jasmine garlands, fragrant flower petals, elegant water droplets, and bright festive Thai atmosphere. No people.", "avoid": "No human figures, hands, crowds, water-gun battle, or chaotic street scene."}, "c2": {"name": "Thai New Year blessing arrangement", "prompt": "A refined Thai New Year arrangement with scented water, floral garlands, traditional textile, temple-inspired details, and fresh uplifting light. No people.", "avoid": "No people and no duplicated silver-bowl focal setup."}}, "05-01": {"name": "วันแรงงานแห่งชาติ", "category": "national", "h1": "๑ พฤษภาคม วันแรงงานแห่งชาติ", "h2": "ส่งกำลังใจให้ทุกความตั้งใจในการทำงาน", "g1": "ขอให้ทุกความขยันและความทุ่มเทนำมาซึ่งความก้าวหน้า ความมั่นคง และความภาคภูมิใจในชีวิต", "g2": "ขอให้การงานราบรื่น มีโอกาสดี ๆ เข้ามา ได้รับผลตอบแทนที่เหมาะสม และมีความสุขกับทุกความสำเร็จ"}, "05-04": {"name": "วันฉัตรมงคล", "category": "national", "h1": "๔ พฤษภาคม วันฉัตรมงคล", "h2": "เนื่องในวันฉัตรมงคล", "g1": "ขอให้วันนี้เป็นวันแห่งความเป็นสิริมงคล ความร่มเย็น และความสุขของทุกคน", "g2": "ขอให้บ้านเมืองสงบสุข และทุกครอบครัวมีความมั่นคง ร่มเย็น และก้าวไปข้างหน้าด้วยสิ่งดีงาม"}, "06-03": {"name": "วันเฉลิมพระชนมพรรษา ๓ มิถุนายน", "category": "national", "h1": "๓ มิถุนายน วันเฉลิมพระชนมพรรษา", "h2": "เนื่องในวันสำคัญ ๓ มิถุนายน", "g1": "ขอให้วันนี้เป็นวันแห่งความเป็นสิริมงคล และขอให้ทุกครอบครัวมีความสุข ความร่มเย็น และความเจริญ", "g2": "ขอให้บ้านเมืองสงบสุข ผู้คนมีความสามัคคี และดำเนินชีวิตด้วยความมั่นคงและความหวังที่ดี"}, "07-28": {"name": "วันเฉลิมพระชนมพรรษา ๒๘ กรกฎาคม", "category": "national", "h1": "๒๘ กรกฎาคม วันเฉลิมพระชนมพรรษา", "h2": "เนื่องในวันสำคัญ ๒๘ กรกฎาคม", "g1": "ขอให้วันนี้เป็นวันแห่งความเป็นสิริมงคล ความสงบสุข และความร่มเย็นของแผ่นดิน", "g2": "ขอให้ทุกครอบครัวมีความสุข ความมั่นคง และร่วมกันสร้างสิ่งดีงามให้กับสังคมไทย"}, "08-12": {"name": "วันแม่แห่งชาติ", "category": "family", "h1": "๑๒ สิงหาคม สุขสันต์วันแม่แห่งชาติ", "h2": "วันแม่แห่งชาติ รักของแม่งดงามเสมอ", "g1": "ขอให้คุณแม่ทุกท่านมีสุขภาพแข็งแรง มีความสุขมาก ๆ และได้รับความรักความอบอุ่นจากครอบครัวเสมอ", "g2": "ขอให้ความรัก ความเสียสละ และความห่วงใยของแม่เป็นพลังใจที่งดงามในทุกวันของครอบครัว", "c1": {"name": "Mother Day jasmine garland still life", "prompt": "A beautiful Thai Mother Day still life with jasmine flowers and garlands, elegant pale-blue accents, refined gift box, warm home atmosphere, and soft loving light. No people.", "avoid": "No woman, mother figure, child, hands, faces, or identifiable family portrait."}, "c2": {"name": "Jasmine garden warm home symbolism", "prompt": "A serene jasmine garden or jasmine-filled veranda with soft pale-blue details, warm morning light, and subtle symbols of family love. No people.", "avoid": "No human figures and no duplicated gift-box arrangement."}}, "10-13": {"name": "วันนวมินทรมหาราช", "category": "national", "h1": "๑๓ ตุลาคม วันนวมินทรมหาราช", "h2": "น้อมรำลึก ๑๓ ตุลาคม", "g1": "ขอน้อมรำลึกถึงคุณูปการอันยิ่งใหญ่ และขอให้ความดีงามเป็นแรงบันดาลใจในการดำเนินชีวิต", "g2": "ขอให้วันนี้เป็นวันที่สงบ เรียบง่าย และเตือนใจให้เราร่วมกันทำความดีเพื่อส่วนรวม"}, "10-23": {"name": "วันปิยมหาราช", "category": "national", "h1": "๒๓ ตุลาคม วันปิยมหาราช", "h2": "น้อมรำลึกวันปิยมหาราช", "g1": "ขอน้อมรำลึกถึงพระมหากรุณาธิคุณ และขอให้คุณค่าของการพัฒนาบ้านเมืองเป็นแรงบันดาลใจสืบไป", "g2": "ขอให้วันนี้เป็นวันแห่งความสงบ ความกตัญญู และความภาคภูมิใจในประวัติศาสตร์ไทย"}, "12-05": {"name": "วันพ่อแห่งชาติ", "category": "family", "h1": "๕ ธันวาคม สุขสันต์วันพ่อแห่งชาติ", "h2": "วันพ่อแห่งชาติ ด้วยรักและความกตัญญู", "g1": "ขอให้คุณพ่อทุกท่านมีสุขภาพแข็งแรง มีความสุข และได้รับความรักความอบอุ่นจากครอบครัวในทุกวัน", "g2": "ขอให้ความรัก ความเสียสละ และคำสอนของพ่อเป็นพลังใจให้ครอบครัวก้าวผ่านทุกเรื่องด้วยความเข้มแข็ง", "c1": {"name": "Father Day yellow canna floral still life", "prompt": "A warm Thai Father Day still life with yellow canna flowers, elegant gift elements, classic pen symbolism, and soft golden home light. No people.", "avoid": "No man, father figure, child, hands, faces, or identifiable family portrait."}, "c2": {"name": "Warm home fatherly strength symbolism", "prompt": "A refined people-free home composition symbolizing fatherly strength and care, with yellow flowers, books, classic objects, and warm morning light. No people.", "avoid": "No human figures and no duplicated gift arrangement."}}, "12-10": {"name": "วันรัฐธรรมนูญ", "category": "national", "h1": "๑๐ ธันวาคม วันรัฐธรรมนูญ", "h2": "วันรัฐธรรมนูญ ๑๐ ธันวาคม", "g1": "ขอให้สังคมไทยก้าวไปข้างหน้าด้วยความสงบ เคารพซึ่งกันและกัน และร่วมกันสร้างประโยชน์เพื่อส่วนรวม", "g2": "ขอให้วันนี้เป็นวันที่เตือนใจถึงความรับผิดชอบต่อสังคม ความสามัคคี และการอยู่ร่วมกันอย่างสร้างสรรค์"}, "12-31": {"name": "วันสิ้นปี", "category": "celebration", "h1": "ส่งท้ายปีเก่า ต้อนรับสิ่งดี ๆ", "h2": "วันสุดท้ายของปี ขอให้จบอย่างงดงาม", "g1": "ขอให้เรื่องเหนื่อยใจผ่านไปพร้อมปีเก่า และเก็บทุกความทรงจำดี ๆ ไว้เป็นพลังสำหรับปีใหม่", "g2": "ขอให้วันสุดท้ายของปีเต็มไปด้วยความสุข ความสบายใจ และพร้อมต้อนรับการเริ่มต้นใหม่ที่สดใส", "c1": {"name": "Year-end elegant countdown still life", "prompt": "An elegant year-end celebration still life with refined clock near midnight, sparkling lights, tasteful ornaments, flowers, and premium festive atmosphere. No people.", "avoid": "No crowd, human figures, hands, nightclub scene, or excessive alcohol imagery."}, "c2": {"name": "Last sunset of the year", "prompt": "A breathtaking peaceful sunset landscape symbolizing the final day of the year, with warm golden light and contemplative premium mood. No people.", "avoid": "No human figures and no duplicated countdown still life."}}};
 const SPECIAL_2026 = {"2026-01-10": {"name": "วันเด็กแห่งชาติ", "category": "family", "h1": "สุขสันต์วันเด็กแห่งชาติ", "h2": "เด็กวันนี้ คือพลังของวันข้างหน้า", "g1": "ขอให้เด็ก ๆ เติบโตอย่างมีความสุข มีความฝัน มีความกล้าเรียนรู้ และได้รับโอกาสที่ดีในทุกช่วงวัย", "g2": "ขอให้ทุกวันของเด็ก ๆ เต็มไปด้วยความสนุก ความปลอดภัย ความอบอุ่น และการเรียนรู้ที่สร้างสรรค์", "c1": {"name": "Colorful children learning world", "prompt": "A joyful people-free children learning scene with colorful books, building blocks, art supplies, balloons, stars, and playful educational toys. No children or people.", "avoid": "No human figures, faces, hands, or copyrighted characters."}, "c2": {"name": "Dream and imagination objects", "prompt": "A whimsical people-free composition with kites, paper airplanes, toy telescope, colorful stars, clouds, pencils, and creative learning objects. No people.", "avoid": "No children, human figures, or duplicated book-block arrangement."}}, "2026-02-17": {"name": "วันตรุษจีน", "category": "culture", "h1": "สุขสันต์วันตรุษจีน เฮง ๆ รวย ๆ", "h2": "ตรุษจีนนี้ ขอให้โชคดีตลอดปี", "g1": "ขอให้ปีใหม่นี้มั่งมีศรีสุข การงานรุ่งเรือง การเงินคล่องตัว และมีโชคลาภตลอดทั้งปี", "g2": "ขอให้บ้านเต็มไปด้วยความสุข ความอบอุ่น ความสำเร็จ และสิ่งดี ๆ เข้ามาอย่างต่อเนื่อง", "c1": {"name": "Chinese New Year red-gold still life", "prompt": "A premium Chinese New Year still life with red envelopes, mandarin oranges, plum blossoms, elegant lanterns, gold decorative elements, and rich red-gold lighting. No people.", "avoid": "No human figures, hands, lion-dance performers, or crowded street scene."}, "c2": {"name": "Lantern and blossom festive courtyard", "prompt": "An elegant empty festive courtyard with red lanterns, blossoms, tasteful gold accents, and warm Chinese New Year atmosphere. No people.", "avoid": "No human figures and no duplicated orange-envelope tabletop."}}, "2026-03-03": {"name": "วันมาฆบูชา", "category": "buddhist", "h1": "วันมาฆบูชา น้อมใจสู่ความสงบ", "h2": "มาฆบูชานี้ ขอให้ใจสว่างด้วยธรรม", "g1": "ขอให้การระลึกถึงหลักธรรมในวันมาฆบูชานำความสงบ สติ และปัญญามาสู่การดำเนินชีวิต", "g2": "ขอให้วันนี้เป็นโอกาสดีในการทำความดี ลดสิ่งที่ทำให้ใจหนัก และเพิ่มความเมตตาให้กับตนเองและผู้อื่น"}, "2026-05-31": {"name": "วันวิสาขบูชา", "category": "buddhist", "h1": "วันวิสาขบูชา น้อมบูชาด้วยใจสงบ", "h2": "วิสาขบูชานี้ ขอให้ธรรมะนำทางใจ", "g1": "ขอให้วันวิสาขบูชานำความสงบ ความมีสติ และความสว่างทางปัญญามาสู่ชีวิต", "g2": "ขอให้บุญกุศลและความตั้งใจดีในวันนี้ช่วยเติมความร่มเย็น และเป็นกำลังใจให้ดำเนินชีวิตอย่างมีคุณค่า"}, "2026-06-08": {"name": "วันอัฏฐมีบูชา", "category": "buddhist", "h1": "วันอัฏฐมีบูชา น้อมระลึกด้วยศรัทธา", "h2": "อัฏฐมีบูชา ขอให้ใจตั้งมั่นในความดี", "g1": "ขอให้การระลึกถึงธรรมในวันนี้ช่วยให้มีสติ รู้เท่าทันใจ และดำเนินชีวิตด้วยความไม่ประมาท", "g2": "ขอให้ความดีที่ตั้งใจทำเป็นเหตุแห่งความสงบ ความเมตตา และปัญญาในทุกวัน"}, "2026-07-29": {"name": "วันอาสาฬหบูชา", "category": "buddhist", "h1": "วันอาสาฬหบูชา น้อมใจบูชาพระรัตนตรัย", "h2": "อาสาฬหบูชานี้ ขอให้ใจพบแสงแห่งธรรม", "g1": "ขอให้วันนี้เป็นวันที่ใจสงบ มีสติ และได้รับพลังจากหลักธรรมในการก้าวผ่านทุกเรื่องอย่างมั่นคง", "g2": "ขอให้การทำความดี ฟังธรรม และระลึกถึงพระรัตนตรัยนำความร่มเย็นและปัญญามาสู่ชีวิต"}, "2026-07-30": {"name": "วันเข้าพรรษา", "category": "buddhist", "h1": "วันเข้าพรรษา เริ่มต้นสิ่งดีด้วยใจตั้งมั่น", "h2": "เข้าพรรษานี้ ตั้งใจดี ทำดีให้ต่อเนื่อง", "g1": "ขอให้ช่วงเข้าพรรษาเป็นจุดเริ่มต้นของการลดสิ่งที่ไม่ดี เพิ่มสิ่งที่มีคุณค่า และดูแลใจให้สงบขึ้นทุกวัน", "g2": "ขอให้ความตั้งใจทำความดีในพรรษานี้เกิดผลเป็นความสุข ความมีสติ และความร่มเย็นในชีวิต"}, "2026-10-26": {"name": "วันออกพรรษา", "category": "buddhist", "h1": "วันออกพรรษา ขอให้ใจอิ่มบุญ", "h2": "ออกพรรษานี้ ขอให้ความดีงอกงาม", "g1": "ขอให้ผลแห่งความตั้งใจดีและการปฏิบัติตนตลอดพรรษานำความสุข ความสงบ และความสบายใจมาสู่ชีวิต", "g2": "ขอให้วันนี้เป็นอีกหนึ่งจุดเริ่มต้นของการรักษาความดี มีสติ และแบ่งปันสิ่งดีงามให้กับคนรอบข้าง"}, "2026-11-24": {"name": "วันลอยกระทง", "category": "culture", "h1": "สุขสันต์วันลอยกระทง", "h2": "ลอยกระทงนี้ ขอให้ทุกข์ลอยไป ความสุขลอยมา", "g1": "ขอให้ค่ำคืนลอยกระทงงดงาม สดใส และเป็นโอกาสให้ปล่อยสิ่งที่หนักใจไปพร้อมสายน้ำ", "g2": "ขอให้ความสุข ความหวัง และสิ่งดี ๆ เข้ามาแทนที่เรื่องที่ผ่านไป พร้อมเริ่มต้นวันใหม่ด้วยใจเบาสบาย", "c1": {"name": "Elegant krathong on moonlit water", "prompt": "A beautiful eco-friendly Thai krathong floating on calm moonlit water, decorated with flowers, candlelight, reflections, and elegant traditional details. No people.", "avoid": "No human figures, hands, crowds, plastic waste, or unsafe fire scene."}, "c2": {"name": "Loy Krathong riverside atmosphere", "prompt": "A serene empty Thai riverside at night with tasteful floating krathongs in the distance, warm lantern light, full moon reflections, flowers, and refined festival ambience. No people.", "avoid": "No human figures and no duplicated close-up krathong focal composition."}}};
-// v11.78 — SPECIAL DAY ENGINE
+// v11.81 — SPECIAL DAY ENGINE
 function specialPreset(id,name,group,category,h1,h2,g1,g2,colorTheme,sceneTheme){
   const baseAvoid="No unrelated text, no copyrighted characters, no political campaign messaging, and no inappropriate religious mixing.";
   return {
@@ -1626,7 +1716,7 @@ function specialPreset(id,name,group,category,h1,h2,g1,g2,colorTheme,sceneTheme)
   };
 }
 
-const SPECIAL_PRESETS_V1178={
+const SPECIAL_PRESETS_V1181={
   // Annual / fixed and general festivals
   new_year:specialPreset("new_year","วันขึ้นปีใหม่","annual","celebration","สวัสดีปีใหม่ เริ่มต้นปีด้วยสิ่งดี ๆ","ปีใหม่นี้ ขอให้สดใสตลอดทาง","เริ่มปีใหม่ด้วยความสุข สุขภาพดี การงานก้าวหน้า และมีโอกาสดีเข้ามาตลอดปี","ทุกการเริ่มต้นนำไปสู่ความสำเร็จ ความสบายใจ และเรื่องน่ายินดีในทุกวัน","ทอง-ขาว-สีประจำวัน","แสงปีใหม่ ของขวัญ ดอกไม้ แสงระยิบระยับ และบรรยากาศเริ่มต้นใหม่"),
   child_day:specialPreset("child_day","วันเด็กแห่งชาติ","family_education","family","สุขสันต์วันเด็กแห่งชาติ","เติบโตอย่างสดใส เรียนรู้ได้ทุกวัน","เด็ก ๆ เติบโตอย่างมีความสุข กล้าคิด กล้าฝัน และได้รับโอกาสดีในการเรียนรู้","ทุกวันเต็มไปด้วยความสนุก ความปลอดภัย ความอบอุ่น และจินตนาการสร้างสรรค์","สีสดใส-พาสเทล-สีประจำวัน","หนังสือ ของเล่นสร้างสรรค์ บอลลูน ดาว กระดาษสี และโลกแห่งการเรียนรู้"),
@@ -1700,7 +1790,7 @@ const SPECIAL_PRESETS_V1178={
 };
 
 function cloneSpecialPreset(id){
-  const p=SPECIAL_PRESETS_V1178[id];
+  const p=SPECIAL_PRESETS_V1181[id];
   if(!p)return null;
   return JSON.parse(JSON.stringify(p));
 }
@@ -1796,7 +1886,7 @@ function specialDayPromptLines(s){
   if(!sp)return [];
   const buddhist=sp.category==="buddhist";
   return [
-    "SPECIAL DAY VISUAL AUTHORITY v11.78:",
+    "SPECIAL DAY VISUAL AUTHORITY v11.81:",
     `SPECIAL DAY: ${sp.name}.`,
     `SPECIAL DAY GROUP: ${sp.group||sp.category||"general"}.`,
     `SPECIAL DAY COLOR THEME: ${sp.colorTheme||"coordinate with the weekday color"}.`,
@@ -1817,6 +1907,9 @@ let wanPhraAutoBuddhist = localStorage.getItem("pokunWanPhraAutoBuddhist") !== "
 let watermarkText = localStorage.getItem("pokunWatermark") || "POKUN ✨";
 let appMode = localStorage.getItem("pokunAppMode") || "greeting";
 let blessingTheme = localStorage.getItem("pokunBlessingTheme") || "auto";
+let blessingLengthMode = localStorage.getItem("pokunBlessingLengthMode") || "auto";
+let blessingTargetLines = localStorage.getItem("pokunBlessingTargetLines") || "auto";
+let blessingWordRange = localStorage.getItem("pokunBlessingWordRange") || "auto";
 let aiPromptMode = localStorage.getItem("pokunAiPromptMode") || "off";
 let aiPromptScope = localStorage.getItem("pokunAiPromptScope") || "text_scene";
 let aiBackendUrl = localStorage.getItem("pokunAiBackendUrl") || "/api/pokun-ai";
@@ -1827,12 +1920,12 @@ let birthdayTheme = localStorage.getItem("pokunBirthdayTheme") || "auto";
 let birthdayAgeGroup = localStorage.getItem("pokunBirthdayAgeGroup") || "auto";
 let birthdayWishFocus = localStorage.getItem("pokunBirthdayWishFocus") || "auto_age";
 let birthdayCustomWish = localStorage.getItem("pokunBirthdayCustomWish") || "";
-let specialDayMode = localStorage.getItem("pokunSpecialDayModeV1178") || "auto";
-let specialDayPriority = localStorage.getItem("pokunSpecialDayPriorityV1178") || "calendar_first";
-let specialDayPreset = localStorage.getItem("pokunSpecialDayPresetV1178") || "first_day";
-let specialCustomName = localStorage.getItem("pokunSpecialCustomNameV1178") || "";
-let specialCustomHeadline = localStorage.getItem("pokunSpecialCustomHeadlineV1178") || "";
-let specialCustomGreeting = localStorage.getItem("pokunSpecialCustomGreetingV1178") || "";
+let specialDayMode = localStorage.getItem("pokunSpecialDayModeV1181") || "auto";
+let specialDayPriority = localStorage.getItem("pokunSpecialDayPriorityV1181") || "calendar_first";
+let specialDayPreset = localStorage.getItem("pokunSpecialDayPresetV1181") || "first_day";
+let specialCustomName = localStorage.getItem("pokunSpecialCustomNameV1181") || "";
+let specialCustomHeadline = localStorage.getItem("pokunSpecialCustomHeadlineV1181") || "";
+let specialCustomGreeting = localStorage.getItem("pokunSpecialCustomGreetingV1181") || "";
 let quoteCategory = localStorage.getItem("pokunQuoteCategory") || "auto";
 let quoteLength = localStorage.getItem("pokunQuoteLength") || "short";
 let quoteVisualStyle = localStorage.getItem("pokunQuoteVisualStyle") || "auto";
@@ -2004,12 +2097,12 @@ const SPECIAL_HEADLINE_PREFIXES = [
   "ส่งความสุขในโอกาส"
 ];
 const SPECIAL_GREETING_VARIANTS = [
-  "ขอให้วันนี้เต็มไปด้วยความสุข ความอบอุ่น และสิ่งดี ๆ ที่เหมาะกับความหมายของวันสำคัญนี้",
-  "ขอให้วันสำคัญนี้นำความสุข ความสบายใจ และความทรงจำดี ๆ มาสู่ทุกคน",
-  "ขอให้ความหมายดีงามของวันนี้เป็นพลังใจ และนำพาเรื่องดี ๆ เข้ามาในชีวิต",
-  "ขอให้วันนี้เป็นอีกหนึ่งวันที่เต็มไปด้วยรอยยิ้ม ความอบอุ่น และความรู้สึกดี ๆ",
-  "ขอให้วันสำคัญนี้เป็นโอกาสของความสุข ความกตัญญู ความรัก และสิ่งดีงามรอบตัว",
-  "ขอให้ทุกช่วงเวลาของวันนี้งดงาม อบอุ่น และเต็มไปด้วยความหมายที่ดี"
+  "ขอให้วันนี้เต็มไปด้วยความสุข ความอบอุ่น และสิ่งดี ๆ ที่สอดคล้องกับความหมายของวันสำคัญ วางเรื่องเหนื่อยใจไว้ข้างหลัง เติมกำลังใจให้ตัวเอง แล้วก้าวต่อไปด้วยความหวังและรอยยิ้ม",
+  "ขอให้วันสำคัญนี้นำความสุข ความสบายใจ และความทรงจำดี ๆ มาสู่ทุกคน ขอบคุณทุกประสบการณ์ที่ช่วยให้เราเติบโต และขอให้วันข้างหน้าเต็มไปด้วยโอกาส ความสำเร็จ และเรื่องน่ายินดี",
+  "ขอให้ความหมายดีงามของวันนี้เป็นพลังใจ ช่วยให้เรื่องหนักค่อย ๆ เบาลง สิ่งที่ตั้งใจค่อย ๆ สำเร็จ และนำพาผู้คน โอกาส รวมถึงเรื่องราวดี ๆ เข้ามาในชีวิตอย่างเหมาะสม",
+  "ขอให้วันนี้เป็นอีกหนึ่งวันที่เต็มไปด้วยรอยยิ้ม ความอบอุ่น และความรู้สึกดี ๆ มีแรงกายแรงใจสำหรับทุกสิ่งที่ต้องทำ ได้รับข่าวดี และพบความสุขเล็ก ๆ ตลอดทั้งวัน",
+  "ขอให้วันสำคัญนี้เป็นโอกาสของความสุข ความกตัญญู ความรัก และสิ่งดีงามรอบตัว ขอให้ทุกความตั้งใจได้รับการตอบรับที่ดี ทุกความพยายามมีความหมาย และหัวใจมีความหวังอยู่เสมอ",
+  "ขอให้ทุกช่วงเวลาของวันนี้งดงาม อบอุ่น และเต็มไปด้วยความหมายที่ดี เรื่องที่กังวลค่อย ๆ คลี่คลาย งานและชีวิตเดินหน้าอย่างราบรื่น พร้อมมีคนดี ๆ และกำลังใจดี ๆ อยู่เคียงข้าง"
 ];
 
 function specialTextVariant(sp,s,setNo,seed){
@@ -3431,7 +3524,7 @@ function sharedCartoonStyle(s){
 
 
 function imageHasPeople(setNo){
-  // v11.78: current UI is authoritative. Stored variables are fallback only.
+  // v11.81: current UI is authoritative. Stored variables are fallback only.
   const mode=document.getElementById(setNo===1?"characterMode1":"characterMode2")?.value
     || (setNo===1 ? characterMode1 : characterMode2)
     || "none";
@@ -6365,8 +6458,14 @@ function buildPromptLegacyV87(setNo){
       "Natural complementary colors and neutrals are allowed only when the weekday color remains immediately recognizable as the main theme."
     );
   }else{
-    L.push(`Use ${s.day.hex} as the recognizable daily signature accent.`);
-    L.push("Natural complementary colors are allowed.");
+    L.push(
+      "DAILY COLOR AUTHORITY v11.82 — HIGHEST COLOR PRIORITY:",
+      `TODAY'S PRIMARY THEME COLOR: ${s.day.colorThai} / ${s.day.colorEnglish} / ${s.day.hex}.`,
+      "Use the weekday color as the dominant 60–70% visual family across lighting, flowers/props, typography accents, surfaces and final color grade.",
+      "Use approximately 20–30% coordinated neutrals or natural materials and no more than 10% minor accent hues.",
+      "Typography Preset, Scene Template, Pair Look and AUTO Color Grade MUST NOT replace the weekday color or turn another hue into the dominant atmosphere.",
+      "Image 1 and Image 2 must immediately read as the same weekday-color collection."
+    );
   }
   if(s.buddhist && s.holy.isHoly && wanPhraAutoBuddhist)L.push("On Wan Phra, preserve the weekday color as PRIMARY and use sacred gold, warm ivory, natural temple tones, and peaceful lighting only as coordinated support.");
   L.push("");
@@ -6491,7 +6590,10 @@ function buildPromptLegacyV87(setNo){
   
   if(appMode==="quote") L.push("Visible Thai quote:",headline,"","Visible Thai supporting thought:",greeting,"");
   else if(appMode==="birthday") L.push("Visible Thai birthday headline:",headline,"","Visible Thai birthday blessing:",greeting,"");
-  else L.push("Visible Thai headline:",headline,"","Visible Thai greeting / blessing:",greeting,"");
+  else {
+    L.push("Visible Thai headline:",headline,"","Visible Thai greeting / blessing:",greeting,"");
+    L.push(...blessingLengthInstruction(greeting));
+  }
   L.push("","BLESSING TEXT FRAME / PANEL:");
   if(variation.frame.use){
     L.push("Use a designed frame/panel specifically for the greeting / blessing text.");
@@ -6775,7 +6877,7 @@ function pairMasterVisualState(s){
     lighting:"same ceremonial premium lighting direction and softness across both images",intensity:"matched luminous premium intensity",contrast:"matched medium cinematic contrast",
     saturation:"matched rich but controlled auspicious saturation",shadows:"matched soft sculptural shadows",glow:"matched premium sacred/auspicious glow",atmosphere:"coherent auspicious ceremonial atmosphere",
     sky:"background color temperature must remain coherent with selected deity palette",grade:"same auspicious final color grade across both images"};
-  return {mode:"GENERAL PAIR MASTER",palette:"same dominant palette family across both images",whiteBalance:"same white balance across both images",
+  return {mode:"GENERAL DAILY-COLOR PAIR MASTER",palette:`today's ${s.day.colorThai} / ${s.day.hex} as the dominant 60–70% palette across both images, supported by coordinated neutrals and natural materials; unrelated hues are minor accents only`,whiteBalance:"same white balance across both images",
     lighting:"same time-of-day, direction and softness across both images",intensity:"matched perceived light intensity",contrast:"matched contrast curve",saturation:"matched saturation level",
     shadows:"matched shadow softness",glow:"matched atmospheric glow",atmosphere:"coherent paired atmosphere",sky:"coherent background color temperature",grade:"same final color grade across both images"};
 }
@@ -7033,6 +7135,52 @@ const REFERENCE_IMAGE_THEME_ALIAS_V1153={
   auspicious_wealth:"wealth"
 };
 
+// v11.82 — AUTO now favors a complete, warm blessing instead of treating one
+// short reference phrase as the whole message. The explicit short_power theme
+// remains untouched for users who intentionally want compact copy.
+const LONG_WARM_BLESSINGS_V1182={
+  happiness:[
+    "ขอให้วันนี้เต็มไปด้วยความสดใสและรอยยิ้ม วางเรื่องเหนื่อยใจไว้ข้างหลัง แล้วเปิดรับความสุขเล็ก ๆ รอบตัว ขอให้ได้พบผู้คนที่จริงใจ ข่าวดีที่รอคอย และช่วงเวลาที่ทำให้หัวใจอบอุ่นตลอดทั้งวัน",
+    "ขอให้เช้าวันนี้นำความเบิกบานเข้ามาในหัวใจ ทุกเรื่องที่กังวลค่อย ๆ เบาลง มีพลังทำสิ่งที่ตั้งใจ และได้ใช้เวลาอยู่กับสิ่งที่รัก ขอให้วันนี้เป็นวันที่สบายใจและน่าจดจำ"
+  ],
+  health:[
+    "ขอให้สุขภาพแข็งแรงทั้งกายและใจ มีแรงสำหรับทุกสิ่งที่ต้องทำ ได้พักผ่อนอย่างเพียงพอ และใช้ชีวิตในแต่ละวันด้วยความสบายใจ ขอให้ห่างไกลจากความเจ็บป่วยและมีความสุขอยู่เสมอ",
+    "ขอให้วันนี้ร่างกายสดชื่น จิตใจแจ่มใส ความเหนื่อยล้าค่อย ๆ คลายลง มีพลังดี ๆ กลับคืนมา และได้รับการดูแลจากคนรอบข้าง ขอให้ทุกวันเต็มไปด้วยสุขภาพที่ดีและรอยยิ้ม"
+  ],
+  work:[
+    "ขอให้การงานวันนี้ราบรื่น ทุกหน้าที่เดินหน้าอย่างคล่องตัว ได้รับความร่วมมือและโอกาสที่ดี ความพยายามค่อย ๆ เห็นผลเป็นความสำเร็จ และมีความภูมิใจในทุกก้าวที่กำลังสร้างขึ้น",
+    "ขอให้สิ่งที่รับผิดชอบสำเร็จตามเป้าหมาย อุปสรรคค่อย ๆ คลี่คลาย มีผู้ใหญ่และเพื่อนร่วมงานคอยสนับสนุน พร้อมพบแนวทางใหม่ ๆ ที่ช่วยให้งานก้าวหน้าและชีวิตมั่นคงยิ่งขึ้น"
+  ],
+  money:[
+    "ขอให้การเงินคล่องตัว มีรายรับและโอกาสดี ๆ เข้ามาอย่างต่อเนื่อง ใช้จ่ายอย่างสบายใจ เก็บออมได้ตามตั้งใจ และให้ทุกความขยันนำมาซึ่งความมั่นคง ความอุดมสมบูรณ์ และความสุขของคนในครอบครัว",
+    "ขอให้วันนี้เปิดทางสู่ความมั่นคงทางการเงิน งานสร้างรายได้อย่างงดงาม เงินทองหมุนเวียนราบรื่น มีโชคในจังหวะที่เหมาะสม และสามารถดูแลตัวเองกับคนที่รักได้อย่างสบายใจ"
+  ],
+  wealth:[
+    "ขอให้ความขยันและความตั้งใจนำพาความมั่งคั่งเข้ามา โอกาสดีเปิดทาง การงานเติบโต การเงินงอกงาม และมีทรัพย์อย่างมั่นคง ขอให้ความสำเร็จทุกด้านเกิดขึ้นพร้อมความสุขและความสบายใจ",
+    "ขอให้ชีวิตรุ่งเรืองและอุดมสมบูรณ์ มีโชคมีลาภอย่างเหมาะสม พบช่องทางที่ช่วยต่อยอดความสำเร็จ เงินทองคล่องมือ และทุกสิ่งที่สร้างไว้ค่อย ๆ เติบโตเป็นความมั่นคงที่ยั่งยืน"
+  ],
+  success:[
+    "ขอให้ทุกเป้าหมายที่ตั้งใจค่อย ๆ สำเร็จอย่างราบรื่น อุปสรรคกลายเป็นบทเรียน ความพยายามได้รับผลตอบแทนที่ดี และทุกก้าวพาเข้าใกล้ความฝัน ขอให้ภาคภูมิใจกับความสำเร็จที่กำลังมาถึง",
+    "ขอให้วันนี้มีความคืบหน้าในเรื่องสำคัญ ได้พบทางออกที่เหมาะสมและคนที่พร้อมสนับสนุน ขอให้ลงมือทำด้วยความมั่นใจ เดินหน้าอย่างมั่นคง และสมหวังในสิ่งดี ๆ ที่ตั้งใจ"
+  ],
+  luck:[
+    "ขอให้วันนี้โชคดีตั้งแต่เช้าจนเย็น ได้พบโอกาสที่เหมาะสม ข่าวดีที่รอคอย และผู้คนที่นำพาเรื่องน่ายินดีเข้ามา ขอให้คิดทำสิ่งใดราบรื่น มีโชคมีลาภ และสมหวังในเรื่องสำคัญ",
+    "ขอให้พลังดี ๆ อยู่เคียงข้างตลอดวัน เรื่องที่ติดขัดค่อย ๆ คลี่คลาย พบจังหวะและโอกาสที่เป็นใจ มีความสุข ความสำเร็จ และโชคลาภเข้ามาเติมเต็มชีวิตอย่างพอดี"
+  ],
+  encouragement:[
+    "ขอให้เริ่มต้นวันนี้ด้วยหัวใจที่เข้มแข็ง วางเรื่องเหนื่อยไว้ข้างหลัง และค่อย ๆ เดินหน้าตามจังหวะของตัวเอง ขอให้ทุกความพยายามมีความหมาย พบกำลังใจดี ๆ และมองเห็นความหวังในทุกก้าว",
+    "ขอให้วันนี้เป็นจุดเริ่มต้นของเรื่องดี ๆ แม้บางก้าวอาจช้าแต่ยังพาเราไปข้างหน้า ขอให้เชื่อมั่นในตัวเอง มีแรงกายแรงใจ และพบความสำเร็จที่คู่ควรกับความตั้งใจ"
+  ],
+  all_round:[
+    "ขอให้วันนี้สุขภาพแข็งแรง จิตใจสดใส การงานราบรื่น การเงินคล่องตัว และมีคนดี ๆ อยู่รอบข้าง ขอให้ทุกสิ่งที่ตั้งใจค่อย ๆ สำเร็จ มีโชค มีความสุข และพบเรื่องน่ายินดีตลอดทั้งวัน",
+    "ขอให้ทุกด้านของชีวิตค่อย ๆ ลงตัว เรื่องหนักกลายเป็นเบา งานและเงินเดินหน้า สุขภาพแข็งแรง ครอบครัวอบอุ่น และหัวใจเต็มไปด้วยความหวัง ขอให้วันนี้นำพาความสำเร็จและสิ่งดี ๆ เข้ามามากกว่าที่คาดไว้"
+  ],
+  buddhist:[
+    "ขออานุภาพแห่งบุญรักษาและธรรมะคุ้มครอง ให้จิตใจสงบ สุขภาพแข็งแรง ชีวิตราบรื่น และมีสติผ่านทุกเรื่องไปได้อย่างงดงาม ขอให้บุญกุศลหนุนนำความสุข ความเจริญ และสิริมงคลมาสู่ชีวิต",
+    "ขอให้แสงแห่งธรรมเป็นกำลังใจ นำพาความสงบ ความเมตตา และปัญญามาสู่ทุกวัน ให้เรื่องที่กังวลค่อย ๆ คลี่คลาย พบหนทางที่ดี และได้รับความสุขอันเรียบง่ายจากใจที่เบิกบาน"
+  ]
+};
+
 function pairedThemeChoice(pool,pairBase,setNo){
   const source=(pool||[]).filter(Boolean);
   if(!source.length)return "all_round";
@@ -7058,7 +7206,9 @@ function resolvedBlessingTheme(s,setNo=1){
   }else if(s?.special){
     pool=["all_round","success","health","happiness","luck"];
   }else{
-    pool=["happiness","health","work","money","wealth","success","luck","encouragement","short_power","all_round"];
+    // v11.82: AUTO never collapses to the intentionally compact preset.
+    // Users can still choose short_power manually from the existing menu.
+    pool=["happiness","health","work","money","wealth","success","luck","encouragement","all_round"];
   }
 
   const pairBase=hashString(`${userSeed}|${s.day.isoDate}|${mainMode}|reference-image-only-theme-v1153|${rerollSeed1}|${rerollSeed2}|${blessingRerollSeed}`);
@@ -7478,6 +7628,61 @@ function deityNamedBlessingTexts(s,setNo,seed){
   };
 }
 
+function thaiBlessingWordCount(text){
+  try{
+    return [...new Intl.Segmenter("th",{granularity:"word"}).segment(String(text||""))]
+      .filter(x=>x.isWordLike).length;
+  }catch(e){
+    return String(text||"").trim().split(/\s+/).filter(Boolean).length;
+  }
+}
+
+function blessingWordBounds(){
+  const raw=String(blessingWordRange||"auto");
+  if(raw==="auto")return null;
+  const m=raw.match(/^(\d+)-(\d+)$/);
+  return m?{min:Number(m[1]),max:Number(m[2])}:null;
+}
+
+function blessingLengthCandidates(key,lib){
+  const shortPool=(lib?.greetings||[]).filter(Boolean);
+  const mediumPool=(GREETING_POOLS||[]).filter(Boolean);
+  const longPool=(LONG_WARM_BLESSINGS_V1182[key]||LONG_WARM_BLESSINGS_V1182.all_round||[]).filter(Boolean);
+  let pool=(blessingLengthMode==="short" || (blessingLengthMode==="auto" && key==="short_power"))?shortPool
+    : blessingLengthMode==="medium"?mediumPool
+    : longPool; // AUTO and LONG intentionally default to warm complete copy.
+  const bounds=blessingWordBounds();
+  if(bounds){
+    const all=[...new Set([...shortPool,...mediumPool,...longPool])];
+    const inRange=all.filter(x=>{
+      const n=thaiBlessingWordCount(x);
+      return n>=bounds.min && n<=bounds.max;
+    });
+    if(inRange.length)pool=inRange;
+    else{
+      const midpoint=(bounds.min+bounds.max)/2;
+      const distance=Math.min(...all.map(x=>Math.abs(thaiBlessingWordCount(x)-midpoint)));
+      pool=all.filter(x=>Math.abs(thaiBlessingWordCount(x)-midpoint)===distance);
+    }
+  }
+  return pool.length?pool:longPool.length?longPool:shortPool;
+}
+
+function blessingLengthInstruction(text){
+  const lines=blessingTargetLines==="auto"?"AUTO — fit the selected Layout naturally":`${blessingTargetLines} lines exactly`;
+  const bounds=blessingWordBounds();
+  const words=bounds?`${bounds.min}–${bounds.max} Thai words requested`:`${thaiBlessingWordCount(text)} Thai words in the exact resolved text`;
+  return [
+    "BLESSING LENGTH / LINE-BREAK LOCK v11.83:",
+    `Length preset: ${blessingLengthMode.toUpperCase()}.`,
+    `Target line count: ${lines}.`,
+    `Word-count target: ${words}.`,
+    "Keep the exact Thai blessing wording unchanged. Control line count only through balanced Thai line wrapping, font size, leading and text-box width; never delete, summarize, paraphrase or add words.",
+    "Do not create an extra supporting line; these are visual wraps of the single Greeting text level.",
+    ""
+  ];
+}
+
 function emotionalBlessingTexts(s,setNo,seed){
   const key=resolvedBlessingTheme(s,setNo);
   const lib=REFERENCE_IMAGE_BLESSING_LIBRARY_V1153[key]||REFERENCE_IMAGE_BLESSING_LIBRARY_V1153.all_round;
@@ -7496,7 +7701,15 @@ function emotionalBlessingTexts(s,setNo,seed){
     pairedBlessingValue(lib.greetings,key,pairBase,setNo,203)
   );
 
-  // v11.78: different blessing libraries can contain the same final phrase.
+  // v11.82 default: preserve the selected reference theme/headline, but use a
+  // complete 3–5 line warm blessing. Only the explicit short_power selection
+  // is allowed to stay intentionally short.
+  const selectedLengthPool=blessingLengthCandidates(key,lib);
+  if(selectedLengthPool?.length){
+    greeting=selectedLengthPool[seededIndex(pairBase+(setNo===1?1183:2283),selectedLengthPool.length)];
+  }
+
+  // v11.81: different blessing libraries can contain the same final phrase.
   // Image 2 must compare against Image 1 across libraries and auto-select a
   // genuinely different fallback before Pair Blessing validation runs.
   if(setNo===2){
@@ -7516,7 +7729,7 @@ function emotionalBlessingTexts(s,setNo,seed){
       return current;
     }
     headline=distinct(lib.headlines,headline,first.headline,101);
-    greeting=distinct(lib.greetings,greeting,first.greeting,203);
+    greeting=distinct(selectedLengthPool,greeting,first.greeting,203);
   }
 
   // Two visible text levels only: Headline + Greeting/Blessing.
@@ -7530,7 +7743,7 @@ function updateBlessingThemeDescription(){
   const raw=sel.value||"auto";
   let base="";
   if(raw==="auto"){
-    base="<b>AUTO — Reference Image Only:</b> ระบบปกติสุ่มเฉพาะคำที่สกัดจากภาพอ้างอิงของคุณ ไม่ผสมคลังคำที่โมเดลเคยแต่ง";
+    base="<b>AUTO — ยาวและอบอุ่น:</b> ใช้แนวคำจากภาพอ้างอิงร่วมกับคำอวยพรฉบับสมบูรณ์ประมาณ 3–5 บรรทัด โดยภาพที่ 1 และ 2 ใช้ข้อความต่างกัน";
   }else{
     const key=REFERENCE_IMAGE_THEME_ALIAS_V1153[raw]||raw;
     const lib=REFERENCE_IMAGE_BLESSING_LIBRARY_V1153[key];
@@ -7548,8 +7761,17 @@ function updateBlessingThemeDescription(){
   el.innerHTML=base;
 }
 
+function updateBlessingLengthDescription(){
+  const el=document.getElementById("blessingLengthDescription");
+  if(!el)return;
+  const lengthLabel=document.getElementById("blessingLengthMode")?.selectedOptions?.[0]?.textContent||"AUTO";
+  const lineLabel=document.getElementById("blessingTargetLines")?.selectedOptions?.[0]?.textContent||"AUTO";
+  const wordLabel=document.getElementById("blessingWordRange")?.selectedOptions?.[0]?.textContent||"AUTO";
+  el.innerHTML=`ค่าปัจจุบัน: <b>${lengthLabel}</b> • <b>${lineLabel}</b> • <b>${wordLabel}</b><br>จำนวนบรรทัดคือการตัดบรรทัดของคำอวยพรเดียวกัน ไม่เพิ่ม Supporting Line ที่สาม`;
+}
+
 const POKUN_V9 = (() => {
-  const VERSION="11.78";
+  const VERSION="11.97";
   const ENGINE_LABEL=`POKUN v${VERSION}`;
 
 
@@ -8387,7 +8609,7 @@ const PAIR_LOOKS={
   };
 
 
-  const POKUN_MASTER_LIBRARY_V1178={
+  const POKUN_MASTER_LIBRARY_V1181={
     version:"11.70",
     purpose:"Curated Thai daily-greeting design library distilled from the user's reference boards and existing POKUN systems. Library guidance is supportive and must never override exact scene, subject, text, typography, frame, layout, weekday/date, or mode locks.",
 
@@ -9143,7 +9365,7 @@ const PAIR_LOOKS={
       "DO NOT make one image golden-hour while the companion is cool daylight unless the selected Pair Look explicitly describes that same treatment for both.",
       s?.buddhist
         ? `BUDDHIST COLOR OVERRIDE: today's ${s.day.colorThai} / ${s.day.hex} is the PRIMARY THEME COLOR and MAY override the Pair Look's base color tone. Preserve Pair Look lighting/contrast/white-balance character while recoloring the palette toward the weekday theme. Sacred gold remains secondary accent only.`
-        : "Today's daily signature color remains an ACCENT only and must not override the shared Pair Look.",
+        : `DAILY COLOR OVERRIDE v11.82: today's ${s.day.colorThai} / ${s.day.hex} is the PRIMARY 60–70% palette for BOTH images and overrides any conflicting Pair Look hue. Keep Pair Look lighting, softness and contrast, but recolor its palette toward the weekday theme. Unrelated hues may occupy no more than minor accents.`,
       ""
     ];
   }
@@ -9155,7 +9377,7 @@ const PAIR_LOOKS={
       return ["monk_generated","monk_reference"].includes(bMode);
     }
     if(mainMode==="buddhist" && setNo===2 && ["layperson_generated","layperson_reference"].includes(bMode))return true;
-    // v11.78: use the live Character UI inside the Engine too.
+    // v11.81: use the live Character UI inside the Engine too.
     const m=value(setNo===1?"characterMode1":"characterMode2",setNo===1?characterMode1:characterMode2)||"none";
     return m==="people" || m==="both";
   }
@@ -9433,16 +9655,31 @@ const PAIR_LOOKS={
     if(subjectResolved.buddhistOn && subjectResolved.explicitSubject){
       const allowed=buddhistSubjectAllowedFamilies(setNo);
       const conceptFamily=sceneFamilyFromConcept(baseConcept,s);
-      if(allowed.has(conceptFamily) && buddhistSubjectSceneCompatible(setNo,baseConcept?.name,baseConcept?.prompt)){
+      const blocked=familyBlockedByOther(setNo,s.day.isoDate);
+      if(allowed.has(conceptFamily) && !blocked.has(conceptFamily) && buddhistSubjectSceneCompatible(setNo,baseConcept?.name,baseConcept?.prompt)){
         return conceptFamily;
       }
-      const candidates=[...allowed].filter(f=>TEMPLATE_CATALOG[f]?.length);
+      let candidates=[...allowed].filter(f=>TEMPLATE_CATALOG[f]?.length && !blocked.has(f));
+      if(!candidates.length)candidates=[...allowed].filter(f=>TEMPLATE_CATALOG[f]?.length);
       return pick(candidates.length?candidates:["buddhist_sacred"],seed+877);
     }
 
-    // If Subject remains AUTO, important/sacred calendar semantics keep priority.
+    // v11.81: Special/Buddhist AUTO keeps calendar semantics, but must still
+    // avoid the companion Scene Family. Previously this early return bypassed
+    // Pair Memory and Validator had to stop generation.
     if(s.special || s.buddhist){
-      return sceneFamilyFromConcept(baseConcept,s);
+      const preferred=sceneFamilyFromConcept(baseConcept,s);
+      const blocked=familyBlockedByOther(setNo,s.day.isoDate);
+      if(!blocked.has(preferred))return preferred;
+
+      let alternatives=Object.keys(TEMPLATE_CATALOG)
+        .filter(f=>familyAllowedInMainMode(f) && !blocked.has(f));
+      if(subjectResolved.buddhistOn){
+        const allowed=buddhistSubjectAllowedFamilies(setNo);
+        alternatives=alternatives.filter(f=>allowed.has(f));
+      }
+      if(alternatives.length)return pick(alternatives,seed+1880);
+      return preferred;
     }
 
     let all=Object.keys(TEMPLATE_CATALOG).filter(f=>familyAllowedInMainMode(f));
@@ -9620,8 +9857,8 @@ const PAIR_LOOKS={
 
 
   function masterLibraryProfile(scene){
-    return POKUN_MASTER_LIBRARY_V1178.sceneProfiles[scene?.family]
-      || POKUN_MASTER_LIBRARY_V1178.sceneProfiles.minimal_abstract;
+    return POKUN_MASTER_LIBRARY_V1181.sceneProfiles[scene?.family]
+      || POKUN_MASTER_LIBRARY_V1181.sceneProfiles.minimal_abstract;
   }
 
   function masterLibraryDistinctPick(list,setNo,base){
@@ -9638,11 +9875,11 @@ const PAIR_LOOKS={
     const profile=masterLibraryProfile(scene);
     const base=hashString(`${userSeed}|${s.day.isoDate}|${scene.family}|${scene.name}|master-library-v1170|${rerollSeed1}|${rerollSeed2}`);
     const themeKey=texts?.blessingThemeKey||resolvedBlessingTheme(s,setNo)||"all_round";
-    const headlineTones=POKUN_MASTER_LIBRARY_V1178.headlineTones[themeKey]
-      || POKUN_MASTER_LIBRARY_V1178.headlineTones.all_round;
+    const headlineTones=POKUN_MASTER_LIBRARY_V1181.headlineTones[themeKey]
+      || POKUN_MASTER_LIBRARY_V1181.headlineTones.all_round;
 
     return {
-      version:POKUN_MASTER_LIBRARY_V1178.version,
+      version:POKUN_MASTER_LIBRARY_V1181.version,
       sceneFamily:scene.family,
       sceneTheme:profile.label,
       mood:masterLibraryDistinctPick(profile.moods,setNo,base+101),
@@ -9657,9 +9894,9 @@ const PAIR_LOOKS={
       blessingFrame:resolvedTextFrame(s,"blessing").label,
       pairLook:pairLook.label,
       blessingTheme:texts?.blessingThemeLabel||themeKey,
-      scenicPattern:masterLibraryDistinctPick(POKUN_MASTER_LIBRARY_V1178.referenceBoardScenicPatterns,setNo,base+709),
+      scenicPattern:masterLibraryDistinctPick(POKUN_MASTER_LIBRARY_V1181.referenceBoardScenicPatterns,setNo,base+709),
       floralPattern:["garden_botanical","floral_stilllife"].includes(scene.family)
-        ? masterLibraryDistinctPick(POKUN_MASTER_LIBRARY_V1178.referenceBoardFloralPatterns,setNo,base+811)
+        ? masterLibraryDistinctPick(POKUN_MASTER_LIBRARY_V1181.referenceBoardFloralPatterns,setNo,base+811)
         : ""
     };
   }
@@ -9672,9 +9909,9 @@ const PAIR_LOOKS={
       ? `SACRED-NAME PERSONALIZED BLESSING EXCEPTION v11.64: visible Thai text may use the user-typed ${sacredNamed.kindLabel} name “${sacredNamed.name}” with POKUN's dedicated named-sacred-subject blessing templates. Reproduce the FINAL resolved Headline and Greeting EXACTLY; do not paraphrase or add extra blessing text.`
       : deityNamed?.personalizeText
         ? `DEITY-NAME PERSONALIZED BLESSING EXCEPTION v11.69: visible Thai text may use the user-typed deity name “${deityNamed.name}” with POKUN's dedicated named-deity blessing templates. Reproduce the FINAL resolved Headline and Greeting EXACTLY; do not paraphrase or add extra blessing text.`
-        : "REFERENCE-IMAGE BLESSING SOURCE LOCK: the resolved Thai Headline and Greeting come only from wording extracted from the user's uploaded reference images. Reproduce them EXACTLY. Do not paraphrase, expand, complete, combine, improve, or add any new blessing wording.";
+        : "WARM BLESSING LOCK v11.83: the resolved Thai Headline follows the selected reference theme, while the resolved Greeting follows the user's selected length controls. Reproduce both FINAL values EXACTLY. Do not shorten, paraphrase, expand, or add extra wording.";
     return [
-      "POKUN MASTER LIBRARY v11.78 — CURATED GREETING DESIGN SUPPORT:",
+      "POKUN MASTER LIBRARY v11.83 — CURATED GREETING DESIGN SUPPORT:",
       "This block is SUPPORTIVE ONLY. Exact Subject, Character, Scene, Thai Text, Typography, Frame, Layout, Weekday/Date, and Mode locks above remain higher priority.",
       `Library Scene Theme: ${bundle.sceneTheme}.`,
       `Library Mood Accent: ${bundle.mood}.`,
@@ -10231,6 +10468,7 @@ const PAIR_LOOKS={
         ""
       );
     }else{
+      L.push(...blessingLengthInstruction(texts.greeting));
       L.push(
         `${ENGINE_LABEL} NEW ARTWORK WITH USER IDENTITY GUIDANCE`,
         "Create a new scene, pose, clothing treatment, lighting, and composition.",
@@ -10592,7 +10830,8 @@ const PAIR_LOOKS={
       failures.push("Mandatory exact watermark authority missing");
     }
     if(ctx?.s?.special){
-      if(!/SPECIAL DAY VISUAL AUTHORITY v11\.70/i.test(prompt))failures.push("Special Day visual authority missing");
+      // v11.81: validate the stable authority marker, not one old release number.
+      if(!/SPECIAL DAY VISUAL AUTHORITY(?: v\d+\.\d+)?:/i.test(prompt))failures.push("Special Day visual authority missing");
       if(!prompt.includes(`SPECIAL DAY: ${ctx.s.special.name}.`))failures.push("Special Day exact name missing from Prompt");
       if(!prompt.includes(`SPECIAL DAY COLOR THEME: ${ctx.s.special.colorTheme||"coordinate with the weekday color"}.`))failures.push("Special Day color theme missing");
     }
@@ -10787,7 +11026,9 @@ const PAIR_LOOKS={
       if(!prompt.includes("No vegetation, food, vessels, furniture, books, stationery piles, or unrelated architecture."))failures.push("paper scene-native supporting rule missing");
     }
     if(ctx.other && ctx.other.dateISO===ctx.s.day.isoDate){
-      if(ctx.other.family===ctx.scene.family && !ctx.scene.templateLocked && !ctx.other.templateLocked)failures.push("same Scene Family as companion");
+      const currentFamilyLocked=selectedTemplateFamily(ctx?.setNo||ctx?.s?.setNo||0)!=="auto";
+      const companionFamilyLocked=!!ctx.other.familyLocked;
+      if(ctx.other.family===ctx.scene.family && !ctx.scene.templateLocked && !ctx.other.templateLocked && !currentFamilyLocked && !companionFamilyLocked)failures.push("same Scene Family as companion");
       if(ctx.other.activityCategory && ctx.other.activityCategory===ctx.variation.activityCategory && !ctx.scene.templateLocked)failures.push("same activity semantic category as companion");
       // Pair Look is resolved from current shared UI state before validation.
       // A stored companion signature may be stale history; never fail generation because of it.
@@ -11619,6 +11860,7 @@ const PAIR_LOOKS={
       masterLibraryTheme:masterLibraryBundle.sceneTheme,
       masterLibraryAccent:masterLibraryBundle.accentProp,
       masterLibraryComposition:masterLibraryBundle.compositionAccent,
+      familyLocked:selectedTemplateFamily(setNo)!=="auto",
       templateLocked:!!scene.templateLocked
     };
 
@@ -11653,7 +11895,7 @@ const PAIR_LOOKS={
     const blessingKeys=Object.keys(REFERENCE_IMAGE_BLESSING_LIBRARY_V1153||{});
     return {
       version:VERSION,
-      curated:JSON.parse(JSON.stringify(POKUN_MASTER_LIBRARY_V1178)),
+      curated:JSON.parse(JSON.stringify(POKUN_MASTER_LIBRARY_V1181)),
       scenes:Object.fromEntries(Object.entries(TEMPLATE_CATALOG).map(([family,items])=>[
         family,
         items.map(x=>({
@@ -11679,17 +11921,17 @@ const PAIR_LOOKS={
       palettes:Object.fromEntries(Object.entries(PAIR_LOOKS).map(([k,v])=>[k,{...v}])),
       generalVisualStyles:JSON.parse(JSON.stringify(GENERAL_VISUAL_STYLES_V1152)),
       autoGeneralVisualStylePools:JSON.parse(JSON.stringify(AUTO_GENERAL_VISUAL_STYLE_POOLS_V1152)),
-      compositions:[...POKUN_MASTER_LIBRARY_V1178.compositions],
-      subjects:JSON.parse(JSON.stringify(POKUN_MASTER_LIBRARY_V1178.subjectFamilies)),
-      scenicReferencePatterns:[...POKUN_MASTER_LIBRARY_V1178.referenceBoardScenicPatterns],
-      floralReferencePatterns:[...POKUN_MASTER_LIBRARY_V1178.referenceBoardFloralPatterns],
+      compositions:[...POKUN_MASTER_LIBRARY_V1181.compositions],
+      subjects:JSON.parse(JSON.stringify(POKUN_MASTER_LIBRARY_V1181.subjectFamilies)),
+      scenicReferencePatterns:[...POKUN_MASTER_LIBRARY_V1181.referenceBoardScenicPatterns],
+      floralReferencePatterns:[...POKUN_MASTER_LIBRARY_V1181.referenceBoardFloralPatterns],
       foodReferenceLibrary:JSON.parse(JSON.stringify(POKUN_FOOD_REFERENCE_LIBRARY_V1154)),
       referenceBoardBlessings:JSON.parse(JSON.stringify(REFERENCE_IMAGE_BLESSING_LIBRARY_V1153)),
       sacredNamedPersonalizedBlessings:JSON.parse(JSON.stringify(SACRED_NAME_BLESSING_TEMPLATES_V1164)),
       textHighlights:JSON.parse(JSON.stringify(TEXT_HIGHLIGHT_STYLES_V1151)),
       autoTextHighlightPool:[...AUTO_TEXT_HIGHLIGHT_POOL_V1151],
-      blessingExtraction:JSON.parse(JSON.stringify(POKUN_MASTER_LIBRARY_V1178.referenceBoardBlessingExtraction)),
-      rules:[...POKUN_MASTER_LIBRARY_V1178.rules]
+      blessingExtraction:JSON.parse(JSON.stringify(POKUN_MASTER_LIBRARY_V1181.referenceBoardBlessingExtraction)),
+      rules:[...POKUN_MASTER_LIBRARY_V1181.rules]
     };
   }
 
@@ -11713,7 +11955,7 @@ const PAIR_LOOKS={
       foodReferenceLibrary:JSON.parse(JSON.stringify(POKUN_FOOD_REFERENCE_LIBRARY_V1154)),
       sacredNamedPersonalizedBlessings:JSON.parse(JSON.stringify(SACRED_NAME_BLESSING_TEMPLATES_V1164)),
       deityNamedPersonalizedBlessings:JSON.parse(JSON.stringify(DEITY_NAME_BLESSING_TEMPLATES_V1169)),
-      specialDayPresets:JSON.parse(JSON.stringify(SPECIAL_PRESETS_V1178)),
+      specialDayPresets:JSON.parse(JSON.stringify(SPECIAL_PRESETS_V1181)),
       textFrameCategories:Object.fromEntries(Object.entries(TEXT_FRAME_CATEGORIES).map(([k,v])=>[k,{label:v.label,contexts:[...(v.contexts||[])]}])),
       textFrames:Object.fromEntries(Object.entries(TEXT_FRAMES).map(([k,v])=>[k,{
         category:v.category,
@@ -11779,6 +12021,7 @@ function mainModeIsolationLines(setNo){
         "GENERAL BASE MODE + EXPLICIT DEITY OVERRIDE — IMAGE 1:",
         "The explicitly selected deity is the HIGHEST SUBJECT AUTHORITY for Image 1 and overrides generic General-subject defaults.",
         "General scene/style logic may support the deity but MUST NOT replace, remove, minimize, or reinterpret the selected deity.",
+        "GENERAL BUDDHIST FREE ZONE — ABSOLUTE: the explicitly selected deity override is allowed, but Buddhist sacred subjects, Buddhist sacred scenes, Wan Phra artwork logic, merit-making rituals, Buddhist merit-food/tiffin offerings, and Buddhist-only typography remain prohibited in General mode.",
         "Buddhist auto-subject logic is OFF.",
         "Do NOT import Buddha statues, Buddhist monks, Wan Phra pair behavior, merit-making offerings, or Buddhist sacred scene logic from previous settings, localStorage, or previous artwork.",
         "GENERAL SUBJECT EXCLUSION — ABSOLUTE: do not generate a Buddhist monk, bhikkhu, novice monk, Buddha statue/image, layperson praying to Buddha, merit-making ritual, alms-giving scene, sangkhathan scene, or Buddhist devotional activity.",
@@ -12171,6 +12414,10 @@ $("watermark").value = watermarkText;
   if(blessingEl) blessingEl.value=blessingTheme;
 }
 updateBlessingThemeDescription();
+$("blessingLengthMode").value = blessingLengthMode;
+$("blessingTargetLines").value = blessingTargetLines;
+$("blessingWordRange").value = blessingWordRange;
+updateBlessingLengthDescription();
 $("birthdayName").value = birthdayName;
 $("birthdayRelation").value = birthdayRelation;
 $("birthdayTone").value = birthdayTone;
@@ -12333,6 +12580,24 @@ $("blessingTheme").addEventListener("change",e=>{
   localStorage.setItem("pokunBlessingTheme",blessingTheme);
   updateBlessingThemeDescription();
   toast("ธีมคำอวยพร: "+e.target.options[e.target.selectedIndex].text);
+});
+$("blessingLengthMode").addEventListener("change",e=>{
+  blessingLengthMode=e.target.value;
+  localStorage.setItem("pokunBlessingLengthMode",blessingLengthMode);
+  updateBlessingLengthDescription();
+  toast("ความยาวคำอวยพร: "+e.target.options[e.target.selectedIndex].text);
+});
+$("blessingTargetLines").addEventListener("change",e=>{
+  blessingTargetLines=e.target.value;
+  localStorage.setItem("pokunBlessingTargetLines",blessingTargetLines);
+  updateBlessingLengthDescription();
+  toast("จำนวนบรรทัด: "+e.target.options[e.target.selectedIndex].text);
+});
+$("blessingWordRange").addEventListener("change",e=>{
+  blessingWordRange=e.target.value;
+  localStorage.setItem("pokunBlessingWordRange",blessingWordRange);
+  updateBlessingLengthDescription();
+  toast("จำนวนคำ: "+e.target.options[e.target.selectedIndex].text);
 });
 $("rerollBlessingTheme").addEventListener("click",()=>{
   blessingRerollSeed++;
@@ -13159,7 +13424,7 @@ window.addEventListener("load",()=>{
 
 
 
-(function initPokunV1178SpecialDayUI(){
+(function initPokunV1181SpecialDayUI(){
   function run(){
     const mode=$("specialDayMode"), priority=$("specialDayPriority"), preset=$("specialDayPreset");
     const customBox=$("specialDayCustomBox"), name=$("specialCustomName"), headline=$("specialCustomHeadline"), greeting=$("specialCustomGreeting");
@@ -13175,7 +13440,7 @@ window.addEventListener("load",()=>{
       ["custom","✏️ กำหนดเอง",["custom"]]
     ];
     preset.innerHTML=groups.map(([_,label,ids])=>`<optgroup label="${label}">${ids.map(id=>{
-      const p=SPECIAL_PRESETS_V1178[id]; return p?`<option value="${id}">${p.name}</option>`:"";
+      const p=SPECIAL_PRESETS_V1181[id]; return p?`<option value="${id}">${p.name}</option>`:"";
     }).join("")}</optgroup>`).join("");
 
     mode.value=[...mode.options].some(o=>o.value===specialDayMode)?specialDayMode:"auto";
@@ -13196,24 +13461,24 @@ window.addEventListener("load",()=>{
     }
     mode.addEventListener("change",()=>{
       specialDayMode=mode.value;
-      localStorage.setItem("pokunSpecialDayModeV1178",specialDayMode);
+      localStorage.setItem("pokunSpecialDayModeV1181",specialDayMode);
       refresh();
       toast(`วันพิเศษ: ${mode.options[mode.selectedIndex].text}`);
     });
     priority.addEventListener("change",()=>{
       specialDayPriority=priority.value;
-      localStorage.setItem("pokunSpecialDayPriorityV1178",specialDayPriority);
+      localStorage.setItem("pokunSpecialDayPriorityV1181",specialDayPriority);
       refresh();
     });
     preset.addEventListener("change",()=>{
       specialDayPreset=preset.value;
-      localStorage.setItem("pokunSpecialDayPresetV1178",specialDayPreset);
+      localStorage.setItem("pokunSpecialDayPresetV1181",specialDayPreset);
       refresh();
       toast(`วันพิเศษ Manual: ${preset.options[preset.selectedIndex].text}`);
     });
-    if(name)name.addEventListener("input",()=>{specialCustomName=name.value;localStorage.setItem("pokunSpecialCustomNameV1178",specialCustomName);refresh();});
-    if(headline)headline.addEventListener("input",()=>{specialCustomHeadline=headline.value;localStorage.setItem("pokunSpecialCustomHeadlineV1178",specialCustomHeadline);refresh();});
-    if(greeting)greeting.addEventListener("input",()=>{specialCustomGreeting=greeting.value;localStorage.setItem("pokunSpecialCustomGreetingV1178",specialCustomGreeting);refresh();});
+    if(name)name.addEventListener("input",()=>{specialCustomName=name.value;localStorage.setItem("pokunSpecialCustomNameV1181",specialCustomName);refresh();});
+    if(headline)headline.addEventListener("input",()=>{specialCustomHeadline=headline.value;localStorage.setItem("pokunSpecialCustomHeadlineV1181",specialCustomHeadline);refresh();});
+    if(greeting)greeting.addEventListener("input",()=>{specialCustomGreeting=greeting.value;localStorage.setItem("pokunSpecialCustomGreetingV1181",specialCustomGreeting);refresh();});
     refresh();
   }
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",run);else run();
@@ -13487,6 +13752,13 @@ window.addEventListener("load",()=>{
       }
       if(cat==="auto"){
         addOption(frameSelect,"auto","AUTO — เลือกแบบให้เข้ากับงาน");
+        // v11.97: AUTO category must still expose every compatible manual
+        // frame. Previously this branch returned early and the dropdown looked empty.
+        Object.entries(FRAMES).forEach(([key,f])=>{
+          if(["auto","none"].includes(key))return;
+          if(!(f.contexts||[]).includes(mode))return;
+          addOption(frameSelect,key,`${CATS[f.category]?.label||f.category} — ${f.label}`);
+        });
         return;
       }
       if(cat==="none"){
@@ -13581,17 +13853,17 @@ window.addEventListener("load",()=>{
 })();;;
 
 </script>
-<style id="pokun-v1178-mode-tab-fix">
-  /* v11.78 — keep the primary mode controls above sticky/relocated sections. */
+<style id="pokun-v1181-mode-tab-fix">
+  /* v11.81 — keep the primary mode controls above sticky/relocated sections. */
   #pokunModeTabsShell{position:relative;z-index:50;pointer-events:auto}
   #pokunModeTabs,#pokunModeTabs .mode-tab{pointer-events:auto}
 </style>
-<script id="pokun-v1178-mode-tab-fix-script">
-(function initPokunV1178ModeTabFix(){
+<script id="pokun-v1181-mode-tab-fix-script">
+(function initPokunV1181ModeTabFix(){
   function start(){
     const shell=document.getElementById("pokunModeTabsShell");
-    if(!shell || shell.dataset.v1178Bound==="1")return;
-    shell.dataset.v1178Bound="1";
+    if(!shell || shell.dataset.v1181Bound==="1")return;
+    shell.dataset.v1181Bound="1";
 
     const tabs=[...shell.querySelectorAll(".mode-tab[data-mode]")];
     const note=document.getElementById("pokunModeContextNote");
@@ -13660,7 +13932,7 @@ window.addEventListener("load",()=>{
         if(deityBox){deityBox.classList.add("mode-deity-emphasis");deityBox.style.display="block"}
         sceneOptions(true);
       }
-      window.dispatchEvent(new CustomEvent("pokun-mode-changed",{detail:{mode,source:"v11.78-fix"}}));
+      window.dispatchEvent(new CustomEvent("pokun-mode-changed",{detail:{mode,source:"v11.97-fix"}}));
     }
 
     /* Capture phase keeps the tabs usable even if another late handler fails. */
@@ -13671,14 +13943,14 @@ window.addEventListener("load",()=>{
 
     let saved=localStorage.getItem(key)||"general";
     apply(saved);
-    window.POKUN_applyPrimaryModeV1178=apply;
+    window.POKUN_applyPrimaryModeV1181=apply;
   }
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",start);
   else start();
 })();
 </script>
-<script id="pokun-v1178-select-recovery">
-(function initPokunV1178SelectRecovery(){
+<script id="pokun-v1181-select-recovery">
+(function initPokunV1181SelectRecovery(){
   function option(select,value,label){
     const item=document.createElement("option");
     item.value=value; item.textContent=label; select.appendChild(item);
@@ -13704,7 +13976,7 @@ window.addEventListener("load",()=>{
   function recoverSpecialPresets(){
     const select=document.getElementById("specialDayPreset");
     if(!select || select.options.length)return;
-    const presets=(typeof SPECIAL_PRESETS_V1178!=="undefined")?SPECIAL_PRESETS_V1178:{};
+    const presets=(typeof SPECIAL_PRESETS_V1181!=="undefined")?SPECIAL_PRESETS_V1181:{};
     const groups=[
       ["📅 วันสำคัญประจำปี / เทศกาล",["new_year","child_day","teacher_day","valentine","songkran","elderly_day","family_day","labor_day","no_tobacco","environment_day","mother_day","father_day","halloween","christmas","year_end"]],
       ["🧧 เทศกาลจีน",["chinese_new_year","qingming","ghost_festival","mid_autumn","vegetarian_festival"]],
@@ -13719,7 +13991,7 @@ window.addEventListener("load",()=>{
       ids.forEach(id=>{if(presets[id])option(group,id,presets[id].name)});
       if(group.children.length)select.appendChild(group);
     });
-    const saved=localStorage.getItem("pokunSpecialDayPresetV1178")||"first_day";
+    const saved=localStorage.getItem("pokunSpecialDayPresetV1181")||"first_day";
     if([...select.options].some(x=>x.value===saved))select.value=saved;
   }
   function recoverFrames(){
@@ -13748,7 +14020,15 @@ window.addEventListener("load",()=>{
     function fillModes(category,select,blessing){
       if(select.options.length)return;
       if(blessing && category.value==="follow"){option(select,"follow_headline","ตาม Headline — ใช้แบบที่เบากว่า");return}
-      if(category.value==="auto"||category.value==="none"){option(select,category.value,category.value==="auto"?"AUTO — เลือกแบบให้เข้ากับงาน":"ไม่ใช้กรอบ");return}
+      if(category.value==="auto"){
+        option(select,"auto","AUTO — เลือกแบบให้เข้ากับงาน");
+        Object.entries(frames).forEach(([key,item])=>{
+          if(["auto","none"].includes(key) || !(item.contexts||[]).includes(mode))return;
+          option(select,key,`${cats[item.category]?.label||item.category} — ${item.label}`);
+        });
+        return;
+      }
+      if(category.value==="none"){option(select,"none","ไม่ใช้กรอบ");return}
       Object.entries(frames).forEach(([key,item])=>{
         if(item.category===category.value && (item.contexts||[]).includes(mode))option(select,key,item.label);
       });
@@ -13760,8 +14040,8 @@ window.addEventListener("load",()=>{
     if([...hCat.options].some(x=>x.value===hc))hCat.value=hc;
     if([...bCat.options].some(x=>x.value===bc))bCat.value=bc;
     fillModes(hCat,hMode,false); fillModes(bCat,bMode,true);
-    if(!hCat.dataset.v1178Recovery){
-      hCat.dataset.v1178Recovery="1"; bCat.dataset.v1178Recovery="1";
+    if(!hCat.dataset.v1181Recovery){
+      hCat.dataset.v1181Recovery="1"; bCat.dataset.v1181Recovery="1";
       hCat.addEventListener("change",()=>{hMode.innerHTML="";fillModes(hCat,hMode,false)});
       bCat.addEventListener("change",()=>{bMode.innerHTML="";fillModes(bCat,bMode,true)});
     }
@@ -13779,8 +14059,8 @@ window.addEventListener("load",()=>{
   },0));
 })();
 </script>
-<script id="pokun-v1178-scene-select-recovery">
-(function initPokunV1178SceneSelectRecovery(){
+<script id="pokun-v1181-scene-select-recovery">
+(function initPokunV1181SceneSelectRecovery(){
   function run(){
     let data={};
     try{data=(typeof POKUN_V9!=="undefined"&&POKUN_V9.uiCatalog)?POKUN_V9.uiCatalog():{}}catch(_){data={}}
@@ -13804,12 +14084,21 @@ window.addEventListener("load",()=>{
     function fillExact(setNo,force){
       const family=document.getElementById(`sceneTemplateFamily${setNo}`);
       const exact=document.getElementById(`sceneTemplateExact${setNo}`);
-      if(!family||!exact||(!force&&exact.options.length))return;
+      if(!family||!exact||(!force&&exact.options.length&&!(family.value==="auto"&&exact.options.length<=1)))return;
       const saved=localStorage.getItem(`pokunSceneTemplateExact${setNo}`)||"auto";
       exact.innerHTML="";
       add(exact,"auto",family.value==="auto"?"AUTO — ตามหมวดฉากที่ระบบเลือก":"AUTO — สุ่ม Template ภายในหมวดนี้");
-      if(family.value!=="auto")rows(family.value).forEach(row=>add(exact,row.name,row.uiName||row.name));
-      exact.value=[...exact.options].some(item=>item.value===saved)?saved:"auto";
+      if(family.value!=="auto"){
+        rows(family.value).forEach(row=>add(exact,row.name,row.uiName||row.name));
+      }else{
+        Object.entries(labels).forEach(([key,label])=>{
+          if(key==="auto"||!allowed(key))return;
+          rows(key).forEach(row=>add(exact,`${key}::${row.name}`,`${label} — ${row.uiName||row.name}`));
+        });
+      }
+      const direct=[...exact.options].find(item=>item.value===saved);
+      const fromAuto=[...exact.options].find(item=>item.value.endsWith(`::${saved}`));
+      exact.value=(direct||fromAuto)?.value||"auto";
     }
     [1,2].forEach(setNo=>{
       const family=document.getElementById(`sceneTemplateFamily${setNo}`);
@@ -13824,14 +14113,27 @@ window.addEventListener("load",()=>{
         family.value=[...family.options].some(item=>item.value===saved)?saved:"auto";
       }
       fillExact(setNo,false);
-      if(!family.dataset.v1178Recovery){
-        family.dataset.v1178Recovery="1";
+      if(!family.dataset.v1181Recovery){
+        family.dataset.v1181Recovery="1";
         family.addEventListener("change",()=>{
           localStorage.setItem(`pokunSceneTemplateFamily${setNo}`,family.value);
           localStorage.setItem(`pokunSceneTemplateExact${setNo}`,"auto");
           fillExact(setNo,true);
         });
-        exact.addEventListener("change",()=>localStorage.setItem(`pokunSceneTemplateExact${setNo}`,exact.value));
+        exact.addEventListener("change",()=>{
+          const combined=String(exact.value||"");
+          if(combined.includes("::")){
+            const splitAt=combined.indexOf("::");
+            const targetFamily=combined.slice(0,splitAt);
+            const targetScene=combined.slice(splitAt+2);
+            family.value=targetFamily;
+            family.dispatchEvent(new Event("change",{bubbles:true}));
+            exact.value=[...exact.options].some(item=>item.value===targetScene)?targetScene:"auto";
+            exact.dispatchEvent(new Event("change",{bubbles:true}));
+            return;
+          }
+          localStorage.setItem(`pokunSceneTemplateExact${setNo}`,exact.value);
+        });
       }
     });
   }
@@ -13839,14 +14141,14 @@ window.addEventListener("load",()=>{
   window.addEventListener("pokun-mode-changed",()=>setTimeout(run,0));
 })();
 </script>
-<script id="pokun-v1178-reroll-recovery">
-(function initPokunV1178RerollRecovery(){
+<script id="pokun-v1181-reroll-recovery">
+(function initPokunV1181RerollRecovery(){
   function start(){
     [1,2].forEach(setNo=>{
       const button=document.getElementById(`reroll${setNo}`);
       const output=document.getElementById(`output${setNo}`);
-      if(!button||!output||button.dataset.v1178Bound==="1")return;
-      button.dataset.v1178Bound="1";
+      if(!button||!output||button.dataset.v1181Bound==="1")return;
+      button.dataset.v1181Bound="1";
       button.type="button";
       button.addEventListener("click",event=>{
         /* Own this action so an older late listener cannot increment the seed twice. */
@@ -13868,7 +14170,7 @@ window.addEventListener("load",()=>{
           if(typeof toast==="function")toast(`สุ่ม Prompt ภาพที่ ${setNo} ชุดใหม่แล้ว`);
           else button.textContent=`✅ สุ่มภาพที่ ${setNo} สำเร็จ`;
         }catch(error){
-          console.error(`POKUN v11.78 reroll image ${setNo} failed:`,error);
+          console.error(`POKUN v11.97 reroll image ${setNo} failed:`,error);
           const message=error?.message||String(error);
           if(typeof toast==="function")toast(`สุ่มภาพที่ ${setNo} ไม่สำเร็จ: ${message}`);
           else window.alert(`สุ่มภาพที่ ${setNo} ไม่สำเร็จ: ${message}`);
@@ -13879,13 +14181,13 @@ window.addEventListener("load",()=>{
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",start);else start();
 })();
 </script>
-<script id="pokun-v1178-blessing-reroll-recovery">
-(function initPokunV1178BlessingRerollRecovery(){
+<script id="pokun-v1181-blessing-reroll-recovery">
+(function initPokunV1181BlessingRerollRecovery(){
   function start(){
     const button=document.getElementById("rerollBlessingTheme");
     const theme=document.getElementById("blessingTheme");
-    if(!button||button.dataset.v1178Bound==="1")return;
-    button.dataset.v1178Bound="1";
+    if(!button||button.dataset.v1181Bound==="1")return;
+    button.dataset.v1181Bound="1";
     button.type="button";
     button.addEventListener("click",event=>{
       event.preventDefault();
@@ -13911,12 +14213,350 @@ window.addEventListener("load",()=>{
         if(typeof toast==="function")toast(message);
         else button.textContent="✅ "+message;
       }catch(error){
-        console.error("POKUN v11.78 blessing reroll failed:",error);
+        console.error("POKUN v11.97 blessing reroll failed:",error);
         const message=error?.message||String(error);
         if(typeof toast==="function")toast(`สุ่มคำอวยพรไม่สำเร็จ: ${message}`);
         else window.alert(`สุ่มคำอวยพรไม่สำเร็จ: ${message}`);
       }
     },true);
+  }
+  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",start);else start();
+})();
+</script>
+<script id="pokun-v1184-layout-studio">
+(function initPokunV1184LayoutStudio(){
+  const PARTS={
+    headline:{title:"Headline / ข้อความหลัก",hint:"เลือกสไตล์ตัวอักษร กรอบ Stroke เงา และ Highlight ของ Headline",controls:[
+      ["รูปแบบตัวอักษร","styleSelect","wide"],["หมวดกรอบ Headline","headlineFrameCategory"],["แบบกรอบ Headline","headlineFrameMode"],["จำนวนชั้น Stroke","strokeLayers"],["Shadow / 3D","shadowMode"],["Highlight Headline","headlineHighlight"]],open:"styleSelect"},
+    blessing:{title:"คำอวยพร / Blessing",hint:"กำหนดเนื้อหา ความยาว จำนวนบรรทัด จำนวนคำ กรอบ และ Stroke",controls:[
+      ["ธีมคำอวยพร","blessingTheme","wide"],["ความยาว","blessingLengthMode"],["จำนวนบรรทัด","blessingTargetLines"],["จำนวนคำ","blessingWordRange"],["หมวดกรอบคำอวยพร","blessingFrameCategory"],["กรอบคำอวยพร","blessingFrameMode"],["Stroke คำอวยพร","blessingStrokeMode"]],open:"blessingThemeCard"},
+    date:{title:"วันที่และวันพิเศษ / Date & Special Day",hint:"เปลี่ยนวันที่ ตรวจวัน สี วันพระ และกำหนดวันพิเศษแบบ AUTO หรือ Manual",controls:[
+      ["วันที่","date","wide"],["รูปแบบวันที่เด่น","dateHighlight","wide"],["โหมดวันพิเศษ","specialDayMode"],["Priority เมื่อวันตรงกันหลายรายการ","specialDayPriority"],["เลือก Manual Preset","specialDayPreset","wide"]],open:"date"},
+    subject:{title:"คนและสัตว์ / Subject",hint:"กำหนดคน สัตว์ เพศ ช่วงวัย แหล่งบุคคล และ Animal Character แยกภาพที่ 1–2",controls:[
+      ["องค์ประกอบภาพที่ 1","characterMode1"],["องค์ประกอบภาพที่ 2","characterMode2"],["รูปแบบภาพหลักทั้งคู่","humanStyle","wide"]],open:"characterCompositionSection"},
+    scene:{title:"ฉาก โทน และ Layout",hint:"กำหนด Visual Style, Scene Template, ความหลากหลาย, โทนร่วม และ Layout แยกภาพ 1–2",controls:[
+      ["Visual Style / สไตล์ภาพ","lifestyleVisualStyle","wide"],
+      ["Scene Family ภาพที่ 1","sceneTemplateFamily1"],["Scene Template ภาพที่ 1","sceneTemplateExact1"],["ความหลากหลายภาพที่ 1","templateVariationMode1","wide"],
+      ["Scene Family ภาพที่ 2","sceneTemplateFamily2"],["Scene Template ภาพที่ 2","sceneTemplateExact2"],["ความหลากหลายภาพที่ 2","templateVariationMode2","wide"],
+      ["Pair Look / โทนสีและแสงร่วม","pairLookMode","wide"],["Layout ภาพที่ 1","layoutMode1"],["Layout ภาพที่ 2","layoutMode2"]],open:"sceneTemplatePairSection"},
+    watermark:{title:"ลายน้ำ / Watermark",hint:"แก้ข้อความลายน้ำที่ใช้ร่วมกันทั้งสองภาพ",controls:[["ข้อความลายน้ำ","watermark","wide"]],open:"watermark"}
+  };
+  let activePart="headline";
+  const byId=id=>document.getElementById(id);
+
+  function syncPreview(){
+    const date=byId("date")?.value||"";
+    if(date){
+      const d=new Date(date+"T12:00:00");
+      const thai=["วันอาทิตย์","วันจันทร์","วันอังคาร","วันพุธ","วันพฤหัสบดี","วันศุกร์","วันเสาร์"][d.getDay()];
+      const colors=["#e75656","#e7b72e","#e989a8","#47a66b","#e79a38","#58a4d8","#7654a8"];
+      const canvas=byId("layoutStudioCanvas");
+      if(canvas)canvas.style.background=`linear-gradient(155deg,#fff4c7 0%,${colors[d.getDay()]} 54%,#647a54 100%)`;
+      const dateBox=document.querySelector('[data-studio-part="date"]');
+      if(dateBox)dateBox.childNodes[0].nodeValue=`${thai} • ${date} `;
+    }
+    const wm=byId("watermark")?.value||"POKUN ✨";
+    const wmBox=document.querySelector('[data-studio-part="watermark"]');
+    if(wmBox)wmBox.childNodes[0].nodeValue=wm+" ";
+    const len=byId("blessingLengthMode")?.selectedOptions?.[0]?.textContent||"คำอวยพร";
+    const blessing=document.querySelector('[data-studio-part="blessing"]');
+    if(blessing)blessing.childNodes[0].nodeValue=`คำอวยพร • ${len} `;
+  }
+
+  function buildProxy(label,sourceId,wide){
+    const source=byId(sourceId);
+    const box=document.createElement("div");
+    box.className="studio-field"+(wide==="wide"?" wide":"");
+    const lab=document.createElement("label");lab.textContent=label;box.appendChild(lab);
+    if(!source){const note=document.createElement("div");note.className="small";note.textContent="ตัวเลือกนี้กำลังโหลด";box.appendChild(note);return box;}
+    let proxy;
+    if(source.tagName==="SELECT"){
+      proxy=document.createElement("select");proxy.innerHTML=source.innerHTML;proxy.value=source.value;proxy.disabled=source.disabled;
+      proxy.addEventListener("change",()=>{source.value=proxy.value;source.dispatchEvent(new Event("change",{bubbles:true}));setTimeout(()=>{
+        if(["headlineFrameCategory","blessingFrameCategory","sceneTemplateFamily1","sceneTemplateFamily2","sceneTemplateExact1","sceneTemplateExact2","specialDayMode","specialDayPreset","characterMode1","characterMode2","personSource1","personSource2","animalType1","animalType2"].includes(sourceId))openPart(activePart);
+        else{proxy.innerHTML=source.innerHTML;proxy.value=source.value;proxy.disabled=source.disabled;syncPreview();refreshBlessingStudioSummary();refreshDateStudioSummary();refreshSceneStudioSummary()}
+      },0)});
+    }else{
+      proxy=document.createElement("input");proxy.type=source.type||"text";proxy.value=source.value;if(Number(source.maxLength)>0)proxy.maxLength=source.maxLength;
+      proxy.addEventListener("input",()=>{source.value=proxy.value;source.dispatchEvent(new Event("input",{bubbles:true}));syncPreview()});
+      proxy.addEventListener("change",()=>source.dispatchEvent(new Event("change",{bubbles:true})));
+    }
+    proxy.dataset.proxyFor=sourceId;box.appendChild(proxy);return box;
+  }
+
+  function refreshBlessingStudioSummary(){
+    const lengthSummary=byId("layoutBlessingLengthSummary");
+    const themeSummary=byId("layoutBlessingThemeSummary");
+    if(lengthSummary)lengthSummary.innerHTML=byId("blessingLengthDescription")?.innerHTML||"";
+    if(themeSummary)themeSummary.innerHTML=byId("blessingThemeDescription")?.innerHTML||"";
+  }
+
+  function appendBlessingExtras(fields){
+    const summary=document.createElement("div");
+    summary.id="layoutBlessingLengthSummary";
+    summary.className="small studio-field wide";
+    fields.appendChild(summary);
+
+    const theme=document.createElement("div");
+    theme.id="layoutBlessingThemeSummary";
+    theme.className="notice studio-field wide";
+    fields.appendChild(theme);
+
+    const reroll=document.createElement("button");
+    reroll.type="button";
+    reroll.className="secondary wide";
+    reroll.textContent="🎲 สุ่มคำอวยพรใหม่ในหมวดนี้";
+    reroll.addEventListener("click",()=>{
+      byId("rerollBlessingTheme")?.click();
+      setTimeout(()=>{refreshBlessingStudioSummary();syncPreview()},0);
+    });
+    fields.appendChild(reroll);
+
+    const note=document.createElement("div");
+    note.className="small studio-field wide";
+    note.innerHTML="สุ่มเฉพาะ <b>Headline + คำอวยพร</b> ในธีมเดิม • รักษาความยาว จำนวนบรรทัด และช่วงจำนวนคำ • ไม่เปลี่ยน Scene / คน / สัตว์ / Layout";
+    fields.appendChild(note);
+    refreshBlessingStudioSummary();
+  }
+
+  function sourceHtml(id){
+    const el=byId(id);
+    return el?.innerHTML||el?.textContent||"";
+  }
+
+  function refreshDateStudioSummary(){
+    const status=byId("layoutDateStatus");
+    const wan=byId("layoutWanPhraStatus");
+    const special=byId("layoutSpecialDayStatus");
+    const suggestions=byId("layoutSpecialDaySuggestions");
+    if(status)status.innerHTML=sourceHtml("status");
+    if(wan)wan.innerHTML=`<b>🪷 วันพระ / Wan Phra</b><div class="small" style="margin-top:6px">${sourceHtml("wanPhraAutoDescription")}</div>`;
+    if(special)special.innerHTML=`<b>📅 ${byId("specialDayName")?.textContent||"วันปกติ"}</b><div class="small" style="margin-top:6px">${sourceHtml("specialDayInfo")}</div><div class="small" style="margin-top:6px">${sourceHtml("specialDayThemeInfo")}</div>`;
+    if(suggestions)suggestions.innerHTML=sourceHtml("specialDaySuggestions");
+  }
+
+  function appendDateExtras(fields){
+    if(byId("specialDayMode")?.value==="manual" && byId("specialDayPreset")?.value==="custom"){
+      [["ชื่อวันพิเศษ","specialCustomName"],["Headline วันพิเศษ","specialCustomHeadline"],["คำอวยพรวันพิเศษ","specialCustomGreeting"]].forEach(c=>fields.appendChild(buildProxy(c[0],c[1],"wide")));
+    }
+    const status=document.createElement("div");status.id="layoutDateStatus";status.className="status studio-field wide";fields.appendChild(status);
+    const wan=document.createElement("div");wan.id="layoutWanPhraStatus";wan.className="notice studio-field wide";fields.appendChild(wan);
+    const special=document.createElement("div");special.id="layoutSpecialDayStatus";special.className="stylebox studio-field wide";fields.appendChild(special);
+    const suggestions=document.createElement("div");suggestions.id="layoutSpecialDaySuggestions";suggestions.className="notice studio-field wide";fields.appendChild(suggestions);
+    refreshDateStudioSummary();
+  }
+
+  function subjectHeading(fields,text){
+    const heading=document.createElement("div");
+    heading.className="studio-field wide";
+    heading.style.background="#ecfdf5";
+    heading.style.borderColor="#86efac";
+    heading.innerHTML=`<b>${text}</b>`;
+    fields.appendChild(heading);
+  }
+
+  function subjectNote(fields,html){
+    const note=document.createElement("div");
+    note.className="notice studio-field wide";
+    note.innerHTML=html;
+    fields.appendChild(note);
+  }
+
+  function appendSubjectExtras(fields){
+    const modes=[null,byId("characterMode1")?.value||"none",byId("characterMode2")?.value||"none"];
+    const hasPeople=n=>["people","both"].includes(modes[n]);
+    const hasAnimal=n=>["animal","both"].includes(modes[n]);
+
+    if(hasPeople(1)||hasPeople(2)){
+      subjectHeading(fields,"👤 รายละเอียดบุคคล");
+      [1,2].forEach(n=>{
+        if(!hasPeople(n))return;
+        fields.appendChild(buildProxy(`เพศ — ภาพที่ ${n}`,`genderMode${n}`));
+        fields.appendChild(buildProxy(`ช่วงวัย — ภาพที่ ${n}`,`ageMode${n}`));
+        fields.appendChild(buildProxy(`แหล่งบุคคล — ภาพที่ ${n}`,`personSource${n}`,"wide"));
+        const source=byId(`personSource${n}`)?.value||"generated";
+        if(source!=="generated")fields.appendChild(buildProxy(`ใช้ส่วนไหนจากรูปอ้างอิง — ภาพที่ ${n}`,`referenceUse${n}`,"wide"));
+        if(source==="multi_photo")fields.appendChild(buildProxy(`บทบาทบุคคลหลายรูป — ภาพที่ ${n}`,`multiPhotoRole${n}`,"wide"));
+        const workflow=sourceHtml(`generationWorkflowStatus${n}`);
+        if(workflow)subjectNote(fields,`<b>สถานะภาพที่ ${n}</b><br>${workflow}`);
+      });
+      subjectNote(fields,"หากเลือกใช้รูปอ้างอิง ให้นำรูปไปแนบพร้อม Prompt ใน ChatGPT • ค่าแนะนำคือ <b>เฉพาะใบหน้า / Identity</b> เพื่อรักษาใบหน้า โดยให้ AI สร้างเสื้อผ้า ท่าทาง ฉาก และแสงใหม่");
+    }
+
+    if(hasAnimal(1)||hasAnimal(2)){
+      subjectHeading(fields,"🐾 รายละเอียดสัตว์ / Animal Character");
+      [1,2].forEach(n=>{
+        if(!hasAnimal(n))return;
+        fields.appendChild(buildProxy(`ประเภทสัตว์ — ภาพที่ ${n}`,`animalType${n}`,"wide"));
+        fields.appendChild(buildProxy(`รูปแบบสัตว์ — ภาพที่ ${n}`,`animalStyle${n}`));
+        fields.appendChild(buildProxy(`สายพันธุ์ / ลักษณะ — ภาพที่ ${n}`,`animalLook${n}`));
+        fields.appendChild(buildProxy(`พฤติกรรม — ภาพที่ ${n}`,`animalBehavior${n}`));
+        fields.appendChild(buildProxy(`ระดับความเป็นตัวละคร — ภาพที่ ${n}`,`anthroLevel${n}`));
+        const anthro=sourceHtml(`anthroDescription${n}`);
+        if(anthro)subjectNote(fields,`<b>ภาพที่ ${n}</b><br>${anthro}`);
+      });
+      subjectNote(fields,"รายละเอียดสัตว์ของภาพที่ 1 และภาพที่ 2 ตั้งแยกกันได้ • การเปลี่ยนสัตว์ในภาพหนึ่งจะไม่เปลี่ยนอีกภาพ");
+    }
+
+    if(!hasPeople(1)&&!hasPeople(2)&&!hasAnimal(1)&&!hasAnimal(2)){
+      subjectNote(fields,"ขณะนี้เลือก <b>ไม่มีคนและสัตว์</b> ทั้งสองภาพ จึงซ่อนรายละเอียดบุคคลและสัตว์ไว้ • เปลี่ยนองค์ประกอบภาพด้านบนเพื่อเปิดตัวเลือกที่เกี่ยวข้อง");
+    }
+  }
+
+  function refreshSceneStudioSummary(){
+    const mapping=[
+      ["layoutVisualStyleDescription","lifestyleVisualDescription"],
+      ["layoutSceneDescription1","sceneTemplateDescription1"],
+      ["layoutSceneDescription2","sceneTemplateDescription2"],
+      ["layoutPairLookDescription","pairLookDescription"],
+      ["layoutModeDescription1","layoutDescription1"],
+      ["layoutModeDescription2","layoutDescription2"]
+    ];
+    mapping.forEach(([target,source])=>{
+      const el=byId(target);
+      if(el)el.innerHTML=`<b>${el.dataset.title||"รายละเอียด"}</b><div class="small" style="margin-top:6px">${sourceHtml(source)}</div>`;
+    });
+  }
+
+  function sceneInfoCard(fields,id,title,sourceId){
+    const box=document.createElement("div");
+    box.id=id;
+    box.className="notice studio-field wide";
+    box.dataset.title=title;
+    box.innerHTML=`<b>${title}</b><div class="small" style="margin-top:6px">${sourceHtml(sourceId)}</div>`;
+    fields.appendChild(box);
+  }
+
+  function appendSceneExtras(fields){
+    subjectHeading(fields,"🧩 สรุปฉากและโทนที่เลือก");
+    sceneInfoCard(fields,"layoutVisualStyleDescription","✨ Visual Style","lifestyleVisualDescription");
+    sceneInfoCard(fields,"layoutSceneDescription1","🖼️ Scene ภาพที่ 1","sceneTemplateDescription1");
+    sceneInfoCard(fields,"layoutSceneDescription2","🖼️ Scene ภาพที่ 2","sceneTemplateDescription2");
+    sceneInfoCard(fields,"layoutPairLookDescription","🎨 Pair Look / โทนร่วม","pairLookDescription");
+    sceneInfoCard(fields,"layoutModeDescription1","📐 Layout ภาพที่ 1","layoutDescription1");
+    sceneInfoCard(fields,"layoutModeDescription2","📐 Layout ภาพที่ 2","layoutDescription2");
+  }
+
+  function openPart(part){
+    activePart=PARTS[part]?part:"headline";const cfg=PARTS[activePart];
+    byId("layoutStudioSection")?.classList.add("editing");
+    document.body.classList.add("layout-studio-focus");
+    document.querySelectorAll(".layout-hotspot").forEach(x=>x.classList.toggle("active",x.dataset.studioPart===activePart));
+    byId("layoutInspectorTitle").textContent=cfg.title;byId("layoutInspectorHint").textContent=cfg.hint;
+    const fields=byId("layoutInspectorFields");fields.innerHTML="";cfg.controls.forEach(c=>fields.appendChild(buildProxy(...c)));
+    if(activePart==="blessing")appendBlessingExtras(fields);
+    if(activePart==="date")appendDateExtras(fields);
+    if(activePart==="subject")appendSubjectExtras(fields);
+    if(activePart==="scene")appendSceneExtras(fields);
+    if(byId("layoutInspectorCreatePrompt"))byId("layoutInspectorCreatePrompt").style.display="block";
+    syncPreview();
+  }
+
+  function showLayout(){
+    byId("layoutStudioSection")?.classList.remove("editing");
+    document.body.classList.remove("layout-studio-focus");
+    syncPreview();
+    requestAnimationFrame(()=>byId("layoutStudioSection")?.scrollIntoView({behavior:"smooth",block:"start"}));
+  }
+
+  function openFull(){
+    const id=PARTS[activePart].open;const el=byId(id);const target=el?.closest(".card")||el;
+    if(target){target.scrollIntoView({behavior:"smooth",block:"center"});target.classList.add("studio-flash");setTimeout(()=>target.classList.remove("studio-flash"),1400)}
+  }
+
+  function resetActive(){
+    const cfg=PARTS[activePart];
+    cfg.controls.forEach(([,id])=>{const el=byId(id);if(!el||el.tagName!=="SELECT")return;const auto=[...el.options].find(o=>o.value==="auto"||o.value==="AUTO"||o.value==="follow");if(auto){el.value=auto.value;el.dispatchEvent(new Event("change",{bubbles:true}))}});
+    if(activePart==="headline")byId("autoStyle")?.click();
+    openPart(activePart);if(typeof toast==="function")toast(`คืนค่า AUTO: ${cfg.title}`);
+  }
+
+  async function copyStudioPrompt(textarea,label){
+    const text=textarea?.value||"";if(!text)return;
+    try{await navigator.clipboard.writeText(text)}catch(e){textarea.focus();textarea.select();document.execCommand("copy")}
+    if(typeof toast==="function")toast(`คัดลอก ${label} แล้ว`);
+  }
+
+  function studioOutputBlock(setNo,prompt){
+    const box=document.createElement("div");box.className="studio-field wide";
+    const label=document.createElement("label");label.textContent=`Prompt ภาพที่ ${setNo}`;box.appendChild(label);
+    const area=document.createElement("textarea");area.className="studio-output";area.dataset.studioOutput=String(setNo);area.value=prompt;area.readOnly=true;box.appendChild(area);
+    const actions=document.createElement("div");actions.className="studio-output-actions";
+    const copy=document.createElement("button");copy.type="button";copy.className="green";copy.textContent=`คัดลอกภาพที่ ${setNo}`;copy.addEventListener("click",()=>copyStudioPrompt(area,`Prompt ภาพที่ ${setNo}`));
+    const share=document.createElement("button");share.type="button";share.className="secondary";share.textContent=`แชร์ภาพที่ ${setNo}`;share.addEventListener("click",()=>{if(navigator.share)navigator.share({title:`Prompt ภาพที่ ${setNo}`,text:area.value}).catch(()=>{});else copyStudioPrompt(area,`Prompt ภาพที่ ${setNo}`)});
+    actions.append(copy,share);box.appendChild(actions);return box;
+  }
+
+  function rebuildStudioPrompt(setNo,reroll=false){
+    if(reroll){
+      if(setNo===1){rerollSeed1=Number(rerollSeed1||0)+1;localStorage.setItem("pokunRerollSeed1",String(rerollSeed1))}
+      else{rerollSeed2=Number(rerollSeed2||0)+1;localStorage.setItem("pokunRerollSeed2",String(rerollSeed2))}
+    }
+    const prompt=pokunSafeBuildPrompt(setNo);if(!prompt)throw new Error(`ระบบไม่ได้คืนค่า Prompt ภาพที่ ${setNo}`);
+    const original=byId(`output${setNo}`);if(original)original.value=prompt;
+    const area=document.querySelector(`[data-studio-output="${setNo}"]`);if(area)area.value=prompt;
+    if(typeof toast==="function")toast(`${reroll?"สุ่มชุดใหม่":"สร้าง Prompt"} ภาพที่ ${setNo} แล้ว`);
+  }
+
+  function studioPromptControls(){
+    const panel=document.createElement("div");panel.className="studio-prompt-controls";
+    const add=(text,cls,fn,wide=false)=>{const b=document.createElement("button");b.type="button";b.textContent=text;b.className=(cls||"")+(wide?" wide":"");b.addEventListener("click",()=>{try{fn()}catch(error){if(typeof toast==="function")toast(`ทำรายการไม่สำเร็จ: ${error?.message||error}`)}});panel.appendChild(b)};
+    add("🎲 สร้าง Prompt ภาพที่ 1","",()=>rebuildStudioPrompt(1));
+    add("🎲 สร้าง Prompt ภาพที่ 2","",()=>rebuildStudioPrompt(2));
+    add("สุ่มชุดใหม่เฉพาะภาพที่ 1","secondary",()=>rebuildStudioPrompt(1,true));
+    add("สุ่มชุดใหม่เฉพาะภาพที่ 2","secondary",()=>rebuildStudioPrompt(2,true));
+    add("ล้างประวัติ Scene ที่ใช้ล่าสุด","ghost",()=>byId("clearSceneMemory")?.click(),true);
+    add("เคลียร์ Prompt ทั้งสองภาพ","ghost",()=>{
+      [1,2].forEach(n=>{const original=byId(`output${n}`),area=document.querySelector(`[data-studio-output="${n}"]`);if(original)original.value="";if(area)area.value=""});
+      if(typeof toast==="function")toast("เคลียร์ Prompt ทั้งสองภาพแล้ว");
+    },true);
+    return panel;
+  }
+
+  function createStudioPrompts(){
+    try{
+      if(typeof pokunSafeBuildPrompt!=="function")throw new Error("ระบบสร้าง Prompt ยังโหลดไม่สมบูรณ์");
+      const p1=pokunSafeBuildPrompt(1),p2=pokunSafeBuildPrompt(2);
+      if(!p1||!p2)throw new Error("ระบบไม่ได้คืนค่า Prompt ครบทั้งสองภาพ");
+      if(byId("output1"))byId("output1").value=p1;if(byId("output2"))byId("output2").value=p2;
+      byId("layoutStudioSection")?.classList.add("editing");document.body.classList.add("layout-studio-focus");
+      byId("layoutInspectorTitle").textContent="✅ Prompt พร้อมใช้งาน";
+      byId("layoutInspectorHint").textContent="คัดลอกหรือแชร์ Prompt ภาพที่ 1–2 ได้จากหน้านี้";
+      const fields=byId("layoutInspectorFields");fields.innerHTML="";fields.append(studioPromptControls(),studioOutputBlock(1,p1),studioOutputBlock(2,p2));
+      if(byId("layoutInspectorCreatePrompt"))byId("layoutInspectorCreatePrompt").style.display="none";
+      if(typeof toast==="function")toast("สร้าง Prompt ภาพที่ 1 และ 2 แล้ว");
+    }catch(error){console.error("POKUN v11.97 Layout Studio create Prompt failed:",error);if(typeof toast==="function")toast(`สร้าง Prompt ไม่สำเร็จ: ${error?.message||error}`)}
+  }
+
+  function enterWorkTypePage(){
+    document.body.classList.remove("pokun-step2","layout-studio-focus");
+    document.body.classList.add("pokun-step1");
+    byId("layoutStudioSection")?.classList.remove("editing");
+    window.scrollTo({top:0,behavior:"smooth"});
+  }
+
+  function enterLayoutPage(){
+    document.body.classList.remove("pokun-step1","layout-studio-focus");
+    document.body.classList.add("pokun-step2");
+    byId("layoutStudioSection")?.classList.remove("editing");
+    syncPreview();
+    window.scrollTo({top:0,behavior:"smooth"});
+  }
+
+  function start(){
+    // Keep the work-type launcher as a true first page even after legacy
+    // workflow grouping has reorganized the old settings cards.
+    const wrap=document.querySelector(".wrap"),hero=document.querySelector(".hero"),launcher=byId("modeLauncherCard");
+    if(wrap&&hero&&launcher)hero.insertAdjacentElement("afterend",launcher);
+    document.querySelectorAll("[data-studio-part]").forEach(x=>x.addEventListener("click",()=>openPart(x.dataset.studioPart)));
+    byId("layoutInspectorBack")?.addEventListener("click",showLayout);
+    byId("layoutStudioReset")?.addEventListener("click",resetActive);
+    byId("layoutStudioCreatePrompt")?.addEventListener("click",createStudioPrompts);
+    byId("layoutInspectorCreatePrompt")?.addEventListener("click",createStudioPrompts);
+    byId("layoutBackToWorkType")?.addEventListener("click",enterWorkTypePage);
+    ["modeGreetingCard","modeQuoteCard","modeBirthdayCard"].forEach(id=>byId(id)?.addEventListener("click",()=>setTimeout(enterLayoutPage,0)));
+    ["date","watermark","blessingLengthMode","headlineFrameMode","blessingFrameMode","sceneTemplateFamily1","sceneTemplateFamily2","layoutMode1","layoutMode2"].forEach(id=>byId(id)?.addEventListener("change",syncPreview));
+    setTimeout(()=>{enterWorkTypePage();syncPreview()},0);
   }
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",start);else start();
 })();
