@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#157a6e">
-<title>POKUN Web v12.05</title>
+<title>POKUN Web v12.07</title>
 <style>
 :root{--bg:#eef6f3;--card:#ffffff;--ink:#17332d;--muted:#5e746d;--line:#d7e7e0;--accent:#157a6e;--accent-2:#244c7d;--accent-soft:#e8f6f1;--good:#1b8f63;--warn:#b7791f;--gold:#e9bf57;--shadow:0 14px 34px rgba(21,44,59,.08)}
 *{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI","Noto Sans Thai",sans-serif;background:linear-gradient(180deg,#f4fbf8 0%,#eef6f3 100%);color:var(--ink)}
@@ -657,7 +657,7 @@ body.pokun-step2.layout-studio-focus .wrap>*{display:none!important}body.pokun-s
 <body class="pokun-step1">
 <div class="wrap">
   <div class="hero">
-    <h1>POKUN Web <span class="small">v12.05</span></h1>
+    <h1>POKUN Web <span class="small">v12.07</span></h1>
     <p>Daily Greeting Prompt Generator — ใช้ได้บนมือถือและคอม</p>
   </div>
 
@@ -2090,7 +2090,7 @@ body.pokun-step2.layout-studio-focus .wrap>*{display:none!important}body.pokun-s
         <button id="reroll2" class="secondary" type="button">สุ่มชุดใหม่เฉพาะภาพที่ 2</button>
       </div>
       <div class="row mobile-stack" style="margin-top:8px">
-        <button id="clearSceneMemory" class="ghost" type="button">ล้างประวัติ Scene ที่ใช้ล่าสุด</button>
+        <button id="clearSceneMemory" class="ghost" type="button">🧹 ล้างประวัติ Scene + สุ่มใหม่ทันที</button>
       </div>
       <div class="row mobile-stack" style="margin-top:8px">
         <button id="clear" class="ghost" type="button" style="width:100%">เคลียร์ Prompt ทั้งสองภาพ</button>
@@ -6904,9 +6904,10 @@ function buildPromptLegacyV87(setNo){
     L.push(
       "DAILY COLOR AUTHORITY v11.82 — HIGHEST COLOR PRIORITY:",
       `TODAY'S PRIMARY THEME COLOR: ${s.day.colorThai} / ${s.day.colorEnglish} / ${s.day.hex}.`,
-      "Use the weekday color as the dominant 60–70% visual family across lighting, flowers/props, typography accents, surfaces and final color grade.",
-      "Use approximately 20–30% coordinated neutrals or natural materials and no more than 10% minor accent hues.",
+      "Use the weekday color as the dominant 70–80% visual family across lighting, flowers/props, typography accents, surfaces and final color grade.",
+      "Use approximately 15–25% coordinated neutrals or natural materials and no more than 5–10% minor accent hues.",
       "Typography Preset, Scene Template, Pair Look and AUTO Color Grade MUST NOT replace the weekday color or turn another hue into the dominant atmosphere.",
+      "If a scene contains naturally colored hero objects, they may keep their own local color, but the overall artwork must still unmistakably read as the weekday color.",
       "Image 1 and Image 2 must immediately read as the same weekday-color collection."
     );
   }
@@ -7320,7 +7321,7 @@ function pairMasterVisualState(s){
     lighting:"same ceremonial premium lighting direction and softness across both images",intensity:"matched luminous premium intensity",contrast:"matched medium cinematic contrast",
     saturation:"matched rich but controlled auspicious saturation",shadows:"matched soft sculptural shadows",glow:"matched premium sacred/auspicious glow",atmosphere:"coherent auspicious ceremonial atmosphere",
     sky:"background color temperature must remain coherent with selected deity palette",grade:"same auspicious final color grade across both images"};
-  return {mode:"GENERAL DAILY-COLOR PAIR MASTER",palette:`today's ${s.day.colorThai} / ${s.day.hex} as the dominant 60–70% palette across both images, supported by coordinated neutrals and natural materials; unrelated hues are minor accents only`,whiteBalance:"same white balance across both images",
+  return {mode:"GENERAL DAILY-COLOR PAIR MASTER",palette:`today's ${s.day.colorThai} / ${s.day.hex} must be the unmistakable dominant 70–80% visual family across BOTH images and must still be obvious even at thumbnail size; support only with coordinated neutrals, natural materials, and small restrained accents. No unrelated hue may take over the atmosphere.`,whiteBalance:"same white balance across both images",
     lighting:"same time-of-day, direction and softness across both images",intensity:"matched perceived light intensity",contrast:"matched contrast curve",saturation:"matched saturation level",
     shadows:"matched shadow softness",glow:"matched atmospheric glow",atmosphere:"coherent paired atmosphere",sky:"coherent background color temperature",grade:"same final color grade across both images"};
 }
@@ -7336,6 +7337,51 @@ function pairMasterVisualLines(s){
     "Scene Template may change subject, location, props, camera and composition, but MUST NOT override master palette, white balance, lighting direction/softness, contrast, saturation, shadow softness, glow, atmosphere or final color grade.",
     "Buddhist Visual Style may enrich sacred ornament/detail, but MUST NOT create a different color temperature or lighting treatment between the two images.",
     "If one image contains a Buddha statue and the other a monk/reference monk, both must remain in the SAME visual world and SAME morning light.",""];
+}
+
+function generalWeekdayColorGuardLines(s){
+  if(resolveMainArtworkMode()!=="general") return [];
+  const key=String(s?.day?.colorEnglish||"").toUpperCase();
+  const base=[
+    "GENERAL WEEKDAY COLOR DRIFT GUARD — ABSOLUTE:",
+    `WEEKDAY COLOR LOCK: ${s.day.colorThai} / ${s.day.colorEnglish} / ${s.day.hex} must stay dominant in BOTH Image 1 and Image 2.`,
+    "Color dominance test: at a quick glance and even at thumbnail size, both artworks must immediately read as the weekday color before any secondary hue.",
+    "If a scene contains naturally colored flowers, props, food, architecture, deity objects, or landscape elements, keep those local colors secondary and wrap the total artwork in the weekday color through typography accents, panel colors, decor, key props, and final grade.",
+    "PAIR CONSISTENCY TEST: Image 1 and Image 2 must share the same lighting family, same white balance family, and the same overall color grade family. Do not make one image golden-warm and the other purple/cool or sunset-heavy.",
+    "The weekday color must be visibly present in MULTIPLE places, not just one tiny accent: for example in headline treatment, date/blessing panels, flowers or props, ambient color cast, and final color grade.",
+  ];
+  const specific={
+    RED:[
+      "SUNDAY RED LOCK: use a refined RED family as the dominant mood — ruby, crimson, cherry-red, rose-red, or softened warm red.",
+      "FORBIDDEN DOMINANCE: orange-gold wash, purple-only mood, green-heavy atmosphere, or blue-heavy atmosphere that hides the red weekday identity."
+    ],
+    YELLOW:[
+      "MONDAY YELLOW LOCK: use a clear YELLOW family as the dominant mood — butter yellow, marigold yellow, warm lemon yellow, or sunflower yellow.",
+      "FORBIDDEN DOMINANCE: gold-only wash, green-only atmosphere, or blue-gray lighting that weakens the Monday yellow identity."
+    ],
+    PINK:[
+      "TUESDAY PINK LOCK: BOTH artworks must visibly read as a PINK-theme collection — blush pink, rose pink, lotus pink, peony pink, magenta-pink, or elegant hot pink.",
+      "FORBIDDEN DOMINANCE: red-gold prosperity wash, pure gold dominance, purple/lavender dominance, blue-only dominance, or any non-pink color family taking over the full atmosphere.",
+      "Do NOT let red signboards, gold wealth symbols, or purple/lavender flower fields overpower the Tuesday pink signature theme. If such objects appear, keep them secondary and restore pink as the visible master color."
+    ],
+    GREEN:[
+      "WEDNESDAY GREEN LOCK: use a refined GREEN family as the dominant mood — leaf green, jade green, mint green, emerald green, or botanical green.",
+      "FORBIDDEN DOMINANCE: blue-only mood, orange wash, or gold-heavy atmosphere that causes green to disappear."
+    ],
+    ORANGE:[
+      "THURSDAY ORANGE LOCK: use a clear ORANGE family as the dominant mood — marigold orange, amber-orange, saffron orange, or warm tangerine.",
+      "FORBIDDEN DOMINANCE: gold-only wash, red-only mood, or brown sepia dominance that weakens the Thursday orange identity."
+    ],
+    BLUE:[
+      "FRIDAY BLUE LOCK: use a BLUE / SKY-BLUE family as the dominant mood — sky blue, clear blue, aqua-blue, or serene sapphire-blue.",
+      "FORBIDDEN DOMINANCE: pink-heavy mood, purple-only mood, or gray-brown atmosphere that hides the Friday blue identity."
+    ],
+    PURPLE:[
+      "SATURDAY PURPLE LOCK: use a PURPLE family as the dominant mood — violet, amethyst, royal purple, plum, or lavender-purple.",
+      "FORBIDDEN DOMINANCE: pink-only mood, red-only mood, or green-heavy atmosphere that hides the Saturday purple identity."
+    ]
+  };
+  return [...base,...(specific[key]||[]),""];
 }
 
 
@@ -11854,6 +11900,7 @@ const PAIR_LOOKS={
     );
     L.push(...masterRenderingLines());
     L.push(...pairMasterVisualLines(s));
+    L.push(...generalWeekdayColorGuardLines(s));
     L.push(...buddhistSubjectAuthorityLines(setNo,s));
     if(deityResolved.heroActive && deityResolved.deityMode!=="auto"){
       const deityMap={
@@ -13244,11 +13291,40 @@ $("reroll2").addEventListener("click",()=>{
   toast("สุ่ม Prompt ภาพที่ 2 ชุดใหม่แล้ว");
 });
 $("clearSceneMemory").addEventListener("click",()=>{
-  localStorage.removeItem(sceneMemoryKey(1));
-  localStorage.removeItem(sceneMemoryKey(2));
-  localStorage.removeItem(crossImageMemoryKey(1));
-  localStorage.removeItem(crossImageMemoryKey(2));
-  toast("ล้างประวัติ Scene + องค์ประกอบซ้ำของภาพ 1/2 แล้ว");
+  try{
+    // 1) Clear all recent-scene / cross-image repeat memory.
+    localStorage.removeItem(sceneMemoryKey(1));
+    localStorage.removeItem(sceneMemoryKey(2));
+    localStorage.removeItem(crossImageMemoryKey(1));
+    localStorage.removeItem(crossImageMemoryKey(2));
+
+    // 2) Advance both reroll seeds so the next resolution cannot simply reuse
+    //    the same deterministic scene/text combination after memory was cleared.
+    rerollSeed1=Number(rerollSeed1||0)+1;
+    rerollSeed2=Number(rerollSeed2||0)+1;
+    localStorage.setItem("pokunRerollSeed1",String(rerollSeed1));
+    localStorage.setItem("pokunRerollSeed2",String(rerollSeed2));
+
+    // 3) Immediately rebuild BOTH prompts from the clean scene-memory state.
+    //    This makes the button visibly effective with one click.
+    const prompt1=pokunSafeBuildPrompt(1);
+    const prompt2=pokunSafeBuildPrompt(2);
+    $("output1").value=prompt1;
+    $("output2").value=prompt2;
+    $("output1").dispatchEvent(new Event("input",{bubbles:true}));
+    $("output2").dispatchEvent(new Event("input",{bubbles:true}));
+
+    // Keep Layout Studio prompt previews in sync when they are currently open.
+    const studio1=document.querySelector('[data-studio-output="1"]');
+    const studio2=document.querySelector('[data-studio-output="2"]');
+    if(studio1)studio1.value=prompt1;
+    if(studio2)studio2.value=prompt2;
+
+    toast("🧹 ล้างประวัติ Scene แล้ว • สุ่ม Prompt ภาพ 1–2 ใหม่ทันที");
+  }catch(err){
+    console.error("POKUN v12.07 clear Scene + reroll failed:",err);
+    toast(`ล้าง Scene สำเร็จ แต่สร้าง Prompt ใหม่ไม่สำเร็จ: ${err?.message||err}`);
+  }
 });
 
 $("saveWatermark").addEventListener("click",()=>{
@@ -14948,7 +15024,7 @@ window.addEventListener("load",()=>{
     add("🎲 สร้าง Prompt ภาพที่ 2","",()=>rebuildStudioPrompt(2));
     add("สุ่มชุดใหม่เฉพาะภาพที่ 1","secondary",()=>rebuildStudioPrompt(1,true));
     add("สุ่มชุดใหม่เฉพาะภาพที่ 2","secondary",()=>rebuildStudioPrompt(2,true));
-    add("ล้างประวัติ Scene ที่ใช้ล่าสุด","ghost",()=>byId("clearSceneMemory")?.click(),true);
+    add("🧹 ล้างประวัติ Scene + สุ่มใหม่ทันที","ghost",()=>byId("clearSceneMemory")?.click(),true);
     add("เคลียร์ Prompt ทั้งสองภาพ","ghost",()=>{
       [1,2].forEach(n=>{const original=byId(`output${n}`),area=document.querySelector(`[data-studio-output="${n}"]`);if(original)original.value="";if(area)area.value=""});
       if(typeof toast==="function")toast("เคลียร์ Prompt ทั้งสองภาพแล้ว");
