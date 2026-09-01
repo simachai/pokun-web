@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#157a6e">
-<title>POKUN Web v12.07</title>
+<title>POKUN Web v12.08</title>
 <style>
 :root{--bg:#eef6f3;--card:#ffffff;--ink:#17332d;--muted:#5e746d;--line:#d7e7e0;--accent:#157a6e;--accent-2:#244c7d;--accent-soft:#e8f6f1;--good:#1b8f63;--warn:#b7791f;--gold:#e9bf57;--shadow:0 14px 34px rgba(21,44,59,.08)}
 *{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI","Noto Sans Thai",sans-serif;background:linear-gradient(180deg,#f4fbf8 0%,#eef6f3 100%);color:var(--ink)}
@@ -657,7 +657,7 @@ body.pokun-step2.layout-studio-focus .wrap>*{display:none!important}body.pokun-s
 <body class="pokun-step1">
 <div class="wrap">
   <div class="hero">
-    <h1>POKUN Web <span class="small">v12.07</span></h1>
+    <h1>POKUN Web <span class="small">v12.08</span></h1>
     <p>Daily Greeting Prompt Generator — ใช้ได้บนมือถือและคอม</p>
   </div>
 
@@ -5496,11 +5496,22 @@ const ANIMAL_LOOK_OPTIONS={
  snail:[["auto","AUTO"],["brown_snail","หอยทากเปลือกน้ำตาล"],["cute_snail","หอยทากน่ารัก"]]
 };
 function updateAnimalLookOptions(setNo){
- const type=$(`animalType${setNo}`).value;
- const sel=$(`animalLook${setNo}`), old=sel.value;
+ // v12.08: a legacy no-argument call existed during startup. Handle it safely
+ // by refreshing BOTH image selectors instead of throwing and stopping JS init.
+ if(setNo!==1 && setNo!==2){
+   updateAnimalLookOptions(1);
+   updateAnimalLookOptions(2);
+   return;
+ }
+ const typeEl=$(`animalType${setNo}`);
+ const sel=$(`animalLook${setNo}`);
+ if(!typeEl || !sel) return;
+ const type=typeEl.value || "auto";
+ const previous=sel.value || (setNo===1?animalLook1:animalLook2) || "auto";
  const opts=ANIMAL_LOOK_OPTIONS[type]||ANIMAL_LOOK_OPTIONS.auto;
  sel.innerHTML=opts.map(([v,t])=>`<option value="${v}">${t}</option>`).join("");
- if(opts.some(x=>x[0]===old)) sel.value=old; else sel.value="auto";
+ const saved=(setNo===1?animalLook1:animalLook2) || previous;
+ sel.value=opts.some(x=>x[0]===saved) ? saved : (opts.some(x=>x[0]===previous)?previous:"auto");
  if(setNo===1) animalLook1=sel.value; else animalLook2=sel.value;
  localStorage.setItem(`pokunAnimalLook${setNo}`,sel.value);
 }
