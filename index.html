@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#157a6e">
-<title>POKUN Web v12.08</title>
+<title>POKUN Web v12.19</title>
 <style>
 :root{--bg:#eef6f3;--card:#ffffff;--ink:#17332d;--muted:#5e746d;--line:#d7e7e0;--accent:#157a6e;--accent-2:#244c7d;--accent-soft:#e8f6f1;--good:#1b8f63;--warn:#b7791f;--gold:#e9bf57;--shadow:0 14px 34px rgba(21,44,59,.08)}
 *{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI","Noto Sans Thai",sans-serif;background:linear-gradient(180deg,#f4fbf8 0%,#eef6f3 100%);color:var(--ink)}
@@ -657,7 +657,7 @@ body.pokun-step2.layout-studio-focus .wrap>*{display:none!important}body.pokun-s
 <body class="pokun-step1">
 <div class="wrap">
   <div class="hero">
-    <h1>POKUN Web <span class="small">v12.08</span></h1>
+    <h1>POKUN Web <span class="small">v12.19</span></h1>
     <p>Daily Greeting Prompt Generator — ใช้ได้บนมือถือและคอม</p>
   </div>
 
@@ -763,7 +763,10 @@ body.pokun-step2.layout-studio-focus .wrap>*{display:none!important}body.pokun-s
         <option value="wealth">มั่งคั่ง / ร่ำรวย</option>
         <option value="success">ความสำเร็จ / สมหวัง</option>
         <option value="luck">โชคดี / โชคลาภ</option>
-        <option value="encouragement">วันใหม่ / กำลังใจ</option>
+        <option value="encouragement">วันใหม่ / สดใส</option>
+        <option value="travel">เดินทาง / ปลอดภัย</option>
+        <option value="family">ครอบครัว / ความสุขความเจริญ</option>
+        <option value="friendship">มิตรภาพ / เพื่อนที่แสนดี</option>
         <option value="short_power">สั้น กระชับ</option>
         <option value="all_round">รวมคำอวยพรจากภาพ</option>
       </select>
@@ -802,7 +805,7 @@ body.pokun-step2.layout-studio-focus .wrap>*{display:none!important}body.pokun-s
       <div id="blessingThemeDescription" class="notice" style="margin-top:8px"></div>
       <button id="rerollBlessingTheme" class="secondary" type="button" style="margin-top:8px;width:100%">🎲 สุ่มคำอวยพรใหม่ในหมวดนี้</button>
       <div class="small" style="margin-top:6px">
-        สุ่มเฉพาะ <b>Headline + คำอวยพร</b> ในธีมเดิม • v11.84 รักษาความยาว จำนวนบรรทัด และช่วงจำนวนคำที่เลือก • ปรับผ่าน Layout Studio ได้ • ไม่เปลี่ยน Scene / คน / สัตว์ / Layout
+        สุ่มเฉพาะ <b>คำอวยพร</b> ในธีมเดิม • รักษา Headline เดิม ความยาว จำนวนบรรทัด และช่วงจำนวนคำที่เลือก • ปรับผ่าน Layout Studio ได้ • ไม่เปลี่ยน Scene / คน / สัตว์ / Layout
       </div>
     </section>
 
@@ -2090,7 +2093,7 @@ body.pokun-step2.layout-studio-focus .wrap>*{display:none!important}body.pokun-s
         <button id="reroll2" class="secondary" type="button">สุ่มชุดใหม่เฉพาะภาพที่ 2</button>
       </div>
       <div class="row mobile-stack" style="margin-top:8px">
-        <button id="clearSceneMemory" class="ghost" type="button">🧹 ล้างประวัติ Scene + สุ่มใหม่ทันที</button>
+        <button id="clearSceneMemory" class="ghost" type="button">🧹 ล้างประวัติ Scene + สุ่ม Scene/คำอวยพรใหม่ทันที</button>
       </div>
       <div class="row mobile-stack" style="margin-top:8px">
         <button id="clear" class="ghost" type="button" style="width:100%">เคลียร์ Prompt ทั้งสองภาพ</button>
@@ -2199,7 +2202,7 @@ const SPECIAL_PRESETS_V1181={
   // Monthly / recurring
   first_day:specialPreset("first_day","วันที่ 1 / เปิดเดือนใหม่","monthly","monthly","วันที่ 1 เปิดเดือนใหม่อย่างสดใส","เริ่มเดือนด้วยพลังดี ๆ","เดือนใหม่นี้การงานราบรื่น การเงินคล่องตัว และมีเรื่องดี ๆ เข้ามา","เริ่มต้นเดือนอย่างมั่นใจ สดชื่น และค่อย ๆ สำเร็จในสิ่งที่ตั้งใจ","สีประจำวัน + ทอง/เขียวมงคล","แสงเช้า ปฏิทิน ดอกไม้ เหรียญมงคลแบบพอดี และภาพเริ่มต้นใหม่"),
   day16:specialPreset("day16","วันที่ 16 / กลางเดือน","monthly","monthly","วันที่ 16 กลางเดือนนี้ ขอให้ปัง","ครึ่งเดือนหลัง เดินหน้าต่ออย่างสดใส","ครึ่งเดือนหลังการงานเดินหน้า การเงินราบรื่น และมีข่าวดีเข้ามา","ทุกเรื่องที่กำลังทำคืบหน้าอย่างมั่นคง พร้อมรับโอกาสใหม่ ๆ","สีประจำวัน + ทอง/เขียวมงคล","แสงสดใส ปฏิทิน ดอกไม้ และพร็อพความสำเร็จแบบพรีเมียม"),
-  lottery_draw:specialPreset("lottery_draw","วันออกรางวัล / วันลุ้นโชค 1 และ 16","monthly","luck","วันลุ้นโชค เฮง ๆ รับทรัพย์","วันนี้ขอให้โชคดี มีสิ่งดี ๆ เข้ามา","วันนี้มีโชค มีลาภ การเงินคล่องตัว และพบโอกาสดีที่น่ายินดี","รับพลังบวก ความเฮง และความมั่งคั่งแบบพอดีตลอดวัน","แดง-ทอง-เขียวมรกต-สีประจำวัน","เหรียญมงคล ซองแดง แสงทอง ดอกไม้มงคล และองค์ประกอบรับทรัพย์ โดยไม่แสดงเลขหรือคำแนะนำเดิมพัน"),
+  lottery_draw:specialPreset("lottery_draw","วันออกรางวัล / วันลุ้นโชค 1 และ 16","monthly","luck","วันลุ้นโชค เฮง ๆ รับทรัพย์","วันนี้ขอให้โชคดี มีสิ่งดี ๆ เข้ามา","วันนี้มีโชค มีลาภ การเงินคล่องตัว และพบโอกาสดีที่น่ายินดี","ขอให้วันนี้พบแต่โอกาสดี การเงินราบรื่น มีโชคมีลาภ และมีความสุขตลอดวัน","แดง-ทอง-เขียวมรกต-สีประจำวัน","เหรียญมงคล ซองแดง แสงทอง ดอกไม้มงคล และองค์ประกอบรับทรัพย์ โดยไม่แสดงเลขหรือคำแนะนำเดิมพัน"),
   month_end:specialPreset("month_end","วันสิ้นเดือน","monthly","monthly","ส่งท้ายเดือนอย่างสวยงาม","ปิดเดือนด้วยความสบายใจ","สิ่งที่ตั้งใจในเดือนนี้จบลงอย่างราบรื่น และได้เห็นความก้าวหน้าที่น่าภูมิใจ","วางเรื่องเหนื่อยไว้ข้างหลัง แล้วเตรียมรับเดือนใหม่ด้วยพลังดี ๆ","สีประจำวัน + ทองอ่อน","พระอาทิตย์ตก ปฏิทินปลายเดือน โต๊ะทำงานเรียบร้อย และดอกไม้"),
   payday:specialPreset("payday","วันเงินเดือนออก","business","money","วันเงินเดือนออก รับทรัพย์แบบสบายใจ","เงินเข้าแล้ว ขอให้บริหารคล่องตัว","การเงินคล่องตัว ใช้จ่ายพอดี มีเหลือเก็บ และวางแผนได้อย่างสบายใจ","รายรับวันนี้ต่อยอดเป็นความมั่นคงและโอกาสดีในอนาคต","เขียวมรกต-ทอง-สีประจำวัน","กระเป๋าสตางค์ สมุดบัญชี เหรียญมงคล โต๊ะทำงาน และบรรยากาศการเงินที่เรียบร้อย"),
   week_start:specialPreset("week_start","วันเริ่มต้นสัปดาห์ใหม่","monthly","work","เริ่มสัปดาห์ใหม่ด้วยพลังดี ๆ","สัปดาห์นี้ ขอให้งานไหลลื่น","เริ่มสัปดาห์อย่างสดชื่น งานเดินหน้า และจัดการทุกอย่างได้อย่างมั่นใจ","มีแรงใจ มีสมาธิ และพบโอกาสดีตลอดทั้งสัปดาห์","สีประจำวัน","โต๊ะทำงาน แสงเช้า ปฏิทิน กาแฟหรือดอกไม้แบบไม่ซ้ำ และบรรยากาศเริ่มงาน"),
@@ -2540,12 +2543,12 @@ const SPECIAL_HEADLINE_PREFIXES = [
   "ส่งความสุขในโอกาส"
 ];
 const SPECIAL_GREETING_VARIANTS = [
-  "ขอให้วันนี้เต็มไปด้วยความสุข ความอบอุ่น และสิ่งดี ๆ ที่สอดคล้องกับความหมายของวันสำคัญ วางเรื่องเหนื่อยใจไว้ข้างหลัง เติมกำลังใจให้ตัวเอง แล้วก้าวต่อไปด้วยความหวังและรอยยิ้ม",
-  "ขอให้วันสำคัญนี้นำความสุข ความสบายใจ และความทรงจำดี ๆ มาสู่ทุกคน ขอบคุณทุกประสบการณ์ที่ช่วยให้เราเติบโต และขอให้วันข้างหน้าเต็มไปด้วยโอกาส ความสำเร็จ และเรื่องน่ายินดี",
-  "ขอให้ความหมายดีงามของวันนี้เป็นพลังใจ ช่วยให้เรื่องหนักค่อย ๆ เบาลง สิ่งที่ตั้งใจค่อย ๆ สำเร็จ และนำพาผู้คน โอกาส รวมถึงเรื่องราวดี ๆ เข้ามาในชีวิตอย่างเหมาะสม",
-  "ขอให้วันนี้เป็นอีกหนึ่งวันที่เต็มไปด้วยรอยยิ้ม ความอบอุ่น และความรู้สึกดี ๆ มีแรงกายแรงใจสำหรับทุกสิ่งที่ต้องทำ ได้รับข่าวดี และพบความสุขเล็ก ๆ ตลอดทั้งวัน",
-  "ขอให้วันสำคัญนี้เป็นโอกาสของความสุข ความกตัญญู ความรัก และสิ่งดีงามรอบตัว ขอให้ทุกความตั้งใจได้รับการตอบรับที่ดี ทุกความพยายามมีความหมาย และหัวใจมีความหวังอยู่เสมอ",
-  "ขอให้ทุกช่วงเวลาของวันนี้งดงาม อบอุ่น และเต็มไปด้วยความหมายที่ดี เรื่องที่กังวลค่อย ๆ คลี่คลาย งานและชีวิตเดินหน้าอย่างราบรื่น พร้อมมีคนดี ๆ และกำลังใจดี ๆ อยู่เคียงข้าง"
+  "ขอให้วันสำคัญนี้เต็มไปด้วยความสุข ความสำเร็จ สุขภาพแข็งแรง โชคดีมีชัย และสมปรารถนาในทุกสิ่งที่ตั้งใจ",
+  "ขอให้ความหมายดีงามของวันนี้นำพาความสุข ความเจริญ การงานราบรื่น การเงินคล่องตัว และข่าวดีมาสู่ทุกคน",
+  "ขอให้วันนี้เป็นวันที่ดี พบแต่สิ่งเป็นมงคล มีความสุข สุขภาพแข็งแรง การงานก้าวหน้า และสมหวังทุกประการ",
+  "ขอให้วันสำคัญนี้นำความสุข ความรัก ความเจริญรุ่งเรือง และความสำเร็จมาสู่ชีวิตและครอบครัว",
+  "ขอให้ทุกสิ่งที่ตั้งใจสำเร็จราบรื่น มีโชคมีลาภ เงินทองคล่องมือ สุขภาพแข็งแรง และมีความสุขตลอดวัน",
+  "ขอให้วันนี้เต็มไปด้วยรอยยิ้ม ข่าวดี โอกาสดี ความสำเร็จ และความสมหวังในทุกประการ"
 ];
 
 function specialTextVariant(sp,s,setNo,seed){
@@ -3837,7 +3840,38 @@ function sharedPairVisualStyle(s){
 
 const HEADLINE_POOLS = ["{DAY}นี้ ขอให้มีแต่สิ่งดี ๆ", "สวัสดี{DAY} ขอให้วันนี้สดใส", "อรุณสวัสดิ์{DAY} เริ่มวันด้วยรอยยิ้ม", "{DAY}แห่งความสุขและความหวัง", "ส่งความสุขในเช้าวัน{DAY}", "ขอให้{DAY}นี้เป็นวันที่น่ารัก", "เช้าวัน{DAY} ขอให้ใจเบิกบาน", "เริ่มต้น{DAY}ด้วยพลังดี ๆ", "{DAY}นี้ ขอให้ทุกอย่างราบรื่น", "สุขสันต์เช้าวัน{DAY} ขอให้โชคดี", "เช้านี้ขอให้{DAY}เต็มไปด้วยความสุข", "{DAY}สดใส ขอให้พบแต่เรื่องดีงาม", "สวัสดีเช้าวัน{DAY} ขอให้ใจเป็นสุข", "เริ่ม{DAY}ด้วยความหวังดี ๆ", "{DAY}นี้ ขอให้ยิ้มได้ทั้งวัน", "ขอให้เช้าวัน{DAY}พาเรื่องดี ๆ มา", "{DAY}เบิกบาน ขอให้วันนี้ใจดีต่อเรา", "อรุณรุ่งวัน{DAY} ขอให้ทุกอย่างลงตัว", "ส่งกำลังใจดี ๆ ในเช้าวัน{DAY}", "{DAY}นี้ ขอให้ได้พบความสบายใจ", "ขอให้{DAY}เป็นวันที่เต็มไปด้วยโอกาสดี", "เริ่มเช้าวัน{DAY}อย่างสดใสและมั่นใจ", "{DAY}นี้ ขอให้โชคดีอยู่ข้างคุณ", "สวัสดี{DAY} ขอให้ทุกก้าวเป็นก้าวที่ดี", "ขอให้เช้าวัน{DAY}เติมพลังให้หัวใจ", "{DAY}วันนี้ ขอให้มีแต่ข่าวดี", "อรุณสวัสดิ์{DAY} ขอให้ทั้งวันราบรื่น", "ขอให้{DAY}นี้มีแต่รอยยิ้มอบอุ่น", "เช้าวัน{DAY} ขอให้ทุกเรื่องง่ายขึ้น", "{DAY}นี้ ขอให้ได้เจอสิ่งที่ใช่", "ส่งความสดใสให้ในวัน{DAY}", "ขอให้วัน{DAY}นี้เป็นวันแห่งความสบายใจ", "{DAY}ดี ๆ เริ่มต้นได้ตั้งแต่เช้านี้", "เช้านี้ในวัน{DAY} ขอให้ใจเต็มไปด้วยพลัง", "สวัสดี{DAY} ขอให้ทุกอย่างเป็นใจ", "ขอให้{DAY}นี้มีแต่ความราบรื่น", "เริ่มต้นวัน{DAY}ด้วยความคิดดี ๆ", "{DAY}นี้ ขอให้ความสุขเดินทางมาหา", "ขอให้เช้าวัน{DAY}เป็นจุดเริ่มต้นที่ดี", "{DAY}นี้ ขอให้มีแรงใจและแรงบันดาลใจ", "ส่งคำทักทายดี ๆ ในเช้าวัน{DAY}", "อรุณสวัสดิ์วัน{DAY} ขอให้ใจสงบและสดใส", "ขอให้{DAY}นี้เป็นวันที่น่าจดจำ", "เช้าวัน{DAY} ขอให้สิ่งดี ๆ เกิดขึ้นง่าย ๆ", "{DAY}นี้ ขอให้สมหวังในสิ่งที่ตั้งใจ", "ขอให้วัน{DAY}นี้อ่อนโยนกับหัวใจ", "เริ่ม{DAY}ด้วยความสุขเล็ก ๆ รอบตัว", "สวัสดีวัน{DAY} ขอให้มีพลังดีตลอดวัน", "{DAY}นี้ ขอให้ทุกช่วงเวลามีความหมาย", "เช้าวัน{DAY} ขอให้ชีวิตไหลลื่นและสบายใจ", "ขอให้วัน{DAY}นี้เต็มไปด้วยความสำเร็จ", "{DAY}สดใส ขอให้หัวใจสดชื่น", "เริ่มต้นวัน{DAY}ด้วยรอยยิ้มและความหวัง", "ส่งความปรารถนาดีในเช้าวัน{DAY}", "{DAY}นี้ ขอให้เรื่องดี ๆ เข้ามาไม่ขาดสาย", "ขอให้เช้าวัน{DAY}นำความสุขมาให้", "สวัสดีวัน{DAY} ขอให้ใจพร้อมรับสิ่งดี ๆ", "{DAY}นี้ ขอให้สิ่งที่รอคอยมาถึง", "อรุณสวัสดิ์วัน{DAY} ขอให้เป็นวันที่ราบรื่น", "เช้าวัน{DAY} ขอให้พบแต่คนและเรื่องดี ๆ"];
 
-const GREETING_POOLS = ["ขอให้วันนี้มีแต่ความสบายใจ รอยยิ้ม และเรื่องดี ๆ เข้ามาเติมพลังตลอดทั้งวัน", "ขอให้ทุกสิ่งที่ตั้งใจค่อย ๆ สำเร็จอย่างราบรื่น และมีความสุขกับทุกก้าวของวันนี้", "ขอให้เช้าวันนี้นำความสดใส ความหวัง และโอกาสดี ๆ เข้ามาในชีวิต", "ขอให้สุขภาพแข็งแรง การงานคล่องตัว และพบเจอแต่ผู้คนและเรื่องราวที่ทำให้ใจเป็นสุข", "ขอให้วันนี้เป็นวันที่เบาสบาย มีข่าวดี มีรอยยิ้ม และมีพลังใจที่ดีอยู่ข้างกาย", "ขอให้ทุกช่วงเวลาของวันนี้เต็มไปด้วยความอบอุ่น ความสำเร็จ และสิ่งที่น่าชื่นใจ", "ขอให้การเดินทางของวันนี้ราบรื่น ได้พบสิ่งดี ๆ และมีความสุขกับเรื่องเล็ก ๆ รอบตัว", "ขอให้วันนี้เปิดประตูสู่โอกาสใหม่ ๆ มีความก้าวหน้า และสมหวังในสิ่งที่ตั้งใจ", "ขอให้หัวใจสดใส มีคนดี ๆ อยู่รอบตัว และได้ใช้วันนี้อย่างมีความหมาย", "ขอให้วันนี้มีโชค มีความสุข และมีเรื่องดี ๆ เกิดขึ้นมากกว่าที่คาดหวัง", "ขอให้ทุกเรื่องที่กำลังพยายามค่อย ๆ เห็นผล และมีแรงใจเดินหน้าต่ออย่างมั่นคง", "ขอให้วันนี้มีจังหวะดี ๆ เข้ามา ทำสิ่งใดก็ราบรื่นและลงตัว", "ขอให้ความเหนื่อยใจลดลง ความสบายใจเพิ่มขึ้น และมีความสุขกับทุกช่วงเวลาของวันนี้", "ขอให้วันนี้เต็มไปด้วยพลังบวก ความคิดดี ๆ และโอกาสที่ช่วยให้ชีวิตก้าวหน้า", "ขอให้ทุกการตัดสินใจวันนี้นำไปสู่สิ่งที่ดี และทำให้ใจเบาสบายขึ้น", "ขอให้เช้านี้เป็นจุดเริ่มต้นของเรื่องดี ๆ ที่ค่อย ๆ เติบโตตลอดทั้งวัน", "ขอให้มีสติ มีพลัง และมีความสุขกับสิ่งที่กำลังทำอยู่ในวันนี้", "ขอให้วันนี้ผ่านไปอย่างราบรื่น ได้รับข่าวดี และพบความสุขในสิ่งเล็ก ๆ รอบตัว", "ขอให้ทุกความตั้งใจได้รับการตอบรับที่ดี และทุกความพยายามมีความหมาย", "ขอให้วันนี้มีทั้งความสุข ความสำเร็จ และความอบอุ่นจากคนรอบข้าง", "ขอให้มีโอกาสดี ๆ เข้ามาอย่างเหมาะสม และพร้อมรับทุกสิ่งด้วยหัวใจที่มั่นคง", "ขอให้วันนี้เป็นวันที่ได้พักใจจากเรื่องหนัก ๆ และพบสิ่งที่ทำให้ยิ้มได้ง่ายขึ้น", "ขอให้ทุกเส้นทางที่เลือกเดินนำไปสู่ความราบรื่น ความก้าวหน้า และความสบายใจ", "ขอให้วันนี้มีความสุขแบบเรียบง่าย มีแรงใจ และมีเวลาสำหรับสิ่งที่สำคัญ", "ขอให้สิ่งดี ๆ ค่อย ๆ เดินทางเข้ามา และทำให้วันนี้เป็นวันที่น่าจดจำ", "ขอให้ความกังวลเบาลง ความหวังเพิ่มขึ้น และมีพลังดี ๆ อยู่กับคุณตลอดวัน", "ขอให้วันนี้มีทั้งโอกาส ความสำเร็จ และคนดี ๆ ที่พร้อมสนับสนุนกัน", "ขอให้ทุกเรื่องที่ค้างคาคลี่คลายไปในทางที่ดี และทำให้ใจโล่งสบายขึ้น", "ขอให้สุขภาพแข็งแรง จิตใจสดใส และได้ทำสิ่งที่รักอย่างมีความสุข", "ขอให้วันนี้มีความหมาย มีความคืบหน้า และมีเรื่องเล็ก ๆ ที่ทำให้หัวใจอบอุ่น", "ขอให้ทุกความพยายามได้รับผลตอบแทนที่ดี และทุกความตั้งใจนำไปสู่ความสำเร็จ", "ขอให้วันนี้มีข่าวดีเข้ามา มีเรื่องน่ายินดี และมีความสบายใจมากขึ้นเรื่อย ๆ", "ขอให้ได้พบผู้คนที่จริงใจ โอกาสที่เหมาะสม และความสุขที่อยู่ได้นาน", "ขอให้วันนี้เป็นวันที่ใจนิ่ง งานเดินหน้า และทุกอย่างค่อย ๆ เข้าที่เข้าทาง", "ขอให้มีความมั่นใจในตัวเอง และพบเหตุผลดี ๆ ที่ทำให้ยิ้มได้ตลอดวัน", "ขอให้ทุกช่วงเวลาวันนี้เติมเต็มทั้งพลังใจ ความหวัง และความสุขเล็ก ๆ", "ขอให้วันนี้มีแต่สิ่งที่ดีต่อใจ และช่วยให้ก้าวไปข้างหน้าอย่างมั่นคง", "ขอให้ทุกอย่างที่ตั้งใจเริ่มเห็นความชัดเจน และพบทางออกที่เหมาะกับตัวเอง", "ขอให้วันนี้เต็มไปด้วยความอ่อนโยน ความเข้าใจ และบรรยากาศที่ทำให้ใจสบาย", "ขอให้ได้ใช้วันนี้อย่างคุ้มค่า มีความสุขกับปัจจุบัน และมองไปข้างหน้าด้วยความหวัง", "ขอให้วันนี้เป็นวันที่ทุกอย่างเบาขึ้น ง่ายขึ้น และเป็นใจมากขึ้น", "ขอให้มีพลังดีพอสำหรับทุกสิ่งที่ต้องทำ และมีเวลาพักใจอย่างพอดี", "ขอให้วันนี้มีความก้าวหน้าแบบไม่กดดัน และมีความสุขกับความสำเร็จเล็ก ๆ ระหว่างทาง", "ขอให้ทุกคำพูด ทุกการพบเจอ และทุกเหตุการณ์วันนี้พาไปในทิศทางที่ดี", "ขอให้วันนี้ใจเย็น งานไหลลื่น และมีความสุขกับผลลัพธ์ที่เกิดขึ้น", "ขอให้มีความหวังใหม่ ๆ เข้ามา และช่วยให้มองเห็นสิ่งดี ๆ รอบตัวได้ชัดขึ้น", "ขอให้วันนี้เป็นวันแห่งการเริ่มต้นที่ดี การตัดสินใจที่ดี และความรู้สึกที่ดี", "ขอให้ทุกเรื่องสำคัญค่อย ๆ ลงตัว และมีความสบายใจมากกว่าความกังวล", "ขอให้วันนี้มีความสุขกับสิ่งที่ทำ มีคนดี ๆ อยู่ใกล้ และมีพลังใจอยู่เสมอ", "ขอให้สิ่งที่กำลังรอคอยค่อย ๆ เดินทางมาถึงในเวลาที่เหมาะสม", "ขอให้วันนี้เต็มไปด้วยความสดใส ความคล่องตัว และความหวังที่จับต้องได้", "ขอให้ความตั้งใจดี ๆ ของวันนี้กลายเป็นผลลัพธ์ที่น่าภูมิใจในวันข้างหน้า", "ขอให้ทุกก้าววันนี้พาเข้าใกล้สิ่งที่หวัง และมีความสุขกับระหว่างทาง", "ขอให้วันนี้มีเรื่องราวดี ๆ มากพอที่จะทำให้หัวใจยิ้มได้", "ขอให้ทุกความเหน็ดเหนื่อยมีความหมาย และนำไปสู่ความสำเร็จที่คู่ควร", "ขอให้วันนี้ราบรื่นตั้งแต่เช้าจนเย็น และมีความสุขกับทุกสิ่งที่เกิดขึ้น", "ขอให้ได้พบความชัดเจนในสิ่งที่ลังเล และมีความมั่นใจในทางที่เลือก", "ขอให้วันนี้มีความพอดีทั้งงาน ชีวิต และความรู้สึก ทำทุกอย่างได้อย่างสบายใจ", "ขอให้สิ่งดี ๆ เข้ามาอย่างต่อเนื่อง และทำให้วันนี้เป็นอีกวันที่น่ารักของชีวิต", "ขอให้มีทั้งแรงกาย แรงใจ และความสุขเพียงพอสำหรับทุกสิ่งที่ต้องเจอในวันนี้"];
+const GREETING_POOLS = [
+  "ขอให้วันนี้มีแต่ความสุข รอยยิ้ม และเรื่องน่ายินดีเข้ามาตลอดทั้งวัน",
+  "ขอให้สุขภาพแข็งแรง การงานราบรื่น การเงินคล่องตัว และพบแต่สิ่งดี ๆ",
+  "ขอให้วันนี้มีข่าวดี โอกาสดี และความสำเร็จในสิ่งที่ตั้งใจ",
+  "ขอให้ทำสิ่งใดก็ราบรื่น สมหวัง และได้รับผลลัพธ์ที่น่าภูมิใจ",
+  "ขอให้การงานก้าวหน้า ได้รับความไว้วางใจ และมีโอกาสดีเข้ามาอย่างต่อเนื่อง",
+  "ขอให้การเงินคล่องมือ มีรายรับดี มีโชคมีลาภ และทรัพย์เพิ่มพูน",
+  "ขอให้วันนี้พบผู้คนที่จริงใจ ได้รับการสนับสนุนที่ดี และมีเรื่องน่ายินดี",
+  "ขอให้ทุกความตั้งใจสำเร็จตามเป้าหมาย และมีความสุขกับผลลัพธ์ที่ได้รับ",
+  "ขอให้วันนี้สดใส เบิกบาน มีพลังดี และพบแต่สิ่งที่เป็นมงคล",
+  "ขอให้มีโชคดีอยู่เสมอ พบโอกาสที่เหมาะสม และสมหวังในเรื่องสำคัญ",
+  "ขอให้ธุรกิจและการงานเจริญรุ่งเรือง มีลูกค้า มีรายได้ และความสำเร็จเพิ่มขึ้น",
+  "ขอให้เงินทองไหลมาเทมา การเงินมั่นคง และมีความอุดมสมบูรณ์ในทุกด้าน",
+  "ขอให้วันนี้เป็นวันที่ดี มีความสุข ความสำเร็จ และความราบรื่นตั้งแต่เช้าจนเย็น",
+  "ขอให้ทุกการติดต่อประสานงานสำเร็จด้วยดี และได้รับข่าวดีที่น่ายินดี",
+  "ขอให้สุขกาย สุขใจ แข็งแรง สดชื่น และมีความสุขตลอดทั้งวัน",
+  "ขอให้มีสิริมงคล โชคลาภ และความเจริญรุ่งเรืองเข้ามาในชีวิต",
+  "ขอให้วันนี้มีโอกาสใหม่ ๆ ที่ดี การงานเดินหน้า และการเงินงอกงาม",
+  "ขอให้สิ่งที่ตั้งใจไว้สำเร็จสมปรารถนา และได้รับผลตอบแทนที่คุ้มค่า",
+  "ขอให้พบแต่คนดี เรื่องดี และโอกาสดีที่นำพาความสุขและความสำเร็จมาให้",
+  "ขอให้วันนี้เต็มไปด้วยความสดใส ความคล่องตัว และเรื่องน่ายินดี",
+  "ขอให้มีความก้าวหน้าในหน้าที่การงาน มีรายได้มั่นคง และมีความสุขกับชีวิต",
+  "ขอให้วันนี้มีโชค มีลาภ การเงินราบรื่น และพบโอกาสดีที่น่ายินดี",
+  "ขอให้คิดสิ่งใดสมปรารถนา ทำสิ่งใดสำเร็จ และได้รับแต่สิ่งดี ๆ",
+  "ขอให้ทุกด้านของชีวิตเจริญก้าวหน้า สุขภาพดี การงานดี และการเงินดี",
+  "ขอให้มีความสุขกับครอบครัว มีความสำเร็จในงาน และมีความมั่นคงทางการเงิน",
+  "ขอให้วันนี้ได้รับข่าวดี พบโอกาสทอง และมีเรื่องดี ๆ เข้ามาอย่างต่อเนื่อง",
+  "ขอให้การเดินทางราบรื่น ปลอดภัย และพบแต่ประสบการณ์ที่ดีตลอดวัน",
+  "ขอให้มีพลังสร้างสรรค์ ความมั่นใจ และความสำเร็จในทุกสิ่งที่ลงมือทำ",
+  "ขอให้วันนี้เป็นวันแห่งโชคดี ความสุข ความก้าวหน้า และความสำเร็จ",
+  "ขอให้ชีวิตอุดมสมบูรณ์ เงินทองคล่องมือ งานรุ่งเรือง และมีสิริมงคลตลอดวัน"
+]
 
 const ACTIVITY_POOLS = [
   "quietly enjoying the morning atmosphere",
@@ -6915,11 +6949,12 @@ function buildPromptLegacyV87(setNo){
     L.push(
       "DAILY COLOR AUTHORITY v11.82 — HIGHEST COLOR PRIORITY:",
       `TODAY'S PRIMARY THEME COLOR: ${s.day.colorThai} / ${s.day.colorEnglish} / ${s.day.hex}.`,
-      "Use the weekday color as the dominant 70–80% visual family across lighting, flowers/props, typography accents, surfaces and final color grade.",
-      "Use approximately 15–25% coordinated neutrals or natural materials and no more than 5–10% minor accent hues.",
+      "Use the weekday color as the dominant 75–85% visual family across lighting, flowers/props, typography, panels, surfaces, decor accents, and final color grade.",
+      "Use approximately 10–20% coordinated neutrals or natural materials and no more than 5–10% restrained accent hues.",
+      "TYPOGRAPHY COLOR LOCK: hero headline, key title fill, date panel accents, and blessing-panel accents must stay inside today's weekday color family or neutral companions. Do not render the main headline in another weekday color family.",
       "Typography Preset, Scene Template, Pair Look and AUTO Color Grade MUST NOT replace the weekday color or turn another hue into the dominant atmosphere.",
-      "If a scene contains naturally colored hero objects, they may keep their own local color, but the overall artwork must still unmistakably read as the weekday color.",
-      "Image 1 and Image 2 must immediately read as the same weekday-color collection."
+      "If a scene contains naturally colored hero objects, they may keep their own local color, but the overall artwork must still unmistakably read as the weekday color before the viewer reads any text.",
+      "Image 1 and Image 2 must immediately read as the same weekday-color collection, the same light family, and the same final color-grade family."
     );
   }
   if(s.buddhist && s.holy.isHoly && wanPhraAutoBuddhist)L.push("On Wan Phra, preserve the weekday color as PRIMARY and use sacred gold, warm ivory, natural temple tones, and peaceful lighting only as coordinated support.");
@@ -7357,9 +7392,13 @@ function generalWeekdayColorGuardLines(s){
     "GENERAL WEEKDAY COLOR DRIFT GUARD — ABSOLUTE:",
     `WEEKDAY COLOR LOCK: ${s.day.colorThai} / ${s.day.colorEnglish} / ${s.day.hex} must stay dominant in BOTH Image 1 and Image 2.`,
     "Color dominance test: at a quick glance and even at thumbnail size, both artworks must immediately read as the weekday color before any secondary hue.",
-    "If a scene contains naturally colored flowers, props, food, architecture, deity objects, or landscape elements, keep those local colors secondary and wrap the total artwork in the weekday color through typography accents, panel colors, decor, key props, and final grade.",
-    "PAIR CONSISTENCY TEST: Image 1 and Image 2 must share the same lighting family, same white balance family, and the same overall color grade family. Do not make one image golden-warm and the other purple/cool or sunset-heavy.",
-    "The weekday color must be visibly present in MULTIPLE places, not just one tiny accent: for example in headline treatment, date/blessing panels, flowers or props, ambient color cast, and final color grade.",
+    "PAIR CONSISTENCY TEST: Image 1 and Image 2 must share the same lighting family, the same white-balance family, the same atmosphere family, and the same overall final color-grade family.",
+    "Do not make one image indoor-neutral and the other outdoor-golden, or one image green and the other pink/purple. They must feel like the same coordinated set.",
+    "The weekday color must be visibly present in MULTIPLE places, not just one tiny accent: headline treatment, date/blessing panels, decor, ambient cast, and final grade.",
+    "TYPOGRAPHY / PANEL LOCK: the main headline fill, main outline accent, date capsule, and blessing panel must visually support today's weekday color family. Avoid large pink/purple/orange headline fills on Wednesday, or any other headline palette that reads like another day.",
+    "If a scene contains naturally colored flowers, props, food, architecture, deity objects, or landscape elements, keep those local colors secondary and wrap the TOTAL artwork back into the weekday color through typography accents, panel colors, decor, key props, foliage selection, wardrobe accents, and final grading.",
+    "If the selected scene naturally pushes the image toward another weekday color family, override that drift by restyling props, choosing different flowers/materials of the same scene concept, and regrading the image back to today's weekday color.",
+    "SELF-CHECK BEFORE FINALIZING: if the artwork reads like another weekday color family, it is INVALID and must be corrected or internally rerolled before final output.",
   ];
   const specific={
     RED:[
@@ -7376,8 +7415,11 @@ function generalWeekdayColorGuardLines(s){
       "Do NOT let red signboards, gold wealth symbols, or purple/lavender flower fields overpower the Tuesday pink signature theme. If such objects appear, keep them secondary and restore pink as the visible master color."
     ],
     GREEN:[
-      "WEDNESDAY GREEN LOCK: use a refined GREEN family as the dominant mood — leaf green, jade green, mint green, emerald green, or botanical green.",
-      "FORBIDDEN DOMINANCE: blue-only mood, orange wash, or gold-heavy atmosphere that causes green to disappear."
+      "WEDNESDAY GREEN LOCK: BOTH artworks must visibly read as a GREEN-theme collection — leaf green, jade green, mint green, emerald green, botanical green, or fresh spring green.",
+      "FORBIDDEN DOMINANCE: pink/rose dominance, purple/lavender dominance, blue-only mood, orange wash, or gold-heavy atmosphere that causes green to disappear.",
+      "WEDNESDAY TYPOGRAPHY LOCK: the hero headline and its dominant fill/accent must stay in the GREEN family (green with white/cream support is allowed). Do NOT use pink/purple headline fills that visually read like Tuesday or Saturday.",
+      "If the scene is floral, garden, romantic, cafe, countryside, old-town, or family-lifestyle, keep GREEN as the hero atmosphere through foliage, styling, panels, wardrobe accents, decor, and final grade. Pink roses, blush skies, magenta bougainvillea, or rose-gold decor may appear only as very minor accents.",
+      "If flowers are needed for beauty, prefer green-rich foliage with white, cream, or pale yellow blossoms rather than large pink flower masses that turn the image into a Tuesday-looking artwork."
     ],
     ORANGE:[
       "THURSDAY ORANGE LOCK: use a clear ORANGE family as the dominant mood — marigold orange, amber-orange, saffron orange, or warm tangerine.",
@@ -7395,6 +7437,43 @@ function generalWeekdayColorGuardLines(s){
   return [...base,...(specific[key]||[]),""];
 }
 
+function generalWeekdayPairRepairLines(s,setNo){
+  if(resolveMainArtworkMode()!=="general") return [];
+  return [
+    "GENERAL PAIR REPAIR / NORMALIZATION — APPLY BEFORE FINAL OUTPUT:",
+    `This is Image ${setNo}. Match it to the SAME weekday palette, SAME light family, SAME tonal atmosphere, and SAME final grade used by the companion image.`,
+    "Companion-pair rule: the two images may have different subjects or scenes, but they must still look like one designed daily greeting set from the same day.",
+    "Normalize any scene-specific drift back to today's weekday color. If the scene introduces strong non-matching hues, reduce them and restyle the scene while preserving the concept.",
+    "Do not allow decorative flowers, sunset skies, signboards, lanterns, red packets, pink rose arches, or other scene props to overpower today's weekday color.",
+    "If needed, prefer safer coordinated alternatives within the same scene concept so the final image remains faithful to the weekday color lock.",
+    "FINAL VALIDATION: if this image does not visually belong with the companion image in both color and light, it is INVALID and must be corrected before finalizing.",
+    ""
+  ];
+}
+
+function generalWeekdaySceneRiskGuardLines(s,setNo){
+  if(resolveMainArtworkMode()!=="general") return [];
+  const key=String(s?.day?.colorEnglish||"").toUpperCase();
+  const common=[
+    "WEEKDAY SCENE RISK GUARD — APPLY TO THE CURRENT IMAGE:",
+    `Current image: ${setNo}. Keep the selected scene concept, but restyle risky colors so the image still reads as today's weekday color.`,
+    "If a scene contains strong competing colors, do NOT abandon the scene. Instead, tame those colors and shift the styling, props, wardrobe accents, flower choice, decorative panels, and final grade back toward today's weekday color.",
+  ];
+  const specific={
+    GREEN:[
+      "WEDNESDAY SCENE GUARD: avoid letting warm yellow buildings, golden rice fields, sunset wash, pink bougainvillea, rose gardens, or magenta flower beds dominate the frame.",
+      "For Wednesday, prefer fresh greenery, leafy framing, green-rich plants, jade/mint decor, and soft clean daylight. Neutral cream and small yellow-white accents are allowed only in support of the green theme.",
+      "If the chosen scene is old town, countryside, or family setting, make sure green elements are abundant and visually stronger than pink flowers or golden architecture."
+    ],
+    PINK:[
+      "For Tuesday, if the scene brings in too much gold, red, or purple, soften those elements and pull the image back into a clear pink family."
+    ],
+    BLUE:[
+      "For Friday, if the scene becomes too gray, brown, or pink, regrade and restyle back into a clear blue/sky-blue atmosphere."
+    ]
+  };
+  return [...common,...(specific[key]||[]),""];
+}
 
 function masterRenderingState(){
   const el=document.getElementById("humanStyle");
@@ -7566,6 +7645,54 @@ const REFERENCE_IMAGE_BLESSING_LIBRARY_V1153={
       "มีความสุขตลอดวัน"
     ]
   },
+  travel:{
+    label:"เดินทาง / ปลอดภัย — คลัง POKUN",
+    desc:"คำอวยพรเรื่องการเดินทางโดยตรง เน้นความปลอดภัย ราบรื่น และถึงจุดหมายโดยสวัสดิภาพ",
+    headlines:[
+      "เดินทางปลอดภัย",
+      "เดินทางโดยสวัสดิภาพ",
+      "ถึงจุดหมายอย่างปลอดภัย",
+      "ทุกเส้นทางราบรื่น"
+    ],
+    greetings:[
+      "ขอให้เดินทางโดยสวัสดิภาพ",
+      "ขอให้เดินทางปลอดภัยทุกเส้นทาง",
+      "ขอให้ไปถึงที่หมายโดยราบรื่นและปลอดภัย",
+      "ขอให้แคล้วคลาดปลอดภัยตลอดการเดินทาง"
+    ]
+  },
+  family:{
+    label:"ครอบครัว / ความสุขความเจริญ — คลัง POKUN",
+    desc:"คำอวยพรครอบครัว เน้นความสุข ความเจริญก้าวหน้า การงาน การเงิน ความรัก สุขภาพ และความสมหวัง",
+    headlines:[
+      "ครอบครัวอยู่ดีมีสุข",
+      "ครอบครัวสุขสันต์",
+      "บ้านนี้มีแต่ความสุข",
+      "ครอบครัวเจริญก้าวหน้า"
+    ],
+    greetings:[
+      "ขอให้ครอบครัวมีแต่ความสุข",
+      "ขอให้ครอบครัวนี้มีแต่ความสุข ความเจริญก้าวหน้า การงานมั่นคง การเงินคล่องตัว ความรักสมหวัง และสมปรารถนาทุกประการ",
+      "ขอให้ทุกคนในครอบครัวอยู่เย็นเป็นสุข สุขภาพแข็งแรง การงานก้าวหน้า การเงินมั่นคง และมีความรักความอบอุ่นเสมอ",
+      "ขอให้บ้านนี้เต็มไปด้วยความรัก ความสุข ความเจริญ และความสมหวังทุกประการ"
+    ]
+  },
+  friendship:{
+    label:"มิตรภาพ / เพื่อนที่แสนดี — คลัง POKUN",
+    desc:"ข้อความมิตรภาพอบอุ่น ซาบซึ้ง และขอบคุณความสัมพันธ์ที่ดีและยืนยาว",
+    headlines:[
+      "ขอบคุณมิตรภาพที่แสนดี",
+      "มิตรภาพที่ไม่เคยจาง",
+      "มิตรไมตรียังเหมือนเดิม",
+      "ที่สุดของคำว่า มิตรภาพ"
+    ],
+    greetings:[
+      "ขอบคุณมิตรภาพที่แสนดี จะกี่วัน กี่เดือน กี่ปี มิตรไมตรีก็ยังเหมือนเดิม",
+      "ที่สุดของคำว่า มิตรภาพ แม้ไม่ได้เจอกัน แต่ก็ไม่เคยลบเลือนไปจากใจ",
+      "มิตรภาพก็เหมือนดวงดาว อาจมองไม่เห็นทุกวัน แต่ก็รู้กันว่ามันไม่ได้หายไปไหน",
+      "ขอให้มิตรภาพดี ๆ ของเรายังคงงดงาม อบอุ่น และอยู่ในใจเสมอ"
+    ]
+  },
   short_power:{
     label:"สั้น กระชับ — จากภาพอ้างอิง",
     desc:"ใช้เฉพาะถ้อยคำสั้น ๆ ที่สกัดจากภาพ",
@@ -7640,47 +7767,58 @@ const REFERENCE_IMAGE_THEME_ALIAS_V1153={
 // remains untouched for users who intentionally want compact copy.
 const LONG_WARM_BLESSINGS_V1182={
   happiness:[
-    "ขอให้วันนี้เต็มไปด้วยความสดใสและรอยยิ้ม วางเรื่องเหนื่อยใจไว้ข้างหลัง แล้วเปิดรับความสุขเล็ก ๆ รอบตัว ขอให้ได้พบผู้คนที่จริงใจ ข่าวดีที่รอคอย และช่วงเวลาที่ทำให้หัวใจอบอุ่นตลอดทั้งวัน",
-    "ขอให้เช้าวันนี้นำความเบิกบานเข้ามาในหัวใจ ทุกเรื่องที่กังวลค่อย ๆ เบาลง มีพลังทำสิ่งที่ตั้งใจ และได้ใช้เวลาอยู่กับสิ่งที่รัก ขอให้วันนี้เป็นวันที่สบายใจและน่าจดจำ"
+    "ขอให้วันนี้เต็มไปด้วยความสดใส รอยยิ้ม และเรื่องน่ายินดี ได้พบผู้คนที่จริงใจ มีช่วงเวลาดี ๆ ตลอดวัน และมีความสุขกับทุกสิ่งที่ทำ",
+    "ขอให้เช้าวันนี้นำความเบิกบานและสิ่งดี ๆ เข้ามาในชีวิต พบข่าวดี โอกาสดี และความสุขที่ทำให้ทั้งวันสดใสและน่าจดจำ"
   ],
   health:[
-    "ขอให้สุขภาพแข็งแรงทั้งกายและใจ มีแรงสำหรับทุกสิ่งที่ต้องทำ ได้พักผ่อนอย่างเพียงพอ และใช้ชีวิตในแต่ละวันด้วยความสบายใจ ขอให้ห่างไกลจากความเจ็บป่วยและมีความสุขอยู่เสมอ",
-    "ขอให้วันนี้ร่างกายสดชื่น จิตใจแจ่มใส ความเหนื่อยล้าค่อย ๆ คลายลง มีพลังดี ๆ กลับคืนมา และได้รับการดูแลจากคนรอบข้าง ขอให้ทุกวันเต็มไปด้วยสุขภาพที่ดีและรอยยิ้ม"
+    "ขอให้สุขภาพแข็งแรงทั้งกายและใจ สดชื่นแจ่มใส มีพลังเต็มที่ตลอดวัน รับประทานอาหารอร่อย พักผ่อนเพียงพอ และมีความสุขกับทุกช่วงเวลา",
+    "ขอให้วันนี้ร่างกายแข็งแรง จิตใจสดใส มีเรี่ยวแรงสำหรับทุกกิจกรรม และได้รับแต่สิ่งดี ๆ ที่ส่งเสริมสุขภาพและความสุขในทุกวัน"
   ],
   work:[
-    "ขอให้การงานวันนี้ราบรื่น ทุกหน้าที่เดินหน้าอย่างคล่องตัว ได้รับความร่วมมือและโอกาสที่ดี ความพยายามค่อย ๆ เห็นผลเป็นความสำเร็จ และมีความภูมิใจในทุกก้าวที่กำลังสร้างขึ้น",
-    "ขอให้สิ่งที่รับผิดชอบสำเร็จตามเป้าหมาย อุปสรรคค่อย ๆ คลี่คลาย มีผู้ใหญ่และเพื่อนร่วมงานคอยสนับสนุน พร้อมพบแนวทางใหม่ ๆ ที่ช่วยให้งานก้าวหน้าและชีวิตมั่นคงยิ่งขึ้น"
+    "ขอให้การงานวันนี้ราบรื่น คล่องตัว และสำเร็จตามเป้าหมาย ได้รับความร่วมมือที่ดี มีผู้ใหญ่สนับสนุน และพบโอกาสที่ช่วยให้ก้าวหน้าอย่างมั่นคง",
+    "ขอให้ทุกหน้าที่สำเร็จด้วยดี งานเดินหน้าอย่างมีประสิทธิภาพ ได้รับความไว้วางใจ ผลงานเป็นที่ยอมรับ และมีความก้าวหน้าอย่างต่อเนื่อง"
   ],
   money:[
-    "ขอให้การเงินคล่องตัว มีรายรับและโอกาสดี ๆ เข้ามาอย่างต่อเนื่อง ใช้จ่ายอย่างสบายใจ เก็บออมได้ตามตั้งใจ และให้ทุกความขยันนำมาซึ่งความมั่นคง ความอุดมสมบูรณ์ และความสุขของคนในครอบครัว",
-    "ขอให้วันนี้เปิดทางสู่ความมั่นคงทางการเงิน งานสร้างรายได้อย่างงดงาม เงินทองหมุนเวียนราบรื่น มีโชคในจังหวะที่เหมาะสม และสามารถดูแลตัวเองกับคนที่รักได้อย่างสบายใจ"
+    "ขอให้การเงินคล่องตัว มีรายรับดี เงินทองหมุนเวียนราบรื่น มีโอกาสสร้างรายได้เพิ่ม เก็บออมได้ตามตั้งใจ และมีความมั่นคงทางการเงินยิ่งขึ้น",
+    "ขอให้วันนี้มีโชคด้านการเงิน เงินทองคล่องมือ ได้รับผลตอบแทนที่ดีจากสิ่งที่ทำ และมีทรัพย์เพิ่มพูนอย่างมั่นคงและเป็นสิริมงคล"
   ],
   wealth:[
-    "ขอให้ความขยันและความตั้งใจนำพาความมั่งคั่งเข้ามา โอกาสดีเปิดทาง การงานเติบโต การเงินงอกงาม และมีทรัพย์อย่างมั่นคง ขอให้ความสำเร็จทุกด้านเกิดขึ้นพร้อมความสุขและความสบายใจ",
-    "ขอให้ชีวิตรุ่งเรืองและอุดมสมบูรณ์ มีโชคมีลาภอย่างเหมาะสม พบช่องทางที่ช่วยต่อยอดความสำเร็จ เงินทองคล่องมือ และทุกสิ่งที่สร้างไว้ค่อย ๆ เติบโตเป็นความมั่นคงที่ยั่งยืน"
+    "ขอให้ชีวิตเจริญรุ่งเรือง การงานเติบโต การเงินงอกงาม มีทรัพย์เพิ่มพูน พบโอกาสดีในการต่อยอดความสำเร็จ และมั่งคั่งอย่างมั่นคง",
+    "ขอให้มีโชคมีลาภ เงินทองคล่องมือ ธุรกิจและการงานเจริญก้าวหน้า ได้รับโอกาสที่ดี และมีความอุดมสมบูรณ์ในทุกด้าน"
   ],
   success:[
-    "ขอให้ทุกเป้าหมายที่ตั้งใจค่อย ๆ สำเร็จอย่างราบรื่น อุปสรรคกลายเป็นบทเรียน ความพยายามได้รับผลตอบแทนที่ดี และทุกก้าวพาเข้าใกล้ความฝัน ขอให้ภาคภูมิใจกับความสำเร็จที่กำลังมาถึง",
-    "ขอให้วันนี้มีความคืบหน้าในเรื่องสำคัญ ได้พบทางออกที่เหมาะสมและคนที่พร้อมสนับสนุน ขอให้ลงมือทำด้วยความมั่นใจ เดินหน้าอย่างมั่นคง และสมหวังในสิ่งดี ๆ ที่ตั้งใจ"
+    "ขอให้ทุกเป้าหมายสำเร็จตามที่ตั้งใจ ผลงานออกมาดี ได้รับการยอมรับ พบโอกาสใหม่ ๆ และก้าวไปสู่ความสำเร็จที่น่าภูมิใจ",
+    "ขอให้วันนี้ทำสิ่งใดก็สำเร็จราบรื่น มีความก้าวหน้าอย่างชัดเจน ได้รับผลลัพธ์ที่ดี และสมหวังในสิ่งที่ตั้งใจ"
   ],
   luck:[
-    "ขอให้วันนี้โชคดีตั้งแต่เช้าจนเย็น ได้พบโอกาสที่เหมาะสม ข่าวดีที่รอคอย และผู้คนที่นำพาเรื่องน่ายินดีเข้ามา ขอให้คิดทำสิ่งใดราบรื่น มีโชคมีลาภ และสมหวังในเรื่องสำคัญ",
-    "ขอให้พลังดี ๆ อยู่เคียงข้างตลอดวัน เรื่องที่ติดขัดค่อย ๆ คลี่คลาย พบจังหวะและโอกาสที่เป็นใจ มีความสุข ความสำเร็จ และโชคลาภเข้ามาเติมเต็มชีวิตอย่างพอดี"
+    "ขอให้วันนี้โชคดี มีโชคลาภ พบข่าวดีและโอกาสน่ายินดี ทำสิ่งใดก็ราบรื่น การเงินคล่องตัว และสมหวังในเรื่องสำคัญ",
+    "ขอให้มีจังหวะดี ๆ เข้ามาตลอดวัน พบคนอุปถัมภ์ โอกาสดี และเรื่องน่ายินดี มีโชคมีลาภ พร้อมความสำเร็จในสิ่งที่ทำ"
   ],
   encouragement:[
-    "ขอให้เริ่มต้นวันนี้ด้วยหัวใจที่เข้มแข็ง วางเรื่องเหนื่อยไว้ข้างหลัง และค่อย ๆ เดินหน้าตามจังหวะของตัวเอง ขอให้ทุกความพยายามมีความหมาย พบกำลังใจดี ๆ และมองเห็นความหวังในทุกก้าว",
-    "ขอให้วันนี้เป็นจุดเริ่มต้นของเรื่องดี ๆ แม้บางก้าวอาจช้าแต่ยังพาเราไปข้างหน้า ขอให้เชื่อมั่นในตัวเอง มีแรงกายแรงใจ และพบความสำเร็จที่คู่ควรกับความตั้งใจ"
+    "ขอให้วันนี้เต็มไปด้วยพลังดี ความมั่นใจ และแรงบันดาลใจ ทำสิ่งที่ตั้งใจได้อย่างเต็มที่ พบโอกาสใหม่ ๆ และมีความสุขกับความสำเร็จของตัวเอง",
+    "ขอให้มีพลังใจที่สดใส ความคิดสร้างสรรค์ และความมั่นใจตลอดวัน ได้เริ่มต้นสิ่งดี ๆ พบคนสนับสนุน และก้าวหน้าในสิ่งที่ตั้งใจ"
+  ],
+  travel:[
+    "ขอให้ทุกการเดินทางราบรื่น ปลอดภัย แคล้วคลาดจากอันตราย และถึงจุดหมายโดยสวัสดิภาพทุกเส้นทาง",
+    "ขอให้เดินทางปลอดภัย พบแต่ความราบรื่นตลอดทาง ไปถึงที่หมายโดยสวัสดิภาพ และกลับถึงบ้านด้วยความสุข"
+  ],
+  family:[
+    "ขอให้ครอบครัวนี้มีแต่ความสุข ความเจริญก้าวหน้า สุขภาพแข็งแรง การงานราบรื่น การเงินมั่นคง ความรักอบอุ่น และสมหวังทุกประการ",
+    "ขอให้ทุกคนในครอบครัวอยู่ดีมีสุข สุขภาพแข็งแรง การงานก้าวหน้า การเงินคล่องตัว ความรักราบรื่น และมีแต่สิ่งดี ๆ เข้ามาในบ้าน"
+  ],
+  friendship:[
+    "ขอบคุณมิตรภาพที่แสนดี ไม่ว่าจะผ่านไปกี่วัน กี่เดือน หรือกี่ปี ขอให้มิตรไมตรีและความปรารถนาดีที่มีต่อกันยังคงงดงามเหมือนเดิม",
+    "มิตรภาพก็เหมือนดวงดาว อาจมองไม่เห็นทุกวัน แต่รู้ว่ายังอยู่เสมอ ขอให้ความผูกพันดี ๆ นี้อยู่ในใจและเป็นความสุขของกันและกันตลอดไป"
   ],
   all_round:[
-    "ขอให้วันนี้สุขภาพแข็งแรง จิตใจสดใส การงานราบรื่น การเงินคล่องตัว และมีคนดี ๆ อยู่รอบข้าง ขอให้ทุกสิ่งที่ตั้งใจค่อย ๆ สำเร็จ มีโชค มีความสุข และพบเรื่องน่ายินดีตลอดทั้งวัน",
-    "ขอให้ทุกด้านของชีวิตค่อย ๆ ลงตัว เรื่องหนักกลายเป็นเบา งานและเงินเดินหน้า สุขภาพแข็งแรง ครอบครัวอบอุ่น และหัวใจเต็มไปด้วยความหวัง ขอให้วันนี้นำพาความสำเร็จและสิ่งดี ๆ เข้ามามากกว่าที่คาดไว้"
+    "ขอให้วันนี้สุขภาพแข็งแรง การงานราบรื่น การเงินคล่องตัว มีโชคมีลาภ พบคนดีและโอกาสดี พร้อมความสุขและความสำเร็จตลอดทั้งวัน",
+    "ขอให้วันนี้เป็นวันที่ดีในทุกด้าน งานก้าวหน้า เงินทองคล่องมือ สุขภาพแข็งแรง ครอบครัวอบอุ่น และมีเรื่องน่ายินดีเข้ามาอย่างต่อเนื่อง"
   ],
   buddhist:[
-    "ขออานุภาพแห่งบุญรักษาและธรรมะคุ้มครอง ให้จิตใจสงบ สุขภาพแข็งแรง ชีวิตราบรื่น และมีสติผ่านทุกเรื่องไปได้อย่างงดงาม ขอให้บุญกุศลหนุนนำความสุข ความเจริญ และสิริมงคลมาสู่ชีวิต",
-    "ขอให้แสงแห่งธรรมเป็นกำลังใจ นำพาความสงบ ความเมตตา และปัญญามาสู่ทุกวัน ให้เรื่องที่กังวลค่อย ๆ คลี่คลาย พบหนทางที่ดี และได้รับความสุขอันเรียบง่ายจากใจที่เบิกบาน"
+    "ขออานุภาพแห่งบุญรักษาและธรรมะคุ้มครอง ให้สุขภาพแข็งแรง จิตใจผ่องใส ชีวิตราบรื่น มีสิริมงคล และพบความสุขความเจริญในทุกวัน",
+    "ขอให้บุญกุศลหนุนนำ ชีวิตมีความสุข ความเจริญ สุขภาพแข็งแรง การงานราบรื่น และมีสิริมงคลคุ้มครองตลอดวัน"
   ]
 };
-
 function pairedThemeChoice(pool,pairBase,setNo){
   const source=(pool||[]).filter(Boolean);
   if(!source.length)return "all_round";
@@ -7708,7 +7846,7 @@ function resolvedBlessingTheme(s,setNo=1){
   }else{
     // v11.82: AUTO never collapses to the intentionally compact preset.
     // Users can still choose short_power manually from the existing menu.
-    pool=["happiness","health","work","money","wealth","success","luck","encouragement","all_round"];
+    pool=["happiness","health","work","money","wealth","success","luck","encouragement","travel","family","friendship","all_round"];
   }
 
   const pairBase=hashString(`${userSeed}|${s.day.isoDate}|${mainMode}|reference-image-only-theme-v1153|${rerollSeed1}|${rerollSeed2}|${blessingRerollSeed}`);
@@ -7716,13 +7854,15 @@ function resolvedBlessingTheme(s,setNo=1){
 }
 
 const POSITIVE_BLESSING_FORBIDDEN_GENERAL=[
-  "ค่อย ๆ ดีขึ้น","ค่อย ๆ เบาลง","ค่อย ๆ หายไป","ความกังวล","ปัญหา","เรื่องหนัก",
-  "เหนื่อยน้อยลง","อย่ายอมแพ้","ไม่ว่าจะเจออะไร","ผ่านทุกเรื่อง","ความหวังค่อย ๆ กลับมา",
-  "ไม่ต้องสมบูรณ์แบบ","คุณทำดีที่สุดแล้ว","เดินช้าได้","พักบ้าง","อย่าลืม"
+  "ค่อย ๆ ดีขึ้น","ค่อย ๆ เบาลง","ค่อย ๆ หายไป","ค่อย ๆ ลงตัว","ค่อย ๆ คลี่คลาย","ค่อย ๆ เข้าที่",
+  "ความกังวล","กังวล","ปัญหา","เรื่องหนัก","เหนื่อยใจ","ความเหนื่อย","พักใจ","ใจโล่ง",
+  "อย่ายอมแพ้","ไม่ว่าจะเจออะไร","ผ่านทุกเรื่อง","ความหวังค่อย ๆ กลับมา","วางเรื่องเหนื่อย",
+  "อุปสรรค","ทางออก","ลังเล","ไม่กดดัน","เดินช้าได้","พักบ้าง","คุณทำดีที่สุดแล้ว",
+  "ทุกอย่างเบาขึ้น","เบาลง","คลี่คลาย","ความเหนื่อยล้า","เรื่องค้างคา","หนักกลายเป็นเบา",
+  "มากกว่าความกังวล","สบายใจมากกว่าความกังวล","ให้กำลังใจ","พลังใจ","ปลอบใจ","เยียวยา","ค่อยเป็นค่อยไป"
 ];
 
 function isPositiveBlessingVoice(text,theme){
-  if(theme==="encouragement") return true;
   const t=String(text||"");
   return !POSITIVE_BLESSING_FORBIDDEN_GENERAL.some(x=>t.includes(x));
 }
@@ -8146,8 +8286,8 @@ function blessingWordBounds(){
 
 function blessingLengthCandidates(key,lib){
   const shortPool=(lib?.greetings||[]).filter(Boolean);
-  const mediumPool=(GREETING_POOLS||[]).filter(Boolean);
-  const longPool=(LONG_WARM_BLESSINGS_V1182[key]||LONG_WARM_BLESSINGS_V1182.all_round||[]).filter(Boolean);
+  const mediumPool=(GREETING_POOLS||[]).filter(x=>x && isPositiveBlessingVoice(x,key));
+  const longPool=(LONG_WARM_BLESSINGS_V1182[key]||LONG_WARM_BLESSINGS_V1182.all_round||[]).filter(x=>x && isPositiveBlessingVoice(x,key));
   let pool=(blessingLengthMode==="short" || (blessingLengthMode==="auto" && key==="short_power"))?shortPool
     : blessingLengthMode==="medium"?mediumPool
     : longPool; // AUTO and LONG intentionally default to warm complete copy.
@@ -10059,6 +10199,7 @@ const PAIR_LOOKS={
     const L=["EXACT ANIMAL AUTHORITY — HIGHEST ANIMAL PRIORITY:"];
     if(c.animalType!=="auto"){
       L.push(
+        `REQUIRED SPECIES KEY: ${c.animalType}.`,
         `REQUIRED SPECIES: ${animalTypeLabel(c.animalType)}.`,
         `The animal MUST be a ${c.animalType}. Do not substitute a different animal species.`
       );
@@ -11470,8 +11611,13 @@ const PAIR_LOOKS={
         if(genderContract==="REFERENCE ROLE MAPPING" && !/GENDER CONTRACT:\s*REFERENCE ROLE MAPPING/i.test(prompt))failures.push("Multi-photo reference role gender contract missing");
       }
 
-      if(ec.animal && ec.animalType!=="auto" && !new RegExp(`REQUIRED SPECIES:.*${ec.animalType}`,"i").test(prompt)){
-        failures.push("Selected animal species exact lock missing");
+      if(ec.animal && ec.animalType!=="auto"){
+        const portableAnimalType=`ANIMAL TYPE: ${ec.animalType}.`;
+        const exactAnimalLabel=(typeof animalTypeLabel==="function") ? animalTypeLabel(ec.animalType) : ec.animalType;
+        const exactSpeciesLine=`REQUIRED SPECIES: ${exactAnimalLabel}.`;
+        if(!prompt.includes(portableAnimalType) && !prompt.includes(exactSpeciesLine)){
+          failures.push("Selected animal species exact lock missing");
+        }
       }
       if(ec.animal && !prompt.includes(`PER-IMAGE ANIMAL SETTINGS LOCK: these animal settings belong ONLY to Image ${exactSetNo}.`)){
         failures.push("Per-image animal settings authority missing");
@@ -11912,6 +12058,8 @@ const PAIR_LOOKS={
     L.push(...masterRenderingLines());
     L.push(...pairMasterVisualLines(s));
     L.push(...generalWeekdayColorGuardLines(s));
+    L.push(...generalWeekdayPairRepairLines(s,setNo));
+    L.push(...generalWeekdaySceneRiskGuardLines(s,setNo));
     L.push(...buddhistSubjectAuthorityLines(setNo,s));
     if(deityResolved.heroActive && deityResolved.deityMode!=="auto"){
       const deityMap={
@@ -12323,7 +12471,10 @@ const PAIR_LOOKS={
     }else{
       L.push(
         "FINAL MASTER RENDERING CHECK: PHOTOREALISTIC is mandatory for this ENTIRE image.",
-        "FINAL PAIR COLOR/LIGHT CHECK: normalize this image back to PAIR MASTER VISUAL STATE before rendering. Ignore scene-specific cool/blue, harsh, high-contrast, or mismatched lighting cues that conflict with the Pair Master.",
+        "FINAL PAIR COLOR/LIGHT CHECK: normalize this image back to PAIR MASTER VISUAL STATE before rendering. Ignore scene-specific cool/blue, harsh, high-contrast, golden-hour, rose-garden, or mismatched lighting cues that conflict with the Pair Master.",
+        "FINAL WEEKDAY COLOR CHECK: the artwork must read as TODAY'S weekday color at first glance. If it visually reads like another weekday color family, correct it before finalizing.",
+        "FINAL TYPOGRAPHY COLOR CHECK: hero headline and major text panels must also reinforce today's weekday color family. If the headline itself reads like another day's color, correct it before finalizing.",
+        "FINAL COMPANION MATCH CHECK: Image 1 and Image 2 must clearly belong to the same set, with the same white balance family, the same lighting softness, and the same final grade family.",
         `ARTWORK RENDERING: PHOTOREALISTIC${effectivePeopleAllowed?" / SELECTED PEOPLE ALLOWED / REQUIRED":" / NO PEOPLE"}.`,
         "Use high-end editorial quality, natural believable lighting, cinematic depth, elegant composition, and polished professional finish.",
         ""
@@ -12990,14 +13141,34 @@ function updateAnthroDescription(setNo){
 
 function syncAnimalControls(){
   [1,2].forEach(setNo=>{
-    const on=imageHasAnimal(setNo);
+    // v12.09: keep animal detail selectors usable in normal modes.
+    // If the user chooses an animal detail while the current composition has no animal,
+    // the change handler will automatically enable animal composition for that image.
+    const lockedByBirthday=appMode==="birthday";
     for(const base of ["animalType","animalStyle","animalLook","animalBehavior","anthroLevel"]){
       const el=$(`${base}${setNo}`);
       if(!el)continue;
-      el.disabled=!on;
-      el.style.opacity=on ? "1" : ".55";
+      el.disabled=lockedByBirthday;
+      el.style.opacity=lockedByBirthday ? ".55" : "1";
+      el.title=lockedByBirthday ? "โหมดการ์ดวันเกิดไม่ใช้ระบบสัตว์" : "เลือกได้ทันที — ระบบจะเปิดสัตว์ให้ภาพนี้อัตโนมัติ";
     }
   });
+}
+
+function ensureAnimalCompositionForSet(setNo){
+  if(appMode==="birthday") return false;
+  const id=setNo===1?"characterMode1":"characterMode2";
+  const el=$(id);
+  if(!el) return false;
+  const current=el.value || (setNo===1?characterMode1:characterMode2) || "none";
+  if(current==="animal" || current==="both") return false;
+  const next=current==="people" ? "both" : "animal";
+  el.value=next;
+  if(setNo===1) characterMode1=next; else characterMode2=next;
+  localStorage.setItem(setNo===1?"pokunCharacterMode1":"pokunCharacterMode2",next);
+  syncDerivedCharacterModes();
+  syncPeopleControls();
+  return true;
 }
 syncDerivedCharacterModes();
 syncAnimalControls();
@@ -13156,27 +13327,32 @@ $("quoteVisualStyle").addEventListener("change",e=>{
 
 [1,2].forEach(setNo=>{
   $(`animalType${setNo}`).addEventListener("change",e=>{
+    const autoEnabled=ensureAnimalCompositionForSet(setNo);
     if(setNo===1)animalType1=e.target.value;else animalType2=e.target.value;
     localStorage.setItem(`pokunAnimalType${setNo}`,e.target.value);
     updateAnimalLookOptions(setNo);
-    toast(`ประเภทสัตว์ภาพที่ ${setNo}: `+e.target.options[e.target.selectedIndex].text);
+    toast(`${autoEnabled ? "เปิดโหมดสัตว์อัตโนมัติ • " : ""}ประเภทสัตว์ภาพที่ ${setNo}: `+e.target.options[e.target.selectedIndex].text);
   });
   $(`animalStyle${setNo}`).addEventListener("change",e=>{
+    ensureAnimalCompositionForSet(setNo);
     if(setNo===1)animalStyle1=e.target.value;else animalStyle2=e.target.value;
     localStorage.setItem(`pokunAnimalStyle${setNo}`,e.target.value);
     toast(`รูปแบบสัตว์ภาพที่ ${setNo}: `+e.target.options[e.target.selectedIndex].text);
   });
   $(`animalLook${setNo}`).addEventListener("change",e=>{
+    ensureAnimalCompositionForSet(setNo);
     if(setNo===1)animalLook1=e.target.value;else animalLook2=e.target.value;
     localStorage.setItem(`pokunAnimalLook${setNo}`,e.target.value);
     toast(`ลักษณะสัตว์ภาพที่ ${setNo}: `+e.target.options[e.target.selectedIndex].text);
   });
   $(`animalBehavior${setNo}`).addEventListener("change",e=>{
+    ensureAnimalCompositionForSet(setNo);
     if(setNo===1)animalBehavior1=e.target.value;else animalBehavior2=e.target.value;
     localStorage.setItem(`pokunAnimalBehavior${setNo}`,e.target.value);
     toast(`พฤติกรรมสัตว์ภาพที่ ${setNo}: `+e.target.options[e.target.selectedIndex].text);
   });
   $(`anthroLevel${setNo}`).addEventListener("change",e=>{
+    ensureAnimalCompositionForSet(setNo);
     if(setNo===1)anthroLevel1=e.target.value;else anthroLevel2=e.target.value;
     localStorage.setItem(`pokunAnthroLevel${setNo}`,e.target.value);
     updateAnthroDescription(setNo);
@@ -13303,21 +13479,49 @@ $("reroll2").addEventListener("click",()=>{
 });
 $("clearSceneMemory").addEventListener("click",()=>{
   try{
-    // 1) Clear all recent-scene / cross-image repeat memory.
+    // v12.13: Clear Scene memory AND force a fresh blessing/text draw too.
+    const stateBefore=effectiveState(1);
+    let oldBless1=null, oldBless2=null;
+    const canCompareBlessing=(appMode==="greeting" && !stateBefore.special && !stateBefore.buddhist);
+    if(canCompareBlessing){
+      try{
+        oldBless1=emotionalBlessingTexts(stateBefore,1,0);
+        oldBless2=emotionalBlessingTexts(stateBefore,2,0);
+      }catch(_){ }
+    }
+
+    // 1) Clear recent-scene / cross-image repeat memory.
     localStorage.removeItem(sceneMemoryKey(1));
     localStorage.removeItem(sceneMemoryKey(2));
     localStorage.removeItem(crossImageMemoryKey(1));
     localStorage.removeItem(crossImageMemoryKey(2));
 
-    // 2) Advance both reroll seeds so the next resolution cannot simply reuse
-    //    the same deterministic scene/text combination after memory was cleared.
+    // 2) Advance Scene reroll seeds.
     rerollSeed1=Number(rerollSeed1||0)+1;
     rerollSeed2=Number(rerollSeed2||0)+1;
     localStorage.setItem("pokunRerollSeed1",String(rerollSeed1));
     localStorage.setItem("pokunRerollSeed2",String(rerollSeed2));
 
-    // 3) Immediately rebuild BOTH prompts from the clean scene-memory state.
-    //    This makes the button visibly effective with one click.
+    // 3) Advance Blessing reroll seed as well. If the new deterministic draw
+    //    accidentally resolves to the same visible blessing, keep advancing
+    //    until both images get a visibly different blessing (max 24 attempts).
+    let blessingChanged=!canCompareBlessing;
+    for(let attempt=0;attempt<24;attempt++){
+      blessingRerollSeed=Number(blessingRerollSeed||0)+1;
+      localStorage.setItem("pokunBlessingRerollSeed",String(blessingRerollSeed));
+      if(!canCompareBlessing){blessingChanged=true;break;}
+      try{
+        const sNow=effectiveState(1);
+        const n1=emotionalBlessingTexts(sNow,1,0);
+        const n2=emotionalBlessingTexts(sNow,2,0);
+        const changed1=!oldBless1 || n1.greeting!==oldBless1.greeting || n1.headline!==oldBless1.headline;
+        const changed2=!oldBless2 || n2.greeting!==oldBless2.greeting || n2.headline!==oldBless2.headline;
+        if(changed1 && changed2){blessingChanged=true;break;}
+      }catch(_){blessingChanged=true;break;}
+    }
+
+    // 4) Immediately rebuild BOTH prompts from the clean Scene memory and
+    //    the new blessing seed.
     const prompt1=pokunSafeBuildPrompt(1);
     const prompt2=pokunSafeBuildPrompt(2);
     $("output1").value=prompt1;
@@ -13331,9 +13535,11 @@ $("clearSceneMemory").addEventListener("click",()=>{
     if(studio1)studio1.value=prompt1;
     if(studio2)studio2.value=prompt2;
 
-    toast("🧹 ล้างประวัติ Scene แล้ว • สุ่ม Prompt ภาพ 1–2 ใหม่ทันที");
+    toast(blessingChanged
+      ? "🧹 ล้าง Scene แล้ว • สุ่ม Scene + คำอวยพร + Prompt ภาพ 1–2 ใหม่แล้ว"
+      : "🧹 ล้าง Scene แล้ว • สุ่ม Prompt ภาพ 1–2 ใหม่แล้ว");
   }catch(err){
-    console.error("POKUN v12.07 clear Scene + reroll failed:",err);
+    console.error("POKUN v12.13 clear Scene + reroll failed:",err);
     toast(`ล้าง Scene สำเร็จ แต่สร้าง Prompt ใหม่ไม่สำเร็จ: ${err?.message||err}`);
   }
 });
@@ -14793,6 +14999,20 @@ window.addEventListener("load",()=>{
     if(blessing)blessing.childNodes[0].nodeValue=`คำอวยพร • ${len} `;
   }
 
+  function studioProxyDisabledState(sourceId,source){
+    // v12.10: Layout Studio must not inherit stale disabled state from hidden source controls.
+    // Animal selectors are always usable outside Birthday mode; people selectors follow current composition.
+    if(/^animal(Type|Style|Look|Behavior)[12]$/.test(sourceId) || /^anthroLevel[12]$/.test(sourceId)){
+      return appMode==="birthday";
+    }
+    const peopleMatch=sourceId.match(/^(genderMode|ageMode|personSource|multiPhotoRole|referenceUse)([12])$/);
+    if(peopleMatch){
+      const n=Number(peopleMatch[2]);
+      return !imageHasPeople(n);
+    }
+    return !!source?.disabled;
+  }
+
   function buildProxy(label,sourceId,wide){
     const source=byId(sourceId);
     const box=document.createElement("div");
@@ -14801,10 +15021,15 @@ window.addEventListener("load",()=>{
     if(!source){const note=document.createElement("div");note.className="small";note.textContent="ตัวเลือกนี้กำลังโหลด";box.appendChild(note);return box;}
     let proxy;
     if(source.tagName==="SELECT"){
-      proxy=document.createElement("select");proxy.innerHTML=source.innerHTML;proxy.value=source.value;proxy.disabled=source.disabled;
+      proxy=document.createElement("select");proxy.innerHTML=source.innerHTML;proxy.value=source.value;proxy.disabled=studioProxyDisabledState(sourceId,source);
       proxy.addEventListener("change",()=>{source.value=proxy.value;source.dispatchEvent(new Event("change",{bubbles:true}));setTimeout(()=>{
+        if(["characterMode1","characterMode2"].includes(sourceId)){
+          if(typeof syncDerivedCharacterModes==="function") syncDerivedCharacterModes();
+          if(typeof syncPeopleControls==="function") syncPeopleControls();
+          if(typeof syncAnimalControls==="function") syncAnimalControls();
+        }
         if(["headlineFrameCategory","blessingFrameCategory","sceneTemplateFamily1","sceneTemplateFamily2","sceneTemplateExact1","sceneTemplateExact2","specialDayMode","specialDayPreset","characterMode1","characterMode2","personSource1","personSource2","animalType1","animalType2"].includes(sourceId))openPart(activePart);
-        else{proxy.innerHTML=source.innerHTML;proxy.value=source.value;proxy.disabled=source.disabled;syncPreview();refreshBlessingStudioSummary();refreshDateStudioSummary();refreshSceneStudioSummary()}
+        else{proxy.innerHTML=source.innerHTML;proxy.value=source.value;proxy.disabled=studioProxyDisabledState(sourceId,source);syncPreview();refreshBlessingStudioSummary();refreshDateStudioSummary();refreshSceneStudioSummary()}
       },0)});
     }else{
       proxy=document.createElement("input");proxy.type=source.type||"text";proxy.value=source.value;if(Number(source.maxLength)>0)proxy.maxLength=source.maxLength;
@@ -14844,7 +15069,7 @@ window.addEventListener("load",()=>{
 
     const note=document.createElement("div");
     note.className="small studio-field wide";
-    note.innerHTML="สุ่มเฉพาะ <b>Headline + คำอวยพร</b> ในธีมเดิม • รักษาความยาว จำนวนบรรทัด และช่วงจำนวนคำ • ไม่เปลี่ยน Scene / คน / สัตว์ / Layout";
+    note.innerHTML="สุ่มเฉพาะ <b>คำอวยพร</b> ใน Prompt เดิมโดยตรง • รักษา Headline / Scene / คน / สัตว์ / Layout เดิมทั้งหมด • คำอวยพรใหม่ต้องไม่ซ้ำข้อความเดิม";
     fields.appendChild(note);
     refreshBlessingStudioSummary();
   }
@@ -14893,6 +15118,11 @@ window.addEventListener("load",()=>{
   }
 
   function appendSubjectExtras(fields){
+    // v12.10: refresh canonical controls first so Layout Studio reflects the latest คน/สัตว์ composition.
+    if(typeof syncDerivedCharacterModes==="function") syncDerivedCharacterModes();
+    if(typeof syncPeopleControls==="function") syncPeopleControls();
+    if(typeof syncAnimalControls==="function") syncAnimalControls();
+    if(typeof updateAnimalLookOptions==="function"){ updateAnimalLookOptions(1); updateAnimalLookOptions(2); }
     const modes=[null,byId("characterMode1")?.value||"none",byId("characterMode2")?.value||"none"];
     const hasPeople=n=>["people","both"].includes(modes[n]);
     const hasAnimal=n=>["animal","both"].includes(modes[n]);
@@ -15035,7 +15265,7 @@ window.addEventListener("load",()=>{
     add("🎲 สร้าง Prompt ภาพที่ 2","",()=>rebuildStudioPrompt(2));
     add("สุ่มชุดใหม่เฉพาะภาพที่ 1","secondary",()=>rebuildStudioPrompt(1,true));
     add("สุ่มชุดใหม่เฉพาะภาพที่ 2","secondary",()=>rebuildStudioPrompt(2,true));
-    add("🧹 ล้างประวัติ Scene + สุ่มใหม่ทันที","ghost",()=>byId("clearSceneMemory")?.click(),true);
+    add("🧹 ล้างประวัติ Scene + สุ่ม Scene/คำอวยพรใหม่ทันที","ghost",()=>byId("clearSceneMemory")?.click(),true);
     add("เคลียร์ Prompt ทั้งสองภาพ","ghost",()=>{
       [1,2].forEach(n=>{const original=byId(`output${n}`),area=document.querySelector(`[data-studio-output="${n}"]`);if(original)original.value="";if(area)area.value=""});
       if(typeof toast==="function")toast("เคลียร์ Prompt ทั้งสองภาพแล้ว");
@@ -15113,6 +15343,210 @@ window.addEventListener("load",()=>{
     apply(valid);
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',setup);else setup();
+})();
+</script>
+
+
+<script id="pokun-v1214-blessing-reroll-fix">
+(function initPokunV1214BlessingRerollFix(){
+  function extractPromptField(prompt,label){
+    if(!prompt) return "";
+    const safe=String(label).replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
+    const re=new RegExp(`${safe}:\\s*\\n([^\\n]+)`,`i`);
+    const m=String(prompt).match(re);
+    return m ? m[1].trim() : "";
+  }
+  function replaceSingleLine(prompt,label,newValue){
+    if(!prompt || !newValue) return prompt;
+    const safe=String(label).replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
+    return String(prompt).replace(new RegExp(`(${safe}:\\s*)[^\\n]+`,`i`),`$1${newValue}`);
+  }
+  function replaceBlockLine(prompt,label,newValue){
+    if(!prompt || !newValue) return prompt;
+    const safe=String(label).replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
+    return String(prompt).replace(new RegExp(`(${safe}:\\s*\\n)[^\\n]+`,`i`),`$1${newValue}`);
+  }
+  function lockHeadlineInsidePrompt(prompt,headline){
+    if(!prompt || !headline) return prompt;
+    let out=String(prompt);
+    out=replaceBlockLine(out,"Visible Thai headline",headline);
+    out=replaceSingleLine(out,"EXACT HEADLINE TEXT",headline);
+    out=replaceSingleLine(out,"Verified headline",headline);
+    return out;
+  }
+  function syncStudioOutputs(){
+    const o1=document.getElementById('output1');
+    const o2=document.getElementById('output2');
+    const s1=document.querySelector('[data-studio-output="1"]');
+    const s2=document.querySelector('[data-studio-output="2"]');
+    if(s1 && o1) s1.value=o1.value||"";
+    if(s2 && o2) s2.value=o2.value||"";
+  }
+  function bind(){
+    const original=document.getElementById('rerollBlessingTheme');
+    if(!original) return;
+    if(original.dataset.v1214Bound==='1') return;
+    const button=original.cloneNode(true);
+    button.dataset.v1214Bound='1';
+    original.parentNode.replaceChild(button,original);
+    button.addEventListener('click',function(event){
+      event.preventDefault();
+      event.stopPropagation();
+      const outputs=[1,2].map(setNo=>document.getElementById(`output${setNo}`));
+      const existing=outputs.filter(Boolean);
+      const oldMeta={
+        1:{headline:extractPromptField(existing[0]?.value||"","Visible Thai headline"),greeting:extractPromptField(existing[0]?.value||"","Visible Thai greeting / blessing")},
+        2:{headline:extractPromptField(existing[1]?.value||"","Visible Thai headline"),greeting:extractPromptField(existing[1]?.value||"","Visible Thai greeting / blessing")}
+      };
+      let finalPrompts={1:existing[0]?.value||"",2:existing[1]?.value||""};
+      let changed=false;
+      let rebuilt=0;
+      const shouldBuild=[1,2].filter(setNo=>{
+        const out=document.getElementById(`output${setNo}`);
+        return !!(out && out.value.trim());
+      });
+      try{
+        for(let attempt=0;attempt<24;attempt++){
+          blessingRerollSeed=Number(blessingRerollSeed||0)+1;
+          localStorage.setItem('pokunBlessingRerollSeed',String(blessingRerollSeed));
+          const draft={};
+          let good=true;
+          shouldBuild.forEach(setNo=>{
+            draft[setNo]=lockHeadlineInsidePrompt(pokunSafeBuildPrompt(setNo), oldMeta[setNo]?.headline||"");
+            const newGreeting=extractPromptField(draft[setNo],"Visible Thai greeting / blessing") || extractPromptField(draft[setNo],"Visible Thai birthday blessing");
+            if(oldMeta[setNo]?.greeting && newGreeting===oldMeta[setNo].greeting) good=false;
+          });
+          if(good || !shouldBuild.length){
+            finalPrompts={...finalPrompts,...draft};
+            changed=good;
+            break;
+          }
+          finalPrompts={...finalPrompts,...draft};
+        }
+        [1,2].forEach(setNo=>{
+          const out=document.getElementById(`output${setNo}`);
+          if(!out || !out.value.trim() || !finalPrompts[setNo]) return;
+          out.value=finalPrompts[setNo];
+          out.dispatchEvent(new Event('input',{bubbles:true}));
+          rebuilt++;
+        });
+        syncStudioOutputs();
+        const selected=document.getElementById('blessingTheme')?.selectedOptions?.[0]?.textContent?.trim()||'AUTO';
+        if(typeof updateBlessingThemeDescription==='function') updateBlessingThemeDescription();
+        if(typeof updateBlessingLengthDescription==='function') updateBlessingLengthDescription();
+        const msg=rebuilt
+          ? (changed
+              ? `🎲 สุ่มคำอวยพรใหม่ในหมวด ${selected} แล้ว — คง Headline/Scene/Layout เดิม`
+              : `🎲 ลองสุ่มคำอวยพรใหม่ในหมวด ${selected} แล้ว — คง Headline/Scene/Layout เดิม`)
+          : `🎲 เตรียมคำอวยพรชุดใหม่ในหมวด ${selected} แล้ว`;
+        if(typeof toast==='function') toast(msg);
+      }catch(error){
+        console.error('POKUN v12.14 blessing-only reroll failed:',error);
+        const message=error?.message||String(error);
+        if(typeof toast==='function') toast(`สุ่มคำอวยพรไม่สำเร็จ: ${message}`);
+        else window.alert(`สุ่มคำอวยพรไม่สำเร็จ: ${message}`);
+      }
+    });
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',bind); else bind();
+})();
+</script>
+
+
+<script id="pokun-v1215-true-blessing-only-reroll">
+(function initPokunV1215TrueBlessingOnlyReroll(){
+  function extractBlock(prompt,label){
+    if(!prompt)return "";
+    const escaped=String(label).replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
+    const re=new RegExp(`${escaped}:\\s*\\n([^\\n]+)`,`i`);
+    const m=String(prompt).match(re);
+    return m?m[1].trim():"";
+  }
+  function replaceAllLiteral(text,from,to){
+    if(!text||!from||from===to)return text;
+    return String(text).split(from).join(to);
+  }
+  function candidatePoolFor(setNo){
+    try{
+      const s=effectiveState(setNo);
+      const key=resolvedBlessingTheme(s,setNo);
+      const lib=REFERENCE_IMAGE_BLESSING_LIBRARY_V1153[key]||REFERENCE_IMAGE_BLESSING_LIBRARY_V1153.all_round;
+      const pool=blessingLengthCandidates(key,lib)||[];
+      return {s,key,lib,pool:[...new Set(pool.map(x=>String(x||'').trim()).filter(Boolean))]};
+    }catch(error){
+      console.error('v12.15 candidatePoolFor failed',error);
+      return {s:null,key:'all_round',lib:null,pool:[]};
+    }
+  }
+  function chooseDifferent(pool,current,avoid,setNo){
+    const clean=pool.filter(x=>x!==current && x!==avoid);
+    const source=clean.length?clean:pool.filter(x=>x!==current);
+    if(!source.length)return "";
+    const seed=hashString(`${userSeed}|blessing-only-v1215|${blessingRerollSeed}|${setNo}|${current}`);
+    return source[seededIndex(seed,source.length)];
+  }
+  function syncStudio(){
+    [1,2].forEach(setNo=>{
+      const out=document.getElementById(`output${setNo}`);
+      const studio=document.querySelector(`[data-studio-output="${setNo}"]`);
+      if(out&&studio)studio.value=out.value||"";
+    });
+  }
+  function bind(){
+    const oldButton=document.getElementById('rerollBlessingTheme');
+    if(!oldButton)return;
+    const button=oldButton.cloneNode(true); // removes every older duplicate listener
+    button.dataset.v1215Bound='1';
+    oldButton.parentNode.replaceChild(button,oldButton);
+    button.type='button';
+    button.addEventListener('click',event=>{
+      event.preventDefault();
+      event.stopPropagation();
+      try{
+        blessingRerollSeed=Number(blessingRerollSeed||0)+1;
+        localStorage.setItem('pokunBlessingRerollSeed',String(blessingRerollSeed));
+
+        const outputs={1:document.getElementById('output1'),2:document.getElementById('output2')};
+        const current={
+          1:extractBlock(outputs[1]?.value||'', 'Visible Thai greeting / blessing'),
+          2:extractBlock(outputs[2]?.value||'', 'Visible Thai greeting / blessing')
+        };
+        const info={1:candidatePoolFor(1),2:candidatePoolFor(2)};
+        const next={1:'',2:''};
+        next[1]=chooseDifferent(info[1].pool,current[1],current[2],1);
+        next[2]=chooseDifferent(info[2].pool,current[2],next[1]||current[1],2);
+
+        let changed=0;
+        [1,2].forEach(setNo=>{
+          const out=outputs[setNo];
+          if(!out||!out.value.trim())return;
+          const oldGreeting=current[setNo];
+          const newGreeting=next[setNo];
+          if(!oldGreeting||!newGreeting||oldGreeting===newGreeting)return;
+          // v12.15: do NOT rebuild the prompt. Replace the exact resolved blessing
+          // everywhere it appears so all lock/verified/visible blocks stay consistent,
+          // while Headline, Scene, Character, Layout and every other setting remain byte-for-byte unchanged.
+          out.value=replaceAllLiteral(out.value,oldGreeting,newGreeting);
+          out.dispatchEvent(new Event('input',{bubbles:true}));
+          changed++;
+        });
+        syncStudio();
+        if(typeof updateBlessingThemeDescription==='function')updateBlessingThemeDescription();
+        if(typeof updateBlessingLengthDescription==='function')updateBlessingLengthDescription();
+        const selected=document.getElementById('blessingTheme')?.selectedOptions?.[0]?.textContent?.trim()||'AUTO';
+        const msg=changed
+          ? `🎲 เปลี่ยนเฉพาะคำอวยพรใหม่ในหมวด ${selected} แล้ว — Headline/Scene/Layout เดิม 100%`
+          : `🎲 เตรียม seed คำอวยพรใหม่ในหมวด ${selected} แล้ว — ถ้ายังไม่มี Prompt ให้กดสร้าง Prompt`;
+        if(typeof toast==='function')toast(msg);
+      }catch(error){
+        console.error('POKUN v12.15 blessing-only reroll failed:',error);
+        const message=error?.message||String(error);
+        if(typeof toast==='function')toast(`สุ่มคำอวยพรไม่สำเร็จ: ${message}`);
+        else window.alert(`สุ่มคำอวยพรไม่สำเร็จ: ${message}`);
+      }
+    });
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bind);else bind();
 })();
 </script>
 
