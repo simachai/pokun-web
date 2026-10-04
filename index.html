@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#157a6e">
-<title>POKUN Web v12.19.33</title>
+<title>POKUN Web v12.19.34</title>
 <style>
 :root{--bg:#eef6f3;--card:#ffffff;--ink:#17332d;--muted:#5e746d;--line:#d7e7e0;--accent:#157a6e;--accent-2:#244c7d;--accent-soft:#e8f6f1;--good:#1b8f63;--warn:#b7791f;--gold:#e9bf57;--shadow:0 14px 34px rgba(21,44,59,.08)}
 *{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI","Noto Sans Thai",sans-serif;background:linear-gradient(180deg,#f4fbf8 0%,#eef6f3 100%);color:var(--ink)}
@@ -18666,5 +18666,66 @@ document.querySelectorAll("#sceneTemplatePairSection .notice").forEach(el=>{if(/
   },true);
   window.POKUN_WEEKDAY_AUTHORITY_121933={apply:applyWeekdayAuthority,getDate:getSelectedDate};
 })();
-</script>\n</body>
+</script>\n
+<script id="pokun-v121934-auto-creative-layout-final-authority">
+/* v12.19.34 — AUTO Layout = AI creative freedom, not a resolved preset.
+   Manual layout selections remain explicit locks. */
+(function(){
+  'use strict';
+  const $=id=>document.getElementById(id);
+  function layoutIsAuto(n){
+    const el=$('layoutMode'+n);
+    if(!el) return true;
+    const v=String(el.value||'').trim();
+    const txt=String(el.options?.[el.selectedIndex]?.text||'').trim();
+    return !v || /^auto$/i.test(v) || /\bAUTO\b/i.test(txt);
+  }
+  function manualLayoutText(n){
+    const el=$('layoutMode'+n);
+    return el ? String(el.options?.[el.selectedIndex]?.text||el.value||'').trim() : '';
+  }
+  function cleanOldLayoutDirectives(s){
+    return String(s||'')
+      .replace(/^Layout ที่เลือกเอง:[^\n]*\n?/gmi,'')
+      .replace(/^AUTO LAYOUT[^\n]*\n?/gmi,'')
+      .replace(/^Layout:\s*(?:Classic Split|Magazine Editorial|Cinematic Poster|Corner Editorial|Floating Typography|Vertical Editorial|Center Hero|Frame Around Subject|Bottom Editorial Block|Oversized Headline|Diagonal Dynamic|Minimal Luxury)[^\n]*\n?/gmi,'');
+  }
+  function apply(n,prompt){
+    if(typeof prompt!=='string'||!prompt.trim()) return prompt;
+    let s=cleanOldLayoutDirectives(prompt);
+    const auto=layoutIsAuto(n);
+    const manual=manualLayoutText(n);
+    const autoLine='LAYOUT: AI AUTO creative — ให้ AI ออกแบบ Layout, ตำแหน่งข้อความ, พื้นที่ว่าง และจุดเด่นของภาพอย่างอิสระให้เหมาะกับฉากและ Typography ครั้งนี้ ไม่ต้องเลือกหรือยึดหนึ่งใน Layout preset และไม่ต้องวางข้อความตำแหน่งเดิมจากภาพก่อนหน้า';
+    const pairLine='PAIR LAYOUT: ถ้าภาพที่ 1 และภาพที่ 2 ใช้ AUTO ทั้งคู่ ให้ทั้งสองภาพใช้โครงสร้างองค์ประกอบและตำแหน่งข้อความต่างกันอย่างชัดเจน';
+    const manualLine='LAYOUT MANUAL LOCK: '+manual+' — ใช้ Layout นี้ตามที่ผู้ใช้เลือก';
+    const insert=auto ? autoLine+'\n'+pairLine : manualLine;
+    // Put layout authority immediately before the general composition freedom sentence.
+    const marker='จัดองค์ประกอบ ตำแหน่งข้อความ ขนาดตัวอักษร';
+    if(s.includes(marker)) s=s.replace(marker,insert+'\n'+marker);
+    else s += '\n'+insert;
+    return s.replace(/\n{3,}/g,'\n\n').trim();
+  }
+  function wrap(name){
+    const old=window[name];
+    if(typeof old!=='function'||old.__pokun121934) return;
+    const fn=function(){ const n=Number(arguments[0])||1; return apply(n,old.apply(this,arguments)); };
+    fn.__pokun121934=true; window[name]=fn;
+  }
+  wrap('buildPrompt'); wrap('pokunSafeBuildPrompt');
+  // Final textarea guard for legacy click handlers that write output directly.
+  document.addEventListener('click',function(e){
+    const b=e.target?.closest?.('button');
+    if(!b||!/สร้าง\s*Prompt/i.test(b.textContent||'')) return;
+    setTimeout(function(){
+      for(const n of [1,2]){
+        const out=$('output'+n);
+        if(out?.value && /สร้างภาพสวัสดี|โปสเตอร์ไทย|TYPOGRAPHY/i.test(out.value)) out.value=apply(n,out.value);
+      }
+    },0);
+  },true);
+  window.POKUN_AUTO_CREATIVE_LAYOUT_121934={apply,layoutIsAuto};
+})();
+</script>
+
+</body>
 </html>
