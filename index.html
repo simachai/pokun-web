@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#157a6e">
-<title>POKUN Web v12.19.34</title>
+<title>POKUN Web v12.19.42</title>
 <style>
 :root{--bg:#eef6f3;--card:#ffffff;--ink:#17332d;--muted:#5e746d;--line:#d7e7e0;--accent:#157a6e;--accent-2:#244c7d;--accent-soft:#e8f6f1;--good:#1b8f63;--warn:#b7791f;--gold:#e9bf57;--shadow:0 14px 34px rgba(21,44,59,.08)}
 *{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI","Noto Sans Thai",sans-serif;background:linear-gradient(180deg,#f4fbf8 0%,#eef6f3 100%);color:var(--ink)}
@@ -18512,109 +18512,9 @@ document.querySelectorAll("#sceneTemplatePairSection .notice").forEach(el=>{if(/
 })();
 </script>
 
-\n<script id="pokun-v121931-wanphra-auto-creative">
-/* v12.19.31 — Wan Phra explicit mode + AI AUTO creative freedom. */
-(function(){
-  const WAN_PHRA_LINE = 'สร้างภาพสวัสดี วันนี้วันพระ ให้ภาพสื่อถึงวันพระและบรรยากาศทางพุทธศาสนาอย่างเหมาะสม โดยให้ AI AUTO creative เลือกฉาก สถานที่ องค์ประกอบ มุมกล้อง แสง บรรยากาศ และรายละเอียดภาพอย่างสร้างสรรค์เอง ไม่จำเป็นต้องใช้ฉากหรือองค์ประกอบเดิมทุกครั้ง';
-  function isWanPhraPrompt(p){
-    p=String(p||'');
-    return /วันนี้วันพระ|วันพระ|WAN PHRA|BUDDHIST HOLY DAY/i.test(p);
-  }
-  function cleanRigidWanPhra(p){
-    let s=String(p||'');
-    s=s.replace(/(?:ต้องมี|must include|include)\s*(?:พระพุทธรูป|วัดไทย|พระอุโบสถ|ดอกบัว)[^\n.]*(?:[.\n]|$)/gi,'');
-    s=s.replace(/(?:พระพุทธรูป\s*[,、/]?\s*วัดไทย\s*[,、/]?\s*พระอุโบสถ\s*[,、/]?\s*ดอกบัว)[^\n]*(?:\n|$)/gi,'');
-    return s;
-  }
-  function applyWanPhra(p){
-    let s=String(p||'');
-    if(!isWanPhraPrompt(s)) return s;
-    s=cleanRigidWanPhra(s);
-    if(!s.includes(WAN_PHRA_LINE)) s=WAN_PHRA_LINE+'\n\n'+s;
-    return s;
-  }
-  if(typeof window.buildPrompt==='function'){
-    const prev=window.buildPrompt;
-    window.buildPrompt=function(){ return applyWanPhra(prev.apply(this,arguments)); };
-  }
-  if(typeof window.pokunSafeBuildPrompt==='function'){
-    const prevSafe=window.pokunSafeBuildPrompt;
-    window.pokunSafeBuildPrompt=function(){ return applyWanPhra(prevSafe.apply(this,arguments)); };
-  }
-  window.POKUN_WAN_PHRA_AUTO_121931={apply:applyWanPhra,line:WAN_PHRA_LINE};
-})();
-</script>\n
-<script id="pokun-v121932-wanphra-final-prompt-authority">
-(function(){
-  'use strict';
-  const WAN_RE = /(วันนี้\s*วันพระ|วันพระ|WAN\s*PHRA|BUDDHIST\s*HOLY\s*DAY)/i;
-  const NOT_WAN_RE = /(ไม่ใช่วันพระ|ไม่เป็นวันพระ|NOT\s*WAN\s*PHRA)/i;
 
-  function pageSaysWanPhra(){
-    try{
-      // Prefer explicit controls/selected values when present.
-      const els=[...document.querySelectorAll('select,input,button,[data-value],[aria-checked="true"]')];
-      for(const el of els){
-        let t='';
-        if(el.tagName==='SELECT') t=(el.options[el.selectedIndex]?.text||'')+' '+(el.value||'');
-        else if(el.type==='radio'||el.type==='checkbox') { if(!el.checked) continue; t=(el.value||'')+' '+(el.labels?.[0]?.innerText||''); }
-        else t=(el.value||'')+' '+(el.innerText||'')+' '+(el.getAttribute('data-value')||'');
-        if(NOT_WAN_RE.test(t)) continue;
-        if(WAN_RE.test(t)) return true;
-      }
-      // Existing app may expose special-day state in prompt/UI; use visible selected summary as fallback.
-      const summary=[...document.querySelectorAll('[id*="special" i],[class*="special" i],[id*="day" i],[class*="day" i]')]
-        .map(x=>x.innerText||x.value||'').join(' ');
-      return WAN_RE.test(summary) && !NOT_WAN_RE.test(summary);
-    }catch(e){ return false; }
-  }
 
-  function rewriteWanPhra(prompt){
-    if(typeof prompt!=='string'||!prompt.trim()) return prompt;
-    const explicitWan = WAN_RE.test(prompt) && !NOT_WAN_RE.test(prompt);
-    const isWan = explicitWan || pageSaysWanPhra();
-    if(!isWan) return prompt;
 
-    let out=prompt;
-    const opening='สร้างภาพสวัสดี วันนี้วันพระ แบบโปสเตอร์ไทยสวยงาม ภาพแนวตั้งขนาด 3:4 ให้ภาพสื่อถึงวันพระและบรรยากาศทางพุทธศาสนาอย่างเหมาะสม โดยให้ AI AUTO creative เลือกฉาก สถานที่ องค์ประกอบ มุมกล้อง แสง บรรยากาศ และรายละเอียดภาพอย่างสร้างสรรค์เอง';
-    if(/^สร้างภาพสวัสดีประจำวัน[^\n]*/m.test(out)) out=out.replace(/^สร้างภาพสวัสดีประจำวัน[^\n]*/m,opening);
-    else if(!out.includes(opening)) out=opening+'\n'+out;
-
-    const scene='ฉาก/สถานที่: AUTO creative สำหรับภาพวันพระ ให้ AI เลือกฉากใหม่ที่สื่อถึงวันพระอย่างสร้างสรรค์และเหมาะสม ไม่ต้องยึดฉากหรือองค์ประกอบวันพระแบบเดิมทุกครั้ง';
-    if(/^ฉาก\/สถานที่:[^\n]*/m.test(out)) out=out.replace(/^ฉาก\/สถานที่:[^\n]*/m,scene);
-    else out=out.replace(opening,opening+'\n'+scene);
-    return out;
-  }
-
-  function wrap(name){
-    try{
-      const old=window[name];
-      if(typeof old!=='function'||old.__wanphra121932) return;
-      const fn=function(){ return rewriteWanPhra(old.apply(this,arguments)); };
-      fn.__wanphra121932=true; fn.__wrapped=old; window[name]=fn;
-    }catch(e){}
-  }
-  wrap('buildPrompt');
-  wrap('pokunSafeBuildPrompt');
-
-  // Also guard prompt textareas/outputs after UI actions, because older handlers may bypass the global wrapper.
-  function patchOutputs(){
-    try{
-      if(!pageSaysWanPhra()) return;
-      document.querySelectorAll('textarea,input[type="text"],pre,[contenteditable="true"]').forEach(el=>{
-        const v=('value' in el)?el.value:el.innerText;
-        if(typeof v==='string' && v.includes('สร้างภาพสวัสดีประจำวัน') && v.includes('ฉาก/สถานที่:')){
-          const nv=rewriteWanPhra(v);
-          if('value' in el) el.value=nv; else el.innerText=nv;
-        }
-      });
-    }catch(e){}
-  }
-  document.addEventListener('click',()=>setTimeout(patchOutputs,0),true);
-  document.addEventListener('change',()=>setTimeout(patchOutputs,0),true);
-  window.POKUN_WANPHRA_FINAL_121932={rewrite:rewriteWanPhra,isWanPhra:pageSaysWanPhra};
-})();
-</script>
 \n<script id="pokun-v121933-weekday-final-prompt-authority">
 (function(){
   'use strict';
@@ -18724,6 +18624,221 @@ document.querySelectorAll("#sceneTemplatePairSection .notice").forEach(el=>{if(/
     },0);
   },true);
   window.POKUN_AUTO_CREATIVE_LAYOUT_121934={apply,layoutIsAuto};
+})();
+</script>
+
+
+
+
+<script id="pokun-v121936-clean-copy-whitespace">
+/* v12.19.36 — Clean Prompt clipboard/share text. */
+(function(){
+  'use strict';
+  function cleanPromptWhitespace(text){
+    return String(text == null ? '' : text)
+      .replace(/\r\n?/g,'\n')
+      .split('\n').map(line=>line.replace(/[ \t]+$/g,'')).join('\n')
+      .replace(/^[ \t]*\n+/,'')
+      .replace(/\n[ \t]*\n(?:[ \t]*\n)+/g,'\n\n')
+      .replace(/[ \t\n]+$/g,'');
+  }
+  function cleanTextarea(el){
+    if(!el || typeof el.value!=='string') return '';
+    const cleaned=cleanPromptWhitespace(el.value);
+    if(el.value!==cleaned) el.value=cleaned;
+    return cleaned;
+  }
+  function cleanAllPromptOutputs(){
+    document.querySelectorAll('textarea').forEach(el=>{
+      if(el.value && /สร้างภาพสวัสดี|โปสเตอร์ไทย|TYPOGRAPHY|Prompt/i.test(el.value)) cleanTextarea(el);
+    });
+  }
+  window.copyText=async function(targetId){
+    const el=document.getElementById(targetId), t=cleanTextarea(el);
+    if(!t){ if(typeof toast==='function') toast('ยังไม่มี Prompt'); return; }
+    try{ await navigator.clipboard.writeText(t); if(typeof toast==='function') toast('คัดลอกแล้ว'); }
+    catch(e){ el.focus(); el.select(); try{document.execCommand('copy');if(typeof toast==='function')toast('คัดลอกแล้ว');}catch(_){if(typeof toast==='function')toast('เลือกข้อความแล้ว กรุณากด Copy');} }
+  };
+  window.shareText=async function(targetId,label){
+    const el=document.getElementById(targetId), t=cleanTextarea(el);
+    if(!t){ if(typeof toast==='function') toast('ยังไม่มี Prompt'); return; }
+    if(navigator.share){try{await navigator.share({title:'POKUN '+label,text:t});}catch(e){}}
+    else await window.copyText(targetId);
+  };
+  document.addEventListener('click',function(e){
+    const b=e.target&&e.target.closest?e.target.closest('button'):null;
+    if(!b||!/คัดลอก/.test(b.textContent||'')) return;
+    const scope=b.closest('.studio-field,.card,.prompt-box,.output-box')||document;
+    let ta=scope.querySelector&&scope.querySelector('textarea');
+    if(!ta){const m=(b.textContent||'').match(/ภาพที่\s*([12])/);if(m)ta=document.getElementById('output'+m[1])||document.querySelector('textarea[data-studio-output="'+m[1]+'"]');}
+    if(ta) cleanTextarea(ta);
+  },true);
+  document.addEventListener('click',function(e){
+    const b=e.target&&e.target.closest?e.target.closest('button'):null;
+    if(b&&/สร้าง\s*Prompt|สุ่มชุดใหม่/i.test(b.textContent||''))setTimeout(cleanAllPromptOutputs,30);
+  },true);
+  window.POKUN_CLEAN_COPY_121936={clean:cleanPromptWhitespace,cleanAll:cleanAllPromptOutputs};
+})();
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+<script id="pokun-v121941-unified-wanphra-authority">
+/* v12.19.41 — ONE Wan Phra authority only.
+   Source of truth: selected date + explicit selector. No page-text scanning.
+   2569-10-05 is normal because only exact keys in DATA.holyDates count. */
+(function(){
+  'use strict';
+  const $=id=>document.getElementById(id);
+  const KEY='pokunWanPhraModeV121935';
+  const NORMAL_OPEN='สร้างภาพสวัสดีประจำวัน แบบโปสเตอร์ไทยสวยงาม ภาพแนวตั้งขนาด 3:4';
+  const NORMAL_SCENE='ฉาก/สถานที่: AUTO creative scene. Create a fresh scene appropriate to the selected scene family.';
+  const WAN_OPEN='สร้างภาพสวัสดี วันนี้วันพระ แบบโปสเตอร์ไทยสวยงาม ภาพแนวตั้งขนาด 3:4 ให้ภาพสื่อถึงวันพระและบรรยากาศทางพุทธศาสนาอย่างเหมาะสม โดยให้ AI AUTO creative เลือกฉาก สถานที่ องค์ประกอบ มุมกล้อง แสง บรรยากาศ และรายละเอียดภาพอย่างสร้างสรรค์เอง';
+  const WAN_SCENE='ฉาก/สถานที่: AUTO creative สำหรับภาพวันพระ ให้ AI เลือกฉากใหม่ที่สื่อถึงวันพระอย่างสร้างสรรค์และเหมาะสม ไม่ต้องยึดฉากหรือองค์ประกอบวันพระแบบเดิมทุกครั้ง';
+
+  function dateElement(){ return $('date') || document.querySelector('input[type="date"]'); }
+  function selectedDate(){
+    const e=dateElement(), v=e&&e.value||'';
+    if(!/^\d{4}-\d{2}-\d{2}$/.test(v)) return null;
+    const [y,m,d]=v.split('-').map(Number);
+    return new Date(y,m-1,d,12,0,0);
+  }
+  function buddhistKey(){
+    const d=selectedDate(); if(!d) return '';
+    return String(d.getFullYear()+543)+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+  }
+  function calendarWan(){
+    const k=buddhistKey();
+    return !!(k && typeof DATA!=='undefined' && DATA.holyDates && Object.prototype.hasOwnProperty.call(DATA.holyDates,k));
+  }
+  function mode(){
+    const sel=$('wanPhraModeV121941') || $('wanPhraModeV121935');
+    const v=sel ? sel.value : (localStorage.getItem(KEY)||'auto');
+    return /^(auto|force_wan|force_normal)$/.test(v) ? v : 'auto';
+  }
+  function effectiveWan(){ const m=mode(); return m==='force_wan' ? true : m==='force_normal' ? false : calendarWan(); }
+
+  function installControl(){
+    const box=$('wanPhraBehaviorBox'); if(!box) return;
+    let old=$('wanPhraModeV121935');
+    if(old){
+      old.id='wanPhraModeV121941';
+      let status=$('wanPhraResolvedV121935'); if(status) status.id='wanPhraResolvedV121941';
+    }else if(!$('wanPhraModeV121941')){
+      const row=document.createElement('div'); row.style.marginTop='10px';
+      row.innerHTML='<label for="wanPhraModeV121941" style="display:block;font-weight:700;margin-bottom:6px">สถานะวันพระสำหรับการสร้างภาพ</label><select id="wanPhraModeV121941" style="width:100%"><option value="auto">AUTO — ตรวจจากวันที่ที่เลือก</option><option value="force_wan">วันนี้เป็นวันพระ — บังคับภาพวันพระ</option><option value="force_normal">ไม่ใช่วันพระ — สร้างภาพประจำวันปกติ</option></select><div id="wanPhraResolvedV121941" class="small" style="margin-top:6px"></div>';
+      box.appendChild(row);
+    }
+    const sel=$('wanPhraModeV121941');
+    if(sel){
+      const saved=localStorage.getItem(KEY)||'auto'; sel.value=/^(auto|force_wan|force_normal)$/.test(saved)?saved:'auto';
+      sel.onchange=function(){localStorage.setItem(KEY,sel.value); patchOutputs();};
+    }
+    updateStatus();
+  }
+  function updateStatus(){
+    const st=$('wanPhraResolvedV121941')||$('wanPhraResolvedV121935'); if(!st)return;
+    const m=mode(), c=calendarWan(), w=effectiveWan();
+    st.textContent=m==='auto' ? ('ผลจากวันที่: '+(c?'วันนี้เป็นวันพระ — ใช้ Prompt วันพระ':'ไม่ใช่วันพระ — ใช้ Prompt ปกติ')) : (w?'Manual: บังคับใช้ Prompt วันพระ':'Manual: บังคับใช้ Prompt ปกติ');
+  }
+  function normalize(text){
+    if(typeof text!=='string'||!text.trim()) return text;
+    let s=text.replace(/\\\s*\n/g,'\n');
+    // Remove all Wan-Phra-only helper rows first. Decision is rebuilt below from authority only.
+    s=s.replace(/^Buddhist holy day:\s*วันพระ[^\n]*\n?/gmi,'')
+       .replace(/^Thai lunar date:[^\n]*\n?/gmi,'')
+       .replace(/^Wan Phra AUTO[^\n]*\n?/gmi,'')
+       .replace(/^บรรยากาศสงบ งดงาม เหมาะกับวันพระ[^\n]*\n?/gmi,'');
+    if(effectiveWan()){
+      s=/^สร้างภาพสวัสดี[^\n]*/m.test(s)?s.replace(/^สร้างภาพสวัสดี[^\n]*/m,WAN_OPEN):WAN_OPEN+'\n'+s;
+      s=/^ฉาก\/สถานที่:[^\n]*/m.test(s)?s.replace(/^ฉาก\/สถานที่:[^\n]*/m,WAN_SCENE):s.replace(WAN_OPEN,WAN_OPEN+'\n'+WAN_SCENE);
+    }else{
+      // Normal means normal, regardless of stale text generated upstream.
+      s=/^สร้างภาพสวัสดี[^\n]*/m.test(s)?s.replace(/^สร้างภาพสวัสดี[^\n]*/m,NORMAL_OPEN):NORMAL_OPEN+'\n'+s;
+      s=/^ฉาก\/สถานที่:[^\n]*/m.test(s)?s.replace(/^ฉาก\/สถานที่:[^\n]*/m,NORMAL_SCENE):s.replace(NORMAL_OPEN,NORMAL_OPEN+'\n'+NORMAL_SCENE);
+      s=s.replace(/สร้างภาพสวัสดี\s*วันนี้วันพระ[^\n]*/g,NORMAL_OPEN)
+         .replace(/^ฉาก\/สถานที่:\s*AUTO creative สำหรับภาพวันพระ[^\n]*/gmi,NORMAL_SCENE);
+    }
+    return s.replace(/\n{3,}/g,'\n\n').trim();
+  }
+  function wrap(name){
+    const old=window[name]; if(typeof old!=='function'||old.__pokun121941)return;
+    const fn=function(){return normalize(old.apply(this,arguments));};
+    fn.__pokun121941=true; fn.__wrapped=old; window[name]=fn;
+  }
+  function patchOutputs(){
+    for(const n of [1,2]){const e=$('output'+n);if(e&&e.value)e.value=normalize(e.value);}
+    document.querySelectorAll('textarea[data-studio-output]').forEach(e=>{if(e.value)e.value=normalize(e.value);});
+    updateStatus();
+  }
+  function install(){ installControl(); wrap('buildPrompt'); wrap('pokunSafeBuildPrompt'); patchOutputs(); }
+  document.addEventListener('change',e=>{if(e.target&&(e.target===dateElement()||e.target.id==='wanPhraModeV121941'))setTimeout(patchOutputs,0);},true);
+  // Legacy buttons may write prompt text directly. Normalize once after their handlers finish.
+  document.addEventListener('click',e=>{const b=e.target&&e.target.closest&&e.target.closest('button');if(b)setTimeout(patchOutputs,60);},true);
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',install);else install();
+  window.POKUN_WANPHRA_AUTHORITY_121941={buddhistKey,calendarWan,mode,effectiveWan,normalize,patchOutputs};
+})();
+</script>
+
+<script id="pokun-v121942-pair-diversity-authority">
+/* v12.19.42 — Pair Diversity Authority.
+   Same date/weekday/color/Wan-Phra authority; different creative role for Image 1 vs Image 2.
+   Keep this compact: AI still owns the creative layout when AUTO is selected. */
+(function(){
+  'use strict';
+  const $=id=>document.getElementById(id);
+  const MARK='PAIR CREATIVE DIRECTION:';
+  const roles={
+    1:'ภาพที่ 1 = HERO VIEW — เลือกฉากหลัก จุดเด่นหลัก มุมกล้อง และโครงสร้างภาพที่โดดเด่นสำหรับภาพนี้เองแบบ AI AUTO creative.',
+    2:'ภาพที่ 2 = COMPANION VIEW — ต้องสร้างเป็นอีกฉาก/อีกมุม/อีกจุดเด่นและอีกโครงสร้างภาพหนึ่งอย่างชัดเจน ห้ามทำเหมือนภาพที่ 1; คงร่วมกันเฉพาะวัน วันที่ ธีมสี และสถานะวันพระ.'
+  };
+  function cleanPairRows(s){
+    return String(s||'')
+      .replace(/^PAIR CREATIVE DIRECTION:[^\n]*\n?/gmi,'')
+      .replace(/^PAIR DIFFERENCE:[^\n]*\n?/gmi,'')
+      .replace(/^PAIR ROLE:[^\n]*\n?/gmi,'');
+  }
+  function apply(text,n){
+    if(typeof text!=='string'||!text.trim())return text;
+    let s=cleanPairRows(text);
+    const line=MARK+' '+roles[n];
+    // Put the pair role next to layout guidance, without adding a long rule block.
+    if(/^LAYOUT:/mi.test(s)) s=s.replace(/^LAYOUT:[^\n]*/mi,m=>m+'\n'+line);
+    else if(/^TYPOGRAPHY:/mi.test(s)) s=s.replace(/^TYPOGRAPHY:[^\n]*/mi,m=>m+'\n'+line);
+    else s=line+'\n'+s;
+    return s.replace(/\n{3,}/g,'\n\n').trim();
+  }
+  function wrap(name){
+    const old=window[name]; if(typeof old!=='function'||old.__pokun121942)return;
+    const fn=function(){
+      const n=Number(arguments[0])===2?2:1;
+      return apply(old.apply(this,arguments),n);
+    };
+    fn.__pokun121942=true; fn.__wrapped=old; window[name]=fn;
+  }
+  function patchOutputs(){
+    for(const n of [1,2]){
+      const e=$('output'+n); if(e&&e.value)e.value=apply(e.value,n);
+      document.querySelectorAll('textarea[data-studio-output="'+n+'"]').forEach(x=>{if(x.value)x.value=apply(x.value,n);});
+    }
+  }
+  function install(){wrap('buildPrompt');wrap('pokunSafeBuildPrompt');patchOutputs();}
+  // Re-apply after all legacy reroll/reset handlers have completed.
+  document.addEventListener('click',e=>{
+    const b=e.target&&e.target.closest&&e.target.closest('button');
+    if(b&&/สร้าง\s*Prompt|สุ่มชุดใหม่|ล้างประวัติ\s*Scene/i.test(b.textContent||''))setTimeout(patchOutputs,90);
+  },true);
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',install);else install();
+  window.POKUN_PAIR_DIVERSITY_121942={apply,patchOutputs};
 })();
 </script>
 
